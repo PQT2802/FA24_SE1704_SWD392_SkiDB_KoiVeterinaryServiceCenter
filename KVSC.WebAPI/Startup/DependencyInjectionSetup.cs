@@ -1,13 +1,10 @@
-﻿using FluentValidation;
-using KVSC.Application.KVSC.Application.Common.Validator;
-using KVSC.Domain.Entities.User;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 
 namespace KVSC.WebAPI.Startup
 {
     public static class DependencyInjectionSetup
     {
-        public static IServiceCollection RegisterServices (this IServiceCollection services)
+        public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(option =>
@@ -50,7 +47,7 @@ namespace KVSC.WebAPI.Startup
 
 
 
-            services.AddTransient<IValidator<User>, UserValidator>();
+            //services.AddTransient<IValidator<User>, UserValidator>();
 
 
 

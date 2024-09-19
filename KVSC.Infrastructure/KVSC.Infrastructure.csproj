@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="KVSC.Infrastructure.DTOs\Common\ResultSuccess\" />
-    <Folder Include="KVSC.Infrastructure.DTOs\Common\ResultError\" />
-    <Folder Include="KVSC.Infrastructure.DBContext\" />
-    <Folder Include="KVSC.Infrastructure.DBContext\KVSC.Infrastructure.Migration\" />
-    <Folder Include="KVSC.Infrastructure.DBContext\KVSC.Infrastructure.Configuration\" />
+    <Folder Include="DTOs\Common\ResultSuccess\" />
+    <Folder Include="DTOs\Common\ResultError\" />
+    <Folder Include="DBContext\" />
+    <Folder Include="DBContext\KVSC.Infrastructure.Migration\" />
+    <Folder Include="DBContext\KVSC.Infrastructure.Configuration\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +27,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.4.5" />
   </ItemGroup>

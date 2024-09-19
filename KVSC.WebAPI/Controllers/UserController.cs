@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 using KVSC.Domain.Entities.User;
-using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using LoginRequest = Microsoft.AspNetCore.Identity.Data.LoginRequest;
 
 namespace KVSC.WebAPI.Controllers
 {
@@ -34,11 +33,11 @@ namespace KVSC.WebAPI.Controllers
             return Ok("User is valid.");
         }
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginTest(Login.Request user)
+        public async Task<IActionResult> LoginTest(LoginRequest user)
         {
             if (user.Email.Equals("a") && user.Password.Equals("2"))
-            // Xử lý khi user hợp lệ
-            return Ok("User is valid.");
+                // Xử lý khi user hợp lệ
+                return Ok("User is valid.");
             return BadRequest("Invalid");
         }
     }
