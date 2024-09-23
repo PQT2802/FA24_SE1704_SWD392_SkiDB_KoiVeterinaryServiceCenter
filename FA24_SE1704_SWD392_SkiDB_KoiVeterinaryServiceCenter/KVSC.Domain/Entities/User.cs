@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Domain.Entities.User
+namespace KVSC.Domain.Entities
 {
     public class User
     {

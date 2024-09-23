@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using KVSC.Domain.Entities.User;
+using KVSC.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using LoginRequest = Microsoft.AspNetCore.Identity.Data.LoginRequest;
 

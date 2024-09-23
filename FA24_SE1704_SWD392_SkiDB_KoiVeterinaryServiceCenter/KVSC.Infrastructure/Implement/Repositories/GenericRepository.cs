@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KVSC.Infrastructure.DB;
+using Microsoft.EntityFrameworkCore;
 
 namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
 {
     public class GenericRepository<T> where T : class
     {
-        protected FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenterContext _context;
+        protected KVSCContext _context;
 
         public GenericRepository()
         {
-            _context ??= new FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenterContext();
+            _context ??= new KVSCContext();
         }
 
-        public GenericRepository(FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenterContext context)
+        public GenericRepository(KVSCContext context)
         {
             _context = context;
         }

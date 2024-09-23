@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KVSC.Infrastructure", "KVSC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KVSC.WebAPI", "KVSC.WebAPI\KVSC.WebAPI.csproj", "{401A37A9-748D-47BB-ADDC-4FA3772CE005}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KVSC.View", "KVSC.View\KVSC.View.csproj", "{F28B565F-189B-414D-9D99-132ED5511EB0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{401A37A9-748D-47BB-ADDC-4FA3772CE005}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{401A37A9-748D-47BB-ADDC-4FA3772CE005}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{401A37A9-748D-47BB-ADDC-4FA3772CE005}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F28B565F-189B-414D-9D99-132ED5511EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F28B565F-189B-414D-9D99-132ED5511EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F28B565F-189B-414D-9D99-132ED5511EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F28B565F-189B-414D-9D99-132ED5511EB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="KVSC.Application.Interface\" />
+    <Folder Include="Interface\IRepositories\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,8 +1,23 @@
+using KVSC.Infrastructure.DB;
 using KVSC.WebAPI.Startup;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<KVSCContext>(opt =>
+{
+    // opt.UseSqlServer(builder.Configuration.GetConnectionString("Azure"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("MyDb"));
+
+}
+
+);
+
+
+
+
 
 builder.Services.AddControllers();
 //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<UserValidator>());

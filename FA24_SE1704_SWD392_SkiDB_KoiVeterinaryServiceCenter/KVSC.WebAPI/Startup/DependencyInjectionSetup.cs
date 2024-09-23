@@ -1,4 +1,14 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using FluentValidation;
+using KVSC.Application.Implement.Service;
+using KVSC.Application.Interface.ICommon;
+using KVSC.Application.Interface.IService;
+using KVSC.Application.KVSC.Application.Common.Validator.Abstract;
+using KVSC.Application.KVSC.Application.Common.Validator.User;
+using KVSC.Domain.Entities;
+using KVSC.Infrastructure.Common;
+using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -6,6 +16,7 @@ namespace KVSC.WebAPI.Startup
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
+
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(option =>
             {
@@ -33,21 +44,36 @@ namespace KVSC.WebAPI.Startup
             new string[] { }
         }
     });
-                // Add custom document filter
-                //  option.DocumentFilter<CustomDocumentFilter>();
-                // option.OperationFilter<FileUploadOperationFilter>();
-                // option.SchemaFilter<SimpleEnumSchemaFilter>();
-                // option.OperationFilter<SwaggerEnumOperationFilter>();
+
             });
-
-
-
-
-
-
-
-
             //services.AddTransient<IValidator<User>, UserValidator>();
+            
+
+            
+
+            #region Common
+            //Common
+            services.AddTransient<IPasswordHasher, PasswordHasher>();
+            //Comon
+            #endregion
+
+            #region Validator
+            //Validator
+            services.AddTransient<IValidator<LoginRequest>, LoginValidator>();
+
+
+            //Validator
+            #endregion
+
+            #region Repositories
+
+            #endregion
+
+            #region Service
+            services.AddTransient<IAuthService, AuthService>();
+            #endregion
+
+
 
 
 

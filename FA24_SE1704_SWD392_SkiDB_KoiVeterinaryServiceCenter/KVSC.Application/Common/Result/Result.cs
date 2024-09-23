@@ -3,38 +3,75 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 
 namespace KVSC.Application.KVSC.Application.Common.Result
 {
-    public class Result<T>
+    public class Result
     {
-        private Result(bool isSuccess, T data, Error error)
+        private Result(bool isSuccess, Error error)
         {
             if (isSuccess && error != Error.None ||
                 !isSuccess && error == Error.None)
             {
-                throw new ArgumentException("Invalid error state", nameof(error));
+                throw new ArgumentException("Invalid error", nameof(error));
             }
 
             IsSuccess = isSuccess;
-            Data = data;
             Error = error;
+        }
+
+        private Result(bool isSuccess, List<Error> errors)
+        {
+            if (isSuccess && (errors == null || errors.Count > 0) ||
+                !isSuccess && (errors != null && errors.Count == 0))
+            {
+                throw new ArgumentException("Invalid errors", nameof(errors));
+            }
+
+            IsSuccess = isSuccess;
+            Errors = errors;
+        }
+
+        private Result(bool isSuccess, object obj, List<object> objects)
+        {
+            if (isSuccess && (obj == null && (objects == null || objects.Count > 0)) ||
+                !isSuccess && (obj != null || (objects != null && objects.Count == 0)))
+            {
+                throw new ArgumentException("Invalid parameters for object and list of objects", nameof(objects));
+            }
+
+            IsSuccess = isSuccess;
+            Object = obj;
+            Objects = objects;
         }
 
         public bool IsSuccess { get; }
 
+        [JsonIgnore]
         public bool IsFailure => !IsSuccess;
 
-        public T Data { get; }
-
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public Error Error { get; }
 
-        // Factory method for success with data
-        public static Result<T> Success(T data) => new(true, data, Error.None);
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public List<Error> Errors { get; }
 
-        // Factory method for failure with error
-        public static Result<T> Failure(Error error) => new(false, default!, error);
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public object Object { get; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public List<object> Objects { get; }
+
+        public static Result Success() => new(true, Error.None);
+        public static Result Failure(Error error) => new(false, error);
+        public static Result Failures(List<Error> errors) => new(false, errors);
+        public static Result SuccessWithObject(object obj) => new(true, obj, null);
+        public static Result FailureWithObjects(List<object> objects) => new(false, null, objects);
+
+
+
     }
 }

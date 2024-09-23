@@ -13,16 +13,16 @@ namespace KVSC.Application.KVSC.Application.Common.Result
     public static class ResultExtensions
     {
         public static TReturn Match<TData, TReturn>(
-            this Result<TData> result,
-            Func<TData, TReturn> onSuccess,
+            this Result result,
+            Func<TReturn> onSuccess,
             Func<Error, TReturn> onFailure)
         {
-            return result.IsSuccess ? onSuccess(result.Data) : onFailure(result.Error);
+            return result.IsSuccess ? onSuccess() : onFailure(result.Error);
         }
 
-        public static IResult
+       
 
-        public static IResult ToProblemDetails<T>(this Result<T> result)
+        public static IResult ToProblemDetails(this Result result)
         {
             if (result.IsSuccess)
             {
@@ -67,25 +67,25 @@ namespace KVSC.Application.KVSC.Application.Common.Result
                 };
         }
 
-        public static IResult ToSuccessDetails<T>(this Result<T> result,string message)
+        public static IResult ToSuccessDetails(this Result result, string message)
         {
             if (!result.IsSuccess)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("The operation was not successful.");
             }
 
-            return result.Data == null
-                ? Results.NoContent() // 204 No Content
+            return result.Object == null
+                ? Results.NoContent() // 204 No Content if no data is present
                 : Results.Ok(
-                    new Success<T>(
+                    new Success<object>(
                         statusCode: StatusCodes.Status200OK,
                         title: "Operation Successful",
                         type: "https://tools.ietf.org/html/rfc7231#section-6.3.1", // 200 OK
-                        data: result.Data,
+                        data: result.Object, // use the Object property from the Result
                         extensions: new Dictionary<string, object?>
                         {
-                            {"message", message },
-                            { "data", result.Data }
+                    { "message", message },
+                    { "data", result.Object }
                         }
                     )
                 );
