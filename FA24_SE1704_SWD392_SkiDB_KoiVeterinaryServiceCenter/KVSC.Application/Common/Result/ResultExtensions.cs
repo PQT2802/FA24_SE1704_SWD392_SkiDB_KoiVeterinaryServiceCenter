@@ -20,6 +20,8 @@ namespace KVSC.Application.KVSC.Application.Common.Result
             return result.IsSuccess ? onSuccess(result.Data) : onFailure(result.Error);
         }
 
+        public static IResult
+
         public static IResult ToProblemDetails<T>(this Result<T> result)
         {
             if (result.IsSuccess)
