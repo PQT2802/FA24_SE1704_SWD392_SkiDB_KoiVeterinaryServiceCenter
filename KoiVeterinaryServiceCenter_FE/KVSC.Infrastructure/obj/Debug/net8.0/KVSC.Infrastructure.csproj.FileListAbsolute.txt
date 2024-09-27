@@ -1,0 +1,12 @@
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\bin\Debug\net8.0\KVSC.Infrastructure.deps.json
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\bin\Debug\net8.0\KVSC.Infrastructure.dll
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\bin\Debug\net8.0\KVSC.Infrastructure.pdb
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.AssemblyInfoInputs.cache
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.AssemblyInfo.cs
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.sourcelink.json
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.dll
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\refint\KVSC.Infrastructure.dll
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.pdb
+D:\Study\Fall2024\SWD392\KoiVeterinaryServiceCenter_FE\KVSC.Infrastructure\obj\Debug\net8.0\ref\KVSC.Infrastructure.dll

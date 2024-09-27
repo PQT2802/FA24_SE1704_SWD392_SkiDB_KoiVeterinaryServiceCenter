@@ -1,0 +1,75 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>HTML Codex - Login Form Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Login Form Template" name="keywords">
+    <meta content="Login Form Template" name="description">
+
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+
+    <!-- Stylesheet -->
+    <link href="~/css/stylelogin.css" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper login-1">
+        <div class="container">
+            <div class="col-left">
+                <div class="login-text">
+                    <h2>Welcome Back</h2>
+                    <p>Create your account.<br>It's totally free.</p>
+                    <a class="btn" href="/Account/Register">Sign Up</a>
+                </div>
+            </div>
+            <div class="col-right">
+                <div class="login-form">
+                    <h2>Login</h2>
+
+                    <!-- Error Message Display -->
+                    @if (Model.ErrorMessage != null && Model.ErrorMessage.Any())
+                    {
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach (var error in Model.ErrorMessage)
+                                {
+                                    <li>@error.Description</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <form method="post">
+                        <p>
+                            <label asp-for="LoginRequest.Email"></label>
+                            <input asp-for="LoginRequest.Email" placeholder="Email" required>
+                            <span asp-validation-for="LoginRequest.Email" class="text-danger"></span>
+                        </p>
+                        <p>
+                            <label asp-for="LoginRequest.Password"></label>
+                            <input asp-for="LoginRequest.Password" placeholder="Password" type="password" required>
+                            <span asp-validation-for="LoginRequest.Password" class="text-danger"></span>
+                        </p>
+                        <p>
+                            <input type="submit" value="Sign In" />
+                        </p>
+                        <p>
+                            <a href="/Account/ForgotPassword">Forget Password?</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="credit">
+            Template by <a href="https://htmlcodex.com">HTML Codex</a>
+        </div>
+    </div>
+
+</body>
+</html>

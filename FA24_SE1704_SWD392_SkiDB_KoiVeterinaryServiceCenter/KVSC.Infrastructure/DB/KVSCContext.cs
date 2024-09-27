@@ -20,10 +20,12 @@ namespace KVSC.Infrastructure.DB
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<User>().ToTable("User");
 
             //Add-Migration init -Context KVSCContext -Project KVSC.Infrastructure -StartupProject KVSC.WebAPI -OutputDir DB/Migrations
             base.OnModelCreating(modelBuilder);
+
         }
-        }
+    }
 }

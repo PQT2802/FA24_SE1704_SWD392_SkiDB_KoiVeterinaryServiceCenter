@@ -1,34 +1,34 @@
 ﻿using KVSC.Infrastructure.DB;
+using KVSC.Infrastructure.Interface.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
 {
-    public class GenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected KVSCContext _context;
-
-        public GenericRepository()
-        {
-            _context ??= new KVSCContext();
-        }
+        protected readonly KVSCContext _context;
 
         public GenericRepository(KVSCContext context)
         {
-            _context = context;
+            _context = context ?? new KVSCContext(); // Ensures that context is initialized
         }
 
         public List<T> GetAll()
         {
             return _context.Set<T>().ToList();
         }
-        public async Task<List<T>> GetAllAsync()
+
+        public async Task<List<T>> GetAllAsync()    
         {
             return await _context.Set<T>().ToListAsync();
         }
+
         public void Create(T entity)
         {
             _context.Add(entity);
-            _context.SaveChanges();
+         //   _context.SaveChanges();
         }
 
         public async Task<int> CreateAsync(T entity)
@@ -48,7 +48,6 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
         {
             var tracker = _context.Attach(entity);
             tracker.State = EntityState.Modified;
-
             return await _context.SaveChangesAsync();
         }
 
@@ -96,24 +95,6 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
             return await _context.Set<T>().FindAsync(code);
         }
 
-
-
-        public void PrepareCreate(T entity)
-        {
-            _context.Add(entity);
-        }
-
-        public void PrepareUpdate(T entity)
-        {
-            var tracker = _context.Attach(entity);
-            tracker.State = EntityState.Modified;
-        }
-
-        public void PrepareRemove(T entity)
-        {
-            _context.Remove(entity);
-        }
-
         public int Save()
         {
             return _context.SaveChanges();
@@ -122,6 +103,12 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<T> GetByAsync(string type, string value)
+        {
+            return await _context.Set<T>()
+                .FirstOrDefaultAsync(x => EF.Property<string>(x, type) == value);
         }
     }
 }

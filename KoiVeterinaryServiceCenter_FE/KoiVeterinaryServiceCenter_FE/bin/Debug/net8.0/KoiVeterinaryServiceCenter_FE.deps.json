@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "KoiVeterinaryServiceCenter_FE/1.0.0": {
+        "dependencies": {
+          "KVSC.Application": "1.0.0"
+        },
+        "runtime": {
+          "KoiVeterinaryServiceCenter_FE.dll": {}
+        }
+      },
+      "KVSC.Application/1.0.0": {
+        "dependencies": {
+          "KVSC.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "KVSC.Application.dll": {}
+        }
+      },
+      "KVSC.Infrastructure/1.0.0": {
+        "runtime": {
+          "KVSC.Infrastructure.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "KoiVeterinaryServiceCenter_FE/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "KVSC.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "KVSC.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

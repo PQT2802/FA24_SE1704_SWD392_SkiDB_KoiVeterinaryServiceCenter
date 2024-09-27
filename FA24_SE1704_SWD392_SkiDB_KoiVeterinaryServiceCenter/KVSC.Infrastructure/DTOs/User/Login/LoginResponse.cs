@@ -8,5 +8,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login
 {
     public class LoginResponse
     {
+        public string ReNewToken { get; set; }
+        public string AccessToken { get; set; }
     }
 }

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\KoiVeterinaryServiceCenter_FE.props" />
+</Project>

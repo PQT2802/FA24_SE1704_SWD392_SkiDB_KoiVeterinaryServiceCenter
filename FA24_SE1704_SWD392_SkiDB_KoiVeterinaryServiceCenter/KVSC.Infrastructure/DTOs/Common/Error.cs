@@ -10,7 +10,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common
     public  record Error
     {
         public static readonly Error None = new(string.Empty, string.Empty,ErrorType.Failure);
-        private Error(string code, string description, ErrorType errorType)
+        public Error(string code, string description, ErrorType errorType)
         {
             Code = code;
             Description = description;

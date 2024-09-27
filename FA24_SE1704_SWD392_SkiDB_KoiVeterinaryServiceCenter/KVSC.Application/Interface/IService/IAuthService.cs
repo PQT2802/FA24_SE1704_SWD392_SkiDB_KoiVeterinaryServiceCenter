@@ -1,4 +1,5 @@
 ﻿using KVSC.Application.KVSC.Application.Common.Result;
+using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace KVSC.Application.Interface.IService
     public interface IAuthService
     {
         Task<Result> SignIn(LoginRequest loginRequest);
+        Task<Result> SignUp(RegisterRequest registerRequest);
     }
 }
