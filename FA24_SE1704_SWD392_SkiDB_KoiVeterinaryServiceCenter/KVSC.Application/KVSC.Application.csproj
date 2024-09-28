@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interface\IRepositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\KVSC.Domain\KVSC.Domain.csproj" />
     <ProjectReference Include="..\KVSC.Infrastructure\KVSC.Infrastructure.csproj" />
   </ItemGroup>

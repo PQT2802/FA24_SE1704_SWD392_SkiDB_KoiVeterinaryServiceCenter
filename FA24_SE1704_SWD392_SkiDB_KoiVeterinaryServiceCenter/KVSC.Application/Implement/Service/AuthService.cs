@@ -6,6 +6,7 @@ using KVSC.Domain.Entities;
 using KVSC.Infrastructure.Common;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.User.Register;
+using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.Common;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
@@ -19,13 +20,13 @@ namespace KVSC.Application.Implement.Service
 {
     public class AuthService : IAuthService
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<RegisterRequest> _registerRequestValidator;
         private readonly IValidator<LoginRequest> _loginRequestValidator;
         private readonly IPasswordHasher _passwordHasher;
 
         public AuthService(
-            UnitOfWork unitOfWork, 
+            IUnitOfWork unitOfWork, 
             IValidator<RegisterRequest> registerRequestValidator, 
             IValidator<LoginRequest> loginRequestValidator,
             IPasswordHasher passwordHasher
@@ -49,9 +50,7 @@ namespace KVSC.Application.Implement.Service
                 // Handle errors as needed, e.g., return them in a Result object
                 return Result.Failures(errors);
             }
-          //  var hashPassword = _passwordHasher.HashPassword(loginRequest.Password);
-           // var userLogin = await _unitOfWork.UserRepository.GetUserByEmailAndPasswordAsync(loginRequest.Email, hashPassword);
-           var userLogin = await _unitOfWork.UserRepository.GetByAsync("Email",loginRequest.Email);
+           var userLogin = await _unitOfWork.UserRepository.GetByAsync("Email",loginRequest.Email); // fixxxxxxxxxx
             var checkPassword = _passwordHasher.VerifyPassword(loginRequest.Password,userLogin.Password);
             if (userLogin == null || checkPassword == false) {
                 return Result.Failure(UserErrorMessage.UserNotExist());
@@ -75,7 +74,6 @@ namespace KVSC.Application.Implement.Service
                 var errors = validate.Errors
                     .Select(e =>(Error) e.CustomState)
                     .ToList();
-                // Handle errors as needed, e.g., return them in a Result object
                 return Result.Failures(errors);
             }
             User newUser = new User

@@ -10,6 +10,7 @@ namespace KVSC.Infrastructure.Interface
     public interface IUnitOfWork : IDisposable
     {
         IUserRepository UserRepository { get; }
+        IPetRepository PetRepository { get; }
         int Complete();
     }
 }

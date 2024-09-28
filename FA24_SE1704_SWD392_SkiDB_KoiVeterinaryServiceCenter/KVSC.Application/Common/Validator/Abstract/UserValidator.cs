@@ -18,7 +18,7 @@ namespace KVSC.Application.KVSC.Application.Common.Validator.Abstract
         protected void AddUserNameRules(Expression<Func<T, string>> userNameExpression, bool checkExists = false)
         {
             RuleFor(userNameExpression)
-                .NotEmpty().WithState(_ => (UserErrorMessage.FieldIsEmpty("User name")))
+                .NotEmpty().WithState(_ => (UserErrorMessage.FieldIsEmpty("User name")))                
                 .MinimumLength(3).WithState(_ => UserErrorMessage.UserNameInValidLength());
 
             // Check if username exists only if required (for registration)
