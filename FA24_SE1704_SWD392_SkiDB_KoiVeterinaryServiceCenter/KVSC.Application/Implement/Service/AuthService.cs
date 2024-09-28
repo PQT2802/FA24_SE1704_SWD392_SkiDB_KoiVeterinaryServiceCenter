@@ -51,7 +51,7 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failures(errors);
             }
            var userLogin = await _unitOfWork.UserRepository.GetByAsync("Email",loginRequest.Email); // fixxxxxxxxxx
-            var checkPassword = _passwordHasher.VerifyPassword(loginRequest.Password,userLogin.Password);
+            var checkPassword = _passwordHasher.VerifyPassword(loginRequest.Password,userLogin.PasswordHash);
             if (userLogin == null || checkPassword == false) {
                 return Result.Failure(UserErrorMessage.UserNotExist());
             }
@@ -78,10 +78,10 @@ namespace KVSC.Application.Implement.Service
             }
             User newUser = new User
             {
-                UserId = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Email = registerRequest.Email,
-                Password = _passwordHasher.HashPassword(registerRequest.Password),
-                UserName = registerRequest.UserName
+                PasswordHash = _passwordHasher.HashPassword(registerRequest.Password),
+                Username = registerRequest.UserName
 
             };
             var createUsre = await _unitOfWork.UserRepository.CreateAsync(newUser);

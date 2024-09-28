@@ -19,7 +19,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
         public async Task<bool> UserNameExistsAsync(string userName)
         {
             // Check if any user exists with the specified username
-            return await _context.Users.AnyAsync(x => x.UserName == userName);
+            return await _context.Users.AnyAsync(x => x.Username == userName);
         }
 
         public async Task<bool> EmailExistsAsync(string email)
@@ -31,7 +31,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
 
         public async Task<User> GetUserByEmailAndPasswordAsync(string email, string password)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Email.Equals(email) && x.Password.Equals(password));
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email.Equals(email) && x.PasswordHash.Equals(password));
         }
 
 
