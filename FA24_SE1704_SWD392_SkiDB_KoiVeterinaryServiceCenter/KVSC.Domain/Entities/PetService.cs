@@ -2,6 +2,7 @@
 
 public class PetService : BaseEntity
 {
+    public string Name { get; set; } // Name of the specific service
     public Guid PetServiceCategoryId { get; set; } // Foreign key to ServiceCategory
     public decimal BasePrice { get; set; }
     public string Duration { get; set; }
@@ -13,4 +14,6 @@ public class PetService : BaseEntity
 
     // Relationships
     public ICollection<OrderItem> OrderItems { get; set; }
+    public PetServiceCategory PetServiceCategory { get; set; } // Navigation property
+
 }

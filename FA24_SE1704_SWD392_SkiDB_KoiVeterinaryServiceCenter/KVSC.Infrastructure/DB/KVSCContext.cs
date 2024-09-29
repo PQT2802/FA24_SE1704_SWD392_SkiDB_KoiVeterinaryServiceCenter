@@ -26,6 +26,7 @@ namespace KVSC.Infrastructure.DB
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Payment> Payments { get; set; }
     public DbSet<PetService> PetServices { get; set; }
+    public DbSet<PetServiceCategory> PetServiceCategories { get; set; }
     #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +41,7 @@ namespace KVSC.Infrastructure.DB
         modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
         modelBuilder.Entity<Payment>().ToTable("Payment");
         modelBuilder.Entity<PetService>().ToTable("PetService");
+        modelBuilder.Entity<PetServiceCategory>().ToTable("PetServiceCategory");
 
         // Relationships and additional configuration
 
@@ -110,9 +112,16 @@ namespace KVSC.Infrastructure.DB
             .WithOne(oi => oi.Product)
             .HasForeignKey(oi => oi.ProductId);
 
+        // PetServiceCategory has many PetServices
+        modelBuilder.Entity<PetServiceCategory>()
+            .HasMany(psc => psc.PetServices)
+            .WithOne(ps => ps.PetServiceCategory)
+            .HasForeignKey(ps => ps.PetServiceCategoryId);
+
         // Call base method
         base.OnModelCreating(modelBuilder);
     }
 }
+
 
 }
