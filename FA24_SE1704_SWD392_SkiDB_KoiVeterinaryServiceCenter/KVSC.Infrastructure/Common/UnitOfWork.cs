@@ -3,7 +3,6 @@ using KVSC.Infrastructure.Implement.Repositories;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
 {
@@ -14,12 +13,14 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
 
         public IUserRepository UserRepository { get; private set; }
         public IPetRepository PetRepository { get; private set; }
+        public ICartRepository CartRepository { get; private set; }
 
         public UnitOfWork(KVSCContext context)
         {
             _context = context;
             UserRepository = new UserRepository(_context);
             PetRepository = new PetRepository(_context);
+            CartRepository = new CartRepository(_context);
         }
 
         public int Complete()

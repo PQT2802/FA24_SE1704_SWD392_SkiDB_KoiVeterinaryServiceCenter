@@ -4,7 +4,7 @@ public class CartItem : BaseEntity
 {
     public Guid CartId { get; set; } // Foreign key to Cart
     public Cart Cart { get; set; }
-
+    public int Quantity { get; set; }
     public Guid? ServiceId { get; set; } // Optional foreign key to Service
     public PetService PetService { get; set; }
 

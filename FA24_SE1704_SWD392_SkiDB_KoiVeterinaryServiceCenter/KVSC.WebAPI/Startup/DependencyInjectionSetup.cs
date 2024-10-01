@@ -4,7 +4,6 @@ using KVSC.Application.Common.Validator.User;
 using KVSC.Application.Implement.Service;
 using KVSC.Application.Interface.ICommon;
 using KVSC.Application.Interface.IService;
-using KVSC.Application.KVSC.Application.Common.Validator.Abstract;
 using KVSC.Application.KVSC.Application.Common.Validator.User;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.Common;
@@ -16,8 +15,6 @@ using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Common;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.OpenApi.Models;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -26,7 +23,7 @@ namespace KVSC.WebAPI.Startup
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
 
-         
+
 
 
 
@@ -52,9 +49,11 @@ namespace KVSC.WebAPI.Startup
 
             #region Repositories
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IPetRepository,PetRepository>();
+            services.AddTransient<IPetRepository, PetRepository>();
+            services.AddTransient<ICartRepository, CartRepository>();
+
             #endregion
-            
+
 
             #region GenericRepositories
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
@@ -65,6 +64,7 @@ namespace KVSC.WebAPI.Startup
 
             #region Service
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<ICartService, CartService>();
 
             #endregion
 
