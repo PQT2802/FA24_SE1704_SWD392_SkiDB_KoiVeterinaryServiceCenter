@@ -15,11 +15,14 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IUserRepository UserRepository { get; private set; }
         public IPetRepository PetRepository { get; private set; }
         public IPetServiceRepository PetServiceRepository { get; private set; }
+        public IPetServiceCategoryRepository PetServiceCategoryRepository { get; private set; }
         public UnitOfWork(KVSCContext context)
         {
             _context = context;
             UserRepository = new UserRepository(_context);
             PetRepository = new PetRepository(_context);
+            PetServiceRepository = new PetServiceRepository(_context);
+            PetServiceCategoryRepository = new PetServiceCategoryRepository(_context);
         }
 
         public int Complete()

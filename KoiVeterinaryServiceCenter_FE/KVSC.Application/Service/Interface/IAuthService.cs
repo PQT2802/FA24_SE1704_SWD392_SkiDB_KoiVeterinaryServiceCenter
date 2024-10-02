@@ -11,5 +11,7 @@ namespace KVSC.Application.Service.Interface
     public interface IAuthService
     {
         Task<ResponseDto<LoginResponse>> SignIn(LoginRequest loginRequest);
+        public Task<ResponseDto<LoginResponse>> GoogleSignIn(GoogleSignInRequest googleSignInRequest);
+
     }
 }

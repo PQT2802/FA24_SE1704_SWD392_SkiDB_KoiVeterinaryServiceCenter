@@ -38,18 +38,26 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failures(errors);
             }
             // Check for required fields
-            if (string.IsNullOrWhiteSpace(addPetService.Duration))
-            {
-                return Result.Failures(new List<Error> { PetServiceErrorMessage.FieldIsEmpty("Duration") });
-            }
+            //if (string.IsNullOrWhiteSpace(addPetService.Duration))
+            //{
+            //    return Result.Failures(new List<Error> { PetServiceErrorMessage.FieldIsEmpty("Duration") });
+            //}
             if (addPetService.StaffQuantity <= 0)
             {
                 return Result.Failures(new List<Error> { PetServiceErrorMessage.FieldIsEmpty("StaffQuantity") });
             }
             // Set default values
+
+            var categoryExists = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(addPetService.PetServiceCategoryId);
+            if (categoryExists == null)
+            {
+                return Result.Failure(PetServiceErrorMessage.FieldIsEmpty("PetServiceCategory"));
+            }
+
             var petService = new PetService
             {
-                PetServiceCategoryId = Guid.NewGuid(),
+                Name = addPetService.Name,
+                PetServiceCategoryId = addPetService.PetServiceCategoryId,
                 BasePrice = addPetService.BasePrice,
                 Duration = addPetService.Duration,
                 ImageUrl = addPetService.ImageUrl,
@@ -60,7 +68,6 @@ namespace KVSC.Application.Implement.Service
                 CreatedDate = DateTime.UtcNow,
                 IsDeleted = false,
                 OrderItems = new List<OrderItem>(),
-                ModifiedDate = DateTime.UtcNow
             };
 
             // Create the service
@@ -84,7 +91,7 @@ namespace KVSC.Application.Implement.Service
             var petService = await _unitOfWork.PetServiceRepository.GetServiceByIdAsync(id);
             if (petService == null)
             {
-                return Result.Failure(PetServiceErrorMessage.PetServiceNotExist());
+                return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
             }
 
             return Result.SuccessWithObject(petService);
@@ -104,9 +111,11 @@ namespace KVSC.Application.Implement.Service
             var existingPetService = await _unitOfWork.PetServiceRepository.GetServiceByIdAsync(id);
             if (existingPetService == null)
             {
-                return Result.Failure(PetServiceErrorMessage.PetServiceNotExist());
+                return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
             }
             // Update the properties
+            existingPetService.Name = addPetService.Name; // Update Name
+            existingPetService.PetServiceCategoryId = addPetService.PetServiceCategoryId;
             existingPetService.BasePrice = addPetService.BasePrice;
             existingPetService.Duration = addPetService.Duration;
             existingPetService.ImageUrl = addPetService.ImageUrl;
@@ -121,7 +130,7 @@ namespace KVSC.Application.Implement.Service
 
             if (updateResult == 0)
             {
-                return Result.Failure(PetServiceErrorMessage.PetServiceNotUpdated());
+                return Result.Failure(PetServiceErrorMessage.PetServiceUpdateFailed());
             }
 
             return Result.SuccessWithObject(updateResult);
@@ -132,7 +141,7 @@ namespace KVSC.Application.Implement.Service
             var deleteResult = await _unitOfWork.PetServiceRepository.DeleteServiceAsync(id);
             if (deleteResult == 0)
             {
-                return Result.Failure(PetServiceErrorMessage.PetServiceNotDeleted());
+                return Result.Failure(PetServiceErrorMessage.PetServiceDeleteFailed());
             }
 
             return Result.Success();

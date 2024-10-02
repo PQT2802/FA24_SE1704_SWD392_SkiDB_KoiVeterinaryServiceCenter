@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KVSC.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eec794a954f3cc5f87283175cab04259c450223d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ef510e46de2e4471205b5130171a709d1c33aa8")]
 [assembly: System.Reflection.AssemblyProductAttribute("KVSC.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KVSC.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

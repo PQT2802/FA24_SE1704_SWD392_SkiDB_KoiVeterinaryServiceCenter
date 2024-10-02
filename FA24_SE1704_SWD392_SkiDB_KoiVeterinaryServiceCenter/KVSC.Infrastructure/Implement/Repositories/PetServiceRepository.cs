@@ -1,6 +1,7 @@
 ﻿using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DB;
 using KVSC.Infrastructure.Interface.IRepositories;
+using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,9 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Implement.Repositories
 {
-    public class PetServiceRepository : IPetServiceRepository
+    public class PetServiceRepository : GenericRepository<PetService>, IPetServiceRepository
     {
-        private readonly KVSCContext _context;
-
-        public PetServiceRepository(KVSCContext context)
-        {
-            _context = context;
-        }
+        public PetServiceRepository(KVSCContext context) : base(context) { }
 
         // CREATE
         public async Task<PetService> CreateServiceAsync(PetService petService)

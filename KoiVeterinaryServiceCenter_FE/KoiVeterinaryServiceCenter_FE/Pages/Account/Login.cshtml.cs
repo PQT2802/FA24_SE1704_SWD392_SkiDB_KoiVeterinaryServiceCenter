@@ -4,6 +4,8 @@ using KVSC.Infrastructure.DTOs.Login;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.Account
 {
@@ -42,6 +44,24 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
             //};
             //ErrorMessage.Add(error);
             return Page(); // Reload the page to show the error
+        }
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> OnPostGoogleSignInAsync([FromBody] GoogleSignInRequest request)
+        {
+            if (string.IsNullOrEmpty(request.IdToken))
+            {
+                return BadRequest("ID token is required.");
+            }
+
+            ResponseDto<LoginResponse> result = await _authService.GoogleSignIn(request);
+
+            if (result.IsSuccess)
+            {
+                return RedirectToPage("/Index"); 
+            }
+
+            ErrorMessage = result.Errors;
+            return Page(); 
         }
 
 

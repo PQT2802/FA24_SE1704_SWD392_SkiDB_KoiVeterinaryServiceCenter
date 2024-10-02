@@ -35,7 +35,7 @@ namespace KVSC.Infrastructure.Repositories.Interface
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 // Deserialize the error response using the options for case insensitivity
-                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent,options);
+                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
 
                 var error = new ResponseDto<LoginResponse>
                 {
@@ -52,7 +52,37 @@ namespace KVSC.Infrastructure.Repositories.Interface
             }
 
             // If successful, deserialize the login response
-            var loginResponse = JsonSerializer.Deserialize<LoginResponse>(responseContent,options);
+            var loginResponse = JsonSerializer.Deserialize<LoginResponse>(responseContent, options);
+
+            return new ResponseDto<LoginResponse>
+            {
+                IsSuccess = true,
+                Data = loginResponse,
+                Message = "Sign-in successful."
+            };
+        }
+        public async Task<ResponseDto<LoginResponse>> GoogleSignIn(GoogleSignInRequest googleSignInRequest)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/Auth/google-sign-in", googleSignInRequest);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+                return new ResponseDto<LoginResponse>
+                {
+                    IsSuccess = false,
+                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                    Message = "Google sign-in failed."
+                };
+            }
+
+            var loginResponse = JsonSerializer.Deserialize<LoginResponse>(responseContent, options);
 
             return new ResponseDto<LoginResponse>
             {

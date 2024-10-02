@@ -55,6 +55,8 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPetRepository,PetRepository>();
             services.AddTransient<IPetServiceRepository,PetServiceRepository>();
+            services.AddTransient<IPetServiceCategoryRepository,PetServiceCategoryRepository>();
+
             #endregion
             
 

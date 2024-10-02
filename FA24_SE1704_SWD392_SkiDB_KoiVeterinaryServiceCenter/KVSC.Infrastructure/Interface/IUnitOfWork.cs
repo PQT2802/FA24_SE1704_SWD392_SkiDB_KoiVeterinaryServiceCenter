@@ -12,6 +12,7 @@ namespace KVSC.Infrastructure.Interface
         IUserRepository UserRepository { get; }
         IPetRepository PetRepository { get; }
         IPetServiceRepository PetServiceRepository { get; }
+        IPetServiceCategoryRepository PetServiceCategoryRepository { get; }
         int Complete();
     }
 }

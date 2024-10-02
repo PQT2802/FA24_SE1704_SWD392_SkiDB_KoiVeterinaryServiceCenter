@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Google.Apis.Auth;
 using KVSC.Application.Interface.ICommon;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
@@ -10,9 +11,13 @@ using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.Common;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +29,7 @@ namespace KVSC.Application.Implement.Service
         private readonly IValidator<RegisterRequest> _registerRequestValidator;
         private readonly IValidator<LoginRequest> _loginRequestValidator;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IConfiguration _configuration;
 
         public AuthService(
             IUnitOfWork unitOfWork, 
@@ -90,6 +96,49 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(UserErrorMessage.UserNoCreated());
             }
             return Result.SuccessWithObject(newUser);
+        }
+        public string GenerateJwtToken(string email, int Role, double expirationMinutes)//them tham so role de phan quyen
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            // add role to author
+            var role = Role switch
+            {
+                1 => "Admin",
+                2 => "Customer",
+                3 => "Staff",
+                4 => "Manager"
+            };
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role, role)// claim role
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(expirationMinutes),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        public async Task<User> FindOrCreateUser(GoogleJsonWebSignature.Payload payload)
+        {
+            var user  = await _unitOfWork.UserRepository.GetByAsync("Email", payload.Email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    Id = Guid.NewGuid(),
+                    Email = payload.Email,
+                    FullName = payload.Name,
+                };
+                await _unitOfWork.UserRepository.CreateAsync(user);
+            }
+            return user;
         }
     }
 }

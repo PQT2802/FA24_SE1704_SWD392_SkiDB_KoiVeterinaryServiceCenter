@@ -8,6 +8,8 @@ namespace KVSC.Infrastructure.DTOs.Pet.AddPet
 {
     public class AddPetServiceDTO
     {
+        public string Name { get; set; }
+        public Guid PetServiceCategoryId { get; set; }
         public decimal BasePrice { get; set; }
         public string Duration { get; set; }
         public string ImageUrl { get; set; }

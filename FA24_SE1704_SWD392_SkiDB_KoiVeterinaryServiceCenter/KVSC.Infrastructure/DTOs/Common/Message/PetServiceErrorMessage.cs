@@ -12,16 +12,20 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
         public static Error FieldIsEmpty(string nameField)
             => Error.Validation("PetService.Empty", $"The '{nameField}' field is required.");
 
-        public static Error PetServiceNotExist()
-            => Error.NotFound("PetService.Exist", "The pet service does not exist.");
+        public static Error InvalidFieldValue(string fieldName)
+            => Error.Validation("PetService.InvalidValue", $"The '{fieldName}' field has an invalid value.");
+
+        public static Error PetServiceNotFound()
+            => Error.Validation("PetService.NotFound", "PetService not found.");
 
         public static Error PetServiceNotCreated()
-            => Error.Conflict("PetService.Exist", "Pet service could not be created.");
+            => Error.Validation("PetService.NotCreated", "PetService could not be created.");
 
-        public static Error PetServiceNotUpdated()
-            => Error.Conflict("PetService.Update", "Pet service could not be updated.");
+        public static Error PetServiceUpdateFailed()
+            => Error.Validation("PetService.UpdateFailed", "Failed to update PetService.");
 
-        public static Error PetServiceNotDeleted()
-            => Error.Conflict("PetService.Delete", "Pet service could not be deleted.");
+        public static Error PetServiceDeleteFailed()
+           => Error.Validation("PetService.DeleteFailed", "Failed to delete PetService.");
+
     }
 }
