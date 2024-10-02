@@ -2,9 +2,10 @@
 
 public class Cart : BaseEntity
 {
-    public Guid CustomerId { get; set; } // Foreign key to User
-    public User Customer { get; set; }
+    public Guid? UserId { get; set; } // Nullable to allow any user
+    public User User { get; set; } // General user reference, not just Customer
 
     // Relationships
     public ICollection<CartItem> CartItems { get; set; }
 }
+

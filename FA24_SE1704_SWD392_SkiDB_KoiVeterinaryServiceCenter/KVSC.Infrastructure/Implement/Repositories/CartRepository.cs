@@ -10,15 +10,15 @@ namespace KVSC.Infrastructure.Implement.Repositories
     {
         public CartRepository(KVSCContext context) : base(context) { }
 
-        public async Task<Cart> GetCartWithItemsAsync(Guid customerId)
+        public async Task<Cart> GetCartWithItemsAsync(Guid? userId)
         {
             return await _context.Carts
                 .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.Product)
-                .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.PetService)
-                .FirstOrDefaultAsync(c => c.CustomerId == customerId);
+                .ThenInclude(ci => ci.Product)  // Include only products
+                .FirstOrDefaultAsync(c => c.UserId == userId);
         }
+
+
     }
 
 

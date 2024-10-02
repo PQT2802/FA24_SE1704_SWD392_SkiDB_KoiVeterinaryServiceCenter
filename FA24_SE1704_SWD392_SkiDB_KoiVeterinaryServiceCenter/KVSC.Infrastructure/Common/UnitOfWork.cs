@@ -14,6 +14,8 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IUserRepository UserRepository { get; private set; }
         public IPetRepository PetRepository { get; private set; }
         public ICartRepository CartRepository { get; private set; }
+        public ICartItemRepository CartItemRepository { get; private set; }
+
 
         public UnitOfWork(KVSCContext context)
         {
@@ -21,6 +23,8 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
             UserRepository = new UserRepository(_context);
             PetRepository = new PetRepository(_context);
             CartRepository = new CartRepository(_context);
+            CartItemRepository = new CartItemRepository(_context);
+
         }
 
         public int Complete()

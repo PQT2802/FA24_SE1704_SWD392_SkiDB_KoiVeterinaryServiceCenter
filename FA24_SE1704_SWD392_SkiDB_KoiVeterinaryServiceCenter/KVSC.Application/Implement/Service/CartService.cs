@@ -1,6 +1,7 @@
 ﻿using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Cart;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 
@@ -15,86 +16,156 @@ namespace KVSC.Application.Implement.Service
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> AddItemToCart(Guid customerId, CartItem cartItem)
+        public async Task<Result> AddItemToCart(AddCartItemDto addCartItemDto)
         {
-            var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(customerId);
-
-            if (cart == null)
+            try
             {
-                cart = new Cart
+                var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(null); // Guests or users
+
+                if (cart == null)
                 {
-                    CustomerId = customerId,
-                    CartItems = new List<CartItem> { cartItem }
-                };
+                    cart = new Cart
+                    {
+                        CartItems = new List<CartItem>()
+                    };
+                    await _unitOfWork.CartRepository.CreateAsync(cart);
+                }
 
-                await _unitOfWork.CartRepository.CreateAsync(cart);
+                // Iterate through each product and its corresponding quantity
+                if (addCartItemDto.ProductQuantities != null && addCartItemDto.ProductQuantities.Count > 0)
+                {
+                    foreach (var productQuantity in addCartItemDto.ProductQuantities)
+                    {
+                        // Check if the product is already in the cart, update the quantity if it is
+                        var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productQuantity.ProductId);
+                        if (cartItem != null)
+                        {
+                            cartItem.Quantity += productQuantity.Quantity; // Increment existing quantity
+                        }
+                        else
+                        {
+                            // Add new product to the cart
+                            cartItem = new CartItem
+                            {
+                                ProductId = productQuantity.ProductId,
+                                Quantity = productQuantity.Quantity,
+                                CartId = cart.Id // Make sure to associate the CartItem with the Cart
+                            };
+                            // Add cart item to the CartItemRepository
+                            await _unitOfWork.CartItemRepository.CreateAsync(cartItem);
+                        }
+                    }
+                }
+
+                var result = _unitOfWork.Complete();
+                if (result == 0)
+                {
+                    return Result.Failure(Error.Failure("CART_ADD_ERROR", "Could not add items to cart"));
+                }
+
+                return Result.SuccessWithObject(cart);
             }
-            else
+            catch (Exception ex)
             {
-                cart.CartItems.Add(cartItem);
+                return Result.Failure(Error.Failure("CART_ADD_ERROR", ex.Message));
             }
-
-            var result = _unitOfWork.Complete();
-            if (result == 0) return Result.Failure(Error.Failure("CART_ADD_ERROR", "Could not add item to cart"));
-
-            return Result.SuccessWithObject(cart);
         }
 
-        public async Task<Result> ViewCart(Guid customerId)
+
+
+
+
+
+
+
+
+
+
+        public async Task<Result> ViewCart()
         {
-            var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(customerId);
-            if (cart == null) return Result.Failure(Error.NotFound("CART_NOT_FOUND", "Cart not found"));
+            try
+            {
+                var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(null); // Accessible for users and guests
+                if (cart == null) return Result.Failure(Error.NotFound("CART_NOT_FOUND", "Cart not found"));
 
-            var totalPrice = cart.CartItems
-                .Sum(ci => ci.Product?.Price ?? ci.PetService?.BasePrice ?? 0);
+                var totalPrice = cart.CartItems.Sum(ci => ci.Product?.Price ?? 0);
 
-            return Result.SuccessWithObject(new { Cart = cart, TotalPrice = totalPrice });
+                return Result.SuccessWithObject(new { Cart = cart, TotalPrice = totalPrice });
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(Error.Failure("CART_VIEW_ERROR", ex.Message));
+            }
         }
 
-        public async Task<Result> UpdateCartItem(Guid customerId, CartItem updatedCartItem)
+
+        public async Task<Result> UpdateCartItem(CartItem updatedCartItem)
         {
-            var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(customerId);
-            if (cart == null) return Result.Failure(Error.NotFound("CART_NOT_FOUND", "Cart not found"));
+            try
+            {
+                var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(null);
+                if (cart == null) return Result.Failure(Error.NotFound("CART_NOT_FOUND", "Cart not found"));
 
-            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.Id == updatedCartItem.Id);
-            if (cartItem == null) return Result.Failure(Error.NotFound("CART_ITEM_NOT_FOUND", "Cart item not found"));
+                var cartItem = cart.CartItems.FirstOrDefault(ci => ci.Id == updatedCartItem.Id);
+                if (cartItem == null) return Result.Failure(Error.NotFound("CART_ITEM_NOT_FOUND", "Cart item not found"));
 
-            cartItem.Quantity = updatedCartItem.Quantity;
-            cartItem.ServiceId = updatedCartItem.ServiceId;
-            cartItem.ProductId = updatedCartItem.ProductId;
+                cartItem.Quantity = updatedCartItem.Quantity;
+                cartItem.ProductId = updatedCartItem.ProductId;
 
-            var result = _unitOfWork.Complete();
-            if (result == 0) return Result.Failure(Error.Failure("CART_UPDATE_ERROR", "Could not update item in cart"));
+                var result = _unitOfWork.Complete();
+                if (result == 0) return Result.Failure(Error.Failure("CART_UPDATE_ERROR", "Could not update item in cart"));
 
-            return Result.SuccessWithObject(cart);
+                return Result.SuccessWithObject(cart);
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(Error.Failure("CART_UPDATE_ERROR", ex.Message));
+            }
         }
 
-        public async Task<Result> RemoveItemFromCart(Guid customerId, Guid cartItemId)
+
+        public async Task<Result> RemoveItemFromCart(Guid cartItemId)
         {
-            var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(customerId);
-            if (cart == null) return Result.Failure(Error.NotFound("CART_NOT_FOUND", "Cart not found"));
+            try
+            {
+                var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(null); // Accessible to users and guests
+                if (cart == null) return Result.Failure(Error.NotFound("CART_NOT_FOUND", "Cart not found"));
 
-            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.Id == cartItemId);
-            if (cartItem == null) return Result.Failure(Error.NotFound("CART_ITEM_NOT_FOUND", "Cart item not found"));
+                var cartItem = cart.CartItems.FirstOrDefault(ci => ci.Id == cartItemId);
+                if (cartItem == null) return Result.Failure(Error.NotFound("CART_ITEM_NOT_FOUND", "Cart item not found"));
 
-            cart.CartItems.Remove(cartItem);
-            var result = _unitOfWork.Complete();
-            if (result == 0) return Result.Failure(Error.Failure("CART_REMOVE_ERROR", "Could not remove item from cart"));
+                cart.CartItems.Remove(cartItem);
+                var result = _unitOfWork.Complete();
+                if (result == 0) return Result.Failure(Error.Failure("CART_REMOVE_ERROR", "Could not remove item from cart"));
 
-            return Result.SuccessWithObject(cart);
+                return Result.SuccessWithObject(cart);
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(Error.Failure("CART_REMOVE_ERROR", ex.Message));
+            }
         }
 
-        public async Task<Result> ClearCart(Guid customerId)
+
+        public async Task<Result> ClearCart()
         {
-            var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(customerId);
-            if (cart == null) return Result.Failure(Error.NotFound("CART_NOT_FOUND", "Cart not found"));
+            try
+            {
+                var cart = await _unitOfWork.CartRepository.GetCartWithItemsAsync(null); // Accessible to users and guests
+                if (cart == null) return Result.Failure(Error.NotFound("CART_NOT_FOUND", "Cart not found"));
 
-            cart.CartItems.Clear();
-            var result = _unitOfWork.Complete();
-            if (result == 0) return Result.Failure(Error.Failure("CART_CLEAR_ERROR", "Could not clear the cart"));
+                cart.CartItems.Clear();
+                var result = _unitOfWork.Complete();
+                if (result == 0) return Result.Failure(Error.Failure("CART_CLEAR_ERROR", "Could not clear the cart"));
 
-            return Result.SuccessWithObject(cart);
+                return Result.SuccessWithObject(cart);
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(Error.Failure("CART_CLEAR_ERROR", ex.Message));
+            }
         }
+
     }
 
 }

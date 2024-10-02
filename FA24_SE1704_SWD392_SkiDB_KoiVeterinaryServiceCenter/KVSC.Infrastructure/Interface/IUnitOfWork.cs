@@ -7,6 +7,8 @@ namespace KVSC.Infrastructure.Interface
         IUserRepository UserRepository { get; }
         IPetRepository PetRepository { get; }
         ICartRepository CartRepository { get; }
+
+        ICartItemRepository CartItemRepository { get; }
         int Complete();
     }
 }

@@ -4,16 +4,19 @@ using KVSC.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KVSC.Infrastructure.Migrations
+namespace KVSC.Infrastructure.DB.Migrations
 {
     [DbContext(typeof(KVSCContext))]
-    partial class KVSCContextModelSnapshot : ModelSnapshot
+    [Migration("20241002052316_fix-Cart-item")]
+    partial class fixCartitem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -399,37 +402,7 @@ namespace KVSC.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductCategoryId");
-
                     b.ToTable("Product", (string)null);
-                });
-
-            modelBuilder.Entity("KVSC.Domain.Entities.ProductCategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductCategory", (string)null);
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.User", b =>
@@ -592,17 +565,6 @@ namespace KVSC.Infrastructure.Migrations
                     b.Navigation("PetServiceCategory");
                 });
 
-            modelBuilder.Entity("KVSC.Domain.Entities.Product", b =>
-                {
-                    b.HasOne("KVSC.Domain.Entities.ProductCategory", "ProductCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductCategory");
-                });
-
             modelBuilder.Entity("KVSC.Domain.Entities.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -626,11 +588,6 @@ namespace KVSC.Infrastructure.Migrations
             modelBuilder.Entity("KVSC.Domain.Entities.Product", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("KVSC.Domain.Entities.ProductCategory", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.User", b =>

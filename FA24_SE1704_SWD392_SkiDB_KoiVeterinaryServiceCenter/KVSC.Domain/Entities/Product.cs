@@ -11,4 +11,6 @@ public class Product : BaseEntity
 
     // Relationships
     public ICollection<OrderItem> OrderItems { get; set; }
+    public ProductCategory ProductCategory { get; set; } // Navigation property for relationship
+
 }

@@ -4,7 +4,7 @@ namespace KVSC.Infrastructure.Interface.IRepositories
 {
     public interface ICartRepository : IGenericRepository<Cart>
     {
-        Task<Cart> GetCartWithItemsAsync(Guid customerId);
+        Task<Cart> GetCartWithItemsAsync(Guid? userId);
 
     }
 
