@@ -75,7 +75,8 @@ namespace KVSC.Application.Implement.Service
                 Id = Guid.NewGuid(),
                 Email = registerRequest.Email,
                 PasswordHash = _passwordHasher.HashPassword(registerRequest.Password),
-                Username = registerRequest.UserName
+                Username = registerRequest.UserName,
+                Address = registerRequest.Address,
 
             };
             var createUsre = await _unitOfWork.UserRepository.CreateAsync(newUser);

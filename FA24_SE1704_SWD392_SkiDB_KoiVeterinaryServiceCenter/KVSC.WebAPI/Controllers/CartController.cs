@@ -17,54 +17,85 @@ namespace KVSC.Api.Controllers
             _cartService = cartService;
         }
 
-        [HttpPost("add-item")]
+        [HttpPost("cart-item")]
         public async Task<IResult> AddItemToCart([FromBody] AddCartItemDto addCartItemDto)
         {
-            Result result = await _cartService.AddItemToCart(addCartItemDto);
-            return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "Item(s) added to cart successfully")
-                : ResultExtensions.ToProblemDetails(result);
+            try
+            {
+                Result result = await _cartService.AddItemToCart(addCartItemDto);
+                return result.IsSuccess
+                    ? ResultExtensions.ToSuccessDetails(result, "Item(s) added to cart successfully")
+                    : ResultExtensions.ToProblemDetails(result);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem($"An error occurred while adding the item to the cart: {ex.Message}");
+            }
         }
 
-
-        [HttpGet("view")]
+        [HttpGet("cart-item")]
         public async Task<IResult> ViewCart()
         {
-            Result result = await _cartService.ViewCart();
-            return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "Cart retrieved successfully")
-                : ResultExtensions.ToProblemDetails(result);
+            try
+            {
+                Result result = await _cartService.ViewCart();
+                return result.IsSuccess
+                    ? ResultExtensions.ToSuccessDetails(result, "Cart retrieved successfully")
+                    : ResultExtensions.ToProblemDetails(result);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem($"An error occurred while retrieving the cart: {ex.Message}");
+            }
         }
 
-
-        [HttpPut("update-item")]
+        [HttpPut("cart-item")]
         public async Task<IResult> UpdateCartItem([FromBody] CartItem updatedCartItem)
         {
-            Result result = await _cartService.UpdateCartItem(updatedCartItem);
-            return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "Cart item updated successfully")
-                : ResultExtensions.ToProblemDetails(result);
+            try
+            {
+                Result result = await _cartService.UpdateCartItem(updatedCartItem);
+                return result.IsSuccess
+                    ? ResultExtensions.ToSuccessDetails(result, "Cart item updated successfully")
+                    : ResultExtensions.ToProblemDetails(result);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem($"An error occurred while updating the cart item: {ex.Message}");
+            }
         }
 
-
-        [HttpDelete("remove-item/{cartItemId}")]
+        [HttpDelete("cart-item/{cartItemId}")]
         public async Task<IResult> RemoveItemFromCart([FromRoute] Guid cartItemId)
         {
-            Result result = await _cartService.RemoveItemFromCart(cartItemId);
-            return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "Item removed from cart successfully")
-                : ResultExtensions.ToProblemDetails(result);
+            try
+            {
+                Result result = await _cartService.RemoveItemFromCart(cartItemId);
+                return result.IsSuccess
+                    ? ResultExtensions.ToSuccessDetails(result, "Item removed from cart successfully")
+                    : ResultExtensions.ToProblemDetails(result);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem($"An error occurred while removing the item from the cart: {ex.Message}");
+            }
         }
 
-
-        [HttpDelete("clear")]
+        [HttpDelete("cart-item")]
         public async Task<IResult> ClearCart()
         {
-            Result result = await _cartService.ClearCart();
-            return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "Cart cleared successfully")
-                : ResultExtensions.ToProblemDetails(result);
+            try
+            {
+                Result result = await _cartService.ClearCart();
+                return result.IsSuccess
+                    ? ResultExtensions.ToSuccessDetails(result, "Cart cleared successfully")
+                    : ResultExtensions.ToProblemDetails(result);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem($"An error occurred while clearing the cart: {ex.Message}");
+            }
         }
-
     }
+
 }
