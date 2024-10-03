@@ -2,6 +2,7 @@ using KVSC.Infrastructure.DB;
 using KVSC.WebAPI.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,9 +48,15 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.MaxDepth = 64;
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-builder.Services.AddControllers();
+
+
+
+
+
 builder.Services.RegisterServices();
 
 builder.Services.AddCors(options =>

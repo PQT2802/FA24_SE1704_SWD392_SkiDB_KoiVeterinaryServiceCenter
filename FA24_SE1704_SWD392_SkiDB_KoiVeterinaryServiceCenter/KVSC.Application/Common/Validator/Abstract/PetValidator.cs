@@ -21,7 +21,20 @@ namespace KVSC.Application.Common.Validator.Abstract
         protected void AddPetNameRules(Expression<Func<T, string>> petNameExpression)
         {
             RuleFor(petNameExpression)
-                .NotEmpty().WithState(_ => (PetErrorMessage.FieldIsEmpty("Pet name")));               
+                .NotEmpty().WithState(_ => (PetErrorMessage.FieldIsEmpty("Pet name")))
+                .Length(1, 50).WithState(_ => PetErrorMessage.FieldLength("Pet name", 1, 50));
+        }
+
+        protected void AddPetAgeRules(Expression<Func<T, int>> petAgeExpression)
+        {
+            RuleFor(petAgeExpression)
+                .GreaterThan(0).WithState(_ => PetErrorMessage.FieldMustBePositive("Pet age"));
+        }
+
+        protected void AddPetBreedRules(Expression<Func<T, string>> petBreedExpression)
+        {
+            RuleFor(petBreedExpression)
+                .NotEmpty().WithState(_ => PetErrorMessage.FieldIsEmpty("Pet breed"));
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace KVSC.Domain.Entities
@@ -18,6 +19,7 @@ namespace KVSC.Domain.Entities
         public DateTime DateOfBirth { get; set; }
 
         // Relationships
+        [JsonIgnore]
         public ICollection<Pet> Pets { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Cart> Carts { get; set; }

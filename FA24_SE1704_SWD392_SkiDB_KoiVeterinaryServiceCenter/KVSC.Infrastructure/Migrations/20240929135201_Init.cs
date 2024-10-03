@@ -6,31 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace KVSC.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "PetService",
+                name: "PetServiceCategory",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PetServiceCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BasePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StaffQuantity = table.Column<int>(type: "int", nullable: false),
-                    AvailableFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AvailableTo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TravelCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ApplicableTo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PetService", x => x.Id);
+                    table.PrimaryKey("PK_PetServiceCategory", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,6 +69,35 @@ namespace KVSC.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetService",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetServiceCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BasePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StaffQuantity = table.Column<int>(type: "int", nullable: false),
+                    AvailableFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AvailableTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TravelCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetService", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PetService_PetServiceCategory_PetServiceCategoryId",
+                        column: x => x.PetServiceCategoryId,
+                        principalTable: "PetServiceCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -324,6 +349,11 @@ namespace KVSC.Infrastructure.Migrations
                 name: "IX_Pet_OwnerId",
                 table: "Pet",
                 column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetService_PetServiceCategoryId",
+                table: "PetService",
+                column: "PetServiceCategoryId");
         }
 
         /// <inheritdoc />
@@ -352,6 +382,9 @@ namespace KVSC.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "PetServiceCategory");
 
             migrationBuilder.DropTable(
                 name: "User");

@@ -13,5 +13,6 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         Task<bool> UserNameExistsAsync(string userName);
         Task<bool> EmailExistsAsync(string email);
         Task<User> GetUserByEmailAndPasswordAsync(string email, string password);
+        Task<User> GetUserByNameAsync(string userName);
     }
 }

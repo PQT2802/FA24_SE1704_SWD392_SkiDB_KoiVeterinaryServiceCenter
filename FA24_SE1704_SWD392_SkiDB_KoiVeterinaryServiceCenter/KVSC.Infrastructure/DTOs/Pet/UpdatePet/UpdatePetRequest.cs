@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.DTOs.Pet.AddPet
+namespace KVSC.Infrastructure.DTOs.Pet.UpdatePet
 {
-    public class AddPetRequest
+    public class UpdatePetRequest
     {
-        public Guid OwnerId { get; set; } //Pet Owner Id
         public string Name { get; set; }
         public int Age { get; set; }
         public string Breed { get; set; }
