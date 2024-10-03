@@ -2,7 +2,6 @@
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KVSC.WebAPI.Controllers
@@ -12,9 +11,9 @@ namespace KVSC.WebAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        public AuthController(IAuthService authService) 
+        public AuthController(IAuthService authService)
         {
-           _authService = authService;
+            _authService = authService;
         }
 
         [HttpPost("sign-in")]

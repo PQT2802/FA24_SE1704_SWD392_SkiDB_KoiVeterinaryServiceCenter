@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KVSC.Domain.Entities
+﻿namespace KVSC.Domain.Entities
 {
     public class User : BaseEntity
     {
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Address { get; set; }
-        public string Username { get; set; }
-        public string PasswordHash { get; set; }
-        public string ProfilePictureUrl { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string? FullName { get; set; } // Nullable string
+        public string? Email { get; set; } // Nullable string
+        public string? PhoneNumber { get; set; } // Nullable string
+        public string? Address { get; set; } // Nullable string
+        public string? Username { get; set; } // Nullable string
+        public string? PasswordHash { get; set; } // Nullable string
+        public string? ProfilePictureUrl { get; set; } // Nullable string
+        public DateTime? DateOfBirth { get; set; } // Nullable DateTime
 
         // Relationships
-        public ICollection<Pet> Pets { get; set; }
-        public ICollection<Order> Orders { get; set; }
-        public ICollection<Cart> Carts { get; set; }
+        public ICollection<Pet>? Pets { get; set; } // Nullable relationship
+        public ICollection<Order>? Orders { get; set; } // Nullable relationship
+        public ICollection<Cart>? Carts { get; set; } // Nullable relationship
     }
+
 
 }
