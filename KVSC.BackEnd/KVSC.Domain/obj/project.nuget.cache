@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "2QBHH2yYS80=",
+  "success": true,
+  "projectFilePath": "D:\\Unity_Game\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KVSC.BackEnd\\KVSC.Domain\\KVSC.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dotro\\.nuget\\packages\\fluentvalidation\\11.9.2\\fluentvalidation.11.9.2.nupkg.sha512",
+    "C:\\Users\\dotro\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\dotro\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
+    "C:\\Users\\dotro\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.1.0\\microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

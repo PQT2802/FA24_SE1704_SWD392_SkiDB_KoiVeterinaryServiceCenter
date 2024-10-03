@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using KVSC.Application.Common.Validator.Pet;
+using KVSC.Application.Common.Validator.Product;
 using KVSC.Application.Common.Validator.User;
 using KVSC.Application.Implement.Service;
 using KVSC.Application.Interface.ICommon;
@@ -9,6 +10,8 @@ using KVSC.Application.KVSC.Application.Common.Validator.User;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.Common;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Product.AddProduct;
+using KVSC.Infrastructure.DTOs.Product.UpdateProduct;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Implement.Repositories;
 using KVSC.Infrastructure.Interface;
@@ -45,7 +48,8 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<LoginRequest>, LoginValidator>();
             services.AddTransient<IValidator<RegisterRequest>, RegisterValidator>();
             services.AddTransient<IValidator<AddPetRequest>, AddPetValidator>();
-
+            services.AddTransient<IValidator<AddProductRequest>, AddProductValidator>();
+            services.AddTransient<IValidator<UpdateProductRequest>, UpdateProductValidator>();
 
             //Validator
             #endregion
@@ -53,19 +57,20 @@ namespace KVSC.WebAPI.Startup
             #region Repositories
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPetRepository,PetRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
             #endregion
             
 
             #region GenericRepositories
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
-
+            services.AddTransient<IGenericRepository<Product>, GenericRepository<Product>>();
             #endregion
 
 
 
             #region Service
             services.AddTransient<IAuthService, AuthService>();
-
+            services.AddTransient<IProductService, ProductService>();
             #endregion
 
 
