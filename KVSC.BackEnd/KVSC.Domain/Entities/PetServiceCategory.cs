@@ -8,5 +8,5 @@ public class PetServiceCategory : BaseEntity
     public string ApplicableTo { get; set; }
 
     // Relationships
-    public ICollection<PetService> PetServices { get; set; }
+    public virtual ICollection<PetService> PetServices { get; set; }
 }

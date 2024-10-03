@@ -10,5 +10,5 @@ public class Order : BaseEntity
     public string OrderStatus { get; set; }
 
     // Relationships
-    public ICollection<OrderItem> OrderItems { get; set; }
+    public virtual ICollection<OrderItem> OrderItems { get; set; }
 }

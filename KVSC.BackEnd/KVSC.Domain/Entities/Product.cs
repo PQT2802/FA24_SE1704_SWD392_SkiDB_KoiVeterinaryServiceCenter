@@ -10,7 +10,7 @@ public class Product : BaseEntity
     public string ImageUrl { get; set; }
 
     // Relationships
-    public ICollection<OrderItem> OrderItems { get; set; }
-    public ProductCategory ProductCategory { get; set; } // Navigation property for relationship
+    public virtual ICollection<OrderItem> OrderItems { get; set; }
+    public virtual ProductCategory ProductCategory { get; set; } // Navigation property for relationship
 
 }

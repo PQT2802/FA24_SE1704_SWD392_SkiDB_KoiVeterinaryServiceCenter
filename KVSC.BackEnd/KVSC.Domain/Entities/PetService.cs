@@ -13,7 +13,7 @@ public class PetService : BaseEntity
     public decimal TravelCost { get; set; }
 
     // Relationships
-    public ICollection<OrderItem> OrderItems { get; set; }
-    public PetServiceCategory PetServiceCategory { get; set; } // Navigation property
+    public virtual ICollection<OrderItem> OrderItems { get; set; }
+    public virtual PetServiceCategory PetServiceCategory { get; set; } // Navigation property
 
 }

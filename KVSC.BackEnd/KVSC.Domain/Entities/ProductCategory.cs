@@ -6,7 +6,7 @@
         public string Description { get; set; } // Optional description
 
         // Relationships
-        public ICollection<Product> Products { get; set; } // Products in this category
+        public virtual ICollection<Product> Products { get; set; } // Products in this category
     }
 
 }

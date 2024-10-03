@@ -14,6 +14,6 @@
 
         // Foreign key relationship
         public Guid OwnerId { get; set; }
-        public User Owner { get; set; } // Reference to the User
+        public virtual User Owner { get; set; } // Reference to the User
     }
 }

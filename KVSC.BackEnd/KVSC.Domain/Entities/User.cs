@@ -12,9 +12,9 @@
         public DateTime? DateOfBirth { get; set; } // Nullable DateTime
 
         // Relationships
-        public ICollection<Pet>? Pets { get; set; } // Nullable relationship
-        public ICollection<Order>? Orders { get; set; } // Nullable relationship
-        public ICollection<Cart>? Carts { get; set; } // Nullable relationship
+        public virtual ICollection<Pet>? Pets { get; set; } // Nullable relationship
+        public virtual ICollection<Order>? Orders { get; set; } // Nullable relationship
+        public virtual ICollection<Cart>? Carts { get; set; } // Nullable relationship
     }
 
 
