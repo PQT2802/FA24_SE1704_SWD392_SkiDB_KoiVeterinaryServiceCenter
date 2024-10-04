@@ -11,7 +11,8 @@ namespace KVSC.Infrastructure.DTOs.Pet.AddPet
         public Guid OwnerId { get; set; } //Pet Owner Id
         public string Name { get; set; }
         public int Age { get; set; }
-        public string Breed { get; set; }
+        public Guid PetTypeId { get; set; }
+        public string Gender { get; set; }
         public string ImageUrl { get; set; }
         public string Color { get; set; }
         public double Length { get; set; }

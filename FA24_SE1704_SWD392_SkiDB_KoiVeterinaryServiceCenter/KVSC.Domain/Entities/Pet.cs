@@ -10,7 +10,7 @@ namespace KVSC.Domain.Entities
     {
         public string Name { get; set; }
         public int Age { get; set; }
-        public string Breed { get; set; }
+        public string Gender { get; set; }
         public string ImageUrl { get; set; }
         public string Color { get; set; }
         public double Length { get; set; }
@@ -21,5 +21,9 @@ namespace KVSC.Domain.Entities
         // Foreign key relationship
         public Guid OwnerId { get; set; }
         public User Owner { get; set; } // Reference to the User
+
+        // Foreign key relationship 
+        public Guid PetTypeId { get; set; }
+        public PetType PetType { get; set; } // Reference to PetType
     }
 }

@@ -9,6 +9,7 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
 {
     public static class PetErrorMessage
     {
+        //Pet
         public static Error FieldIsEmpty(string nameField)
             => Error.Validation("Pet.Empty", $"The '{nameField}' is required.");
 
@@ -32,5 +33,19 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
 
         public static Error PetNotFound()
             => Error.NotFound("Pet.NotFound", "The specified pet was not found.");
+
+
+        //PetType
+        public static Error PetTypeCreateFailed()
+            => Error.Validation("Pet.CreateFailed", "Failed to create pet type.");
+
+        public static Error PetTypeUpdateFailed()
+            => Error.Validation("Pet.UpdateFailed", "Failed to update pet type.");
+
+        public static Error PetTypeDeleteFailed()
+           => Error.Validation("PetType.DeleteFailed", "Failed to delete pet type.");
+
+        public static Error PetTypeNotFound()
+            => Error.NotFound("PetType.NotFound", "The pet type not found.");
     }
 }

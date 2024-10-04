@@ -12,6 +12,21 @@ namespace KVSC.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "PetHabitat",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HabitatType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetHabitat", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PetServiceCategory",
                 columns: table => new
                 {
@@ -69,6 +84,29 @@ namespace KVSC.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetType",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GeneralType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SpecificType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetHabitatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetType", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PetType_PetHabitat_PetHabitatId",
+                        column: x => x.PetHabitatId,
+                        principalTable: "PetHabitat",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,7 +190,7 @@ namespace KVSC.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    Breed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Length = table.Column<double>(type: "float", nullable: false),
@@ -160,6 +198,7 @@ namespace KVSC.Infrastructure.Migrations
                     LastHealthCheck = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HealthStatus = table.Column<int>(type: "int", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PetTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -167,6 +206,12 @@ namespace KVSC.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pet", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pet_PetType_PetTypeId",
+                        column: x => x.PetTypeId,
+                        principalTable: "PetType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Pet_User_OwnerId",
                         column: x => x.OwnerId,
@@ -351,9 +396,19 @@ namespace KVSC.Infrastructure.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pet_PetTypeId",
+                table: "Pet",
+                column: "PetTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PetService_PetServiceCategoryId",
                 table: "PetService",
                 column: "PetServiceCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetType_PetHabitatId",
+                table: "PetType",
+                column: "PetHabitatId");
         }
 
         /// <inheritdoc />
@@ -387,7 +442,13 @@ namespace KVSC.Infrastructure.Migrations
                 name: "PetServiceCategory");
 
             migrationBuilder.DropTable(
+                name: "PetType");
+
+            migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "PetHabitat");
         }
     }
 }

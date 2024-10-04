@@ -15,7 +15,9 @@ namespace KVSC.Application.Common.Validator.Pet
         {
             AddPetNameRules(request => request.Name);
             AddPetAgeRules(request => request.Age);
-            AddPetBreedRules(request => request.Breed);
+            AddPetGenderRules(request => request.Gender);
+            AddPetLengthRules(request => request.Length);
+            AddPetWeightRules(request => request.Weight);
         }
     }
 }

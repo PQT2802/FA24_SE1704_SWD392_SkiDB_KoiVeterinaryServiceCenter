@@ -76,14 +76,15 @@ namespace KVSC.Application.Implement.Service
                 Id = Guid.NewGuid(),
                 Name = addPet.Name,
                 Age = addPet.Age,
-                Breed = addPet.Breed,
+                Gender = addPet.Gender,
                 ImageUrl = addPet.ImageUrl,
                 Color = addPet.Color,
                 Length = addPet.Length,
                 Weight = addPet.Weight,
                 LastHealthCheck = addPet.LastHealthCheck,
                 HealthStatus = addPet.HealthStatus,
-                OwnerId = addPet.OwnerId
+                OwnerId = addPet.OwnerId,
+                PetTypeId = addPet.PetTypeId
             };
 
             var createResult = await _unitOfWork.PetRepository.CreatePetAsync(pet);
@@ -108,7 +109,6 @@ namespace KVSC.Application.Implement.Service
             }
 
             var pet = await _unitOfWork.PetRepository.GetPetByIdAsync(id);
-
             if (pet == null)
             {
                 return Result.Failure(PetErrorMessage.PetNotFound());
@@ -116,13 +116,14 @@ namespace KVSC.Application.Implement.Service
 
             pet.Name = updatePet.Name;
             pet.Age = updatePet.Age;
-            pet.Breed = updatePet.Breed;
+            pet.Gender = updatePet.Gender;
             pet.ImageUrl = updatePet.ImageUrl;
             pet.Color = updatePet.Color;
             pet.Length = updatePet.Length;
             pet.Weight = updatePet.Weight;
             pet.LastHealthCheck = updatePet.LastHealthCheck;
             pet.HealthStatus = updatePet.HealthStatus;
+            pet.PetTypeId = updatePet.PetTypeId;
 
             var updateResult = await _unitOfWork.PetRepository.UpdatePetAsync(pet);
             if (updateResult == 0)
