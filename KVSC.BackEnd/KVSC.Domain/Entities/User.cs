@@ -2,20 +2,23 @@
 {
     public class User : BaseEntity
     {
-        public string? FullName { get; set; } // Nullable string
-        public string? Email { get; set; } // Nullable string
-        public string? PhoneNumber { get; set; } // Nullable string
-        public string? Address { get; set; } // Nullable string
-        public string? Username { get; set; } // Nullable string
-        public string? PasswordHash { get; set; } // Nullable string
-        public string? ProfilePictureUrl { get; set; } // Nullable string
-        public DateTime? DateOfBirth { get; set; } // Nullable DateTime
+        public string? FullName { get; set; }
+        public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Address { get; set; }
+        public string? Username { get; set; }
+        public string? PasswordHash { get; set; }
+        public string? ProfilePictureUrl { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         // Relationships
-        public virtual ICollection<Pet>? Pets { get; set; } // Nullable relationship
-        public virtual ICollection<Order>? Orders { get; set; } // Nullable relationship
-        public virtual ICollection<Cart>? Carts { get; set; } // Nullable relationship
+        public virtual ICollection<Pet>? Pets { get; set; }
+        public virtual ICollection<Order>? Orders { get; set; }
+
+        // One-to-one relationship with Cart
+        public virtual Cart? Cart { get; set; }
     }
+
 
 
 }

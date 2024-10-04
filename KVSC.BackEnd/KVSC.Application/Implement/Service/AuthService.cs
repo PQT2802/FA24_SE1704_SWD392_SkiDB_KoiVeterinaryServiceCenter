@@ -3,6 +3,7 @@ using KVSC.Application.Interface.ICommon;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
+using KVSC.Domain.Enum;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Interface;
@@ -62,14 +63,17 @@ namespace KVSC.Application.Implement.Service
 
         public async Task<Result> SignUp(RegisterRequest registerRequest)
         {
+            // Validate the registration request
             var validate = await _registerRequestValidator.ValidateAsync(registerRequest);
             if (!validate.IsValid)
             {
                 var errors = validate.Errors
-                    .Select(e => (Error)e.CustomState)
+                    .Select(e => new Error("VALIDATION_FAILED", e.ErrorMessage, ErrorType.Validation)) // Use Validation error type
                     .ToList();
-                return Result.Failures(errors);
+                return Result.Failures(errors); // Return list of validation errors
             }
+
+            // Create a new User
             User newUser = new User
             {
                 Id = Guid.NewGuid(),
@@ -77,14 +81,34 @@ namespace KVSC.Application.Implement.Service
                 PasswordHash = _passwordHasher.HashPassword(registerRequest.Password),
                 Username = registerRequest.UserName,
                 Address = registerRequest.Address,
-
             };
-            var createUsre = await _unitOfWork.UserRepository.CreateAsync(newUser);
-            if (createUsre == 0)
+
+            var createUserResult = await _unitOfWork.UserRepository.CreateAsync(newUser);
+            if (createUserResult == 0)
             {
-                return Result.Failure(UserErrorMessage.UserNoCreated());
+                return Result.Failure(new Error("USER_CREATE_FAILED", "User creation failed.", ErrorType.Failure)); // Failure error type
             }
+
+            // Create a Cart for the new User
+            Cart newCart = new Cart
+            {
+                Id = Guid.NewGuid(),
+                UserId = newUser.Id,
+                User = newUser
+            };
+
+            var createCartResult = await _unitOfWork.CartRepository.CreateAsync(newCart);
+            if (createCartResult == 0)
+            {
+                return Result.Failure(new Error("CART_CREATE_FAILED", "Failed to create cart for the user.", ErrorType.Failure)); // Failure error type
+            }
+
+            // Success - Return user and cart as part of the result
             return Result.SuccessWithObject(newUser);
         }
+
+
+
+
     }
 }

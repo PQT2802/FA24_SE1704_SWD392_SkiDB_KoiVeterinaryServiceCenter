@@ -38,7 +38,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<Payment>().ToTable("Payment");
             modelBuilder.Entity<PetService>().ToTable("PetService");
             modelBuilder.Entity<PetServiceCategory>().ToTable("PetServiceCategory");
-            modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory"); // Added ProductCategory table
+            modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory");
 
             // Relationships and additional configuration
 
@@ -54,24 +54,33 @@ namespace KVSC.Infrastructure.DB
                 .WithOne(o => o.Customer)
                 .HasForeignKey(o => o.CustomerId);
 
+            // One-to-one relationship between User and Cart
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Cart)
+                .WithOne(c => c.User)
+                .HasForeignKey<Cart>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Delete cart when user is deleted
+
             // Cart has many CartItems
             modelBuilder.Entity<Cart>()
                 .HasMany(c => c.CartItems)
                 .WithOne(ci => ci.Cart)
-                .HasForeignKey(ci => ci.CartId);
+                .HasForeignKey(ci => ci.CartId)
+                .OnDelete(DeleteBehavior.Cascade); // Delete cart items when the cart is deleted
 
             // Order has many OrderItems
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderItems)
                 .WithOne(oi => oi.Order)
-                .HasForeignKey(oi => oi.OrderId);
+                .HasForeignKey(oi => oi.OrderId)
+                .OnDelete(DeleteBehavior.Cascade); // OrderItems are deleted when the order is deleted
 
             // OrderItem relationships (optional foreign keys)
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.Pet)
                 .WithMany()
                 .HasForeignKey(oi => oi.PetId)
-                .OnDelete(DeleteBehavior.Restrict); // Optional, can change based on your needs
+                .OnDelete(DeleteBehavior.Restrict); // Restrict deletion to prevent accidental cascading
 
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.PetService)
@@ -118,6 +127,7 @@ namespace KVSC.Infrastructure.DB
             // Call base method
             base.OnModelCreating(modelBuilder);
         }
+
     }
 
 
