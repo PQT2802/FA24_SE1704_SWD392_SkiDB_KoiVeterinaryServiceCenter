@@ -20,6 +20,7 @@ namespace KVSC.Infrastructure.DB
     public DbSet<User> Users { get; set; }
     public DbSet<Pet> Pets { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<ProductCategory> ProductCategories { get; set; }
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Order> Orders { get; set; }
@@ -35,6 +36,7 @@ namespace KVSC.Infrastructure.DB
         modelBuilder.Entity<User>().ToTable("User");
         modelBuilder.Entity<Pet>().ToTable("Pet");
         modelBuilder.Entity<Product>().ToTable("Product");
+        modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory");
         modelBuilder.Entity<Cart>().ToTable("Cart");
         modelBuilder.Entity<CartItem>().ToTable("CartItem");
         modelBuilder.Entity<Order>().ToTable("Order");
@@ -112,7 +114,14 @@ namespace KVSC.Infrastructure.DB
             .WithOne(oi => oi.Product)
             .HasForeignKey(oi => oi.ProductId);
 
-        // PetServiceCategory has many PetServices
+            // ProductCategory has many Products
+        modelBuilder.Entity<ProductCategory>()
+                .HasMany(pc => pc.Products)
+                .WithOne(p => p.ProductCategory)
+                .HasForeignKey(p => p.ProductCategoryId)
+                .OnDelete(DeleteBehavior.Cascade); // Adjust behavior based on your requirements
+
+            // PetServiceCategory has many PetServices
         modelBuilder.Entity<PetServiceCategory>()
             .HasMany(psc => psc.PetServices)
             .WithOne(ps => ps.PetServiceCategory)

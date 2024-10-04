@@ -1,0 +1,6 @@
+D:\Unity_Game\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\KVSC.BackEnd\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.csproj.AssemblyReference.cache
+D:\Unity_Game\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\KVSC.BackEnd\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Unity_Game\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\KVSC.BackEnd\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.AssemblyInfoInputs.cache
+D:\Unity_Game\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\KVSC.BackEnd\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.AssemblyInfo.cs
+D:\Unity_Game\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\KVSC.BackEnd\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Unity_Game\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\KVSC.BackEnd\KVSC.Infrastructure\obj\Debug\net8.0\KVSC.Infrastructure.sourcelink.json

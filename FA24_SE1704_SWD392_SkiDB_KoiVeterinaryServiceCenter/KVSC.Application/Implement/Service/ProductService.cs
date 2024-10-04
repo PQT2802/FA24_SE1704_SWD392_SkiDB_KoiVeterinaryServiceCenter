@@ -12,6 +12,10 @@ using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 using KVSC.Infrastructure.DTOs.Product.UpdateProduct;
 using KVSC.Infrastructure.DTOs.Product.SearchProduct;
+using KVSC.Infrastructure.DTOs.Firebase.AddImage;
+using KVSC.Infrastructure.DTOs.Firebase.GetImage;
+using KVSC.Infrastructure.DTOs.Product.GetProduct;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KVSC.Application.Implement.Service
 {
@@ -51,7 +55,17 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(ProductErrorMessage.ProductNameIsExist());
             }
-            
+
+            // Upload the image and get the result
+            AddImageRequest imageRequest = new AddImageRequest(addProductRequest.ImageFile, "Products");
+
+            var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest); // Assuming 'Image' is the property in AddProductRequest for the image file
+
+            if (!uploadImageResult.Success)
+            {
+                return Result.Failure(uploadImageResult.Error); // Return the error from image upload
+            }
+
             // Create a new product entity
             var product = new Product
             {
@@ -60,7 +74,7 @@ namespace KVSC.Application.Implement.Service
                 Description = addProductRequest.Description,
                 ProductCategoryId = addProductRequest.ProductCategoryId, // Assuming this is in the request
                 StockQuantity = addProductRequest.StockQuantity, // Assuming this is in the request, set to 0 if no stock data is provided
-                ImageUrl = addProductRequest.ImageUrl // Optional, but set if available
+                ImageUrl = uploadImageResult.FilePath // Optional, but set if available
             };
 
             // Add the product to the database
@@ -80,7 +94,26 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(ProductErrorMessage.ProductNotExist());
             }
-            return Result.SuccessWithObject(product);
+            // Retrieve the product image from Firebase (assuming FirebaseRepository has a method to get the image)
+            GetImageRequest getImageRequest = new GetImageRequest(product.ImageUrl);
+            var imageResult = await _unitOfWork.FirebaseRepository.GetImageAsync(getImageRequest); // Assuming product.ImageUrl stores the image reference
+            if (imageResult == null)
+            {
+                return Result.Failure(imageResult.Error); // Handle image retrieval failure
+            }
+
+            var productResponse = new GetProductResponse
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                ProductCategoryId = product.ProductCategoryId,
+                StockQuantity = product.StockQuantity,
+                ImageStream = imageResult.ImageUrl,   // Store image data in MemoryStream
+                //ProductCategoryName = product.ProductCategory?.Name // Optional: Category name, if available
+            };
+            return Result.SuccessWithObject(productResponse);
         }
         public async Task<Result> GetProductsAsync(SearchProductRequest request)
         {

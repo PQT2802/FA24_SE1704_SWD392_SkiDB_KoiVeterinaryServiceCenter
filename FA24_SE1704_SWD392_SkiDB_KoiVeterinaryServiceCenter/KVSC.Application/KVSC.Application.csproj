@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FirebaseAdmin" Version="3.0.1" />
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\KVSC.Domain\KVSC.Domain.csproj" />
     <ProjectReference Include="..\KVSC.Infrastructure\KVSC.Infrastructure.csproj" />
   </ItemGroup>

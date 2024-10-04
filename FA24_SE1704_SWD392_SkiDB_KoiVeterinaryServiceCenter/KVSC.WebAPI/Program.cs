@@ -1,4 +1,5 @@
 using KVSC.Infrastructure.DB;
+
 using KVSC.WebAPI.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -61,6 +62,7 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowCredentials());
 });
+
 
 var app = builder.Build();
 
