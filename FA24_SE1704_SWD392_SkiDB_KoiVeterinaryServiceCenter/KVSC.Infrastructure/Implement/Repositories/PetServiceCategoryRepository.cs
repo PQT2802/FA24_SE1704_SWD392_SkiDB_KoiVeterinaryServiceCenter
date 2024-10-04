@@ -2,6 +2,7 @@
 using KVSC.Infrastructure.DB;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,33 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<PetServiceCategory> GetByIdAsync(Guid id)
         {
             return await _context.PetServiceCategories.FindAsync(id);
+        }
+        public async Task<PetServiceCategory> CreateAsync(PetServiceCategory category)
+        {
+            await _context.PetServiceCategories.AddAsync(category);
+            await _context.SaveChangesAsync();
+            return category;
+        }
+
+        public async Task<IEnumerable<PetServiceCategory>> GetAllAsync()
+        {
+            return await _context.PetServiceCategories.ToListAsync();
+        }
+        public async Task<int> UpdateAsync(PetServiceCategory category)
+        {
+            _context.PetServiceCategories.Update(category);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteAsync(Guid id)
+        {
+            var category = await _context.PetServiceCategories.FindAsync(id);
+            if (category != null)
+            {
+                _context.PetServiceCategories.Remove(category);
+                return await _context.SaveChangesAsync();
+            }
+            return 0;
         }
     }
 }

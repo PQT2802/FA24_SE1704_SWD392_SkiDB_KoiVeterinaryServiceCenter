@@ -9,12 +9,13 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
 {
     public static class PetServiceErrorMessage
     {
-        public static Error FieldIsEmpty(string nameField)
+        public static Error FieldIsEmpty(string nameField)  
             => Error.Validation("PetService.Empty", $"The '{nameField}' field is required.");
 
         public static Error InvalidFieldValue(string fieldName)
             => Error.Validation("PetService.InvalidValue", $"The '{fieldName}' field has an invalid value.");
-
+        public static Error InvalidDateTimeCheck(string dateFrom, string dateTo)
+            => Error.Validation("PetService.InvalidDate", $"'{dateFrom}' must be greater than '{dateTo}'.");
         public static Error PetServiceNotFound()
             => Error.Validation("PetService.NotFound", "PetService not found.");
 

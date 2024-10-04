@@ -41,8 +41,11 @@ namespace KVSC.Application.Common.Validator.Abstract
         protected void AddDateRangeRules(Expression<Func<T, DateTime>> availableFromExpression, Expression<Func<T, DateTime>> availableToExpression)
         {
             RuleFor(availableFromExpression)
-                .LessThanOrEqualTo(availableToExpression)
-                .WithState(_ => (PetServiceErrorMessage.InvalidFieldValue("AvailableFrom and AvailableTo")));
+                .LessThan(availableToExpression)
+                .WithState(_ => (PetServiceErrorMessage.InvalidDateTimeCheck("AvailableFrom","AvailableTo")));
+            RuleFor(availableFromExpression)
+                .Must(date => date > DateTime.UtcNow)
+                .WithState(_ =>PetServiceErrorMessage.InvalidDateTimeCheck("AvailableFrom","the current time"));
         }
         protected void AddTravelCostRangeRules(Expression<Func<T, decimal>> TravelCostExpression)
         {

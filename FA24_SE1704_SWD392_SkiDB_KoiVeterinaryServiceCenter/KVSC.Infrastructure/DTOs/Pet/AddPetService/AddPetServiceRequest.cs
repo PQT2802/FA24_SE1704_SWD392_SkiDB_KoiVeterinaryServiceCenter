@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.DTOs.Pet.AddPet
+namespace KVSC.Infrastructure.DTOs.Pet.AddPetService
 {
-    public class AddPetServiceDTO
+    public class AddPetServiceRequest
     {
         public string Name { get; set; }
         public Guid PetServiceCategoryId { get; set; }

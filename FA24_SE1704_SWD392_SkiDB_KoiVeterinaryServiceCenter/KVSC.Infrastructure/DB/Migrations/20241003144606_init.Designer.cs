@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KVSC.Infrastructure.DB.Migrations
+namespace KVSC.Infrastructure.Migrations
 {
     [DbContext(typeof(KVSCContext))]
-    [Migration("20240929062248_add-petServiceCate")]
-    partial class addpetServiceCate
+    [Migration("20241003144606_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,6 +89,54 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("CartItem", (string)null);
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.ComboService", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DiscountPercentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ComboService", (string)null);
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.ComboServiceItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ComboServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PetServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComboServiceId");
+
+                    b.HasIndex("PetServiceId");
+
+                    b.ToTable("ComboServiceItem", (string)null);
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.Order", b =>
@@ -497,6 +545,25 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.ComboServiceItem", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.ComboService", "ComboService")
+                        .WithMany("ComboServiceItems")
+                        .HasForeignKey("ComboServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KVSC.Domain.Entities.PetService", "PetService")
+                        .WithMany("ComboServiceItems")
+                        .HasForeignKey("PetServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComboService");
+
+                    b.Navigation("PetService");
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.Order", b =>
                 {
                     b.HasOne("KVSC.Domain.Entities.User", "Customer")
@@ -585,6 +652,11 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Navigation("CartItems");
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.ComboService", b =>
+                {
+                    b.Navigation("ComboServiceItems");
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.Order", b =>
                 {
                     b.Navigation("OrderItems");
@@ -592,6 +664,8 @@ namespace KVSC.Infrastructure.DB.Migrations
 
             modelBuilder.Entity("KVSC.Domain.Entities.PetService", b =>
                 {
+                    b.Navigation("ComboServiceItems");
+
                     b.Navigation("OrderItems");
                 });
 

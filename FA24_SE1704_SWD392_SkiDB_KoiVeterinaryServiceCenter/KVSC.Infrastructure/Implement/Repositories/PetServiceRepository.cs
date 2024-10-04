@@ -33,7 +33,17 @@ namespace KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.PetServices.FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
         }
-
+        //get by list id
+        public async Task<List<PetService>> GetByIdsAsync(List<Guid> serviceIds)
+        {
+            return await _context.PetServices
+                                 .Where(ps => serviceIds.Contains(ps.Id))
+                                 .ToListAsync();
+        }
+        public async Task<int> GetServiceByPetServiceCategoryIdAsync(Guid id)
+        {
+            return await _context.PetServices.CountAsync(s=> s.PetServiceCategoryId == id && !s.IsDeleted);
+        }
         // UPDATE
         public async Task<int> UpdateServiceAsync(PetService petService)
         {

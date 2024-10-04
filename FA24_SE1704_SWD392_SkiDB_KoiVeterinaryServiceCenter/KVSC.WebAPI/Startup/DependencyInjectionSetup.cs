@@ -9,7 +9,9 @@ using KVSC.Application.KVSC.Application.Common.Validator.Abstract;
 using KVSC.Application.KVSC.Application.Common.Validator.User;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.Common;
+using KVSC.Infrastructure.DTOs.Pet.AddComboService;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Implement.Repositories;
 using KVSC.Infrastructure.Interface;
@@ -46,8 +48,9 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<LoginRequest>, LoginValidator>();
             services.AddTransient<IValidator<RegisterRequest>, RegisterValidator>();
             services.AddTransient<IValidator<AddPetRequest>, AddPetValidator>();
-            services.AddTransient<IValidator<AddPetServiceDTO>, AddPetServiceValidator>();
-
+            services.AddTransient<IValidator<AddPetServiceRequest>, AddPetServiceValidator>();
+            services.AddTransient<IValidator<AddComboServiceRequest>, AddComboServiceValidator>();
+            services.AddTransient<IValidator<AddPetServiceCategoryRequest>, AddPetServiceCategoryValidator>();
             //Validator
             #endregion
 
@@ -56,9 +59,11 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IPetRepository,PetRepository>();
             services.AddTransient<IPetServiceRepository,PetServiceRepository>();
             services.AddTransient<IPetServiceCategoryRepository,PetServiceCategoryRepository>();
+            services.AddTransient<IPetServiceCategoryRepository, PetServiceCategoryRepository>();
+            services.AddTransient<IComboServiceRepository, ComboServiceRepository>();
 
             #endregion
-            
+
 
             #region GenericRepositories
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
@@ -70,6 +75,8 @@ namespace KVSC.WebAPI.Startup
             #region Service
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IPetServiceService, PetServiceService>();
+            services.AddTransient<IPetServiceCategoryService, PetServiceCategoryService>();
+            services.AddTransient<IComboServiceService, ComboServiceService>();
             #endregion
 
 

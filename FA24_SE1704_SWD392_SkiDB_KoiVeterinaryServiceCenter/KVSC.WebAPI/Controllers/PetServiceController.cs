@@ -1,7 +1,7 @@
 ﻿using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
-using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KVSC.WebAPI.Controllers
@@ -19,11 +19,20 @@ namespace KVSC.WebAPI.Controllers
 
         // POST: api/petservice
         [HttpPost]
-        public async Task<IResult> CreatePetService([FromBody] AddPetServiceDTO addPetService)
+        public async Task<IResult> CreatePetService([FromBody] AddPetServiceRequest addPetService)
         {
             Result result = await _petServiceService.CreatePetServiceAsync(addPetService);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Pet service created successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpGet]
+        public async Task<IResult> GetAllPetServices()
+        {
+            Result result = await _petServiceService.GetAllPetServicesAsync();
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "All pet services retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
@@ -39,7 +48,7 @@ namespace KVSC.WebAPI.Controllers
 
         // PUT: api/petservice/{id}
         [HttpPut("{id}")]
-        public async Task<IResult> UpdatePetService(Guid id, [FromBody] AddPetServiceDTO addPetService)
+        public async Task<IResult> UpdatePetService(Guid id, [FromBody] AddPetServiceRequest addPetService)
         {
             Result result = await _petServiceService.UpdatePetServiceAsync(id, addPetService);
             return result.IsSuccess

@@ -14,6 +14,8 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         public Task<PetService> GetServiceByIdAsync(Guid id);
         public Task<int> UpdateServiceAsync(PetService petService);
         public Task<int> DeleteServiceAsync(Guid id);
+        public Task<int> GetServiceByPetServiceCategoryIdAsync(Guid id);
+        public Task<List<PetService>> GetByIdsAsync(List<Guid> serviceIds);
 
     }
 }

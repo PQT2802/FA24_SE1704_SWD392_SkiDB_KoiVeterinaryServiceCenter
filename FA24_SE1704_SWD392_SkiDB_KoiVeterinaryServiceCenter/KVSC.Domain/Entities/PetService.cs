@@ -16,4 +16,7 @@ public class PetService : BaseEntity
     public ICollection<OrderItem> OrderItems { get; set; }
     public PetServiceCategory PetServiceCategory { get; set; } // Navigation property
 
+    // New relationship: ComboServiceItems (for many-to-many relation with ComboService)
+    public ICollection<ComboServiceItem> ComboServiceItems { get; set; }
+
 }

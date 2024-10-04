@@ -1,9 +1,10 @@
-﻿using FluentValidation;
+﻿using Azure;
+using FluentValidation;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
-using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
@@ -18,15 +19,15 @@ namespace KVSC.Application.Implement.Service
     public class PetServiceService : IPetServiceService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IValidator<AddPetServiceDTO> _petServiceValidator;
+        private readonly IValidator<AddPetServiceRequest> _petServiceValidator;
 
-        public PetServiceService(IUnitOfWork unitOfWork, IValidator<AddPetServiceDTO> petServiceValidator)
+        public PetServiceService(IUnitOfWork unitOfWork, IValidator<AddPetServiceRequest> petServiceValidator)
         {
             _unitOfWork = unitOfWork;
             _petServiceValidator = petServiceValidator;
         }
 
-        public async Task<Result> CreatePetServiceAsync(AddPetServiceDTO addPetService)
+        public async Task<Result> CreatePetServiceAsync(AddPetServiceRequest addPetService)
         {
             // Validate the input
             var validationResult = await _petServiceValidator.ValidateAsync(addPetService);
@@ -37,21 +38,11 @@ namespace KVSC.Application.Implement.Service
                     .ToList();
                 return Result.Failures(errors);
             }
-            // Check for required fields
-            //if (string.IsNullOrWhiteSpace(addPetService.Duration))
-            //{
-            //    return Result.Failures(new List<Error> { PetServiceErrorMessage.FieldIsEmpty("Duration") });
-            //}
-            if (addPetService.StaffQuantity <= 0)
-            {
-                return Result.Failures(new List<Error> { PetServiceErrorMessage.FieldIsEmpty("StaffQuantity") });
-            }
-            // Set default values
 
             var categoryExists = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(addPetService.PetServiceCategoryId);
             if (categoryExists == null)
             {
-                return Result.Failure(PetServiceErrorMessage.FieldIsEmpty("PetServiceCategory"));
+                return Result.Failure(PetServiceErrorMessage.InvalidFieldValue("PetServiceCategory"));
             }
 
             var petService = new PetService
@@ -76,8 +67,8 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetServiceErrorMessage.PetServiceNotCreated());
             }
-
-            return Result.SuccessWithObject(petService);
+            var response = new CreateResponse { Id = petService.Id };
+            return Result.SuccessWithObject(response);
         }
 
         public async Task<Result> GetAllPetServicesAsync()
@@ -97,7 +88,7 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(petService);
         }
 
-        public async Task<Result> UpdatePetServiceAsync(Guid id, AddPetServiceDTO addPetService)
+        public async Task<Result> UpdatePetServiceAsync(Guid id, AddPetServiceRequest addPetService)
         {
             // Validate the input
             var validationResult = await _petServiceValidator.ValidateAsync(addPetService);
@@ -112,6 +103,11 @@ namespace KVSC.Application.Implement.Service
             if (existingPetService == null)
             {
                 return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
+            }
+            var categoryExists = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(addPetService.PetServiceCategoryId);
+            if (categoryExists == null)
+            {
+                return Result.Failure(PetServiceErrorMessage.InvalidFieldValue("PetServiceCategory"));
             }
             // Update the properties
             existingPetService.Name = addPetService.Name; // Update Name
@@ -133,18 +129,24 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(PetServiceErrorMessage.PetServiceUpdateFailed());
             }
 
-            return Result.SuccessWithObject(updateResult);
+            var response = new CreateResponse { Id = existingPetService.Id };
+            return Result.SuccessWithObject(response);
         }
 
         public async Task<Result> DeletePetServiceAsync(Guid id)
         {
+            var existingPetService = await _unitOfWork.PetServiceRepository.GetServiceByIdAsync(id);
+            if (existingPetService == null)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
+            }
             var deleteResult = await _unitOfWork.PetServiceRepository.DeleteServiceAsync(id);
             if (deleteResult == 0)
             {
                 return Result.Failure(PetServiceErrorMessage.PetServiceDeleteFailed());
             }
 
-            return Result.Success();
+            return Result.SuccessWithObject(deleteResult);
         }
     }
 }
