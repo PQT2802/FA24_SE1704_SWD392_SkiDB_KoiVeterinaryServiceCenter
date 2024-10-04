@@ -32,6 +32,8 @@ namespace KVSC.WebAPI.Startup
 {
     public static class DependencyInjectionSetup
     {
+
+        //comr
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
 
