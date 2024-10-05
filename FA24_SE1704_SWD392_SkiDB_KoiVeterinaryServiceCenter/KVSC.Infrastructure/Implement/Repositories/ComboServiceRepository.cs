@@ -20,7 +20,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
             await _context.SaveChangesAsync();
             return comboService;
         }
-        public async Task<IEnumerable<ComboService>> GetAllAsync()
+        public async Task<IEnumerable<ComboService>> GetAllComboAsync()
         {
             return await _context.ComboServices
                 .Include(cs => cs.ComboServiceItems)
@@ -28,7 +28,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .Where(cs => !cs.IsDeleted)
                 .ToListAsync();
         }
-        public async Task<ComboService> GetByIdAsync(Guid id)
+        public async Task<ComboService> GetComboByIdAsync(Guid id)
         {
             return await _context.ComboServices
                 .Include(cs => cs.ComboServiceItems)

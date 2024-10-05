@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Interface.IRepositories
 {
-    public interface IComboServiceRepository
+    public interface IComboServiceRepository : IGenericRepository<ComboService>
     {
         public Task<ComboService> CreateAsync(ComboService comboService);
-        public Task<IEnumerable<ComboService>> GetAllAsync();
+        public Task<IEnumerable<ComboService>> GetAllComboAsync();
      
-        public Task<ComboService> GetByIdAsync(Guid id);
+        public Task<ComboService> GetComboByIdAsync(Guid id);
         public Task<int> UpdateAsync(ComboService comboService);
       
         public Task<int> DeleteAsync(Guid id);

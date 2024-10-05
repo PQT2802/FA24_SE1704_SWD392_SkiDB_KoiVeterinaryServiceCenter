@@ -44,12 +44,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.PetServices.CountAsync(s=> s.PetServiceCategoryId == id && !s.IsDeleted);
         }
-        // UPDATE
-        public async Task<int> UpdateServiceAsync(PetService petService)
-        {
-            _context.PetServices.Update(petService);
-            return await _context.SaveChangesAsync();
-        }
+       
 
         // DELETE (soft delete)
         public async Task<int> DeleteServiceAsync(Guid id)

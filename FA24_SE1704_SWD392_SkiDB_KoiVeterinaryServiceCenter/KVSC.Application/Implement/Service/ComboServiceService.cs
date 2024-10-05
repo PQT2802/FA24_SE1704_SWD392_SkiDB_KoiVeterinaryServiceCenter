@@ -75,7 +75,7 @@ namespace KVSC.Application.Implement.Service
 
         public async Task<Result> GetComboServiceByIdAsync(Guid id)
         {
-            var comboService = await _unitOfWork.ComboServiceRepository.GetByIdAsync(id);
+            var comboService = await _unitOfWork.ComboServiceRepository.GetComboByIdAsync(id);
 
             if (comboService == null || comboService.IsDeleted)
             {
@@ -97,7 +97,7 @@ namespace KVSC.Application.Implement.Service
         }
         public async Task<Result> GetAllComboServicesAsync()
         {
-            var comboServices = await _unitOfWork.ComboServiceRepository.GetAllAsync();
+            var comboServices = await _unitOfWork.ComboServiceRepository.GetAllComboAsync();
 
             var comboServiceResponses = comboServices
                 .Where(cs => !cs.IsDeleted) // Lọc bỏ các combo đã bị xóa
@@ -118,7 +118,7 @@ namespace KVSC.Application.Implement.Service
 
         public async Task<Result> UpdateComboServiceAsync(Guid id, AddComboServiceRequest addComboService)
         {
-            var comboService = await _unitOfWork.ComboServiceRepository.GetByIdAsync(id);
+            var comboService = await _unitOfWork.ComboServiceRepository.GetComboByIdAsync(id);
             if (comboService == null || comboService.IsDeleted)
             {
                 return Result.Failure(ComboServiceErrorMessage.ComboServiceNotFound());
@@ -140,10 +140,26 @@ namespace KVSC.Application.Implement.Service
             comboService.Name = addComboService.Name;
             comboService.DiscountPercentage = addComboService.DiscountPercentage;
             comboService.ModifiedDate = DateTime.UtcNow;
-            comboService.ComboServiceItems = distinctServiceIds.Select(serviceId => new ComboServiceItem
+            // Xóa các ComboServiceItem không còn nằm trong danh sách distinctServiceIds
+            var itemsToRemove = comboService.ComboServiceItems
+                .Where(item => !distinctServiceIds.Contains(item.PetServiceId))
+                .ToList();
+            foreach (var item in itemsToRemove)
             {
-                PetServiceId = serviceId
-            }).ToList();
+                comboService.ComboServiceItems.Remove(item);
+            }
+            // Thêm các ComboServiceItem mới từ distinctServiceIds
+            foreach (var serviceId in distinctServiceIds)
+            {
+                // Kiểm tra xem đã tồn tại chưa
+                if (!comboService.ComboServiceItems.Any(item => item.PetServiceId == serviceId))
+                {
+                    comboService.ComboServiceItems.Add(new ComboServiceItem
+                    {
+                        PetServiceId = serviceId
+                    });
+                }
+            }
 
             var updateResult = await _unitOfWork.ComboServiceRepository.UpdateAsync(comboService);
             if (updateResult == 0)

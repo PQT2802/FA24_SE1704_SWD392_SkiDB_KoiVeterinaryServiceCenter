@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Interface.IRepositories
 {
-    public interface IPetServiceRepository
+    public interface IPetServiceRepository : IGenericRepository<PetService>
     {
         public Task<PetService> CreateServiceAsync(PetService petService);
         public Task<IEnumerable<PetService>> GetAllServicesAsync();
         public Task<PetService> GetServiceByIdAsync(Guid id);
-        public Task<int> UpdateServiceAsync(PetService petService);
         public Task<int> DeleteServiceAsync(Guid id);
         public Task<int> GetServiceByPetServiceCategoryIdAsync(Guid id);
         public Task<List<PetService>> GetByIdsAsync(List<Guid> serviceIds);
