@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Interface.IRepositories
 {
-    public interface IPetRepository
+    public interface IPetRepository : IGenericRepository<Pet>
     {
-        public Task<Pet> GetByIdAsync(Guid id);
     }
 }

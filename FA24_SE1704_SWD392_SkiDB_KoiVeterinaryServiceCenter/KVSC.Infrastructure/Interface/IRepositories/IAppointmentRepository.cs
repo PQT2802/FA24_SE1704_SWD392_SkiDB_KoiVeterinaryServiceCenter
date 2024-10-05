@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Interface.IRepositories
 {
-    public interface IAppointmentRepository
+    public interface IAppointmentRepository : IGenericRepository<Appointment>
     {
         public Task<Appointment> CreateAppointmentAsync(Appointment appointment);
 

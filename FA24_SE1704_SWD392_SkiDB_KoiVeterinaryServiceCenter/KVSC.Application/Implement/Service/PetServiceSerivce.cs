@@ -120,7 +120,7 @@ namespace KVSC.Application.Implement.Service
             existingPetService.ModifiedDate = DateTime.UtcNow;
 
             // Update the service
-            var updateResult = await _unitOfWork.PetServiceRepository.UpdateServiceAsync(existingPetService);
+            var updateResult = await _unitOfWork.PetServiceRepository.UpdateAsync(existingPetService);
 
             if (updateResult == 0)
             {

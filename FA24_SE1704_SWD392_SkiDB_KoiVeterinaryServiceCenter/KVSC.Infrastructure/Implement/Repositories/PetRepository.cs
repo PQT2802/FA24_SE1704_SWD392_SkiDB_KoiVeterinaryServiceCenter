@@ -17,9 +17,6 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
         public PetRepository(KVSCContext context) : base(context) { }
 
-        public async Task<Pet> GetByIdAsync(Guid Id)
-        {
-            return await _context.Pets.FirstOrDefaultAsync(p => p.Id == Id);
-        }
+       
     }   
 }

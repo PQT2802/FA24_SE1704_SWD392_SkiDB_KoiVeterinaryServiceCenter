@@ -8,12 +8,10 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Interface.IRepositories
 {
-    public interface IPetServiceCategoryRepository
+    public interface IPetServiceCategoryRepository : IGenericRepository<PetServiceCategory>
     {
-        public Task<PetServiceCategory> GetByIdAsync(Guid id);
+      
         public Task<PetServiceCategory> CreateAsync(PetServiceCategory category);
-        public Task<IEnumerable<PetServiceCategory>> GetAllAsync();
-        public Task<int> UpdateAsync(PetServiceCategory category);
         public Task<int> DeleteAsync(Guid id);
       
     }
