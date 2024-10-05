@@ -8,7 +8,6 @@ namespace KVSC.Infrastructure.DTOs.Pet.UpdatePetHabitat
 {
     public class UpdatePetHabitatRequest
     {
-        public Guid Id { get; set; }
         public string HabitatType { get; set; }
     }
 }

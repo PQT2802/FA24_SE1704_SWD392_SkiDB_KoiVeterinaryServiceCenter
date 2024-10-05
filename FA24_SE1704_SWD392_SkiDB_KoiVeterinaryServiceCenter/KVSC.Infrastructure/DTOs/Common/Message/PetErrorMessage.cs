@@ -47,5 +47,19 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
 
         public static Error PetTypeNotFound()
             => Error.NotFound("PetType.NotFound", "The pet type not found.");
+
+        //PetHabitat
+
+        public static Error PetHabitatNotFound()
+        => Error.NotFound("PetHabitat.NotFound", "Pet habitat not found.");
+
+        public static Error PetHabitatCreateFailed()
+            => Error.Validation("PetHabitat.CreateFailed", "Failed to create pet habitat.");
+
+        public static Error PetHabitatUpdateFailed()
+            => Error.Validation("PetHabitat.UpdateFailed", "Failed to update pet habitat.");
+
+        public static Error PetHabitatDeleteFailed()
+            => Error.Validation("PetHabitat.DeleteFailed", "Failed to delete pet habitat.");
     }
 }

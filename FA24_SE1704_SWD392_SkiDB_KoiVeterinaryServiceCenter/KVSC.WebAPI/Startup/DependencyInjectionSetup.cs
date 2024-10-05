@@ -9,8 +9,10 @@ using KVSC.Application.KVSC.Application.Common.Validator.User;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.Common;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Pet.AddPetHabitat;
 using KVSC.Infrastructure.DTOs.Pet.AddPetType;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
+using KVSC.Infrastructure.DTOs.Pet.UpdatePetHabitat;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePetType;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Implement.Repositories;
@@ -47,6 +49,8 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<UpdatePetRequest>, UpdatePetvalidator>();
             services.AddTransient<IValidator<AddPetTypeRequest>, AddPetTypeValidator>();
             services.AddTransient<IValidator<UpdatePetTypeRequest>, UpdatePetTypeValidator>();
+            services.AddTransient<IValidator<AddPetHabitatRequest>, AddPetHabitatValidator>();
+            services.AddTransient<IValidator<UpdatePetHabitatRequest>, UpdatePetHabitatValidator>();
 
 
             //Validator
@@ -56,6 +60,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPetRepository, PetRepository>();
             services.AddTransient<IPetTypeRepository, PetTypeRepository>();
+            services.AddTransient<IPetHabitatRepository, PetHabitatRepository>();
             #endregion
 
 
@@ -70,6 +75,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IPetServiceService, PetServiceService>();
             services.AddTransient<IPetTypeService, PetTypeService>();
+            services.AddTransient<IPetHabitatService, PetHabitatService>();
 
             #endregion
 
