@@ -22,5 +22,11 @@ namespace KVSC.Application.Service.Implement
             var response = await _userRepository.SignIn(loginRequest);
             return response;
         }
+        public async Task<ResponseDto<LoginResponse>> GoogleSignIn(GoogleSignInRequest googleSignInRequest)
+        {
+            // Gửi yêu cầu đến API để xác thực Google ID Token
+            var response = await _userRepository.GoogleSignIn(googleSignInRequest);
+            return response;
+        }
     }
 }

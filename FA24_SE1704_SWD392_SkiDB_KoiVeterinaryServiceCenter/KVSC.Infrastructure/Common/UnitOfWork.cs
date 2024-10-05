@@ -18,6 +18,10 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IProductRepository ProductRepository { get; private set; }
         public IFirebaseRepository FirebaseRepository { get; private set; }
         public IProductCategoryRepository ProductCategoryRepository { get; private set; }
+        public IPetServiceRepository PetServiceRepository { get; private set; }
+        public IPetServiceCategoryRepository PetServiceCategoryRepository { get; private set; }
+        public IComboServiceRepository ComboServiceRepository { get; private set; }
+        public IAppointmentRepository AppointmentRepository { get; private set; }
 
         public UnitOfWork(KVSCContext context, StorageClient storageClient)
         {
@@ -27,6 +31,10 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
             ProductRepository = new ProductRepository(_context);
             FirebaseRepository = new FirebaseRepository(storageClient);
             ProductCategoryRepository = new ProductCategoryRepository(_context);
+            PetServiceRepository = new PetServiceRepository(_context);
+            PetServiceCategoryRepository = new PetServiceCategoryRepository(_context);
+            ComboServiceRepository = new ComboServiceRepository(_context);
+            AppointmentRepository = new AppointmentRepository(_context);
         }
 
         public int Complete()

@@ -7,7 +7,6 @@ public class PetService : BaseEntity
     public decimal BasePrice { get; set; }
     public string Duration { get; set; }
     public string ImageUrl { get; set; }
-    public int StaffQuantity { get; set; }
     public DateTime AvailableFrom { get; set; }
     public DateTime AvailableTo { get; set; }
     public decimal TravelCost { get; set; }
@@ -15,5 +14,8 @@ public class PetService : BaseEntity
     // Relationships
     public ICollection<OrderItem> OrderItems { get; set; }
     public PetServiceCategory PetServiceCategory { get; set; } // Navigation property
+
+    // New relationship: ComboServiceItems (for many-to-many relation with ComboService)
+    public ICollection<ComboServiceItem> ComboServiceItems { get; set; }
 
 }

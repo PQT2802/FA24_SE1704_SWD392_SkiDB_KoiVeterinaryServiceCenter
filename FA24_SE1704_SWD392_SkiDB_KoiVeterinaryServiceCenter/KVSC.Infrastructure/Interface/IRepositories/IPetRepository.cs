@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KVSC.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace KVSC.Infrastructure.Interface.IRepositories
 {
     public interface IPetRepository
     {
+        public Task<Pet> GetByIdAsync(Guid id);
     }
 }

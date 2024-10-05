@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj": {}
+    "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj": {}
   },
   "projects": {
-    "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj": {
+    "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
+        "projectUniqueName": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
         "projectName": "KoiVeterinaryServiceCenter_FE",
-        "projectPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\obj\\",
+        "projectPath": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,15 +22,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj": {
-                "projectPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj"
+              "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj": {
+                "projectPath": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj"
               }
             }
           }
@@ -68,21 +67,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj": {
+    "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj",
+        "projectUniqueName": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj",
         "projectName": "KVSC.Application",
-        "projectPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj",
-        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\obj\\",
+        "projectPath": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\KVSC.Application.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -90,15 +89,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj": {
-                "projectPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj"
+              "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj": {
+                "projectPath": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj"
               }
             }
           }
@@ -133,21 +131,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj": {
+    "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj",
+        "projectUniqueName": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj",
         "projectName": "KVSC.Infrastructure",
-        "projectPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\obj\\",
+        "projectPath": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\KVSC.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "E:\\FA24_SE1704_SWD392_SkiDB_KoiVeterinaryServiceCenter\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -155,7 +153,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -194,7 +191,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

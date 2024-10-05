@@ -1,9 +1,14 @@
 using KVSC.Infrastructure.DB;
 
 using KVSC.WebAPI.Startup;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +17,44 @@ builder.Services.AddDbContext<KVSCContext>(opt =>
 {
     // Set up your database connection string
     opt.UseSqlServer(builder.Configuration.GetConnectionString("MyDb"));
+});
+//Google-signin
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+        builder.WithOrigins("https://localhost:7241")
+               .AllowAnyHeader()
+               .AllowAnyMethod());
+});
+
+
+//authorize
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("CustomerOnly", policy => policy.RequireRole("Customer"));
+    options.AddPolicy("StaffOnly", policy => policy.RequireRole("Staff"));
+    options.AddPolicy("VeterinarianOnly", policy => policy.RequireRole("Veterinarian"));
+    options.AddPolicy("ManagerOnly", policy => policy.RequireRole("Manager"));
 });
 
 builder.Services.AddEndpointsApiExplorer();

@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.RegisterServices(builder.Configuration);
 
+
 // Configure Cookie Policy
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {

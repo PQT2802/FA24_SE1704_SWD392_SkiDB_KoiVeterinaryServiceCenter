@@ -1,4 +1,6 @@
-﻿using KVSC.Application.KVSC.Application.Common.Result;
+﻿using Google.Apis.Auth;
+using KVSC.Application.KVSC.Application.Common.Result;
+using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
 using System;
@@ -13,5 +15,8 @@ namespace KVSC.Application.Interface.IService
     {
         Task<Result> SignIn(LoginRequest loginRequest);
         Task<Result> SignUp(RegisterRequest registerRequest);
+        public string GenerateJwtToken(string email, int Role, double expirationMinutes);
+        public Task<User> FindOrCreateUser(GoogleJsonWebSignature.Payload payload);
+      
     }
 }

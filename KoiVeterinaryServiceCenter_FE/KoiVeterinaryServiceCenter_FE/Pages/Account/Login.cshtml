@@ -17,6 +17,8 @@
 
     <!-- Stylesheet -->
     <link href="~/css/stylelogin.css" rel="stylesheet">
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <div class="wrapper login-1">
@@ -64,12 +66,41 @@
                         </p>
                     </form>
                 </div>
+                <div id="g_id_onload"
+                     data-client_id="461997059059-rcigqraco900cl7jci2o2250ht07urn5.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-ux_mode="popup"   
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" data-type="standard"></div>
+                <script>
+                    function handleCredentialResponse(response) {
+                        var idToken = response.credential;
+
+                        // Send the token to the server for verification
+                        fetch('/Account/Login?handler=GoogleSignInAsync', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ IdToken: idToken })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    window.location.href = "/Index"; // Redirect on success
+                                } else {
+                                    alert("Google Sign-in failed: " + data.message);
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    }
+                </script>
             </div>
         </div>
         <div class="credit">
             Template by <a href="https://htmlcodex.com">HTML Codex</a>
         </div>
     </div>
-
 </body>
 </html>
