@@ -89,7 +89,8 @@ namespace KVSC.Application.Implement.Service
                 DiscountPercentage = comboService.DiscountPercentage,
                 ServiceIds = comboService.ComboServiceItems
                                          .Select(csi => csi.PetServiceId)
-                                         .ToList()
+                                         .ToList(),
+                TotalPrice = comboService.TotalPrice
             };
 
             return Result.SuccessWithObject(comboServiceResponse);
@@ -107,7 +108,8 @@ namespace KVSC.Application.Implement.Service
                     DiscountPercentage = cs.DiscountPercentage,
                     ServiceIds = cs.ComboServiceItems
                                     .Select(csi => csi.PetServiceId)
-                                    .ToList()
+                                    .ToList(),
+                    TotalPrice = cs.TotalPrice
                 })
                 .ToList();
 

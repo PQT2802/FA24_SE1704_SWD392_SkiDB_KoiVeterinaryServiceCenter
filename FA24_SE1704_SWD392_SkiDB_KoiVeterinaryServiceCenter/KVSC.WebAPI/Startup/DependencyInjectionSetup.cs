@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using KVSC.Application.Common.Validator.Appointment;
 using KVSC.Application.Common.Validator.Pet;
 using KVSC.Application.Common.Validator.PetService;
 using KVSC.Application.Common.Validator.User;
@@ -9,6 +10,7 @@ using KVSC.Application.KVSC.Application.Common.Validator.Abstract;
 using KVSC.Application.KVSC.Application.Common.Validator.User;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.Common;
+using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using KVSC.Infrastructure.DTOs.Pet.AddComboService;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
@@ -51,6 +53,8 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<AddPetServiceRequest>, AddPetServiceValidator>();
             services.AddTransient<IValidator<AddComboServiceRequest>, AddComboServiceValidator>();
             services.AddTransient<IValidator<AddPetServiceCategoryRequest>, AddPetServiceCategoryValidator>();
+            services.AddTransient<IValidator<MakeAppointmentForServiceRequest>, MakeAppointmentForServiceValidator>();
+            services.AddTransient<IValidator<MakeAppointmentForComboRequest>, MakeAppointmentForComboValidator>();
             //Validator
             #endregion
 
@@ -61,6 +65,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IPetServiceCategoryRepository,PetServiceCategoryRepository>();
             services.AddTransient<IPetServiceCategoryRepository, PetServiceCategoryRepository>();
             services.AddTransient<IComboServiceRepository, ComboServiceRepository>();
+            services.AddTransient<IAppointmentRepository, AppointmentRepository>();
 
             #endregion
 
@@ -77,6 +82,8 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IPetServiceService, PetServiceService>();
             services.AddTransient<IPetServiceCategoryService, PetServiceCategoryService>();
             services.AddTransient<IComboServiceService, ComboServiceService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
+
             #endregion
 
 

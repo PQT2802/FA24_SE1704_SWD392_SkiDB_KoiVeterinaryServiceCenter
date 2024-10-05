@@ -52,7 +52,6 @@ namespace KVSC.Application.Implement.Service
                 BasePrice = addPetService.BasePrice,
                 Duration = addPetService.Duration,
                 ImageUrl = addPetService.ImageUrl,
-                StaffQuantity = addPetService.StaffQuantity,
                 AvailableFrom = addPetService.AvailableFrom,
                 AvailableTo = addPetService.AvailableTo,
                 TravelCost = addPetService.TravelCost,
@@ -115,7 +114,6 @@ namespace KVSC.Application.Implement.Service
             existingPetService.BasePrice = addPetService.BasePrice;
             existingPetService.Duration = addPetService.Duration;
             existingPetService.ImageUrl = addPetService.ImageUrl;
-            existingPetService.StaffQuantity = addPetService.StaffQuantity;
             existingPetService.AvailableFrom = addPetService.AvailableFrom;
             existingPetService.AvailableTo = addPetService.AvailableTo;
             existingPetService.TravelCost = addPetService.TravelCost;

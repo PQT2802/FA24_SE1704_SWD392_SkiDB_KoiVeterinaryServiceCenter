@@ -13,7 +13,6 @@ namespace KVSC.Infrastructure.DTOs.Pet.AddPetService
         public decimal BasePrice { get; set; }
         public string Duration { get; set; }
         public string ImageUrl { get; set; }
-        public int StaffQuantity { get; set; }
         public DateTime AvailableFrom { get; set; }
         public DateTime AvailableTo { get; set; }
         public decimal TravelCost { get; set; }

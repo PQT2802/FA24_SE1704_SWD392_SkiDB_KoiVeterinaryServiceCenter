@@ -24,6 +24,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.ComboServices
                 .Include(cs => cs.ComboServiceItems)
+                .ThenInclude(csi => csi.PetService)
                 .Where(cs => !cs.IsDeleted)
                 .ToListAsync();
         }
@@ -31,6 +32,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.ComboServices
                 .Include(cs => cs.ComboServiceItems)
+                .ThenInclude(csi => csi.PetService)
                 .FirstOrDefaultAsync(cs => cs.Id == id && !cs.IsDeleted);
         }
 

@@ -17,6 +17,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IPetServiceRepository PetServiceRepository { get; private set; }
         public IPetServiceCategoryRepository PetServiceCategoryRepository { get; private set; }
         public IComboServiceRepository ComboServiceRepository { get; private set; }
+        public IAppointmentRepository AppointmentRepository { get; private set; }
         public UnitOfWork(KVSCContext context)
         {
             _context = context;
@@ -25,6 +26,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
             PetServiceRepository = new PetServiceRepository(_context);
             PetServiceCategoryRepository = new PetServiceCategoryRepository(_context);
             ComboServiceRepository = new ComboServiceRepository(_context);
+            AppointmentRepository = new AppointmentRepository(_context);
         }
 
         public int Complete()

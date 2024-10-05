@@ -21,5 +21,9 @@ namespace KVSC.Domain.Entities
         // Foreign key relationship
         public Guid OwnerId { get; set; }
         public User Owner { get; set; } // Reference to the User
+
+        // Thêm quan hệ với Appointment
+        public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment
+
     }
 }

@@ -33,11 +33,7 @@ namespace KVSC.Application.Common.Validator.Abstract
             RuleFor(durationExpression)
                 .NotEmpty().WithState(_ => (PetServiceErrorMessage.FieldIsEmpty("Duration")));
         }
-        protected void AddStaffQuantityRules(Expression<Func<T, int>> staffQuantityExpression)
-        {
-            RuleFor(staffQuantityExpression)
-                .GreaterThan(0).WithState(_ => (PetServiceErrorMessage.InvalidFieldValue("StaffQuantity")));
-        }
+      
         protected void AddDateRangeRules(Expression<Func<T, DateTime>> availableFromExpression, Expression<Func<T, DateTime>> availableToExpression)
         {
             RuleFor(availableFromExpression)

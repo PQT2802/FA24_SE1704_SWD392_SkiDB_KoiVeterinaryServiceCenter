@@ -22,6 +22,89 @@ namespace KVSC.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("KVSC.Domain.Entities.Appointment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("AcceptedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ComboServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CompletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PetServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComboServiceId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("PetId");
+
+                    b.HasIndex("PetServiceId");
+
+                    b.ToTable("Appointment", (string)null);
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.AppointmentVeterinarian", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("VeterinarianId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("VeterinarianId");
+
+                    b.ToTable("AppointmentVeterinarian");
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.Cart", b =>
                 {
                     b.Property<Guid>("Id")
@@ -103,7 +186,7 @@ namespace KVSC.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -123,6 +206,15 @@ namespace KVSC.Infrastructure.Migrations
 
                     b.Property<Guid>("ComboServiceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("PetServiceId")
                         .HasColumnType("uniqueidentifier");
@@ -365,9 +457,6 @@ namespace KVSC.Infrastructure.Migrations
                     b.Property<Guid>("PetServiceCategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("StaffQuantity")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("TravelCost")
                         .HasColumnType("decimal(18,2)");
 
@@ -501,9 +590,138 @@ namespace KVSC.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("role")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.Veterinarian", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("ConsultationFee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Qualifications")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Specialty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Veterinarian", (string)null);
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.VeterinarianSchedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<Guid>("VeterinarianId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VeterinarianId");
+
+                    b.ToTable("VeterinarianSchedule", (string)null);
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.Appointment", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.ComboService", "ComboService")
+                        .WithMany()
+                        .HasForeignKey("ComboServiceId");
+
+                    b.HasOne("KVSC.Domain.Entities.User", "Customer")
+                        .WithMany("Appointments")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KVSC.Domain.Entities.Pet", "Pet")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PetId");
+
+                    b.HasOne("KVSC.Domain.Entities.PetService", "PetService")
+                        .WithMany()
+                        .HasForeignKey("PetServiceId");
+
+                    b.Navigation("ComboService");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Pet");
+
+                    b.Navigation("PetService");
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.AppointmentVeterinarian", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.Appointment", "Appointment")
+                        .WithMany("AppointmentVeterinarians")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("KVSC.Domain.Entities.User", "Veterinarian")
+                        .WithMany("AppointmentVeterinarians")
+                        .HasForeignKey("VeterinarianId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+
+                    b.Navigation("Veterinarian");
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.Cart", b =>
@@ -547,13 +765,13 @@ namespace KVSC.Infrastructure.Migrations
                     b.HasOne("KVSC.Domain.Entities.ComboService", "ComboService")
                         .WithMany("ComboServiceItems")
                         .HasForeignKey("ComboServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("KVSC.Domain.Entities.PetService", "PetService")
                         .WithMany("ComboServiceItems")
                         .HasForeignKey("PetServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ComboService");
@@ -644,6 +862,33 @@ namespace KVSC.Infrastructure.Migrations
                     b.Navigation("PetServiceCategory");
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.Veterinarian", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.User", "User")
+                        .WithOne("Veterinarian")
+                        .HasForeignKey("KVSC.Domain.Entities.Veterinarian", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.VeterinarianSchedule", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.Veterinarian", "Veterinarian")
+                        .WithMany("VeterinarianSchedules")
+                        .HasForeignKey("VeterinarianId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Veterinarian");
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.Appointment", b =>
+                {
+                    b.Navigation("AppointmentVeterinarians");
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -657,6 +902,11 @@ namespace KVSC.Infrastructure.Migrations
             modelBuilder.Entity("KVSC.Domain.Entities.Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.Pet", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.PetService", b =>
@@ -678,11 +928,23 @@ namespace KVSC.Infrastructure.Migrations
 
             modelBuilder.Entity("KVSC.Domain.Entities.User", b =>
                 {
+                    b.Navigation("AppointmentVeterinarians");
+
+                    b.Navigation("Appointments");
+
                     b.Navigation("Carts");
 
                     b.Navigation("Orders");
 
                     b.Navigation("Pets");
+
+                    b.Navigation("Veterinarian")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.Veterinarian", b =>
+                {
+                    b.Navigation("VeterinarianSchedules");
                 });
 #pragma warning restore 612, 618
         }

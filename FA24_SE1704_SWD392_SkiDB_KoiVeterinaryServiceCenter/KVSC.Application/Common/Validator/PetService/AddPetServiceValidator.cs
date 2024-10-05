@@ -14,7 +14,6 @@ namespace KVSC.Application.Common.Validator.PetService
             AddPetServiceNameRules(request => request.Name);
             AddBasePriceRules(request => request.BasePrice);
             AddDurationRules(request => request.Duration);
-            AddStaffQuantityRules(request => request.StaffQuantity);
             AddTravelCostRangeRules(request => request.TravelCost);
             AddDateRangeRules(request => request.AvailableFrom, request => request.AvailableTo);
         }
