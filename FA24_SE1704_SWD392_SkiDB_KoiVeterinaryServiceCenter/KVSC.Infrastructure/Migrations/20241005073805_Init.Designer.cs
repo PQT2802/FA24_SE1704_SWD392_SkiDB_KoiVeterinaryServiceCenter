@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KVSC.Infrastructure.Migrations
 {
     [DbContext(typeof(KVSCContext))]
-    [Migration("20241005025350_initDb")]
-    partial class initDb
+    [Migration("20241005073805_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -544,7 +544,37 @@ namespace KVSC.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductCategoryId");
+
                     b.ToTable("Product", (string)null);
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.ProductCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductCategory", (string)null);
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.User", b =>
@@ -865,6 +895,17 @@ namespace KVSC.Infrastructure.Migrations
                     b.Navigation("PetServiceCategory");
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.ProductCategory", "ProductCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategory");
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.Veterinarian", b =>
                 {
                     b.HasOne("KVSC.Domain.Entities.User", "User")
@@ -927,6 +968,11 @@ namespace KVSC.Infrastructure.Migrations
             modelBuilder.Entity("KVSC.Domain.Entities.Product", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.ProductCategory", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.User", b =>

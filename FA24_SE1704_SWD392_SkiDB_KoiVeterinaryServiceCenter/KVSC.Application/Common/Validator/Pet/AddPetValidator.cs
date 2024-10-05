@@ -13,7 +13,7 @@ namespace KVSC.Application.Common.Validator.Pet
     {
             public AddPetValidator(UnitOfWork unitOfWork) : base(unitOfWork)
             {
-            AddPetNameRules(request => request.PetName);
+                AddPetNameRules(request => request.PetName);
             }
 
     }

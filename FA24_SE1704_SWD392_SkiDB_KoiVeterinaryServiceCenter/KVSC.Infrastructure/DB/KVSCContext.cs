@@ -16,43 +16,45 @@ namespace KVSC.Infrastructure.DB
         {
         }
 
-        #region DBSet
-        public DbSet<User> Users { get; set; }
-        public DbSet<Pet> Pets { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<PetService> PetServices { get; set; }
-        public DbSet<PetServiceCategory> PetServiceCategories { get; set; }
-        public DbSet<ComboService> ComboServices { get; set; }
-        public DbSet<ComboServiceItem> ComboServiceItems { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Veterinarian> Veterinarians { get; set; }
-        public DbSet<VeterinarianSchedule> VeterinarianSchedules { get; set; }
-        #endregion
+
+    #region DBSet
+    public DbSet<User> Users { get; set; }
+    public DbSet<Pet> Pets { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<ProductCategory> ProductCategories { get; set; }
+    public DbSet<Cart> Carts { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Payment> Payments { get; set; }
+    public DbSet<PetService> PetServices { get; set; }
+    public DbSet<PetServiceCategory> PetServiceCategories { get; set; }
+    public DbSet<ComboService> ComboServices { get; set; }
+    public DbSet<ComboServiceItem> ComboServiceItems { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<Veterinarian> Veterinarians { get; set; }
+    public DbSet<VeterinarianSchedule> VeterinarianSchedules { get; set; }
+    #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Define table names
-            modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<Pet>().ToTable("Pet");
-            modelBuilder.Entity<Product>().ToTable("Product");
-            modelBuilder.Entity<Cart>().ToTable("Cart");
-            modelBuilder.Entity<CartItem>().ToTable("CartItem");
-            modelBuilder.Entity<Order>().ToTable("Order");
-            modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
-            modelBuilder.Entity<Payment>().ToTable("Payment");
-            modelBuilder.Entity<PetService>().ToTable("PetService");
-            modelBuilder.Entity<PetServiceCategory>().ToTable("PetServiceCategory");
-            modelBuilder.Entity<ComboService>().ToTable("ComboService");
-            modelBuilder.Entity<ComboServiceItem>().ToTable("ComboServiceItem");
-            modelBuilder.Entity<Appointment>().ToTable("Appointment");
-            modelBuilder.Entity<Veterinarian>().ToTable("Veterinarian");
-            modelBuilder.Entity<VeterinarianSchedule>().ToTable("VeterinarianSchedule");
-            // Relationships and additional configuration
+    {
+        // Define table names
+        modelBuilder.Entity<User>().ToTable("User");
+        modelBuilder.Entity<Pet>().ToTable("Pet");
+        modelBuilder.Entity<Product>().ToTable("Product");
+        modelBuilder.Entity<ProductCategory>().ToTable("ProductCategory");
+        modelBuilder.Entity<Cart>().ToTable("Cart");
+        modelBuilder.Entity<CartItem>().ToTable("CartItem");
+        modelBuilder.Entity<Order>().ToTable("Order");
+        modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
+        modelBuilder.Entity<Payment>().ToTable("Payment");
+        modelBuilder.Entity<PetService>().ToTable("PetService");
+        modelBuilder.Entity<PetServiceCategory>().ToTable("PetServiceCategory"); 
+        modelBuilder.Entity<ComboService>().ToTable("ComboService");
+        modelBuilder.Entity<ComboServiceItem>().ToTable("ComboServiceItem");
+        modelBuilder.Entity<Appointment>().ToTable("Appointment");
+        modelBuilder.Entity<Veterinarian>().ToTable("Veterinarian");
+        modelBuilder.Entity<VeterinarianSchedule>().ToTable("VeterinarianSchedule");
 
             // User has many Pets
             modelBuilder.Entity<User>()
@@ -127,12 +129,23 @@ namespace KVSC.Infrastructure.DB
                 .WithOne(ps => ps.PetServiceCategory)
                 .HasForeignKey(ps => ps.PetServiceCategoryId);
 
+
+            // ProductCategory has many Products
+        modelBuilder.Entity<ProductCategory>()
+                .HasMany(pc => pc.Products)
+                .WithOne(p => p.ProductCategory)
+                .HasForeignKey(p => p.ProductCategoryId)
+                .OnDelete(DeleteBehavior.Cascade); // Adjust behavior based on your requirements
+
+
+
             // ComboService -> ComboServiceItem (1-to-many)
             modelBuilder.Entity<ComboService>()
                 .HasMany(c => c.ComboServiceItems)
                 .WithOne(csi => csi.ComboService)
                 .HasForeignKey(csi => csi.ComboServiceId)
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             // PetService -> ComboServiceItem (1-to-many)
             modelBuilder.Entity<PetService>()

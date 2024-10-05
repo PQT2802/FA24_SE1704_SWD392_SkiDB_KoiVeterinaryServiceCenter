@@ -1,4 +1,5 @@
 using KVSC.Infrastructure.DB;
+
 using KVSC.WebAPI.Startup;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -104,6 +105,7 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowCredentials());
 });
+
 
 var app = builder.Build();
 
