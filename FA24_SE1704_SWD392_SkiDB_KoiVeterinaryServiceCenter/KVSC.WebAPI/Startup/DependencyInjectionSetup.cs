@@ -31,6 +31,11 @@ using KVSC.Infrastructure.DTOs.ProductCategory.UpdateProductCategory;
 
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 
+using KVSC.Infrastructure.DTOs.Pet.AddPetHabitat;
+using KVSC.Infrastructure.DTOs.Pet.AddPetType;
+using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
+using KVSC.Infrastructure.DTOs.Pet.UpdatePetHabitat;
+using KVSC.Infrastructure.DTOs.Pet.UpdatePetType;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Implement.Repositories;
 using KVSC.Infrastructure.Interface;
@@ -84,6 +89,11 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<LoginRequest>, LoginValidator>();
             services.AddTransient<IValidator<RegisterRequest>, RegisterValidator>();
             services.AddTransient<IValidator<AddPetRequest>, AddPetValidator>();
+            services.AddTransient<IValidator<UpdatePetRequest>, UpdatePetvalidator>();
+            services.AddTransient<IValidator<AddPetTypeRequest>, AddPetTypeValidator>();
+            services.AddTransient<IValidator<UpdatePetTypeRequest>, UpdatePetTypeValidator>();
+            services.AddTransient<IValidator<AddPetHabitatRequest>, AddPetHabitatValidator>();
+            services.AddTransient<IValidator<UpdatePetHabitatRequest>, UpdatePetHabitatValidator>();
 
             services.AddTransient<IValidator<AddProductRequest>, AddProductValidator>();
             services.AddTransient<IValidator<UpdateProductRequest>, UpdateProductValidator>();
@@ -127,6 +137,9 @@ namespace KVSC.WebAPI.Startup
 
             #region Service
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IPetBusinessService, PetBusinessService>();
+            services.AddTransient<IPetTypeService, PetTypeService>();
+            services.AddTransient<IPetHabitatService, PetHabitatService>();
 
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IFirebaseService, FirebaseService>();

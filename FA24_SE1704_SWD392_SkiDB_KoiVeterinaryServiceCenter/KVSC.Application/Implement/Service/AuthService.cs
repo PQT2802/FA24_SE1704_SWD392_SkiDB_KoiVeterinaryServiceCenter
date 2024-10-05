@@ -32,8 +32,8 @@ namespace KVSC.Application.Implement.Service
         private readonly IConfiguration _configuration;
 
         public AuthService(
-            IUnitOfWork unitOfWork, 
-            IValidator<RegisterRequest> registerRequestValidator, 
+            IUnitOfWork unitOfWork,
+            IValidator<RegisterRequest> registerRequestValidator,
             IValidator<LoginRequest> loginRequestValidator,
             IPasswordHasher passwordHasher
             )
@@ -56,9 +56,10 @@ namespace KVSC.Application.Implement.Service
                 // Handle errors as needed, e.g., return them in a Result object
                 return Result.Failures(errors);
             }
-           var userLogin = await _unitOfWork.UserRepository.GetByAsync("Email",loginRequest.Email); // fixxxxxxxxxx
-            var checkPassword = _passwordHasher.VerifyPassword(loginRequest.Password,userLogin.PasswordHash);
-            if (userLogin == null || checkPassword == false) {
+            var userLogin = await _unitOfWork.UserRepository.GetByAsync("Email", loginRequest.Email); // fixxxxxxxxxx
+            var checkPassword = _passwordHasher.VerifyPassword(loginRequest.Password, userLogin.PasswordHash);
+            if (userLogin == null || checkPassword == false)
+            {
                 return Result.Failure(UserErrorMessage.UserNotExist());
             }
 
@@ -78,7 +79,7 @@ namespace KVSC.Application.Implement.Service
             if (!validate.IsValid)
             {
                 var errors = validate.Errors
-                    .Select(e =>(Error) e.CustomState)
+                    .Select(e => (Error)e.CustomState)
                     .ToList();
                 return Result.Failures(errors);
             }
@@ -91,7 +92,7 @@ namespace KVSC.Application.Implement.Service
 
             };
             var createUsre = await _unitOfWork.UserRepository.CreateAsync(newUser);
-            if (createUsre == 0) 
+            if (createUsre == 0)
             {
                 return Result.Failure(UserErrorMessage.UserNoCreated());
             }

@@ -34,9 +34,9 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
             return await _context.Users.FirstOrDefaultAsync(x => x.Email.Equals(email) && x.PasswordHash.Equals(password));
         }
 
-
-
-
-
+        public async Task<User> GetUserByNameAsync(string userName)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == userName);
+        }
     }
 }

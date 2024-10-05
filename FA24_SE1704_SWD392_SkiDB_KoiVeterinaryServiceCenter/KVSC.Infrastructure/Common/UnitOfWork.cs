@@ -4,7 +4,6 @@ using KVSC.Infrastructure.Implement.Repositories;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
 {
@@ -22,6 +21,8 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IPetServiceCategoryRepository PetServiceCategoryRepository { get; private set; }
         public IComboServiceRepository ComboServiceRepository { get; private set; }
         public IAppointmentRepository AppointmentRepository { get; private set; }
+        public IPetTypeRepository PetTypeRepository { get; private set; }
+        public IPetHabitatRepository PetHabitatRepository { get; private set; }
 
         public UnitOfWork(KVSCContext context, StorageClient storageClient)
         {
@@ -35,6 +36,8 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
             PetServiceCategoryRepository = new PetServiceCategoryRepository(_context);
             ComboServiceRepository = new ComboServiceRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
+            PetTypeRepository = new PetTypeRepository(_context);
+            PetHabitatRepository = new PetHabitatRepository(_context);
         }
 
         public int Complete()

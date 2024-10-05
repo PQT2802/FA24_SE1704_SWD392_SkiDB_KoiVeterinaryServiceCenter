@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace KVSC.Domain.Entities
@@ -19,6 +20,7 @@ namespace KVSC.Domain.Entities
         public int role {  get; set; }//1 admin, 2 manager,3 veterinarian, 4 staff, 5 customer
 
         // Relationships
+        [JsonIgnore]
         public ICollection<Pet> Pets { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Cart> Carts { get; set; }

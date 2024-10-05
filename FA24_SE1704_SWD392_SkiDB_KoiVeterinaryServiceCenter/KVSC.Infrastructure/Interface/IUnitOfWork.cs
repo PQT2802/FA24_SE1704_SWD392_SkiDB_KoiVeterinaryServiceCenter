@@ -21,6 +21,8 @@ namespace KVSC.Infrastructure.Interface
         IComboServiceRepository ComboServiceRepository { get; }
         IAppointmentRepository AppointmentRepository { get; }
 
+        IPetTypeRepository PetTypeRepository { get; }
+        IPetHabitatRepository PetHabitatRepository { get; }
         int Complete();
     }
 }
