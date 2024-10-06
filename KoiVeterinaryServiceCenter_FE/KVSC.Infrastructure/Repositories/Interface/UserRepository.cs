@@ -22,44 +22,64 @@ namespace KVSC.Infrastructure.Repositories.Interface
 
         public async Task<ResponseDto<LoginResponse>> SignIn(LoginRequest loginRequest)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-in", loginRequest);
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            Debug.WriteLine($"Response Content: {responseContent}");
-
-            var options = new JsonSerializerOptions
+            try
             {
-                PropertyNameCaseInsensitive = true // This will ignore case sensitivity
-            };
+                // Send the request and get the response
+                var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-in", loginRequest);
 
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<LoginResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during sign-in."
+                    };
+                }
+
+                // If successful, deserialize the login response
+                var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(options);
+
+                return new ResponseDto<LoginResponse>
+                {
+                    IsSuccess = true,
+                    Data = loginResponse,
+                    Message = "Sign-in successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
             {
-                // Deserialize the error response using the options for case insensitivity
-                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent,options);
-
-                var error = new ResponseDto<LoginResponse>
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<LoginResponse>
                 {
                     IsSuccess = false,
                     Data = null,
-                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
-                    Message = "An error occurred during sign-in."
+                    Message = $"Request error: {httpEx.Message}"
                 };
-
-                // Log the error details for inspection
-                Debug.WriteLine($"Error Details: {JsonSerializer.Serialize(error.Errors)}");
-
-                return error;
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<LoginResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
             }
 
-            // If successful, deserialize the login response
-            var loginResponse = JsonSerializer.Deserialize<LoginResponse>(responseContent,options);
-
-            return new ResponseDto<LoginResponse>
-            {
-                IsSuccess = true,
-                Data = loginResponse,
-                Message = "Sign-in successful."
-            };
         }
     }
 }

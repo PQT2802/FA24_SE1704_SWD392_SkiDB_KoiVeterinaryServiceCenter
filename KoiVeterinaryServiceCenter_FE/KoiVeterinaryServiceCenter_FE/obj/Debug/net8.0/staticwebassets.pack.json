@@ -5,10 +5,6 @@
       "PackagePath": "staticwebassets\\KoiVeterinaryServiceCenter_FE.bundle.scp.css"
     },
     {
-      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\404.html",
-      "PackagePath": "staticwebassets\\404.html"
-    },
-    {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\LICENSE.txt",
       "PackagePath": "staticwebassets\\LICENSE.txt"
     },
@@ -23,6 +19,506 @@
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\blog.html",
       "PackagePath": "staticwebassets\\blog.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\404.html",
+      "PackagePath": "staticwebassets\\board\\404.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\board\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\READ-ME.txt",
+      "PackagePath": "staticwebassets\\board\\READ-ME.txt"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\blank.html",
+      "PackagePath": "staticwebassets\\board\\blank.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\bootstrap-admin-template-free.jpg",
+      "PackagePath": "staticwebassets\\board\\bootstrap-admin-template-free.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\button.html",
+      "PackagePath": "staticwebassets\\board\\button.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\chart.html",
+      "PackagePath": "staticwebassets\\board\\chart.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\board\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\css\\style.css",
+      "PackagePath": "staticwebassets\\board\\css\\style.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\element.html",
+      "PackagePath": "staticwebassets\\board\\element.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\form.html",
+      "PackagePath": "staticwebassets\\board\\form.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\img\\testimonial-1.jpg",
+      "PackagePath": "staticwebassets\\board\\img\\testimonial-1.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\img\\testimonial-2.jpg",
+      "PackagePath": "staticwebassets\\board\\img\\testimonial-2.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\img\\user.jpg",
+      "PackagePath": "staticwebassets\\board\\img\\user.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\index.html",
+      "PackagePath": "staticwebassets\\board\\index.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\js\\main.js",
+      "PackagePath": "staticwebassets\\board\\js\\main.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\chart\\chart.min.js",
+      "PackagePath": "staticwebassets\\board\\lib\\chart\\chart.min.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\easing\\easing.js",
+      "PackagePath": "staticwebassets\\board\\lib\\easing\\easing.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\easing\\easing.min.js",
+      "PackagePath": "staticwebassets\\board\\lib\\easing\\easing.min.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\LICENSE",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\assets\\ajax-loader.gif",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\assets\\ajax-loader.gif"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\assets\\owl.carousel.css",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\assets\\owl.carousel.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\assets\\owl.carousel.min.css",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\assets\\owl.carousel.min.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\assets\\owl.theme.default.css",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\assets\\owl.theme.default.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\assets\\owl.theme.default.min.css",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\assets\\owl.theme.default.min.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\assets\\owl.theme.green.css",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\assets\\owl.theme.green.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\assets\\owl.theme.green.min.css",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\assets\\owl.theme.green.min.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\assets\\owl.video.play.png",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\assets\\owl.video.play.png"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\owl.carousel.js",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\owl.carousel.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\owlcarousel\\owl.carousel.min.js",
+      "PackagePath": "staticwebassets\\board\\lib\\owlcarousel\\owl.carousel.min.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\tempusdominus\\css\\tempusdominus-bootstrap-4.css",
+      "PackagePath": "staticwebassets\\board\\lib\\tempusdominus\\css\\tempusdominus-bootstrap-4.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\tempusdominus\\css\\tempusdominus-bootstrap-4.min.css",
+      "PackagePath": "staticwebassets\\board\\lib\\tempusdominus\\css\\tempusdominus-bootstrap-4.min.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\tempusdominus\\js\\moment-timezone.min.js",
+      "PackagePath": "staticwebassets\\board\\lib\\tempusdominus\\js\\moment-timezone.min.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\tempusdominus\\js\\moment.min.js",
+      "PackagePath": "staticwebassets\\board\\lib\\tempusdominus\\js\\moment.min.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\tempusdominus\\js\\tempusdominus-bootstrap-4.js",
+      "PackagePath": "staticwebassets\\board\\lib\\tempusdominus\\js\\tempusdominus-bootstrap-4.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\tempusdominus\\js\\tempusdominus-bootstrap-4.min.js",
+      "PackagePath": "staticwebassets\\board\\lib\\tempusdominus\\js\\tempusdominus-bootstrap-4.min.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\waypoints\\links.php",
+      "PackagePath": "staticwebassets\\board\\lib\\waypoints\\links.php"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\lib\\waypoints\\waypoints.min.js",
+      "PackagePath": "staticwebassets\\board\\lib\\waypoints\\waypoints.min.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_accordion.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_accordion.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_alert.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_alert.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_badge.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_badge.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_breadcrumb.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_breadcrumb.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_button-group.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_button-group.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_buttons.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_buttons.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_card.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_card.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_carousel.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_carousel.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_close.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_close.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_containers.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_containers.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_dropdown.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_dropdown.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_forms.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_forms.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_functions.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_functions.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_grid.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_grid.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_helpers.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_helpers.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_images.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_images.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_list-group.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_list-group.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_mixins.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_mixins.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_modal.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_modal.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_nav.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_nav.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_navbar.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_navbar.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_offcanvas.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_offcanvas.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_pagination.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_pagination.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_popover.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_popover.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_progress.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_progress.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_reboot.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_reboot.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_root.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_root.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_spinners.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_spinners.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_tables.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_tables.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_toasts.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_toasts.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_tooltip.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_tooltip.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_transitions.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_transitions.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_type.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_type.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_utilities.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_utilities.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\_variables.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\_variables.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\bootstrap-grid.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\bootstrap-grid.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\bootstrap-reboot.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\bootstrap-reboot.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\bootstrap-utilities.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\bootstrap-utilities.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\bootstrap.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\bootstrap.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_floating-labels.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_floating-labels.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_form-check.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_form-check.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_form-control.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_form-control.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_form-range.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_form-range.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_form-select.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_form-select.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_form-text.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_form-text.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_input-group.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_input-group.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_labels.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_labels.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\forms\\_validation.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\forms\\_validation.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\helpers\\_clearfix.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\helpers\\_clearfix.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\helpers\\_colored-links.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\helpers\\_colored-links.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\helpers\\_position.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\helpers\\_position.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\helpers\\_ratio.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\helpers\\_ratio.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\helpers\\_stretched-link.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\helpers\\_stretched-link.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\helpers\\_text-truncation.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\helpers\\_text-truncation.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\helpers\\_visually-hidden.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\helpers\\_visually-hidden.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_alert.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_alert.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_border-radius.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_border-radius.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_box-shadow.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_box-shadow.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_breakpoints.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_breakpoints.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_buttons.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_buttons.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_caret.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_caret.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_clearfix.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_clearfix.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_color-scheme.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_color-scheme.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_container.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_container.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_deprecate.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_deprecate.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_forms.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_forms.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_gradients.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_gradients.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_grid.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_grid.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_image.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_image.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_list-group.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_list-group.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_lists.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_lists.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_pagination.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_pagination.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_reset-text.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_reset-text.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_resize.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_resize.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_table-variants.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_table-variants.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_text-truncate.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_text-truncate.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_transition.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_transition.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_utilities.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_utilities.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\mixins\\_visually-hidden.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\mixins\\_visually-hidden.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\utilities\\_api.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\utilities\\_api.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\scss\\bootstrap\\scss\\vendor\\_rfs.scss",
+      "PackagePath": "staticwebassets\\board\\scss\\bootstrap\\scss\\vendor\\_rfs.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\signin.html",
+      "PackagePath": "staticwebassets\\board\\signin.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\signup.html",
+      "PackagePath": "staticwebassets\\board\\signup.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\table.html",
+      "PackagePath": "staticwebassets\\board\\table.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\typography.html",
+      "PackagePath": "staticwebassets\\board\\typography.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\widget.html",
+      "PackagePath": "staticwebassets\\board\\widget.html"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\contact.html",
@@ -41,20 +537,8 @@
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
-      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\css\\stylelogin.css",
-      "PackagePath": "staticwebassets\\css\\stylelogin.css"
-    },
-    {
-      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\daycare-website-template.jpg",
-      "PackagePath": "staticwebassets\\daycare-website-template.jpg"
-    },
-    {
-      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\event.html",
-      "PackagePath": "staticwebassets\\event.html"
-    },
-    {
-      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\favicon.ico",
-      "PackagePath": "staticwebassets\\favicon.ico"
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\detail.html",
+      "PackagePath": "staticwebassets\\detail.html"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\about.jpg",
@@ -63,6 +547,10 @@
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\background.jpg",
       "PackagePath": "staticwebassets\\img\\background.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\bird.jpg",
+      "PackagePath": "staticwebassets\\img\\bird.jpg"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\blog-1.jpg",
@@ -77,8 +565,16 @@
       "PackagePath": "staticwebassets\\img\\blog-3.jpg"
     },
     {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\cat.jpg",
+      "PackagePath": "staticwebassets\\img\\cat.jpg"
+    },
+    {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\demo-1.png",
       "PackagePath": "staticwebassets\\img\\demo-1.png"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\dog.jpg",
+      "PackagePath": "staticwebassets\\img\\dog.jpg"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\event-1.jpg",
@@ -129,8 +625,40 @@
       "PackagePath": "staticwebassets\\img\\galary-9.jpg"
     },
     {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\hamster.jpg",
+      "PackagePath": "staticwebassets\\img\\hamster.jpg"
+    },
+    {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\hero-img.jpg",
       "PackagePath": "staticwebassets\\img\\hero-img.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\hero.jpg",
+      "PackagePath": "staticwebassets\\img\\hero.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\koi.jpg",
+      "PackagePath": "staticwebassets\\img\\koi.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\offer.jpg",
+      "PackagePath": "staticwebassets\\img\\offer.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\product-1.png",
+      "PackagePath": "staticwebassets\\img\\product-1.png"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\product-2.png",
+      "PackagePath": "staticwebassets\\img\\product-2.png"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\product-3.png",
+      "PackagePath": "staticwebassets\\img\\product-3.png"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\product-4.png",
+      "PackagePath": "staticwebassets\\img\\product-4.png"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\program-1.jpg",
@@ -165,6 +693,10 @@
       "PackagePath": "staticwebassets\\img\\team-4.jpg"
     },
     {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\team-5.jpg",
+      "PackagePath": "staticwebassets\\img\\team-5.jpg"
+    },
+    {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\testimonial-1.jpg",
       "PackagePath": "staticwebassets\\img\\testimonial-1.jpg"
     },
@@ -175,6 +707,14 @@
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\testimonial-3.jpg",
       "PackagePath": "staticwebassets\\img\\testimonial-3.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\testimonial.jpg",
+      "PackagePath": "staticwebassets\\img\\testimonial.jpg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\img\\user.jpg",
+      "PackagePath": "staticwebassets\\img\\user.jpg"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\index.html",
@@ -263,6 +803,22 @@
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-theme.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-theme.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-theme.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-theme.css.map"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-theme.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-theme.min.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-theme.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-theme.min.css.map"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
@@ -383,6 +939,46 @@
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\easing\\easing.min.js",
       "PackagePath": "staticwebassets\\lib\\easing\\easing.min.js"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\backup.txt",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\backup.txt"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\font\\Flaticon.eot",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\font\\Flaticon.eot"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\font\\Flaticon.svg",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\font\\Flaticon.svg"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\font\\Flaticon.ttf",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\font\\Flaticon.ttf"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\font\\Flaticon.woff",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\font\\Flaticon.woff"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\font\\Flaticon.woff2",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\font\\Flaticon.woff2"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\font\\_flaticon.scss",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\font\\_flaticon.scss"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\font\\flaticon.css",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\font\\flaticon.css"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\font\\flaticon.html",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\font\\flaticon.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\flaticon\\license\\license.pdf",
+      "PackagePath": "staticwebassets\\lib\\flaticon\\license\\license.pdf"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
@@ -517,12 +1113,16 @@
       "PackagePath": "staticwebassets\\lib\\wow\\wow.min.js"
     },
     {
-      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\login1.html",
-      "PackagePath": "staticwebassets\\login1.html"
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\pet-shop-website-template.jpg",
+      "PackagePath": "staticwebassets\\pet-shop-website-template.jpg"
     },
     {
-      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\program.html",
-      "PackagePath": "staticwebassets\\program.html"
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\price.html",
+      "PackagePath": "staticwebassets\\price.html"
+    },
+    {
+      "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\product.html",
+      "PackagePath": "staticwebassets\\product.html"
     },
     {
       "Id": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\scss\\bootstrap.scss",

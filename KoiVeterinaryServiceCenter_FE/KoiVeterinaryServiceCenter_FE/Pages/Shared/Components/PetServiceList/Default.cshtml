@@ -1,0 +1,38 @@
+﻿@model List<KVSC.Infrastructure.DTOs.Service.PetService>
+<!-- Pet Service Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+            <h6 class="text-primary text-uppercase">Pricing Plan</h6>
+            <h1 class="display-5 text-uppercase mb-0">Competitive Pricing For Pet Services</h1>
+        </div>
+        <div class="row g-5">
+            <div class="owl-carousel team-carousel position-relative" style="padding-right: 25px;">
+                @foreach (var service in Model)
+                {
+                    <div class="col-lg-4" style="width:300px">
+                        <div class="bg-light text-center pt-5 mt-lg-5">
+                            <h2 class="text-uppercase">@service.Name</h2>
+                            <div class="text-center bg-primary p-4 mb-2">
+                                <h1 class="display-4 text-white mb-0">
+                                    <small class="align-top"
+                                           style="font-size: 22px; line-height: 45px;">VND</small>@service.Price<small class="align-bottom" style="font-size: 16px; line-height: 40px;">                                        
+                                    </small>
+                                </h1>
+                            </div>
+                            <div class="text-center p-4">
+                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                    <span>@service.Description</span>
+                                    <i class="bi bi-check2 fs-4 text-primary"></i>
+                                </div>
+
+                                <a href="" class="btn btn-primary text-uppercase py-2 px-4 my-3">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                }                        
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pet Service End -->

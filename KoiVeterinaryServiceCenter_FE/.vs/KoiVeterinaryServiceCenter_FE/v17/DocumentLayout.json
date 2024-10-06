@@ -3,92 +3,164 @@
   "WorkspaceRootPath": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\repositories\\interface\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\repositories\\interface\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\user\\admin\\serviceslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\user\\admin\\serviceslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\user\\admin\\serviceslist.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\user\\admin\\serviceslist.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\components\\generictable\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\components\\generictable\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\service\\petservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\service\\petservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\service\\petserviceadminboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\service\\petserviceadminboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\service\\petservicecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\service\\petservicecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\viewcomponents\\generictableviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\viewcomponents\\generictableviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.application\\service\\implement\\petserviceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|solutionrelative:kvsc.application\\service\\implement\\petserviceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.application\\service\\interface\\ipetserviceserivce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|solutionrelative:kvsc.application\\service\\interface\\ipetserviceserivce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\viewcomponents\\petservicelistviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\viewcomponents\\petservicelistviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\viewcomponents\\pettypelistviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\viewcomponents\\pettypelistviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\viewcomponents\\petservicecategorylistviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\viewcomponents\\petservicecategorylistviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\components\\pettypelist\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\components\\pettypelist\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\user\\admin\\_adminsidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\user\\admin\\_adminsidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\user\\admin\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\user\\admin\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\ipropertynameprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\ipropertynameprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\user\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\user\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\components\\petservicelist\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\components\\petservicelist\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\components\\petservicecategorylist\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\components\\petservicecategorylist\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\wwwroot\\service.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\wwwroot\\service.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.application\\service\\implement\\petservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|solutionrelative:kvsc.application\\service\\implement\\petservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\services\\services.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\services\\services.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\services\\services.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\services\\services.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.application\\service\\implement\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|solutionrelative:kvsc.application\\service\\implement\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\errorresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\errorresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\login\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\login\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\startup\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\startup\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\pet\\pettype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\pet\\pettype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.application\\service\\interface\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|solutionrelative:kvsc.application\\service\\interface\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\wwwroot\\login1.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\wwwroot\\login1.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\repositories\\implement\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\repositories\\implement\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\login\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\login\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.application\\service\\interface\\ipetservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}|KVSC.Application\\KVSC.Application.csproj|solutionrelative:kvsc.application\\service\\interface\\ipetservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\user\\admin\\dashboard.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\user\\admin\\dashboard.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\_navbarboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\_navbarboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\_navbar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\_navbar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\wwwroot\\board\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\wwwroot\\board\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\dtos\\generictableviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\dtos\\generictableviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\repositories\\implement\\ipetrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\repositories\\implement\\ipetrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\kvsc.infrastructure\\repositories\\interface\\petrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C4CB126-EC46-462E-B092-5E2E0A406E69}|KVSC.Infrastructure\\KVSC.Infrastructure.csproj|solutionrelative:kvsc.infrastructure\\repositories\\interface\\petrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\startup\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\startup\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\wwwroot\\board\\table.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\wwwroot\\board\\table.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\shared\\_layoutcustomer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\shared\\_layoutcustomer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|d:\\study\\fall2024\\swd392\\koiveterinaryservicecenter_fe\\koiveterinaryservicecenter_fe\\pages\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD8962EF-4702-49BE-9505-F06E8CB2FE29}|KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj|solutionrelative:koiveterinaryservicecenter_fe\\pages\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -98,7 +170,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -106,267 +178,484 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\appsettings.json",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\appsettings.json",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\appsettings.json",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-26T13:38:16.139Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "DependencyInjection.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\StartUp\\DependencyInjection.cs",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\StartUp\\DependencyInjection.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\StartUp\\DependencyInjection.cs",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\StartUp\\DependencyInjection.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T11:36:10.852Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB0AAAASAAAA",
+              "DocumentIndex": 16,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\Dashboard.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\Dashboard.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\Dashboard.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-26T11:32:24.276Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "login1.html",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\login1.html",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\wwwroot\\login1.html",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\login1.html",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\wwwroot\\login1.html",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAiwDUAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-09-26T14:46:50.416Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\Repositories\\Interface\\UserRepository.cs",
-              "RelativeDocumentMoniker": "KVSC.Infrastructure\\Repositories\\Interface\\UserRepository.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\Repositories\\Interface\\UserRepository.cs",
-              "RelativeToolTip": "KVSC.Infrastructure\\Repositories\\Interface\\UserRepository.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAkwB8AAABMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T11:33:42.595Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-03T05:51:40.025Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 17,
-              "Title": "IAuthService.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Interface\\IAuthService.cs",
-              "RelativeDocumentMoniker": "KVSC.Application\\Service\\Interface\\IAuthService.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Interface\\IAuthService.cs",
-              "RelativeToolTip": "KVSC.Application\\Service\\Interface\\IAuthService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA8AAAAAAAAA",
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetServiceList\\Default.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetServiceList\\Default.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetServiceList\\Default.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetServiceList\\Default.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-03T06:44:44.207Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetServiceCategoryList\\Default.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetServiceCategoryList\\Default.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetServiceCategoryList\\Default.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetServiceCategoryList\\Default.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T15:24:56.718Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GenericTableViewComponent.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\ViewComponents\\GenericTableViewComponent.cs",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\ViewComponents\\GenericTableViewComponent.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\ViewComponents\\GenericTableViewComponent.cs",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\ViewComponents\\GenericTableViewComponent.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T14:10:00.222Z"
+              "WhenOpened": "2024-10-04T15:11:11.274Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PetServiceAdminBoard.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Service\\PetServiceAdminBoard.cs",
+              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\Service\\PetServiceAdminBoard.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Service\\PetServiceAdminBoard.cs",
+              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\Service\\PetServiceAdminBoard.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBEAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T06:46:35.541Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PetServiceCategory.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Service\\PetServiceCategory.cs",
+              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\Service\\PetServiceCategory.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Service\\PetServiceCategory.cs",
+              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\Service\\PetServiceCategory.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T14:48:30.344Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetTypeList\\Default.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetTypeList\\Default.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetTypeList\\Default.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\PetTypeList\\Default.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAABcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-04T00:34:51.066Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "_LayoutAdmin.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\_LayoutAdmin.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\_LayoutAdmin.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\_LayoutAdmin.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\_LayoutAdmin.cshtml",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAACwAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-03T06:00:51.776Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "_AdminSidebar.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\_AdminSidebar.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\_AdminSidebar.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\_AdminSidebar.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\_AdminSidebar.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAABMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-03T06:24:03.474Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ServicesList.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\ServicesList.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\ServicesList.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\ServicesList.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\ServicesList.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAABRAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-04T15:17:43.728Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\GenericTable\\Default.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\GenericTable\\Default.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\GenericTable\\Default.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\Components\\GenericTable\\Default.cshtml",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAB8AAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-04T15:12:29.286Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ServicesList.cshtml.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\ServicesList.cshtml.cs",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\ServicesList.cshtml.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\ServicesList.cshtml.cs",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\ServicesList.cshtml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T15:17:49.455Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "PetService.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Service\\PetService.cs",
+              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\Service\\PetService.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Service\\PetService.cs",
+              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\Service\\PetService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBUAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T14:48:05.356Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IPetServiceSerivce.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Interface\\IPetServiceSerivce.cs",
+              "RelativeDocumentMoniker": "KVSC.Application\\Service\\Interface\\IPetServiceSerivce.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Interface\\IPetServiceSerivce.cs",
+              "RelativeToolTip": "KVSC.Application\\Service\\Interface\\IPetServiceSerivce.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T06:55:07.479Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PetServiceListViewComponent.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetServiceListViewComponent.cs",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetServiceListViewComponent.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetServiceListViewComponent.cs",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetServiceListViewComponent.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T06:42:22.181Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PetTypeListViewComponent.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetTypeListViewComponent.cs",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetTypeListViewComponent.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetTypeListViewComponent.cs",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetTypeListViewComponent.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T06:42:25.367Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "PetServiceCategoryListViewComponent.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetServiceCategoryListViewComponent.cs",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetServiceCategoryListViewComponent.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetServiceCategoryListViewComponent.cs",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\ViewComponents\\PetServiceCategoryListViewComponent.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T14:47:52.024Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PetServiceService.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Implement\\PetServiceService.cs",
+              "RelativeDocumentMoniker": "KVSC.Application\\Service\\Implement\\PetServiceService.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Implement\\PetServiceService.cs",
+              "RelativeToolTip": "KVSC.Application\\Service\\Implement\\PetServiceService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T06:57:17.693Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "IPropertyNameProvider.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\IPropertyNameProvider.cs",
+              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\IPropertyNameProvider.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\IPropertyNameProvider.cs",
+              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\IPropertyNameProvider.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T15:33:53.6Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Services.cshtml.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Services\\Services.cshtml.cs",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Services\\Services.cshtml.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Services\\Services.cshtml.cs",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Services\\Services.cshtml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T03:19:30.519Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Services.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Services\\Services.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Services\\Services.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Services\\Services.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Services\\Services.cshtml",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAswFkAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-03T06:49:54.243Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "service.html",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\service.html",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\wwwroot\\service.html",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\service.html",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\wwwroot\\service.html",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAqwGIAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-05T16:46:21.346Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "PetService.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Implement\\PetService.cs",
+              "RelativeDocumentMoniker": "KVSC.Application\\Service\\Implement\\PetService.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Implement\\PetService.cs",
+              "RelativeToolTip": "KVSC.Application\\Service\\Implement\\PetService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T06:55:00.79Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
               "Title": "AuthService.cs",
               "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Implement\\AuthService.cs",
               "RelativeDocumentMoniker": "KVSC.Application\\Service\\Implement\\AuthService.cs",
               "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Implement\\AuthService.cs",
               "RelativeToolTip": "KVSC.Application\\Service\\Implement\\AuthService.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAjwBcAAAAIAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T14:10:09.114Z"
+              "WhenOpened": "2024-10-05T15:29:39.175Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Account\\Login.cshtml",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Account\\Login.cshtml",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Account\\Login.cshtml",
-              "ViewState": "AQIAACQAAAAAAAAAAAAowEEAAAAWAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-26T14:29:11.843Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Login.cshtml.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Account\\Login.cshtml.cs",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Account\\Login.cshtml.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Account\\Login.cshtml.cs",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Account\\Login.cshtml.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAD4vyEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T14:46:43.613Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Program.cs",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Program.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Program.cs",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T11:35:35.013Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ResponseDto.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\ResponseDto.cs",
-              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\ResponseDto.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\ResponseDto.cs",
-              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\ResponseDto.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAowBIAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T13:48:17.943Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "LoginRequest.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Login\\LoginRequest.cs",
-              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\Login\\LoginRequest.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Login\\LoginRequest.cs",
-              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\Login\\LoginRequest.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T13:49:14.117Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "LoginResponse.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Login\\LoginResponse.cs",
-              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\Login\\LoginResponse.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Login\\LoginResponse.cs",
-              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\Login\\LoginResponse.cs",
+              "DocumentIndex": 24,
+              "Title": "PetType.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Pet\\PetType.cs",
+              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\Pet\\PetType.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\Pet\\PetType.cs",
+              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\Pet\\PetType.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T13:49:24.31Z"
+              "WhenOpened": "2024-10-05T04:17:02.401Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ErrorResponse.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\ErrorResponse.cs",
-              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\ErrorResponse.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\ErrorResponse.cs",
-              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\ErrorResponse.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAnAAAA",
+              "DocumentIndex": 25,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Interface\\IAuthService.cs",
+              "RelativeDocumentMoniker": "KVSC.Application\\Service\\Interface\\IAuthService.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Interface\\IAuthService.cs",
+              "RelativeToolTip": "KVSC.Application\\Service\\Interface\\IAuthService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T00:49:22.809Z"
+              "WhenOpened": "2024-10-05T15:19:20.816Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 26,
+              "Title": "IPetService.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Interface\\IPetService.cs",
+              "RelativeDocumentMoniker": "KVSC.Application\\Service\\Interface\\IPetService.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Application\\Service\\Interface\\IPetService.cs",
+              "RelativeToolTip": "KVSC.Application\\Service\\Interface\\IPetService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T06:54:55.839Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "PetRepository.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\Repositories\\Interface\\PetRepository.cs",
+              "RelativeDocumentMoniker": "KVSC.Infrastructure\\Repositories\\Interface\\PetRepository.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\Repositories\\Interface\\PetRepository.cs",
+              "RelativeToolTip": "KVSC.Infrastructure\\Repositories\\Interface\\PetRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T15:32:51.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\_ViewStart.cshtml",
               "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\_ViewStart.cshtml",
               "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\_ViewStart.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-26T15:45:24.394Z"
+              "WhenOpened": "2024-10-03T05:53:59.387Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Error.cshtml",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Error.cshtml",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Error.cshtml",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Error.cshtml",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Error.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-26T15:45:25.545Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Privacy.cshtml",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Privacy.cshtml",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Privacy.cshtml",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Privacy.cshtml",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Privacy.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-26T15:45:30.578Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "KoiVeterinaryServiceCenter_FE.csproj",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAACQAAABFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-09-26T15:58:21.534Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "KoiVeterinaryServiceCenter_FE",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-09-26T15:58:46.751Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "_ValidationScriptsPartial.cshtml",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
-              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
-              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-26T15:45:31.676Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\Repositories\\Implement\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "KVSC.Infrastructure\\Repositories\\Implement\\IUserRepository.cs",
-              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\Repositories\\Implement\\IUserRepository.cs",
-              "RelativeToolTip": "KVSC.Infrastructure\\Repositories\\Implement\\IUserRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T11:33:26.907Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 27,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\_ViewImports.cshtml",
               "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\_ViewImports.cshtml",
               "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\_ViewImports.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-03T05:54:02.533Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "_NavbarBoard.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_NavbarBoard.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_NavbarBoard.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_NavbarBoard.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_NavbarBoard.cshtml",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAAAoAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-04T15:53:24.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "_Navbar.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_Navbar.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_Navbar.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_Navbar.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_Navbar.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-26T11:32:19.531Z"
+              "WhenOpened": "2024-10-04T15:56:20.159Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Dashboard.cshtml.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\Dashboard.cshtml.cs",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\Dashboard.cshtml.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\Dashboard.cshtml.cs",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\User\\Admin\\Dashboard.cshtml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T15:57:43.778Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "GenericTableViewModel.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\GenericTableViewModel.cs",
+              "RelativeDocumentMoniker": "KVSC.Infrastructure\\DTOs\\GenericTableViewModel.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\DTOs\\GenericTableViewModel.cs",
+              "RelativeToolTip": "KVSC.Infrastructure\\DTOs\\GenericTableViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T15:11:34.108Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "index.html",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\index.html",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\index.html",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\index.html",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\index.html",
+              "ViewState": "AQIAACIAAAAAAAAAAAAAANABAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-03T05:52:18.965Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "IPetRepository.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\Repositories\\Implement\\IPetRepository.cs",
+              "RelativeDocumentMoniker": "KVSC.Infrastructure\\Repositories\\Implement\\IPetRepository.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KVSC.Infrastructure\\Repositories\\Implement\\IPetRepository.cs",
+              "RelativeToolTip": "KVSC.Infrastructure\\Repositories\\Implement\\IPetRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T15:32:45.992Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\StartUp\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\StartUp\\DependencyInjection.cs",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\StartUp\\DependencyInjection.cs",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\StartUp\\DependencyInjection.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABoAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T06:59:44.717Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "table.html",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\table.html",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\table.html",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\table.html",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\wwwroot\\board\\table.html",
+              "ViewState": "AQIAAFgAAAAAAAAAAAD4v7YAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-03T06:38:07.937Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\_Layout.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\_Layout.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\_Layout.cshtml",
+              "ViewState": "AQIAACcAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-03T05:55:29.84Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "_LayoutCustomer.cshtml",
+              "DocumentMoniker": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_LayoutCustomer.cshtml",
+              "RelativeDocumentMoniker": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_LayoutCustomer.cshtml",
+              "ToolTip": "D:\\Study\\Fall2024\\SWD392\\KoiVeterinaryServiceCenter_FE\\KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_LayoutCustomer.cshtml",
+              "RelativeToolTip": "KoiVeterinaryServiceCenter_FE\\Pages\\Shared\\_LayoutCustomer.cshtml",
+              "ViewState": "AQIAABMAAAAAAAAAAAAiwCYAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-03T05:53:54.565Z"
             }
           ]
         }

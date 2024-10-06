@@ -1,0 +1,96 @@
+﻿@page "/Services"
+@model ServicesModel
+@{
+    ViewData["SelectedPetTypeId"] = Model.SelectedPetTypeId;
+    ViewData["SelectedPetServiceCategoryId"] = Model.SelectedPetServiceCategoryId;
+    ViewData["Title"] = "Services";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>PET SHOP - Pet Shop Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <style>
+        .center-message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh; /* Adjust the height as needed */
+            text-align: center;
+        }
+
+            .center-message p {
+                font-size: 24px; /* Make text larger */
+                font-weight: bold; /* Make the text bold (optional) */
+                color: #333; /* Change the color if needed */
+            }
+    </style>
+    <script>
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <!-- Render PetTypeList ViewComponent (Step 1: Select a Pet) -->
+    @await Component.InvokeAsync("PetTypeList")
+
+    <!-- Step 2: Render PetServiceCategoryList based on the selected PetTypeId -->
+    @if (Model.SelectedPetTypeId > 0)
+    {
+        <!-- PetServiceCategoryList is rendered when a PetTypeId is selected -->
+        @await Component.InvokeAsync("PetServiceCategoryList", new { petTypeId = Model.SelectedPetTypeId })
+
+        <!-- Step 3: Render PetServiceList based on the selected PetServiceCategoryId -->
+        @if (Model.SelectedPetServiceCategoryId > 0)
+        {
+            <!-- Add anchor for scrolling to service list -->
+            <div id="service-list-section" class="container mt-5">
+                <!-- PetServiceList is rendered when a PetServiceCategoryId is selected -->
+                @await Component.InvokeAsync("PetServiceList", new { petCategoryId = Model.SelectedPetServiceCategoryId })
+            </div>
+        }
+        else
+        {
+            <div class="center-message">
+                <p>Please select a pet service category to view services.</p>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="center-message">
+            <p>Please select a pet category to view services.</p>
+        </div>
+    }
+
+</body>
+</html>

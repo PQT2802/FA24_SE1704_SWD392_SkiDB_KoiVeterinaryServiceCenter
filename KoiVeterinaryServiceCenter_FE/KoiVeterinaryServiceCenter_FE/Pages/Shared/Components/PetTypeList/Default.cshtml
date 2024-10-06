@@ -1,0 +1,35 @@
+﻿@model List<KVSC.Infrastructure.DTOs.Pet.PetType>
+
+@{
+    var selectedPetTypeId = ViewData["SelectedPetTypeId"] != null ? Convert.ToInt32(ViewData["SelectedPetTypeId"]) : 0; // Get the selected pet type ID from ViewData
+}
+
+<!-- PetType Start -->
+<div id="pet-category-section" class="container-fluid py-5">
+    <!-- Add anchor here -->
+    <div class="container">
+        <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+            <h6 class="text-primary text-uppercase">Pets</h6>
+            <h1 class="display-5 text-uppercase mb-0">Select a Pet Category</h1>
+        </div>
+        <div class="owl-carousel team-carousel position-relative" style="padding-right: 25px;">
+            @foreach (var item in Model)
+            {
+                <form method="get" action="#pet-category-section">
+                    <!-- Action will include anchor -->
+                    <!-- PetTypeId will be passed when clicked -->
+                    <input type="hidden" name="SelectedPetTypeId" value="@item.PetTypeId" />
+                    <div class="team-item" style="cursor: pointer;" onclick="this.closest('form').submit();">
+                        <div class="position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="img/koi.jpg" alt="Image of @item.PetName">
+                        </div>
+                        <div class="bg-light text-center p-4">
+                            <h5 class="text-uppercase">@item.PetName</h5>
+                        </div>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+<!-- PetType End -->
