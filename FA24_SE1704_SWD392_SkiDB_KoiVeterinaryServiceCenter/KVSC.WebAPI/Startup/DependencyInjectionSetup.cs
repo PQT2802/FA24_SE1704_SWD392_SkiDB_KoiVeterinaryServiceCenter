@@ -1,17 +1,14 @@
-
-﻿using FirebaseAdmin;
+using FirebaseAdmin;
 using FluentValidation;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using KVSC.Application.Common.Validator.Pet;
 using KVSC.Application.Common.Validator.Product;
 using KVSC.Application.Common.Validator.ProductCategory;
-
-﻿using FluentValidation;
+using FluentValidation;
 using KVSC.Application.Common.Validator.Appointment;
 using KVSC.Application.Common.Validator.Pet;
 using KVSC.Application.Common.Validator.PetService;
-
 using KVSC.Application.Common.Validator.User;
 using KVSC.Application.Implement.Service;
 using KVSC.Application.Interface.ICommon;
@@ -23,14 +20,11 @@ using KVSC.Infrastructure.Common;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using KVSC.Infrastructure.DTOs.Pet.AddComboService;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
-
 using KVSC.Infrastructure.DTOs.Product.AddProduct;
 using KVSC.Infrastructure.DTOs.Product.UpdateProduct;
 using KVSC.Infrastructure.DTOs.ProductCategory.AddProductCategory;
 using KVSC.Infrastructure.DTOs.ProductCategory.UpdateProductCategory;
-
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
-
 using KVSC.Infrastructure.DTOs.Pet.AddPetHabitat;
 using KVSC.Infrastructure.DTOs.Pet.AddPetType;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
@@ -50,15 +44,15 @@ namespace KVSC.WebAPI.Startup
 {
     public static class DependencyInjectionSetup
     {
-
         //comr
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
+            var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), "Keys",
+                "koiveterinaryservicecent-925db-firebase-adminsdk-vus2r-93ba231cea.json");
 
-
-            var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), "koiveterinaryservicecent-925db-firebase-adminsdk-vus2r-93ba231cea.json");
             try
             {
+                // Initialize Firebase with the credentials from the JSON file
                 FirebaseApp.Create(new AppOptions()
                 {
                     Credential = GoogleCredential.FromFile(credentialPath)
@@ -66,25 +60,27 @@ namespace KVSC.WebAPI.Startup
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as necessary
+                // Log or handle the exception as necessary
                 throw new Exception("Failed to initialize Firebase.", ex);
             }
 
-            // Register the Google Cloud Storage client and any Firebase related services
+            // Register the Google Cloud Storage client and Firebase related services
             services.AddSingleton(StorageClient.Create(GoogleCredential.FromFile(credentialPath)));
 
 
-
             #region Common
+
             //Common
             services.AddTransient<IPasswordHasher, PasswordHasher>();
             services.AddTransient<UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             //Comon
+
             #endregion
 
             #region Validator
+
             //Validator
             services.AddTransient<IValidator<LoginRequest>, LoginValidator>();
             services.AddTransient<IValidator<RegisterRequest>, RegisterValidator>();
@@ -107,35 +103,40 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<MakeAppointmentForComboRequest>, MakeAppointmentForComboValidator>();
 
             //Validator
+
             #endregion
 
             #region Repositories
+
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IPetRepository,PetRepository>();
+            services.AddTransient<IPetRepository, PetRepository>();
 
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IFirebaseRepository, FirebaseRepository>();
             services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
 
-            services.AddTransient<IPetServiceRepository,PetServiceRepository>();
-            services.AddTransient<IPetServiceCategoryRepository,PetServiceCategoryRepository>();
+            services.AddTransient<IPetServiceRepository, PetServiceRepository>();
+            services.AddTransient<IPetServiceCategoryRepository, PetServiceCategoryRepository>();
             services.AddTransient<IPetServiceCategoryRepository, PetServiceCategoryRepository>();
             services.AddTransient<IComboServiceRepository, ComboServiceRepository>();
             services.AddTransient<IAppointmentRepository, AppointmentRepository>();
-
 
             #endregion
 
 
             #region GenericRepositories
+
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
             services.AddTransient<IGenericRepository<Product>, GenericRepository<Product>>();
-            services.AddTransient<IGenericRepository<ProductCategoryRepository>, GenericRepository<ProductCategoryRepository>>();
+            services
+                .AddTransient<IGenericRepository<ProductCategoryRepository>,
+                    GenericRepository<ProductCategoryRepository>>();
+
             #endregion
 
 
-
             #region Service
+
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IPetBusinessService, PetBusinessService>();
             services.AddTransient<IPetTypeService, PetTypeService>();
@@ -151,9 +152,6 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IAppointmentService, AppointmentService>();
 
             #endregion
-
-
-
 
 
             return services;

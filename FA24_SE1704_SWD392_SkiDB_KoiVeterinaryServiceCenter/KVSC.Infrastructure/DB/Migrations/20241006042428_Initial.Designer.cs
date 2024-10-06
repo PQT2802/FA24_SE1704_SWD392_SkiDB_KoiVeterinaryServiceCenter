@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KVSC.Infrastructure.Migrations
+namespace KVSC.Infrastructure.DB.Migrations
 {
     [DbContext(typeof(KVSCContext))]
-    [Migration("20241005163543_Init")]
-    partial class Init
+    [Migration("20241006042428_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KVSC.Infrastructure.Migrations
+namespace KVSC.Infrastructure.DB.Migrations
 {
     [DbContext(typeof(KVSCContext))]
     partial class KVSCContextModelSnapshot : ModelSnapshot
