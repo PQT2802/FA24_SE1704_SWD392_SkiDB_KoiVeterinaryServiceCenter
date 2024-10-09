@@ -135,6 +135,7 @@ var logger = app.Services.GetRequiredService<ILogger<Program>>();
 logger.LogInformation("App is starting...");
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.MigrateDatabases();
 app.MapControllers();
 
 app.Run();

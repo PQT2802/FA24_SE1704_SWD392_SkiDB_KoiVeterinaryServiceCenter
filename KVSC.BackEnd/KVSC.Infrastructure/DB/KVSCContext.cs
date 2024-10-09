@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DB.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace KVSC.Infrastructure.DB
@@ -41,6 +42,19 @@ namespace KVSC.Infrastructure.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            #region
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            #endregion
+
+
+
+
+
+
+
+
             // Define table names
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Pet>().ToTable("Pet");
