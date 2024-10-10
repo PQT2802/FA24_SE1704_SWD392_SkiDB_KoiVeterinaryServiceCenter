@@ -8,16 +8,16 @@ namespace KVSC.Domain.Entities
 {
     public class Veterinarian : BaseEntity
     {
-        public Guid UserId { get; set; } 
+        public Guid UserId { get; set; }  // Foreign key to the User entity
 
         public string LicenseNumber { get; set; } // Số giấy phép hành nghề
         public string Specialty { get; set; } // Chuyên môn
         public decimal ConsultationFee { get; set; } // Phí tư vấn
         public string Qualifications { get; set; } // Học vị/chứng chỉ
 
-
         // Navigation properties
-        public User User { get; set; } // Quan hệ với User
-        public ICollection<VeterinarianSchedule> VeterinarianSchedules { get; set; } // Quan hệ với VeterinarianSchedule
+        public virtual User User { get; set; } // Quan hệ với User, marked as virtual for lazy loading
+        public virtual ICollection<AppointmentVeterinarian> AppointmentVeterinarians { get; set; } // Quan hệ với AppointmentVeterinarian
+        public virtual ICollection<VeterinarianSchedule> VeterinarianSchedules { get; set; } // Quan hệ với VeterinarianSchedule
     }
 }

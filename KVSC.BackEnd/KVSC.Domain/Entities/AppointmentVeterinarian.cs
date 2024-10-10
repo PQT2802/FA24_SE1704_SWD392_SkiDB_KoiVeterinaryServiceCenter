@@ -13,6 +13,6 @@ namespace KVSC.Domain.Entities
 
         // Navigation properties
         public Appointment Appointment { get; set; }
-        public User Veterinarian { get; set; } 
+        public Veterinarian Veterinarian { get; set; } 
     }
 }

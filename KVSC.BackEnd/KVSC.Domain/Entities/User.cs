@@ -25,7 +25,7 @@ namespace KVSC.Domain.Entities
         public ICollection<Order> Orders { get; set; }
         public ICollection<Cart> Carts { get; set; }
         public Veterinarian Veterinarian { get; set; }
-        public ICollection<AppointmentVeterinarian> AppointmentVeterinarians { get; set; }//dành cho veterinarians
+        
 
         // Thêm quan hệ với Appointment
         public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment

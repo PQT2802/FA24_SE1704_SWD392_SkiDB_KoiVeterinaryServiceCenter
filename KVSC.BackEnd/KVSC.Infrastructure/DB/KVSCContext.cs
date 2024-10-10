@@ -37,6 +37,10 @@ namespace KVSC.Infrastructure.DB
         public DbSet<VeterinarianSchedule> VeterinarianSchedules { get; set; }
         public DbSet<PetType> PetTypes { get; set; }
         public DbSet<PetHabitat> PetHabitats { get; set; }
+        public DbSet<ServiceReport> ServiceReports { get; set; }
+        public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<PrescriptionDetail> PrescriptionDetails { get; set; }
+        public DbSet<AppointmentVeterinarian> AppointmentVeterinarians { get; set; }
         #endregion
 
 
@@ -74,6 +78,10 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<VeterinarianSchedule>().ToTable("VeterinarianSchedule");
             modelBuilder.Entity<PetType>().ToTable("PetType");
             modelBuilder.Entity<PetHabitat>().ToTable("PetHabitat");
+            modelBuilder.Entity<ServiceReport>().ToTable("ServiceReport");
+            modelBuilder.Entity<Prescription>().ToTable("Prescription");
+            modelBuilder.Entity<PrescriptionDetail>().ToTable("PrescriptionDetail");
+            modelBuilder.Entity<AppointmentVeterinarian>().ToTable("AppointmentVeterinarian");
 
             // Relationships and additional configuration
 
@@ -203,11 +211,6 @@ namespace KVSC.Infrastructure.DB
                .OnDelete(DeleteBehavior.Restrict);
 
 
-            modelBuilder.Entity<AppointmentVeterinarian>()
-                .HasOne(av => av.Veterinarian)
-                .WithMany(v => v.AppointmentVeterinarians)
-                .HasForeignKey(av => av.VeterinarianId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             // Quan hệ một-một giữa User và Veterinarian
             modelBuilder.Entity<Veterinarian>()
@@ -233,6 +236,30 @@ namespace KVSC.Infrastructure.DB
                 .HasForeignKey(pt => pt.PetHabitatId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
+            // PrescriptionDetail and Product - many-to-one relationship
+            modelBuilder.Entity<PrescriptionDetail>()
+                .HasOne(pd => pd.Medicine)
+                .WithMany()
+                .HasForeignKey(pd => pd.MedicineId).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AppointmentVeterinarian>()
+    .HasOne(av => av.Appointment)
+    .WithMany(a => a.AppointmentVeterinarians)
+    .HasForeignKey(av => av.AppointmentId).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AppointmentVeterinarian>()
+                .HasOne(av => av.Veterinarian) // Reference the Veterinarian entity, not User
+                .WithMany(v => v.AppointmentVeterinarians)
+                .HasForeignKey(av => av.VeterinarianId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            modelBuilder.Entity<PrescriptionDetail>()
+        .HasOne(pd => pd.Medicine)
+        .WithMany()
+        .HasForeignKey(pd => pd.MedicineId)
+        .OnDelete(DeleteBehavior.Restrict);
             // Call base method
             base.OnModelCreating(modelBuilder);
         }
