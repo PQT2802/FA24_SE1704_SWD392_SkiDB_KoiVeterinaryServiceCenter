@@ -1,6 +1,6 @@
 using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
-using KVSC.Infrastructure.DTOs.Login;
+using KVSC.Infrastructure.DTOs.User.Login;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

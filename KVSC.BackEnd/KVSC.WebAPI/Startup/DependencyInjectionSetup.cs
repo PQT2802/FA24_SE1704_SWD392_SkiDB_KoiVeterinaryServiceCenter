@@ -150,6 +150,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IPetServiceCategoryService, PetServiceCategoryService>();
             services.AddTransient<IComboServiceService, ComboServiceService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
+            services.AddTransient<ITokenService, TokenService>();
 
             #endregion
 

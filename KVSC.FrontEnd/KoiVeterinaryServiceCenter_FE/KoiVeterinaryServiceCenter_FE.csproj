@@ -53,4 +53,12 @@
     <ProjectReference Include="..\KVSC.Application\KVSC.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\User\Admin\" />
+    <Folder Include="Pages\User\Customer\" />
+    <Folder Include="Pages\User\Manager\" />
+    <Folder Include="Pages\User\Veterinarian\" />
+    <Folder Include="Pages\User\Staff\" />
+  </ItemGroup>
+
 </Project>

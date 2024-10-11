@@ -260,6 +260,11 @@ namespace KVSC.Infrastructure.DB
         .WithMany()
         .HasForeignKey(pd => pd.MedicineId)
         .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ServiceReport>()
+    .HasOne(sr => sr.Prescription)
+    .WithOne(p => p.ServiceReport)
+    .HasForeignKey<Prescription>(p => p.ServiceReportId);
             // Call base method
             base.OnModelCreating(modelBuilder);
         }

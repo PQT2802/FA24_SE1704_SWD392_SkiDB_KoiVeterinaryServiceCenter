@@ -12,6 +12,8 @@ namespace KVSC.Domain.Entities
         public virtual ServiceReport Report { get; set; }
 
         public DateTime PrescriptionDate { get; set; }
+        public Guid? ServiceReportId { get; set; }
         public virtual ICollection<PrescriptionDetail> PrescriptionDetails { get; set; }
+        public virtual ServiceReport ServiceReport { get; set; }
     }
 }

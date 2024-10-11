@@ -5,9 +5,9 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KoiVeterinaryServiceCenter_FE", "KoiVeterinaryServiceCenter_FE\KoiVeterinaryServiceCenter_FE.csproj", "{CD8962EF-4702-49BE-9505-F06E8CB2FE29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVSC.Application", "KVSC.Application\KVSC.Application.csproj", "{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KVSC.Application", "KVSC.Application\KVSC.Application.csproj", "{9991ED14-DCBC-43C5-BB6D-156AC5C3BC4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVSC.Infrastructure", "KVSC.Infrastructure\KVSC.Infrastructure.csproj", "{1C4CB126-EC46-462E-B092-5E2E0A406E69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KVSC.Infrastructure", "KVSC.Infrastructure\KVSC.Infrastructure.csproj", "{1C4CB126-EC46-462E-B092-5E2E0A406E69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

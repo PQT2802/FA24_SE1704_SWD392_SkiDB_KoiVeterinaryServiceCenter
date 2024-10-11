@@ -1,0 +1,77 @@
+﻿@model KVSC.Infrastructure.DTOs.GenericTableViewModel
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Responsive Table</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No.</th>
+                                @foreach (var propName in Model.PropertyNames)
+                                {
+                                    <th scope="col">@propName</th>
+                                }
+                                @if (Model.PropertyNames.Contains("Status"))
+                                {
+                                    <th scope="col">Status</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Items != null && Model.Items.Any())
+                            {
+                                @foreach (var (item, index) in Model.Items.Select((item, index) => (item, index)))
+                                {
+                                    <tr>
+                                        <th scope="row">@(index + 1)</th>
+                                        @foreach (var propName in Model.PropertyNames)
+                                        {
+                                            <td>@item.GetType().GetProperty(propName)?.GetValue(item)</td>
+                                        }
+
+                                        @* Define variables for status class and value before using them *@
+                                        @{
+                                            var statusClass = "bg-secondary text-white"; // Default class
+                                            var statusValue = "";
+
+                                            var statusProp = item.GetType().GetProperty("Status");
+                                            if (statusProp != null)
+                                            {
+                                                statusValue = statusProp.GetValue(item)?.ToString();
+                                                statusClass = statusValue switch
+                                                {
+                                                    "Completed" => "bg-success text-white",
+                                                    "Implementing" => "bg-primary text-white",
+                                                    "Pending" => "bg-warning text-dark",
+                                                    "Rejected" => "bg-danger text-white",
+                                                    _ => "bg-secondary text-white"
+                                                };
+                                            }
+                                        }
+
+                                        @* Apply the dynamic status class and display the status value *@
+                                        <td class="@statusClass">
+                                            @statusValue
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="@Model.PropertyNames.Count + 2">No items available</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

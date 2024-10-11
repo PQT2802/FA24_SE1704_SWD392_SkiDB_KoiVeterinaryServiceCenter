@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace KVSC.Infrastructure.DB.Migrations
+namespace KVSC.Infrastructure.Migrations
 {
     [DbContext(typeof(KVSCContext))]
     partial class KVSCContextModelSnapshot : ModelSnapshot
@@ -40,6 +40,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<DateTime?>("CompletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -48,6 +51,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -84,11 +90,17 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<Guid>("AppointmentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -102,13 +114,16 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.HasIndex("VeterinarianId");
 
-                    b.ToTable("AppointmentVeterinarian");
+                    b.ToTable("AppointmentVeterinarian", (string)null);
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.Cart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -119,6 +134,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -139,11 +157,17 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<Guid>("CartId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -177,6 +201,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -185,6 +212,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -207,11 +237,17 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<Guid>("ComboServiceId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -234,6 +270,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -242,6 +281,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -272,6 +314,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<DateTime?>("AppointmentDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -281,6 +326,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -331,11 +379,17 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -375,6 +429,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -397,6 +454,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<double>("Length")
                         .HasColumnType("float");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -429,6 +489,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -438,6 +501,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -462,6 +528,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<decimal>("BasePrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -475,6 +544,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -506,6 +578,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -515,6 +590,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -538,6 +616,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -547,6 +628,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -565,10 +649,84 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.ToTable("PetType", (string)null);
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.Prescription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PrescriptionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReportId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ServiceReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportId1");
+
+                    b.HasIndex("ServiceReportId")
+                        .IsUnique()
+                        .HasFilter("[ServiceReportId] IS NOT NULL");
+
+                    b.ToTable("Prescription", (string)null);
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.PrescriptionDetail", b =>
+                {
+                    b.Property<Guid>("PrescriptionDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MedicineId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PrescriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("PrescriptionDetailId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("PrescriptionId");
+
+                    b.ToTable("PrescriptionDetail", (string)null);
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -584,6 +742,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -614,6 +775,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -623,6 +787,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -636,6 +803,101 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.ToTable("ProductCategory", (string)null);
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            RoleName = "admin"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            RoleName = "manager"
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            RoleName = "veterinarian"
+                        },
+                        new
+                        {
+                            RoleId = 4,
+                            RoleName = "staff"
+                        },
+                        new
+                        {
+                            RoleId = 5,
+                            RoleName = "customer"
+                        });
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.ServiceReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasPrescription")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PrescriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Recommendations")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReportContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReportDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.ToTable("ServiceReport", (string)null);
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -645,6 +907,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -663,6 +928,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
@@ -675,7 +943,6 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -688,6 +955,134 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4feb4940-94dc-4aed-b580-ee116b668704"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2343),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@gmail.com",
+                            FullName = "Admin",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Admin",
+                            role = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2360),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "manager@gmail.com",
+                            FullName = "Manager",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Manager",
+                            role = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2364),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "veterinarian1@gmail.com",
+                            FullName = "Veterinarian_1",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Veterinarian_1",
+                            role = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2366),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "veterinarian2@gmail.com",
+                            FullName = "Veterinarian_2",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Veterinarian_2",
+                            role = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("5f28fcb6-675b-4f97-a925-01ac8c68b5ac"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2369),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "staff1@gmail.com",
+                            FullName = "Staff_1",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Staff_1",
+                            role = 4
+                        },
+                        new
+                        {
+                            Id = new Guid("0d1fbbab-a175-4d90-8291-d5d96ebb9359"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2381),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "staff2@gmail.com",
+                            FullName = "Staff_2",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Staff_2",
+                            role = 4
+                        },
+                        new
+                        {
+                            Id = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2383),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "customer1@gmail.com",
+                            FullName = "Customer_1",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Customer_1",
+                            role = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2386),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "customer2@gmail.com",
+                            FullName = "Customer_2",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Customer_2",
+                            role = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
+                            Address = "123 Main St",
+                            CreatedDate = new DateTime(2024, 10, 11, 4, 0, 5, 156, DateTimeKind.Utc).AddTicks(2388),
+                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "customer3@gmail.com",
+                            FullName = "Customer_3",
+                            IsDeleted = false,
+                            PasswordHash = "String123!",
+                            PhoneNumber = "123456789",
+                            Username = "Customer_3",
+                            role = 5
+                        });
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.Veterinarian", b =>
@@ -696,8 +1091,8 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("ConsultationFee")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -708,6 +1103,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Property<string>("LicenseNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -737,6 +1135,9 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -751,6 +1152,9 @@ namespace KVSC.Infrastructure.DB.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -805,7 +1209,7 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("KVSC.Domain.Entities.User", "Veterinarian")
+                    b.HasOne("KVSC.Domain.Entities.Veterinarian", "Veterinarian")
                         .WithMany("AppointmentVeterinarians")
                         .HasForeignKey("VeterinarianId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -973,6 +1377,42 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Navigation("PetHabitat");
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.Prescription", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.ServiceReport", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KVSC.Domain.Entities.ServiceReport", "ServiceReport")
+                        .WithOne("Prescription")
+                        .HasForeignKey("KVSC.Domain.Entities.Prescription", "ServiceReportId");
+
+                    b.Navigation("Report");
+
+                    b.Navigation("ServiceReport");
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.PrescriptionDetail", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.Product", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("KVSC.Domain.Entities.Prescription", "Prescription")
+                        .WithMany("PrescriptionDetails")
+                        .HasForeignKey("PrescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medicine");
+
+                    b.Navigation("Prescription");
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.Product", b =>
                 {
                     b.HasOne("KVSC.Domain.Entities.ProductCategory", "ProductCategory")
@@ -982,6 +1422,17 @@ namespace KVSC.Infrastructure.DB.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductCategory");
+                });
+
+            modelBuilder.Entity("KVSC.Domain.Entities.ServiceReport", b =>
+                {
+                    b.HasOne("KVSC.Domain.Entities.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("KVSC.Domain.Entities.Veterinarian", b =>
@@ -1053,6 +1504,11 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Navigation("Pets");
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.Prescription", b =>
+                {
+                    b.Navigation("PrescriptionDetails");
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.Product", b =>
                 {
                     b.Navigation("OrderItems");
@@ -1063,10 +1519,13 @@ namespace KVSC.Infrastructure.DB.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("KVSC.Domain.Entities.ServiceReport", b =>
+                {
+                    b.Navigation("Prescription");
+                });
+
             modelBuilder.Entity("KVSC.Domain.Entities.User", b =>
                 {
-                    b.Navigation("AppointmentVeterinarians");
-
                     b.Navigation("Appointments");
 
                     b.Navigation("Carts");
@@ -1081,6 +1540,8 @@ namespace KVSC.Infrastructure.DB.Migrations
 
             modelBuilder.Entity("KVSC.Domain.Entities.Veterinarian", b =>
                 {
+                    b.Navigation("AppointmentVeterinarians");
+
                     b.Navigation("VeterinarianSchedules");
                 });
 #pragma warning restore 612, 618

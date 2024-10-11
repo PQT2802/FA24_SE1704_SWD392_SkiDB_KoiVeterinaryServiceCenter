@@ -1,6 +1,8 @@
 ﻿using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
-using KVSC.Infrastructure.DTOs.Login;
+using KVSC.Infrastructure.DTOs.User;
+using KVSC.Infrastructure.DTOs.User.Login;
+using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Repositories.Implement;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,18 @@ namespace KVSC.Application.Service.Implement
         {
             // Gửi yêu cầu đến API để xác thực Google ID Token
             var response = await _userRepository.GoogleSignIn(googleSignInRequest);
+            return response;
+        }
+
+        public async Task<ResponseDto<SignUpResponse>> SignUp(SignUpRequest signUpRequest)
+        {
+            var response = await _userRepository.SignUp(signUpRequest);
+            return response;
+        }
+
+        public async Task<ResponseDto<UserInfo>> GetUserInforByToken(string token)
+        {
+            var response = await _userRepository.GetUserInforByToken(token);
             return response;
         }
     }

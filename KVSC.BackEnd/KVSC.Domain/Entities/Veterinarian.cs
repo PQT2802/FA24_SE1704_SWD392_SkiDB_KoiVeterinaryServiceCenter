@@ -12,7 +12,6 @@ namespace KVSC.Domain.Entities
 
         public string LicenseNumber { get; set; } // Số giấy phép hành nghề
         public string Specialty { get; set; } // Chuyên môn
-        public decimal ConsultationFee { get; set; } // Phí tư vấn
         public string Qualifications { get; set; } // Học vị/chứng chỉ
 
         // Navigation properties

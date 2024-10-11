@@ -5,6 +5,7 @@ using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.Common;
+using KVSC.Infrastructure.DTOs.Common;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Interface;
@@ -30,18 +31,22 @@ namespace KVSC.Application.Implement.Service
         private readonly IValidator<LoginRequest> _loginRequestValidator;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IConfiguration _configuration;
+        private readonly ITokenService _tokenService;
+
 
         public AuthService(
             IUnitOfWork unitOfWork,
             IValidator<RegisterRequest> registerRequestValidator,
             IValidator<LoginRequest> loginRequestValidator,
-            IPasswordHasher passwordHasher
+            IPasswordHasher passwordHasher,
+            ITokenService tokenService
             )
         {
             _unitOfWork = unitOfWork;
             _registerRequestValidator = registerRequestValidator;
             _loginRequestValidator = loginRequestValidator;
             _passwordHasher = passwordHasher;
+            _tokenService = tokenService;
         }
 
         public async Task<Result> SignIn(LoginRequest loginRequest)
@@ -56,17 +61,26 @@ namespace KVSC.Application.Implement.Service
                 // Handle errors as needed, e.g., return them in a Result object
                 return Result.Failures(errors);
             }
-            var userLogin = await _unitOfWork.UserRepository.GetByAsync("Email", loginRequest.Email); // fixxxxxxxxxx
-            var checkPassword = _passwordHasher.VerifyPassword(loginRequest.Password, userLogin.PasswordHash);
-            if (userLogin == null || checkPassword == false)
+            var userLogin = await _unitOfWork.UserRepository.GetUserByEmailAndPasswordAsync(loginRequest.Email, loginRequest.Password); 
+            
+            if (userLogin == null)
             {
                 return Result.Failure(UserErrorMessage.UserNotExist());
             }
-
+            var c = new CurrentUserObject
+            {
+                UserId = userLogin.Id,
+                Fullname = userLogin.FullName,
+                Email = userLogin.Email,
+                Phone = userLogin.PhoneNumber,
+                RoleId = userLogin.role,
+            };
+            var token = await _tokenService.GenerateTokenAsync(c);
+            var accessToken = await _tokenService.GenerateAccessTokenAsync(token);
             var loginResponse = new LoginResponse
             {
                 ReNewToken = "Test",
-                AccessToken = "Test",
+                AccessToken = accessToken,
             };
 
             return Result.SuccessWithObject(loginResponse);
@@ -87,7 +101,7 @@ namespace KVSC.Application.Implement.Service
             {
                 Id = Guid.NewGuid(),
                 Email = registerRequest.Email,
-                PasswordHash = _passwordHasher.HashPassword(registerRequest.Password),
+                PasswordHash = registerRequest.Password,
                 Username = registerRequest.UserName
 
             };
