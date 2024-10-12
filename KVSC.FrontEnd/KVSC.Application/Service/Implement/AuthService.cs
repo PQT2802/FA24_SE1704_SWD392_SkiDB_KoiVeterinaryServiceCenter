@@ -3,7 +3,7 @@ using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
-using KVSC.Infrastructure.Repositories.Implement;
+using KVSC.Infrastructure.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

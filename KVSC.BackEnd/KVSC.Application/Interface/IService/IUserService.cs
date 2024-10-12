@@ -10,6 +10,6 @@ namespace KVSC.Application.Interface.IService
 {
     public interface IUserService
     {
-        
+        Task<Result> GetUserByEmail(string email);
     }
 }

@@ -54,7 +54,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\User\Admin\" />
     <Folder Include="Pages\User\Customer\" />
     <Folder Include="Pages\User\Manager\" />
     <Folder Include="Pages\User\Veterinarian\" />

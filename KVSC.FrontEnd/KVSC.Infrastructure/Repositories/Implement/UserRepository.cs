@@ -2,7 +2,7 @@
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
-using KVSC.Infrastructure.Repositories.Implement;
+using KVSC.Infrastructure.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.Repositories.Interface
+namespace KVSC.Infrastructure.Repositories.Implement
 {
     public class UserRepository : IUserRepository
     {
@@ -30,6 +30,7 @@ namespace KVSC.Infrastructure.Repositories.Interface
                 // Send the request and get the response
                 var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-in", loginRequest);
 
+                /// must have
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true

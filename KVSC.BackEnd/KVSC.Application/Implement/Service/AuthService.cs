@@ -39,7 +39,8 @@ namespace KVSC.Application.Implement.Service
             IValidator<RegisterRequest> registerRequestValidator,
             IValidator<LoginRequest> loginRequestValidator,
             IPasswordHasher passwordHasher,
-            ITokenService tokenService
+            ITokenService tokenService,
+            IConfiguration configuration
             )
         {
             _unitOfWork = unitOfWork;
@@ -47,6 +48,7 @@ namespace KVSC.Application.Implement.Service
             _loginRequestValidator = loginRequestValidator;
             _passwordHasher = passwordHasher;
             _tokenService = tokenService;
+            _configuration = configuration;
         }
 
         public async Task<Result> SignIn(LoginRequest loginRequest)
@@ -77,6 +79,7 @@ namespace KVSC.Application.Implement.Service
             };
             var token = await _tokenService.GenerateTokenAsync(c);
             var accessToken = await _tokenService.GenerateAccessTokenAsync(token);
+            //var accessToken =  GenerateJwtToken(c.Email, c.RoleId, 180);
             var loginResponse = new LoginResponse
             {
                 ReNewToken = "Test",
@@ -112,7 +115,7 @@ namespace KVSC.Application.Implement.Service
             }
             return Result.SuccessWithObject(newUser);
         }
-        public string GenerateJwtToken(string email, int Role, double expirationMinutes)//them tham so role de phan quyen
+        public  string GenerateJwtToken(string email, int Role, double expirationMinutes)//them tham so role de phan quyen
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

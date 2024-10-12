@@ -19,8 +19,8 @@ namespace KVSC.Application.Common
         }
         public async Task<CurrentUserObject> GetThisUserInfo(HttpContext httpContext)
         {
-            // Check if the user has an Email claim
-            var checkUser = httpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+            // Check if the user has an "email" claim
+            var checkUser = httpContext.User.Claims.FirstOrDefault(c => c.Type == "email");
             if (checkUser == null)
             {
                 return null;  // Return early if the user is not authenticated
@@ -31,11 +31,11 @@ namespace KVSC.Application.Common
             {
                 Email = checkUser.Value,
                 Fullname = httpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value,
-                Phone = httpContext.User.Claims.FirstOrDefault(c => c.Type == "Phone")?.Value
+                Phone = httpContext.User.Claims.FirstOrDefault(c => c.Type == "phone")?.Value
             };
 
             // Convert UserId claim (string) to Guid
-            var userIdClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+            var userIdClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
             if (Guid.TryParse(userIdClaim, out Guid userId))
             {
                 currentUser.UserId = userId;
@@ -47,7 +47,7 @@ namespace KVSC.Application.Common
             }
 
             // Handle RoleId (parsing to int)
-            var roleClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            var roleClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
             currentUser.RoleId = int.TryParse(roleClaim, out int roleId) ? roleId : -1;
 
             return currentUser;

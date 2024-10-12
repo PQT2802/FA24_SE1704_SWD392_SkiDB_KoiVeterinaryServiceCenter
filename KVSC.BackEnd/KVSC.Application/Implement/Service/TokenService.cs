@@ -33,10 +33,11 @@ namespace KVSC.Application.Implement.Service
             var role = currentUserObject.RoleId switch
             {
                 1 => "Admin",
-                2 => "Vet",
+                2 => "Veterinarian",
                 3 => "Manager",
                 4 => "Staff",
-                5 => "Customer"
+                5 => "Customer",
+                _ => throw new InvalidOperationException("Unknown role.")
             };
 
             var tokenDescription = new SecurityTokenDescriptor
@@ -46,15 +47,13 @@ namespace KVSC.Application.Implement.Service
             new Claim(JwtRegisteredClaimNames.Sub, currentUserObject.UserId.ToString()),  // Ensure UserId is string
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Name, currentUserObject.Fullname),
-            new Claim("Phone", currentUserObject.Phone),
+            new Claim("phone", currentUserObject.Phone),
             new Claim(ClaimTypes.Role, currentUserObject.RoleId.ToString()),
-            new Claim(ClaimTypes.Email, currentUserObject.Email),
-            new Claim("UserId", currentUserObject.UserId.ToString())  // UserId to string to avoid type conflicts
+            new Claim("email", currentUserObject.Email),
+            new Claim("userId", currentUserObject.UserId.ToString())  // UserId to string to avoid type conflicts
         }),
-                Expires = DateTime.UtcNow.AddMinutes(180),  // Set token expiration (adjust if needed)
+                Expires = DateTime.UtcNow.AddMinutes(180),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature),
-
-                // Retrieve Issuer and Audience from configuration
                 Issuer = _configuration["Jwt:Issuer"],
                 Audience = _configuration["Jwt:Audience"]
             };
@@ -72,8 +71,7 @@ namespace KVSC.Application.Implement.Service
         public async Task<string> GenerateAccessTokenAsync(SecurityToken token)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-            var accessToken = jwtTokenHandler.WriteToken(token);
-            return accessToken;
+            return await Task.FromResult(jwtTokenHandler.WriteToken(token));
         }
     }
 }

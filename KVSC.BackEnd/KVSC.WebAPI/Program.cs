@@ -99,7 +99,7 @@ builder.Services.AddControllers()
 
 
 
-
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.RegisterServices();
 
@@ -134,6 +134,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 logger.LogInformation("App is starting...");
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MigrateDatabases();
 app.MapControllers();

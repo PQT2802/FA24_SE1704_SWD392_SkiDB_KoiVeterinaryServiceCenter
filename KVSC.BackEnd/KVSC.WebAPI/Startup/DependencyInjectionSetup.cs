@@ -39,6 +39,7 @@ using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using KVSC.Application.KVSC.Application.Implement.Service;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -152,6 +153,12 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<ITokenService, TokenService>();
 
+
+            services.AddTransient<IUserService, UserService>();
+
+
+
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             #endregion
 
 

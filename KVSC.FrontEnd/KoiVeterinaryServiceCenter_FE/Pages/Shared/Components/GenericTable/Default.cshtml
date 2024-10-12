@@ -15,10 +15,7 @@
                                 {
                                     <th scope="col">@propName</th>
                                 }
-                                @if (Model.PropertyNames.Contains("Status"))
-                                {
-                                    <th scope="col">Status</th>
-                                }
+                                <th scope="col">Actions</th> <!-- Action Column -->
                             </tr>
                         </thead>
                         <tbody>
@@ -33,29 +30,9 @@
                                             <td>@item.GetType().GetProperty(propName)?.GetValue(item)</td>
                                         }
 
-                                        @* Define variables for status class and value before using them *@
-                                        @{
-                                            var statusClass = "bg-secondary text-white"; // Default class
-                                            var statusValue = "";
-
-                                            var statusProp = item.GetType().GetProperty("Status");
-                                            if (statusProp != null)
-                                            {
-                                                statusValue = statusProp.GetValue(item)?.ToString();
-                                                statusClass = statusValue switch
-                                                {
-                                                    "Completed" => "bg-success text-white",
-                                                    "Implementing" => "bg-primary text-white",
-                                                    "Pending" => "bg-warning text-dark",
-                                                    "Rejected" => "bg-danger text-white",
-                                                    _ => "bg-secondary text-white"
-                                                };
-                                            }
-                                        }
-
-                                        @* Apply the dynamic status class and display the status value *@
-                                        <td class="@statusClass">
-                                            @statusValue
+                                        <td>
+                                            @* Render Action Buttons from Partial View *@
+                                            @Html.Partial("_ActionButtons", Model.ListType)
                                         </td>
                                     </tr>
                                 }
