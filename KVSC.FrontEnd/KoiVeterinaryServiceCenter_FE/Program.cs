@@ -6,6 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.RegisterServices(builder.Configuration);
 
+// Add session services
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true; // Make the session cookie HTTP-only for security
+    options.Cookie.IsEssential = true; // Ensure session cookie is always stored
+});
 
 // Configure Cookie Policy
 builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -13,11 +20,8 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.Lax; // Use Lax or Strict
     options.Secure = CookieSecurePolicy.Always; // Ensure cookies are sent only over HTTPS
 });
-//builder.Services.AddControllers()
-//    .AddJsonOptions(options =>
-//    {
-//        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-//    });
+
+// Build the app
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,6 +35,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Use session before authorization
+app.UseSession(); // Enable session middleware
 
 // Use Cookie Policy middleware
 app.UseCookiePolicy();

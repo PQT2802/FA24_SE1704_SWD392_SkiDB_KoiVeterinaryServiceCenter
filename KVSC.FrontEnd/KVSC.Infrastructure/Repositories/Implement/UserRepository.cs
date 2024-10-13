@@ -184,7 +184,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 // Send the request and get the response
-                var response = await _httpClient.GetAsync("api/User/infor");
+                var response = await _httpClient.GetAsync("api/User/user-infor");
 
                 var options = new JsonSerializerOptions
                 {

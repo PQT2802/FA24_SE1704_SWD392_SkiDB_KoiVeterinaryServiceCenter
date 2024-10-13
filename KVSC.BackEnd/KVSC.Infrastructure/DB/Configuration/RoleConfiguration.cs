@@ -19,27 +19,27 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Role
                 {
                     RoleId = 1,
-                    RoleName = "admin"
+                    RoleName = "Admin"
                 },
                  new Role
                  {
                      RoleId = 2,
-                     RoleName = "manager"
+                     RoleName = "Manager"
                  },
                   new Role
                   {
                       RoleId = 3,
-                      RoleName = "veterinarian"
+                      RoleName = "Veterinarian"
                   },
                   new Role
                   {
                       RoleId = 4,
-                      RoleName = "staff"
+                      RoleName = "Staff"
                   },
                   new Role
                   {
                       RoleId = 5,
-                      RoleName = "customer"
+                      RoleName = "Customer"
                   }
 
                 );

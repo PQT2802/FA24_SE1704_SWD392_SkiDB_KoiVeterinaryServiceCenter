@@ -1,0 +1,57 @@
+﻿<div class="bg-light rounded h-100 p-4">
+    <h6 class="mb-4">Pet Service Form</h6>
+
+    <form method="post">
+        <!-- Adjust the action URL to your Razor page -->
+        <!-- Name Input -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" name="AddServiceRequest.Name" placeholder="Service Name">
+            <label for="name">Service Name</label>
+        </div>
+
+        <!-- Pet Service Category ID -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="petServiceCategoryId" name="AddServiceRequest.PetServiceCategoryId" placeholder="Category ID">
+            <label for="petServiceCategoryId">Pet Service Category ID</label>
+        </div>
+
+        <!-- Base Price -->
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="basePrice" name="AddServiceRequest.BasePrice" placeholder="Base Price">
+            <label for="basePrice">Base Price</label>
+        </div>
+
+        <!-- Duration -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="duration" name="AddServiceRequest.Duration" placeholder="Duration">
+            <label for="duration">Duration</label>
+        </div>
+
+        <!-- Image URL -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="imageUrl" name="AddServiceRequest.ImageUrl" placeholder="Image URL">
+            <label for="imageUrl">Image URL</label>
+        </div>
+
+        <!-- Available From (DateTime) -->
+        <div class="form-floating mb-3">
+            <input type="datetime-local" class="form-control" id="availableFrom" name="AddServiceRequest.AvailableFrom" placeholder="Available From" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+            <label for="availableFrom">Available From</label>
+        </div>
+
+        <!-- Available To (DateTime) -->
+        <div class="form-floating mb-3">
+            <input type="datetime-local" class="form-control" id="availableTo" name="AddServiceRequest.AvailableTo" placeholder="Available To" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+            <label for="availableTo">Available To</label>
+        </div>
+
+        <!-- Travel Cost -->
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="travelCost" name="AddServiceRequest.TravelCost" placeholder="Travel Cost">
+            <label for="travelCost">Travel Cost</label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

@@ -69,13 +69,22 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(UserErrorMessage.UserNotExist());
             }
+            var role = userLogin.role switch
+            {
+                1 => "Admin",
+                2 => "Manager",
+                3 => "Veterinarian",
+                4 => "Staff",
+                5 => "Customer",
+                _ => throw new InvalidOperationException("Unknown role.")
+            };
             var c = new CurrentUserObject
             {
                 UserId = userLogin.Id,
                 Fullname = userLogin.FullName,
                 Email = userLogin.Email,
                 Phone = userLogin.PhoneNumber,
-                RoleId = userLogin.role,
+                RoleName = role,
             };
             var token = await _tokenService.GenerateTokenAsync(c);
             var accessToken = await _tokenService.GenerateAccessTokenAsync(token);

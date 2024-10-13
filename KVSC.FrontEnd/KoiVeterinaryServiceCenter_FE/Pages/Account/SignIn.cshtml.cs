@@ -34,25 +34,26 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
                 if (getResult.IsSuccess)
                 {
                     var userInfor = getResult.Data;
-                    HttpContext.Session.SetString("ActorRole", userInfor.RoleName);
-                    HttpContext.Session.SetString("ActorName", userInfor.UserName);
+                    HttpContext.Session.SetString("ActorRole", userInfor.Extensions.Data.RoleName);
+                    HttpContext.Session.SetString("ActorName", userInfor.Extensions.Data.UserName);
+                    HttpContext.Session.SetString("Token", accessToken);
 
                     // Redirect based on role
-                    if (userInfor.RoleName == "Admin")
+                    if (userInfor.Extensions.Data.RoleName == "Admin")
                     {
-                        return RedirectToPage("/Admin/Dashboard");
+                        return RedirectToPage("/User/Admin/Dashboard");
                     }
-                    else if (userInfor.RoleName == "Manager")
+                    else if (userInfor.Extensions.Data.RoleName == "Manager")
                     {
-                        return RedirectToPage("/Manager/Dashboard");
+                        return RedirectToPage("/User/Manager/Dashboard");
                     }
-                    else if (userInfor.RoleName == "Veterinarian")
+                    else if (userInfor.Extensions.Data.RoleName == "Veterinarian")
                     {
-                        return RedirectToPage("/Veterinarian/Dashboard");
+                        return RedirectToPage("/User/Veterinarian/Dashboard");
                     }
-                    else if (userInfor.RoleName == "Staff")
+                    else if (userInfor.Extensions.Data.RoleName == "Staff")
                     {
-                        return RedirectToPage("/Staff/Dashboard");
+                        return RedirectToPage("/User/Staff/Dashboard");
                     }
                     else
                     {

@@ -19,8 +19,12 @@ namespace KVSC.Application.Common
         }
         public async Task<CurrentUserObject> GetThisUserInfo(HttpContext httpContext)
         {
+            foreach (var claim in httpContext.User.Claims)
+            {
+                Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
+            }
             // Check if the user has an "email" claim
-            var checkUser = httpContext.User.Claims.FirstOrDefault(c => c.Type == "email");
+            var checkUser = httpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             if (checkUser == null)
             {
                 return null;  // Return early if the user is not authenticated
@@ -31,7 +35,8 @@ namespace KVSC.Application.Common
             {
                 Email = checkUser.Value,
                 Fullname = httpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value,
-                Phone = httpContext.User.Claims.FirstOrDefault(c => c.Type == "phone")?.Value
+                Phone = httpContext.User.Claims.FirstOrDefault(c => c.Type == "phone")?.Value,
+                RoleName  = httpContext.User.Claims.FirstOrDefault(c => c.Type == "role")?.Value
             };
 
             // Convert UserId claim (string) to Guid
@@ -46,9 +51,7 @@ namespace KVSC.Application.Common
                 currentUser.UserId = Guid.Empty;  // Or any default handling you prefer
             }
 
-            // Handle RoleId (parsing to int)
-            var roleClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
-            currentUser.RoleId = int.TryParse(roleClaim, out int roleId) ? roleId : -1;
+           
 
             return currentUser;
         }

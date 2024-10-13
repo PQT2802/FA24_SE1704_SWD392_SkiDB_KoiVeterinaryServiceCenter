@@ -1,6 +1,5 @@
 ﻿@model KVSC.Infrastructure.DTOs.GenericTableViewModel
 
-
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <div class="col-12">
@@ -31,8 +30,8 @@
                                         }
 
                                         <td>
-                                            @* Render Action Buttons from Partial View *@
-                                            @Html.Partial("_ActionButtons", Model.ListType)
+                                            <!-- Pass ListType as the Model to the _ActionButtons partial view -->
+                                            @await Html.PartialAsync("ActionButtons", Model.ListType)
                                         </td>
                                     </tr>
                                 }
@@ -50,5 +49,3 @@
         </div>
     </div>
 </div>
-
-

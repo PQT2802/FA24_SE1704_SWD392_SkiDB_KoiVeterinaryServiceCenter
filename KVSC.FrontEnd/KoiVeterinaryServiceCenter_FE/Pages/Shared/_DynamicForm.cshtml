@@ -1,0 +1,49 @@
+﻿@model Tuple<string, List<KVSC.Infrastructure.DTOs.DynamicFormField>>
+
+<div class="bg-light rounded h-100 p-4">
+    <h6 class="mb-4">@Model.Item1</h6> <!-- Dynamically display the form title -->
+
+    <form method="post" enctype="multipart/form-data">
+        @foreach (var field in Model.Item2)
+        {
+            if (field.FieldType == "textarea")
+            {
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="@field.Placeholder" 
+                              id="@field.Name" name="@field.Name" style="height: 150px;" @(field.Required ? "required" : "")></textarea>
+                    <label for="@field.Name">@field.Label</label>
+                </div>
+            }
+            else if (field.FieldType == "select")
+            {
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="@field.Name" name="@field.Name" aria-label="@field.Label" @(field.Required ? "required" : "")>
+                        <option selected disabled>Select @field.Label</option>
+                        @foreach (var option in field.Options)
+                        {
+                            <option value="@option">@option</option>
+                        }
+                    </select>
+                    <label for="@field.Name">@field.Label</label>
+                </div>
+            }
+            else if (field.FieldType == "file")
+            {
+                <div class="mb-3">
+                    <label for="@field.Name" class="form-label">@field.Label</label>
+                    <input class="form-control" type="file" id="@field.Name" name="@field.Name" @(field.Required ? "required" : "")>
+                </div>
+            }
+            else
+            {
+                <div class="form-floating mb-3">
+                    <input type="@field.FieldType" class="form-control" id="@field.Name" 
+                           name="@field.Name" placeholder="@field.Placeholder" @(field.Required ? "required" : "")>
+                    <label for="@field.Name">@field.Label</label>
+                </div>
+            }
+        }
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

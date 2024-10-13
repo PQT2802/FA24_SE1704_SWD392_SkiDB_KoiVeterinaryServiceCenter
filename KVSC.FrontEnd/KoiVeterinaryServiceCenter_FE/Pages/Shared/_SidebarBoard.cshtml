@@ -12,14 +12,15 @@
             <div class="ms-3">
                 @{
                     var actorName = Context.Session.GetString("ActorName");
+                    var actorRole = Context.Session.GetString("ActorRole");
                     <h6 class="mb-0">@actorName</h6>
-                    <span>Admin</span>
+                    <span>@actorRole</span>
                 }            
             </div>
         </div>
         <div class="navbar-nav w-100">          
                @{
-                var actorRole = Context.Session.GetString("ActorRole");
+                
                 @await (actorRole switch
                     {
                         "Admin" => Html.PartialAsync("_AdminSidebarItem"),

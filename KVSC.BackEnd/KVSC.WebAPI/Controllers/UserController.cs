@@ -22,7 +22,7 @@ namespace KVSC.WebAPI.Controllers
             _userService = userService;
         }
 
-
+        [Authorize]
         [HttpGet("user-infor")]
         public async Task<IResult> GetUserInfor()
         {

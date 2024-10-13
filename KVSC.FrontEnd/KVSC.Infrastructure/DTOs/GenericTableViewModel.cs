@@ -10,5 +10,6 @@ namespace KVSC.Infrastructure.DTOs
     {
         public List<IPropertyNameProvider> Items { get; set; }
         public List<string> PropertyNames { get; set; }
+        public string ListType { get; set; }  // "service" or "appointment"
     }
 }

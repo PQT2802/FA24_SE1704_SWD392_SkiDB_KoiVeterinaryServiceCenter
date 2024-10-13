@@ -1,0 +1,29 @@
+﻿@page
+@using KVSC.Infrastructure.DTOs.Service
+@using KVSC.Infrastructure.DTOs
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Admin.ServicesModel
+@{
+    Layout = "_LayoutBoard";
+}
+
+<!-- Trigger Button for Modal -->
+<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createServiceModal">Add Service</button>
+
+<!-- Table for displaying services -->
+@await Component.InvokeAsync("GenericTable", new { items = Model.KoiServiceList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "service" })
+
+<!-- Modal for Creating a New Service -->
+<div class="modal fade" id="createServiceModal" tabindex="-1" aria-labelledby="createServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createServiceModalLabel">Add New Service</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Render the form from the partial view -->
+                @await Html.PartialAsync("_PetServiceForm")
+            </div>
+        </div>
+    </div>
+</div>

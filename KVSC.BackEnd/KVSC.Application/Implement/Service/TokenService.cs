@@ -30,15 +30,7 @@ namespace KVSC.Application.Implement.Service
             // Retrieve the secret key from configuration
             var secretKey = _configuration["Jwt:Key"];
             var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
-            var role = currentUserObject.RoleId switch
-            {
-                1 => "Admin",
-                2 => "Veterinarian",
-                3 => "Manager",
-                4 => "Staff",
-                5 => "Customer",
-                _ => throw new InvalidOperationException("Unknown role.")
-            };
+            
 
             var tokenDescription = new SecurityTokenDescriptor
             {
@@ -48,8 +40,8 @@ namespace KVSC.Application.Implement.Service
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Name, currentUserObject.Fullname),
             new Claim("phone", currentUserObject.Phone),
-            new Claim(ClaimTypes.Role, currentUserObject.RoleId.ToString()),
-            new Claim("email", currentUserObject.Email),
+            new Claim("role", currentUserObject.RoleName),
+            new Claim(ClaimTypes.Email, currentUserObject.Email),
             new Claim("userId", currentUserObject.UserId.ToString())  // UserId to string to avoid type conflicts
         }),
                 Expires = DateTime.UtcNow.AddMinutes(180),
