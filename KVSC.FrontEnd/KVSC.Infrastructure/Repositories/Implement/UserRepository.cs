@@ -210,6 +210,8 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
                 // If successful, deserialize the UserInfo response
                 var userInfo = await response.Content.ReadFromJsonAsync<UserInfo>(options);
+                var jsonData = JsonSerializer.Serialize(userInfo, new JsonSerializerOptions { WriteIndented = true });
+                Console.WriteLine(jsonData);
 
                 return new ResponseDto<UserInfo>
                 {
