@@ -15,12 +15,14 @@ namespace KoiVeterinaryServiceCenter_FE.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            // Fetch service list (you could limit it to 6 here)
-            var serviceResponse = await _petServiceService.GetKoiServiceList();
+            // Fetch all pet services
+            var result = await _petServiceService.GetKoiServiceList();
 
-            if (serviceResponse.IsSuccess && serviceResponse.Data != null)
+            if (result.IsSuccess && result.Data != null)
             {
-                var services = serviceResponse.Data.Extensions?.Data.Take(6).ToList();
+                // Ensure that the data is a list or enumerable
+                var services = result.Data.Extensions?.Data.Take(6).ToList();  // Assuming result.Data.Extensions.Data is a list or enumerable
+
                 var model = new GenericTableViewModel
                 {
                     Items = services.Cast<IPropertyNameProvider>().ToList(),
@@ -31,7 +33,7 @@ namespace KoiVeterinaryServiceCenter_FE.ViewComponents
                 return View(model);
             }
 
-            // Handle error case
+            // In case of failure, return an empty list
             return View(new GenericTableViewModel
             {
                 Items = new List<IPropertyNameProvider>(),
@@ -39,5 +41,6 @@ namespace KoiVeterinaryServiceCenter_FE.ViewComponents
                 ListType = "TopServices"
             });
         }
+
     }
 }
