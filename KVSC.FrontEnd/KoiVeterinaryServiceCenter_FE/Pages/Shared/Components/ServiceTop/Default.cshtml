@@ -1,0 +1,51 @@
+﻿@model KVSC.Infrastructure.DTOs.GenericTableViewModel
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Top 6 Services</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No.</th>
+                                @foreach (var propName in Model.PropertyNames)
+                                {
+                                    <th scope="col">@propName</th>
+                                }
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Items != null && Model.Items.Any())
+                            {
+                                @foreach (var (item, index) in Model.Items.Select((item, index) => (item, index)))
+                                {
+                                    <tr>
+                                        <th scope="row">@(index + 1)</th>
+                                        @foreach (var propName in Model.PropertyNames)
+                                        {
+                                            <td>@item.GetType().GetProperty(propName)?.GetValue(item)</td>
+                                        }
+
+                                        <td>
+                                            <!-- Pass ListType as the Model to the _ActionButtons partial view -->
+                                            @await Html.PartialAsync("ActionButtons", Model.ListType)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="@Model.PropertyNames.Count + 2">No items available</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
