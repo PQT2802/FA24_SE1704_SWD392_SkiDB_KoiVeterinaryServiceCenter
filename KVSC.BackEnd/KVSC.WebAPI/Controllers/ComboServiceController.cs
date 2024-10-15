@@ -1,5 +1,7 @@
 ﻿using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
+using KVSC.Infrastructure.DTOs.ComboService.GetComboService;
+using KVSC.Infrastructure.DTOs.ComboService.UpdateComboService;
 using KVSC.Infrastructure.DTOs.Pet.AddComboService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +28,7 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IResult> GetAllComboServices()
         {
             Result result = await _comboServiceService.GetAllComboServicesAsync();
@@ -35,30 +37,30 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
         // GET: api/comboservice/{id}
-        [HttpGet("{id}")]
-        public async Task<IResult> GetComboServiceById(Guid id)
+        [HttpGet]
+        public async Task<IResult> GetComboServiceById([FromQuery] GetComboServiceRequest request)
         {
-            Result result = await _comboServiceService.GetComboServiceByIdAsync(id);
+            Result result = await _comboServiceService.GetComboServiceByIdAsync(request.Id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Combo service retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
         // PUT: api/comboservice/{id}
-        [HttpPut("{id}")]
-        public async Task<IResult> UpdateComboService(Guid id, [FromBody] AddComboServiceRequest addComboService)
+        [HttpPut]
+        public async Task<IResult> UpdateComboService([FromBody] UpdateComboServiceRequest request)
         {
-            Result result = await _comboServiceService.UpdateComboServiceAsync(id, addComboService);
+            Result result = await _comboServiceService.UpdateComboServiceAsync(request);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Combo service updated successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
         // DELETE: api/comboservice/{id}
-        [HttpDelete("{id}")]
-        public async Task<IResult> DeleteComboService(Guid id)
+        [HttpDelete]
+        public async Task<IResult> DeleteComboService([FromQuery] GetComboServiceRequest request)
         {
-            Result result = await _comboServiceService.DeleteComboServiceAsync(id);
+            Result result = await _comboServiceService.DeleteComboServiceAsync(request.Id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Combo service deleted successfully")
                 : ResultExtensions.ToProblemDetails(result);

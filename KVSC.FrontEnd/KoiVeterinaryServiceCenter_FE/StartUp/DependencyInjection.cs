@@ -18,6 +18,10 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
+            services.AddHttpClient<IPetServiceCategoryRepository, PetServiceCategoryRepository>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7283");
+            });
 
 
             #endregion
@@ -27,6 +31,7 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             // Register other services here if needed.
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IPetServiceSerivce, PetServiceSerivce>();
+            services.AddTransient<IPetServiceCategoryService, PetServiceCategoryService>();
             #endregion
 
             return services;
