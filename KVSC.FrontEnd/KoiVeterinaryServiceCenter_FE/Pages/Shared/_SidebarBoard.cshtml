@@ -1,4 +1,4 @@
-﻿  <!-- Sidebar Start -->
+﻿<!-- Sidebar Start -->
 <div class="sidebar pe-4 pb-3">
     <nav class="navbar bg-light navbar-light">
         <a href="index.html" class="navbar-brand mx-4 mb-3">
@@ -15,23 +15,20 @@
                     var actorRole = Context.Session.GetString("ActorRole");
                     <h6 class="mb-0">@actorName</h6>
                     <span>@actorRole</span>
-                }            
+                }
             </div>
         </div>
-        <div class="navbar-nav w-100">          
-               @{
-                
-                @await (actorRole switch
-                    {
-                        "Admin" => Html.PartialAsync("_AdminSidebarItem"),
-                        "Manager" => Html.PartialAsync("_ManagerSidebarItem"),
-                        "Staff" => Html.PartialAsync("_StaffSidebarItem"),
-                        "Veterinarian" => Html.PartialAsync("_VeterinarianSidebarItem"),
-                        _ => Html.PartialAsync("_CustomerSidebarItem") // Default or fallback partial
-                    })
-                ;
-                   } 
-            </div>
+        <div class="navbar-nav w-100">
+            @{
+                await (actorRole switch
+                {
+                    "Admin" => Html.PartialAsync("_AdminSidebarItem"),
+                    "Manager" => Html.PartialAsync("_ManagerSidebarItem"),
+                    "Staff" => Html.PartialAsync("_StaffSidebarItem"),
+                    "Veterinarian" => Html.PartialAsync("_VeterinarianSidebarItem"),
+                    _ => Html.PartialAsync("_CustomerSidebarItem") // Default or fallback partial
+                });
+            }
         </div>
     </nav>
 </div>
