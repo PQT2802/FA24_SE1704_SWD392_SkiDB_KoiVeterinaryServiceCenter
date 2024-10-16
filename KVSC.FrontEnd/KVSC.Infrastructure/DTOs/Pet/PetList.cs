@@ -4,10 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Domain.Entities
+namespace KVSC.Infrastructure.DTOs.Pet
 {
-    public class Pet : BaseEntity
+    public class PetList
     {
+        public Extensions<List<PetData>> Extensions { get; set; }
+    }
+
+    public class PetData : IPropertyNameProvider
+    {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
@@ -18,16 +24,11 @@ namespace KVSC.Domain.Entities
         public DateTime LastHealthCheck { get; set; }
         public int HealthStatus { get; set; }
 
-        // Foreign key relationship
-        public Guid OwnerId { get; set; }
-        public User Owner { get; set; } // Reference to the User
+        public string Owner { get; set; } // The name of the owner
 
-        // Foreign key relationship 
-        public Guid? PetTypeId { get; set; }
-        public PetType? PetType { get; set; }  // Reference to PetType
-
-        // Thêm quan hệ với Appointment
-        public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment
-
+        public List<string> GetPropertyNames()
+        {
+            return new List<string> { nameof(Name), nameof(Age), nameof(Gender), nameof(Color), nameof(Length), nameof(Weight), nameof(Owner) };
+        }
     }
 }

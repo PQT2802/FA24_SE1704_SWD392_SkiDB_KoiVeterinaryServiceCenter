@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Domain.Entities
+namespace KVSC.Infrastructure.DTOs.Pet.UpdatePet
 {
-    public class Pet : BaseEntity
+    public class UpdatePetRequest
     {
+        public Guid Id { get; set; } // The ID of the pet to update
         public string Name { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
@@ -17,17 +18,5 @@ namespace KVSC.Domain.Entities
         public double Weight { get; set; }
         public DateTime LastHealthCheck { get; set; }
         public int HealthStatus { get; set; }
-
-        // Foreign key relationship
-        public Guid OwnerId { get; set; }
-        public User Owner { get; set; } // Reference to the User
-
-        // Foreign key relationship 
-        public Guid? PetTypeId { get; set; }
-        public PetType? PetType { get; set; }  // Reference to PetType
-
-        // Thêm quan hệ với Appointment
-        public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment
-
     }
 }

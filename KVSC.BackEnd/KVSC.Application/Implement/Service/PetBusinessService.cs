@@ -83,8 +83,7 @@ namespace KVSC.Application.Implement.Service
                 Weight = addPet.Weight,
                 LastHealthCheck = addPet.LastHealthCheck,
                 HealthStatus = addPet.HealthStatus,
-                OwnerId = addPet.OwnerId,
-                PetTypeId = addPet.PetTypeId
+                OwnerId = addPet.OwnerId
             };
 
             var createResult = await _unitOfWork.PetRepository.CreatePetAsync(pet);
@@ -123,7 +122,6 @@ namespace KVSC.Application.Implement.Service
             pet.Weight = updatePet.Weight;
             pet.LastHealthCheck = updatePet.LastHealthCheck;
             pet.HealthStatus = updatePet.HealthStatus;
-            pet.PetTypeId = updatePet.PetTypeId;
 
             var updateResult = await _unitOfWork.PetRepository.UpdatePetAsync(pet);
             if (updateResult == 0)
