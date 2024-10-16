@@ -54,10 +54,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\User\Customer\" />
     <Folder Include="Pages\User\Manager\" />
-    <Folder Include="Pages\User\Veterinarian\" />
     <Folder Include="Pages\User\Staff\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
   </ItemGroup>
 
 </Project>

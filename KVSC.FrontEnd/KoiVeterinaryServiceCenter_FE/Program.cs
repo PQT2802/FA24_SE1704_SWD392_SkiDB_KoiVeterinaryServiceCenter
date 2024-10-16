@@ -1,9 +1,11 @@
+using KoiVeterinaryServiceCenter_FE.Pages.User.Customer;
 using KoiVeterinaryServiceCenter_FE.StartUp;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 builder.Services.RegisterServices(builder.Configuration);
 
 // Add session services
@@ -45,5 +47,6 @@ app.UseCookiePolicy();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();

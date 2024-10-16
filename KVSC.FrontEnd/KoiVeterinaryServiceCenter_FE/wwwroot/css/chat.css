@@ -1,0 +1,398 @@
+﻿
+.containerss {
+    position: fixed; /* Để khung xuất hiện trên cùng của trang */
+    top: 50%; /* Đặt ở giữa màn hình theo chiều dọc */
+    left: 50%; /* Đặt ở giữa màn hình theo chiều ngang */
+    transform: translate(-50%, -50%); /* Căn giữa khung */
+    width: 100%; /* Chiều rộng của khung (70% chiều rộng màn hình) */
+    max-width: 70%; /* Chiều rộng tối đa để không quá lớn */
+    max-height: 90%; /* Chiều cao của khung (70% chiều cao màn hình) */
+    background-color: white; /* Màu nền trắng */
+    border-radius: 15px; /* Bo tròn góc */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Tạo hiệu ứng bóng cho khung */
+    overflow: hidden; /* Ẩn phần nội dung tràn ra ngoài */
+    z-index: 1030; /* Đặt lên trên các phần tử khác */
+}
+.chat-icon {
+    position: fixed; /* Để icon luôn hiển thị trên màn hình */
+    bottom: 20px; /* Khoảng cách từ dưới lên */
+    right: 20px; /* Khoảng cách từ bên phải vào */
+    background-color: #007bff; /* Màu nền cho icon */
+    color: white; /* Màu chữ/icon */
+    border-radius: 50%; /* Bo tròn icon */
+    width: 50px; /* Chiều rộng của icon */
+    height: 50px; /* Chiều cao của icon */
+    display: flex; /* Sử dụng flexbox để căn giữa */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    cursor: pointer; /* Hiển thị con trỏ khi hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Tạo hiệu ứng bóng */
+    z-index: 1000; /* Đặt z-index lớn hơn header sticky nếu cần */
+}
+
+    .chat-icon i {
+        font-size: 20px; /* Kích thước icon */
+    }
+.overlay {
+    position: fixed; /* Để overlay xuất hiện trên cùng của trang */
+    top: 0; /* Đặt ở trên cùng của màn hình */
+    left: 0; /* Đặt ở bên trái của màn hình */
+    width: 100%; /* Chiếm toàn bộ chiều rộng màn hình */
+    height: 100%; /* Chiếm toàn bộ chiều cao màn hình */
+    background-color: rgba(0, 0, 0, 0.7); /* Màu nền đen với độ mờ */
+    z-index: 1025; /* Đặt dưới khung chat nhưng trên các phần tử khác */
+}
+
+/* Thêm một lớp cho hiệu ứng mở */
+.popup-open {
+    animation: fadeIn 0.3s; /* Hiệu ứng xuất hiện */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Bắt đầu với độ mờ là 0 */
+    }
+
+    to {
+        opacity: 1; /* Kết thúc với độ mờ là 1 */
+    }
+}
+/* ===== MENU ===== */
+.row {
+    display: flex;
+    padding: 10px 0 10px 0;
+    justify-content: space-around;
+}
+
+.menu {
+    float: left;
+    height: 700px;
+    width: 70px;
+    background: linear-gradient(#4768b5, #35488e);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19);
+}
+
+    .menu .items {
+        list-style: none;
+        margin: auto;
+        padding: 0;
+    }
+
+        .menu .items .item {
+            height: 70px;
+            border-bottom: 1px solid #6780cc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #9fb5ef;
+            font-size: 17pt;
+        }
+
+        .menu .items .item-active {
+            background-color: #5172c3;
+            color: #FFF;
+        }
+
+        .menu .items .item:hover {
+            cursor: pointer;
+            background-color: #4f6ebd;
+            color: #cfe5ff;
+        }
+
+/* === CONVERSATIONS === */
+.discussions {
+    width: 35%;
+    height: 700px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Bóng nhẹ, mềm hơn */
+    overflow: hidden;
+    background-color: #5c85d6; /* Màu xanh dịu mắt hơn */
+    border-radius: 12px; /* Bo góc container */
+    display: inline-block;
+}
+
+    .discussions .discussion {
+        width: 100%;
+        height: 90px;
+        background-color: #FAFAFA;
+        border-bottom: 1px solid #E0E0E0;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease; /* Hiệu ứng hover */
+    }
+
+        .discussions .discussion:hover {
+            background-color: #f0f4ff; /* Đổi màu khi hover */
+        }
+
+    .discussions .search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px 5px;
+        margin-top: 10px;
+        border-radius: 6px;
+        color: #E0E0E0;
+    }
+
+        .discussions .search .searchbar {
+            height: 42px;
+            background-color: #FFF;
+            width: 75%;
+            padding: 0 20px;
+            border-radius: 50px;
+            border: 1px solid #DDD;
+            display: flex;
+            align-items: center;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng lõm */
+            transition: box-shadow 0.3s ease;
+        }
+
+            .discussions .search .searchbar:hover {
+                box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.15); /* Tăng hiệu ứng khi hover */
+            }
+
+            .discussions .search .searchbar input {
+                margin-left: 15px;
+                height: 38px;
+                width: 100%;
+                border: none;
+                font-family: 'Montserrat', sans-serif;
+                color: #333;
+                outline: none;
+            }
+
+                .discussions .search .searchbar input::placeholder {
+                    color: #B0B0B0;
+                }
+
+    .discussions .message-active {
+        width: 95%; /* Giảm nhẹ độ rộng cho cân đối */
+        height: 90px;
+        background-color: #FFF;
+        border: 1px solid #E0E0E0; /* Đổi border-bottom thành viền đều */
+        margin: 10px auto; /* Tạo khoảng cách thoáng hơn giữa các mục */
+        border-radius: 12px; /* Tăng bo góc cho mềm mại */
+        display: flex;
+        align-items: center;
+        padding: 10px; /* Thêm padding cho nội dung */
+        transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng mượt */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng mờ nhẹ cho mục */
+        overflow: hidden;
+    }
+
+        .discussions .message-active:hover {
+            background-color: #eef3ff; /* Màu nền dịu khi hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Tăng bóng khi hover */
+        }
+
+    .discussions .discussion .photo {
+        margin-left: 15px;
+        width: 55px; /* Tăng nhẹ kích thước cho cân đối */
+        height: 55px;
+        background: #E6E7ED;
+        border-radius: 50%; /* Bo tròn avatar */
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Bóng nhẹ cho avatar */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng khi hover */
+    }
+
+        .discussions .discussion .photo:hover {
+            transform: scale(1.05); /* Phóng to nhẹ khi hover */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Bóng đậm hơn khi hover */
+        }
+.online {
+    position: relative;
+    top: 30px;
+    left: 35px;
+    width: 13px;
+    height: 13px;
+    background-color: #8BC34A;
+    border-radius: 50%;
+    border: 3px solid #FAFAFA;
+}
+.desc-contact {
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+}
+
+.discussions .discussion .name {
+    margin: 0 0 3px 20px; /* Khoảng cách dưới để tách tên và tin nhắn */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12pt; /* Tăng một chút kích thước để rõ ràng hơn */
+    color: #333; /* Màu chữ đậm hơn cho dễ đọc */
+}
+
+.discussions .discussion .message {
+    margin: 2px 0 2px 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10pt; /* Chữ nhỏ vừa đủ để gọn */
+    color: #515151;
+    background-color: #F5F7FB; /* Màu nền sáng nhẹ, dịu hơn */
+    border: 1px solid #E0E0E0;
+    border-radius: 8px; /* Giảm nhẹ bo góc cho gọn */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Bóng nhẹ hơn */
+    padding: 6px 10px; /* Cân đối padding để dễ đọc hơn */
+    max-width: 90%; /* Giới hạn độ rộng tối đa của phần tử */
+    word-wrap: break-word; /* Ngắt từ nếu quá dài */
+    overflow-x: hidden;
+}
+.timer {
+    margin-left: auto; /* Đẩy sang phải */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 9pt; /* Giảm kích thước để cân đối hơn */
+    padding: 3px 8px; /* Thu gọn padding cho hợp lý */
+    color: #AAA;
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng mượt hơn */
+}
+
+.chat {
+    width: calc(65% - 95px);
+    position: relative;
+    background-color: #f9f9f9; /* Nền sáng cho khu vực chat */
+    border-radius: 10px; /* Bo góc cho chat box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bóng mờ nhẹ cho depth */
+    overflow: hidden; /* Ẩn phần thừa ra ngoài nếu có */
+}
+
+.header-chat {
+    background-color: #FFF;
+    height: 90px;
+    box-shadow: 0px 3px 2px rgba(0,0,0,0.100);
+    display: flex;
+    border-radius: 10px;
+    margin-top : 5px;
+    align-items: center;
+}
+
+.chat .header-chat .icon {
+    margin-left: 30px;
+    color: #515151;
+    font-size: 14pt;
+}
+
+.chat .header-chat .name {
+    margin: 0 0 0 20px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13pt;
+    color: #515151;
+}
+
+.chat .header-chat .right {
+    position: absolute;
+    right: 40px;
+}
+.chat .messages-chat {
+    padding: 2px 5px;
+    overflow-y: auto;
+    max-height: 450px; /* Căn chỉnh chiều cao cho phần tin nhắn */
+    flex-direction: column-reverse;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: transparent transparent; /* Firefox */
+}
+
+    .chat .messages-chat::-webkit-scrollbar {
+        width: 0; /* Ẩn thanh cuộn trên trình duyệt Webkit */
+        background: transparent; /* Nền trong suốt */
+    }
+
+    .chat .messages-chat .message {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+        .chat .messages-chat .message .photo {
+            display: block;
+            width: 45px;
+            height: 45px;
+            background: #E6E7ED;
+            border-radius: 50%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+    .chat .messages-chat .text {
+        margin: 0 35px;
+        background-color: #f6f6f6;
+        padding: 15px;
+        border-radius: 12px;
+    }
+.text-only {
+    margin-left: 45px;
+}
+
+.time {
+    font-size: 10px;
+    color: lightgrey;
+    margin-bottom: 10px;
+    margin-left: 85px;
+}
+
+.response-time {
+    float: right;
+    margin-right: 40px !important;
+}
+
+.response {
+    float: right;
+    margin-right: 0px !important;
+    margin-left: auto; /* flexbox alignment rule */
+}
+
+    .response .text {
+        background-color: #e3effd !important;
+    }
+
+.footer-chat {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    background-color: transparent;
+    border-top: 2px solid #EEE;
+}
+
+.chat .footer-chat .icon {
+    margin-left: 30px;
+    color: #C0C0C0;
+    font-size: 14pt;
+}
+
+.chat .footer-chat .send {
+    color: #fff;
+    background-color: #4f6ebd;
+    position: absolute;
+    right: 50px;
+    padding: 12px;
+    border-radius: 15%;
+    font-size: 14pt;
+}
+
+.write-message {
+    border: none !important;
+    height: 50px;
+    padding: 10px;
+    border-radius: 25px; /* Bo tròn góc cho ô nhập liệu */
+    background-color: #f6f6f6; /* Nền cho ô nhập liệu */
+}
+
+.footer-chat input::placeholder {
+    color: #C0C0C0;
+    font-size: 13pt;
+}
+
+.clickable {
+    cursor: pointer;
+}
+

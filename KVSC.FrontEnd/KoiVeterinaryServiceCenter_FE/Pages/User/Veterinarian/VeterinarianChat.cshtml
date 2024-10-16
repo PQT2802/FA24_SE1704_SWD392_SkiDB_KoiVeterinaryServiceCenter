@@ -1,0 +1,29 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.VeterinarianChatModel
+@{
+}
+<div>
+    <h2>Veterinarian Chat</h2>
+    <div id="messagesList" class="border p-3 mb-2" style="height: 300px; overflow-y: scroll;"></div>
+    <textarea id="messageInput" placeholder="Enter message" class="form-control mb-2"></textarea>
+    <button id="sendButton" class="btn btn-primary">Send</button>
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.7/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+    const veterinarianId = "@Model.UserId";  // ID của Veterinarian
+
+        connection.start().then(() => connection.invoke("JoinRoom", veterinarianId));
+
+        connection.on("ReceiveMessage", (sender, message) => {
+            const li = document.createElement("li");
+            li.textContent = `${sender}: ${message}`;
+            document.getElementById("messagesList").appendChild(li);
+        });
+
+        document.getElementById("sendButton").addEventListener("click", () => {
+            const message = document.getElementById("messageInput").value;
+            connection.invoke("SendMessage", "CustomerID", veterinarianId, message);
+        });
+    </script>

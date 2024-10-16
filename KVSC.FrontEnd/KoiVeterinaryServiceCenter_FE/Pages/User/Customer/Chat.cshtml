@@ -1,0 +1,149 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.ChatModel
+@{
+    Layout = "_LayoutCustomer";
+}
+<div class="overlay" id="overlay"></div>
+<div class="containerss  popup-open">
+    <div class="box-chat-mess">
+        <div class="row">
+            <section class="discussions">
+                <div class="discussion search">
+                    <div class="searchbar">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <input type="text" placeholder="Search..."></input>
+                    </div>
+                </div>
+                <div class="discussion message-active">
+                     @foreach (var conversation in Model.Conversations.Extensions?.Data)
+                    {
+                    <a href="@Url.Page("Chat", new { recipientId = conversation.RecipientId })" class="conversation-item">
+
+                    <div class="desc-contact">
+                    <strong>@conversation.RecipientName</strong>
+                    <p class="message">@conversation.LastMessage</p>
+                    </div>
+                    <div class="timer">@conversation.Timestamp</div>
+                    </a>
+                    }
+                </div>
+            </section>
+            <section class="chat">
+                <div class="header-chat">
+                    <i class="icon fa fa-user-o" aria-hidden="true"></i>
+                    <p class="name">@Model.Messages.Extensions?.Data.FirstOrDefault()?.RecipientName</p>
+                    <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+                </div>
+                <div class="messages-chat" id="messagesContainer" style="display: flex; flex-direction: column-reverse;">
+                     @foreach (var message in Model.Messages.Extensions?.Data)
+                    {
+                    if (message.SenderId == Model.CurrentUserId)
+                    {
+                    <div class="message">
+                    <div class="response">
+                    <p class="text">@message.Content</p>
+                    </div>
+                    </div>
+                    }
+                    else
+                    {
+                    <div class="message">
+                    <div class="photo">
+                    <div class="online"></div>
+                    </div>
+                    <p class="text">@message.Content</p>
+                    </div>
+                    }
+                    <p class="time">@message.Timestamp.ToString("g")</p>
+                    }
+                </div>
+                <div class="footer-chat">
+                    <form id="sendMessageForm" method="post" asp-page-handler="SendMessage" onsubmit="sendMessage(event)">
+                        <input type="hidden" asp-for="CreateMessageRequest.SenderId" value="@Model.CurrentUserId" />
+                        <input type="hidden" asp-for="CreateMessageRequest.RecipientId" value="@Model.CurrentRecipientId" />
+                        <div class="message-input-container">
+                            <input type="text" class="write-message" asp-for="CreateMessageRequest.Content" placeholder="Type your message..." required />
+                            <button class="icon send fa fa-paper-plane-o clickable" type="submit">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- Icon Chat -->
+<div id="chatIcon" class="chat-icon">
+    <i class="fa fa-comment"></i> <!-- Icon chat -->
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft.signalr/3.1.12/signalr.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const messagesContainer = document.getElementById('messagesContainer');
+
+        // ----------------layout--------------------------------
+        const overlay = document.getElementById('overlay'); // Lấy phần tử overlay
+        overlay.addEventListener('click', function () {
+            window.location.href = "https://localhost:7241/"; // Chuyển hướng trang
+        });
+        // ----------------layout--------------------------------
+
+        // Đảo ngược thứ tự tin nhắn trong container
+        const messages = Array.from(messagesContainer.children);
+        messagesContainer.innerHTML = ""; // Xóa nội dung hiện tại
+        messages.reverse().forEach(message => {
+            messagesContainer.appendChild(message); // Thêm lại tin nhắn theo thứ tự đảo ngược
+        });
+
+        // Cuộn xuống cuối messagesContainer khi trang được tải
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        // Tạo kết nối SignalR
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chathub")
+            .build();
+
+        // Khởi tạo kết nối
+        connection.start().then(() => {
+            console.log("SignalR connection established.");
+
+            // Gán sự kiện gửi tin nhắn sau khi kết nối thành công
+            document.getElementById("sendMessageForm").onsubmit = async function (event) {
+                event.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
+
+                const senderId = document.getElementById('CreateMessageRequest_SenderId').value;
+                const recipientId = document.getElementById('CreateMessageRequest_RecipientId').value;
+                const content = document.querySelector('.write-message').value;
+                // Lưu vị trí cuộn hiện tại
+                const scrollPosition = messagesContainer.scrollTop;
+                localStorage.setItem('scrollPosition', scrollPosition);
+                try {
+                    // Gửi tin nhắn qua SignalR
+                    await connection.invoke("SendMessage", senderId, recipientId, content);
+                } catch (err) {
+                    console.error("Error sending message: ", err.toString());
+                }
+
+                // Gửi form để lưu tin nhắn vào DB
+                const form = document.getElementById('sendMessageForm');
+                form.submit();
+                // Cuộn xuống cuối messagesContainer
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            };
+        }).catch(err => console.error("Error establishing SignalR connection: ", err));
+
+        // Nhận tin nhắn từ SignalR
+        connection.on("ReceiveMessage", (message) => {
+            // Xử lý hiển thị tin nhắn nhận được ở đây
+            console.log("New message:", message);
+            // Cuộn xuống cuối messagesContainer
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        });
+
+        // Khôi phục vị trí cuộn sau khi trang được tải
+        const savedScrollPosition = localStorage.getItem('scrollPosition');
+        if (savedScrollPosition) {
+            messagesContainer.scrollTop = savedScrollPosition;
+            localStorage.removeItem('scrollPosition'); // Xóa vị trí cuộn đã lưu
+        }
+    });
+</script>
