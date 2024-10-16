@@ -1,0 +1,82 @@
+﻿@model KVSC.Infrastructure.DTOs.AppointmentFormViewModel
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">Book an Appointment</h2>
+
+                @if (!string.IsNullOrEmpty(ViewBag.Message))
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @ViewBag.Message
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @ViewBag.Error
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <form asp-action="SubmitAppointment" asp-controller="AppointmentForm" method="post" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="customerId" class="form-label">Customer ID</label>
+                        <input type="text" class="form-control" id="customerId" name="CustomerId" value="@Model.CustomerId" required />
+                        <div class="invalid-feedback">
+                            Please enter your Customer ID.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="petServiceId" class="form-label">Pet Service</label>
+                        <select class="form-select" id="petServiceId" name="PetServiceId" required>
+                            <option value="">Select a service</option>
+                            @foreach (var service in Model.Services)
+                            {
+                                <option value="@service.Id">@service.Name</option>
+                            }
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a pet service.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="appointmentDate" class="form-label">Appointment Date</label>
+                        <input type="datetime-local" class="form-control" id="appointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" required />
+                        <div class="invalid-feedback">
+                            Please choose a valid appointment date and time.
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Book Appointment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        'use strict'
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
