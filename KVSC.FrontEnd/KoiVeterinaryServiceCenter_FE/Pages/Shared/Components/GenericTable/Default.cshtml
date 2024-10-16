@@ -31,7 +31,8 @@
 
                                         <td>
                                             <!-- Pass ListType as the Model to the _ActionButtons partial view -->
-                                            @await Html.PartialAsync("ActionButtons", Model.ListType)
+                                            @* @await Html.PartialAsync("ActionButtons", Model.ListType) *@
+                                            @await Html.PartialAsync("ActionButtons", new { Item = item, ListType = Model.ListType })
                                         </td>
                                     </tr>
                                 }

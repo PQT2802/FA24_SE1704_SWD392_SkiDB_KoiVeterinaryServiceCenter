@@ -40,6 +40,12 @@ using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using KVSC.Application.KVSC.Application.Implement.Service;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.AddPetServiceCategroy;
+using KVSC.Application.Common.Validator.PetServiceCategory;
+using KVSC.Application.Common.Validator.ComboService;
+using KVSC.Infrastructure.DTOs.PetService.UpdatePetService;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.UpdatePetServiceCategory;
+using KVSC.Infrastructure.DTOs.ComboService.UpdateComboService;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -98,8 +104,14 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<UpdateProductCategoryRequest>, UpdateProductCategoryValidator>();
 
             services.AddTransient<IValidator<AddPetServiceRequest>, AddPetServiceValidator>();
+            services.AddTransient<IValidator<UpdatePetServiceRequest>, UpdatePetServiceValidator>();    
+
             services.AddTransient<IValidator<AddComboServiceRequest>, AddComboServiceValidator>();
+            services.AddTransient<IValidator<UpdateComboServiceRequest>, UpdateComboServiceValidator>();
+
             services.AddTransient<IValidator<AddPetServiceCategoryRequest>, AddPetServiceCategoryValidator>();
+            services.AddTransient<IValidator<UpdatePetServiceCategoryRequest>, UpdatePetServiceCategoryValidator>();
+
             services.AddTransient<IValidator<MakeAppointmentForServiceRequest>, MakeAppointmentForServiceValidator>();
             services.AddTransient<IValidator<MakeAppointmentForComboRequest>, MakeAppointmentForComboValidator>();
 

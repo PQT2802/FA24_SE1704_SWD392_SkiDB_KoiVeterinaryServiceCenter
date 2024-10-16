@@ -18,6 +18,11 @@ namespace KVSC.Application.Common.Validator.Abstract
         {
             _unitOfWork = unitOfWork;
         }
+        protected void AddPetServiceIdRules(Expression<Func<T, Guid>> petServiceIdExpression)
+        {
+            RuleFor(petServiceIdExpression)
+                .NotEmpty().WithState(_ => (PetServiceErrorMessage.FieldIsEmpty("PetService Id")));
+        }
         protected void AddPetServiceNameRules(Expression<Func<T, string>> petServiceNameExpression)
         {
             RuleFor(petServiceNameExpression)

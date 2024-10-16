@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.DTOs.Pet.AddPetService
+namespace KVSC.Infrastructure.DTOs.PetServiceCategory.AddPetServiceCategroy
 {
     public class AddPetServiceCategoryRequest
     {
