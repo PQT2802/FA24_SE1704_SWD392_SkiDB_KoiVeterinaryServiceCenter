@@ -8,5 +8,10 @@
 <div>
     @await Html.PartialAsync("_HeroCustomer")
     @await Html.PartialAsync("_AboutCustomer")
-
+    
+    @* phần Service *@
+    @await Component.InvokeAsync("ServiceTop")
+    @await Component.InvokeAsync("AppointmentForm")
+    
+    
 </div>
