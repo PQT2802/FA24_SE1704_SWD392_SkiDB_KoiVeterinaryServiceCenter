@@ -1,4 +1,5 @@
-﻿<!-- Sidebar Start -->
+﻿
+<!-- Sidebar Start -->
 <div class="sidebar pe-4 pb-3">
     <nav class="navbar bg-light navbar-light">
         <a href="index.html" class="navbar-brand mx-4 mb-3">
@@ -20,16 +21,19 @@
         </div>
         <div class="navbar-nav w-100">
             @{
-                await (actorRole switch
-                {
-                    "Admin" => Html.PartialAsync("_AdminSidebarItem"),
-                    "Manager" => Html.PartialAsync("_ManagerSidebarItem"),
-                    "Staff" => Html.PartialAsync("_StaffSidebarItem"),
-                    "Veterinarian" => Html.PartialAsync("_VeterinarianSidebarItem"),
-                    _ => Html.PartialAsync("_CustomerSidebarItem") // Default or fallback partial
-                });
+
+                @await (actorRole switch
+                    {
+                        "Admin" => Html.PartialAsync("_AdminSidebarItem"),
+                        "Manager" => Html.PartialAsync("_ManagerSidebarItem"),
+                        "Staff" => Html.PartialAsync("_StaffSidebarItem"),
+                        "Veterinarian" => Html.PartialAsync("VeterinarianSidebarItem"),
+                    _=> Html.PartialAsync("_CustomerSidebarItem") // Default or fallback partial
+                    })
+                ;
             }
         </div>
+</div>
     </nav>
 </div>
 <!-- Sidebar End -->
