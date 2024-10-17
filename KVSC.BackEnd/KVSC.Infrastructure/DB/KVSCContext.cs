@@ -50,6 +50,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.ApplyConfiguration(new VeterinarianConfiguration());
             modelBuilder.ApplyConfiguration(new VeterinarianScheduleConfiguration());
             modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
+            modelBuilder.ApplyConfiguration(new AppointmentVeterinarianConfiguration());
             modelBuilder.ApplyConfiguration(new PetConfiguration());
             modelBuilder.ApplyConfiguration(new PetTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
