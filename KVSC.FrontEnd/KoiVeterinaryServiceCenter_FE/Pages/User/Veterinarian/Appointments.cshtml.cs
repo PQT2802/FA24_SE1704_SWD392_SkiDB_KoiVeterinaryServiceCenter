@@ -15,7 +15,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
         }
 
         [BindProperty]
-        public List<AppointmentList> AppointmentList { get; set; } = default!;
+        public AppointmentList AppointmentList { get; set; } = default!;
 
         [BindProperty]
         public int AppointmentId { get; set; } // For handling appointment actions
@@ -25,44 +25,50 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
 
         public async Task OnGetAsync()
         {
-            var result = await _appointmentsService.GetAppointmentListAsync();
-            AppointmentList = result.Data;
+            var token = HttpContext.Session.GetString("Token");
+            var result = await _appointmentsService.GetAppoitmentListForVet(token);
+            if (result.IsSuccess) 
+            {
+                AppointmentList = result.Data;
+            }
+
+            
         }
 
-        public async Task<IActionResult> OnPostAcceptAsync(int appointmentId)
-        {
-            // Call service to accept appointment
-            await _appointmentsService.UpdateStatusAsync(appointmentId, "Accepted");
+        //public async Task<IActionResult> OnPostAcceptAsync(int appointmentId)
+        //{
+        //    // Call service to accept appointment
+        //    await _appointmentsService.UpdateStatusAsync(appointmentId, "Accepted");
 
-            // Refresh the list after the action
-            return RedirectToPage();
-        }
+        //    // Refresh the list after the action
+        //    return RedirectToPage();
+        //}
 
-        public async Task<IActionResult> OnPostRejectAsync(int appointmentId)
-        {
-            // Call service to reject appointment
-            await _appointmentsService.UpdateStatusAsync(appointmentId, "Rejected");
+        //public async Task<IActionResult> OnPostRejectAsync(int appointmentId)
+        //{
+        //    // Call service to reject appointment
+        //    await _appointmentsService.UpdateStatusAsync(appointmentId, "Rejected");
 
-            // Refresh the list after the action
-            return RedirectToPage();
-        }
+        //    // Refresh the list after the action
+        //    return RedirectToPage();
+        //}
 
-        public async Task<IActionResult> OnPostMarkInProgressAsync(int appointmentId)
-        {
-            // Call service to mark appointment as in progress
-            await _appointmentsService.UpdateStatusAsync(appointmentId, "InProgress");
+        //public async Task<IActionResult> OnPostMarkInProgressAsync(int appointmentId)
+        //{
+        //    // Call service to mark appointment as in progress
+        //    await _appointmentsService.UpdateStatusAsync(appointmentId, "InProgress");
 
-            // Refresh the list after the action
-            return RedirectToPage();
-        }
+        //    // Refresh the list after the action
+        //    return RedirectToPage();
+        //}
 
-        public async Task<IActionResult> OnPostSubmitReportAsync()
-        {
-            // Submit report for the appointment
-            await _appointmentsService.SubmitReportAsync(AppointmentId, ReportDetails);
+        //public async Task<IActionResult> OnPostSubmitReportAsync()
+        //{
+        //    // Submit report for the appointment
+        //    await _appointmentsService.SubmitReportAsync(AppointmentId, ReportDetails);
 
-            // Refresh the list after the report is submitted
-            return RedirectToPage();
-        }
+        //    // Refresh the list after the report is submitted
+        //    return RedirectToPage();
+        //}
     }
 }

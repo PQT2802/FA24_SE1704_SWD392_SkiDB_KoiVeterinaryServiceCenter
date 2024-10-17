@@ -6,7 +6,7 @@
     Layout = "_LayoutBoard";
 }
 
-@await Component.InvokeAsync("GenericTable", new { items = Model.AppointmentList.Cast<IPropertyNameProvider>(), listType = "appointment" })
+@await Component.InvokeAsync("GenericTable", new { items = Model.AppointmentList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "appointment" })
 
 <!-- Report Modal -->
 <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">

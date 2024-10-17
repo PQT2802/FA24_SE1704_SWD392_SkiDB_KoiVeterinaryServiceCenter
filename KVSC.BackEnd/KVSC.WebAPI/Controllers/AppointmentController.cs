@@ -3,6 +3,7 @@ using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using KVSC.Infrastructure.DTOs.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KVSC.WebAPI.Controllers
@@ -46,12 +47,13 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        // GET: api/appointment/list/vet/{vetId}
-        [HttpGet("list/vet/{vetId}")]
+        // GET: api/appointment/list/vet/
+        [Authorize]
+        [HttpGet("list/vet")]
         public async Task<IResult> GetAppointmentListByVetIdAsync(  )
         {
             CurrentUserObject c = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
-            Result result = await _appointmentService.GetAppointmentListByVetIdAsync(c.UserId);
+            Result result = await _appointmentService.GetAppointmentListByUserIdAsync(c.UserId);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Fetched appointment list for the specified vet successfully.")
                 : ResultExtensions.ToProblemDetails(result);

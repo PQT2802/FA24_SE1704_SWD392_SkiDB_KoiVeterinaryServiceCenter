@@ -34,7 +34,7 @@ else if (Model.ListType == "appointment")
     else
     {
         <form method="post">
-            <input type="hidden" name="AppointmentId" value="@Model.Item.Id" />
+            <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
 
             @switch (Model.Status)
             {
@@ -46,7 +46,7 @@ else if (Model.ListType == "appointment")
                     <button class="btn btn-sm btn-info" formaction="/Veterinarian/MarkInProgress">Mark In Progress</button>
                     break;
                 case "InProgress":
-                    <button class="btn btn-sm btn-info" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.Id">Report</button>
+                    <button class="btn btn-sm btn-info" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.AppointmentListId">Report</button>
                     break;
                 case "Reported":
                     <button class="btn btn-sm btn-secondary" disabled>Completed</button>
