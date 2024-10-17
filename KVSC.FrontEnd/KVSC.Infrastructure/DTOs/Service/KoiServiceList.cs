@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.DTOs.Service
 {
-    public class KoiServiceList 
+    public class KoiServiceList
     {
         public Extensions<List<Data>> Extensions { get; set; }
-
     }
+
     public class Data : IPropertyNameProvider
     {
         public Guid Id { get; set; }
@@ -31,4 +31,5 @@ namespace KVSC.Infrastructure.DTOs.Service
             return new List<string> { nameof(Name), nameof(serviceCategory), nameof(BasePrice), nameof(TravelCost), nameof(Duration) };
         }
     }
+
 }

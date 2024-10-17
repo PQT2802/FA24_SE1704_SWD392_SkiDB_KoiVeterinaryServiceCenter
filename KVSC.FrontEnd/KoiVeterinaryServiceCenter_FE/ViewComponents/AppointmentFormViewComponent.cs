@@ -1,59 +1,87 @@
 ﻿using KVSC.Application.Service.Interface;
+using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.Pet;
+using KVSC.Infrastructure.DTOs.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KoiVeterinaryServiceCenter_FE.ViewComponents
 {
     public class AppointmentFormViewComponent : ViewComponent
-    {
-        private readonly IAppointmentService _appointmentService;
-        private readonly IPetServiceService _petServiceService;
+{
+    private readonly IAuthService _authService;
+    private readonly IPetBusinessService _petBusinessService;
+    private readonly IPetServiceService _petServiceService;
 
-        public AppointmentFormViewComponent(IPetServiceService petServiceService, IAppointmentService appointmentService)
+    public AppointmentFormViewComponent(IAuthService authService, IPetServiceService petServiceService, IPetBusinessService petBusinessService)
+    {
+        _authService = authService;
+        _petServiceService = petServiceService;
+        _petBusinessService = petBusinessService;
+    }
+
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+        // Get access token from session
+        var accessToken = HttpContext.Session.GetString("Token");
+
+        // Handle case where access token is missing
+        if (string.IsNullOrEmpty(accessToken))
         {
-            _petServiceService = petServiceService;
-            _appointmentService = appointmentService;
+            return View(new AppointmentFormViewModel
+            {
+                CustomerName = "Unknown",
+                CustomerEmail = "Unknown",
+                CustomerPhone = "Unknown",
+                Pets = new List<PetData>(),
+                Services = new List<Data>(), // Empty service list
+            });
         }
 
-        //public async Task<IViewComponentResult> InvokeAsync()
-        //{
-        //    // Fetch necessary data for the form
-        //    var petServiceResponse = await _petServiceService.GetKoiServiceList();
+        // Get user info based on the access token
+        var getResult = await _authService.GetUserInforByToken(accessToken);
+        if (getResult.IsSuccess)
+        {
+            var userInfor = getResult.Data;
 
-        //    var model = new AppointmentFormViewModel
-        //    {
-        //        Services = petServiceResponse.IsSuccess ? petServiceResponse.Data.Extensions?.Data : new List<Data>(),
-        //        AppointmentDate = DateTime.Now, // Default date
-        //    };
+            
 
-        //    return View(model); // This will render the view with the form
-        //}
+            // Fetch pets by owner ID
+            var petResponse = await _petBusinessService.GetPetsByOwnerIdAsync("45A9DC1C-FB8A-4607-9A7E-D6B1359384D7");
+            var pets = petResponse.IsSuccess 
+                ? petResponse.Data?.Extensions?.Data ?? new List<PetData>() 
+                : new List<PetData>();
 
-        // Handle appointment submission
-        //[HttpPost]
-        //public async Task<IActionResult> SubmitAppointment([FromForm] AppointmentFormViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Json(new { success = false, message = "Form validation failed." });
-        //    }
+            // Fetch Koi Service List
+            var serviceResponse = await _petServiceService.GetKoiServiceList();
+            var services = serviceResponse.IsSuccess 
+                ? serviceResponse.Data.Extensions.Data 
+                : new List<Data>();
 
-        //    // Create the appointment request
-        //    var request = new MakeAppointmentForServiceRequest
-        //    {
-        //        UserId = model.CustomerId,
-        //        PetId = model.PetServiceId,
-        //        ServiceId = model.PetServiceId,
-        //        DateTime = model.AppointmentDate
-        //    };
+            // Create the view model with user info, pets, and services
+            var model = new AppointmentFormViewModel
+            {
+                CustomerName = userInfor.Extensions.Data.UserName,
+                CustomerEmail = userInfor.Extensions.Data.Email,
+                CustomerPhone = userInfor.Extensions.Data.PhoneNumber ?? "Unknown",
+                Pets = pets,
+                Services = services,
+                AppointmentDate = DateTime.Now
+            };
 
-        //    var response = await _appointmentService.MakeAppointmentForServiceAsync(request);
+            return View(model);
+        }
 
-        //    if (response.IsSuccess)
-        //    {
-        //        return Json(new { success = true, message = "Appointment successfully booked!" });
-        //    }
-
-        //    return Json(new { success = false, message = "Failed to book appointment.", errors = response.Errors });
-        //}
+        // Handle case where user info fetch fails
+        return View(new AppointmentFormViewModel
+        {
+            CustomerName = "Unknown",
+            CustomerEmail = "Unknown",
+            CustomerPhone = "Unknown",
+            Pets = new List<PetData>(),
+            Services = new List<Data>(), // Empty service list
+        });
     }
+}
+
+
 }

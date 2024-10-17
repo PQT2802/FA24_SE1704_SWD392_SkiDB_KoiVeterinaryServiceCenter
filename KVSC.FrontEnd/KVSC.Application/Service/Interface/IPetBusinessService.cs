@@ -13,5 +13,6 @@ namespace KVSC.Application.Service.Interface
         Task<ResponseDto<UpdatePetResponse>> UpdatePetAsync(UpdatePetRequest request);
         Task<ResponseDto<DeletePetResponse>> DeletePetAsync(DeletePetRequest request);
 
+        Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string ownerId);
     }
 }
