@@ -48,7 +48,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     {
                         IsSuccess = false,
                         Data = null,
-                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                       Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
                         Message = "An error occurred during sign-in."
                     };
                 }
@@ -100,7 +100,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 return new ResponseDto<LoginResponse>
                 {
                     IsSuccess = false,
-                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                   Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
                     Message = "Google sign-in failed."
                 };
             }

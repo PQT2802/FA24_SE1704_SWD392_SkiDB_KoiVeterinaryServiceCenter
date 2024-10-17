@@ -1,6 +1,9 @@
-﻿using KVSC.Application.Interface.IService;
+﻿using Azure.Core;
+using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
-using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.AddPetServiceCategroy;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.GetPetServiceCategory;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.UpdatePetServiceCategory;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KVSC.WebAPI.Controllers
@@ -27,7 +30,7 @@ namespace KVSC.WebAPI.Controllers
         }
 
         // GET: api/petservicecategory
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IResult> GetAllPetServiceCategories()
         {
             Result result = await _petServiceCategoryService.GetAllPetServiceCategoriesAsync();
@@ -37,30 +40,30 @@ namespace KVSC.WebAPI.Controllers
         }
 
         // GET: api/petservicecategory/{id}
-        [HttpGet("{id}")]
-        public async Task<IResult> GetPetServiceCategoryById(Guid id)
+        [HttpGet]
+        public async Task<IResult> GetPetServiceCategoryById([FromQuery] GetPetServiceCategoryRequest request)
         {
-            Result result = await _petServiceCategoryService.GetPetServiceCategoryByIdAsync(id);
+            Result result = await _petServiceCategoryService.GetPetServiceCategoryByIdAsync(request.Id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Pet service category retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
         // PUT: api/petservicecategory/{id}
-        [HttpPut("{id}")]
-        public async Task<IResult> UpdatePetServiceCategory(Guid id, [FromBody] AddPetServiceCategoryRequest addPetServiceCategory)
+        [HttpPut]
+        public async Task<IResult> UpdatePetServiceCategory([FromBody] UpdatePetServiceCategoryRequest updatePetServiceRequest)
         {
-            Result result = await _petServiceCategoryService.UpdatePetServiceCategoryAsync(id, addPetServiceCategory);
+            Result result = await _petServiceCategoryService.UpdatePetServiceCategoryAsync(updatePetServiceRequest);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Pet service category updated successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
         // DELETE: api/petservicecategory/{id}
-        [HttpDelete("{id}")]
-        public async Task<IResult> DeletePetServiceCategory(Guid id)
+        [HttpDelete]
+        public async Task<IResult> DeletePetServiceCategory([FromQuery] GetPetServiceCategoryRequest request)
         {
-            Result result = await _petServiceCategoryService.DeletePetServiceCategoryAsync(id);
+            Result result = await _petServiceCategoryService.DeletePetServiceCategoryAsync(request.Id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Pet service category deleted successfully")
                 : ResultExtensions.ToProblemDetails(result);

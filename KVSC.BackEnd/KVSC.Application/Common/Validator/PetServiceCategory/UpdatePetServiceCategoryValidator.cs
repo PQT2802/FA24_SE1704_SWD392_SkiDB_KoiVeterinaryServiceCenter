@@ -1,6 +1,6 @@
 ﻿using KVSC.Application.Common.Validator.Abstract;
-using KVSC.Infrastructure.DTOs.Pet.AddComboService;
-using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.AddPetServiceCategroy;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.UpdatePetServiceCategory;
 using KVSC.Infrastructure.KVSC.Infrastructure.Common;
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Application.Common.Validator.PetService
+namespace KVSC.Application.Common.Validator.PetServiceCategory
 {
-    public class AddPetServiceCategoryValidator : PetServiceCategoryValidator<AddPetServiceCategoryRequest>
+    public class UpdatePetServiceCategoryValidator : PetServiceCategoryValidator<UpdatePetServiceCategoryRequest>
     {
-        public AddPetServiceCategoryValidator(UnitOfWork unitOfWork) : base(unitOfWork)
+        public UpdatePetServiceCategoryValidator(UnitOfWork unitOfWork) : base(unitOfWork)
         {
             AddCategoryNameRules(request => request.Name);
             AddDescriptionRules(request => request.Description);

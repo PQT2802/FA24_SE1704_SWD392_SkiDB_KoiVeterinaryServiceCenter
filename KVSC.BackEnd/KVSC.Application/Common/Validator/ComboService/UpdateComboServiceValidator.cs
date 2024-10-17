@@ -1,6 +1,6 @@
 ﻿using KVSC.Application.Common.Validator.Abstract;
+using KVSC.Infrastructure.DTOs.ComboService.UpdateComboService;
 using KVSC.Infrastructure.DTOs.Pet.AddComboService;
-using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.KVSC.Infrastructure.Common;
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Application.Common.Validator.PetService
+namespace KVSC.Application.Common.Validator.ComboService
 {
-    public class AddComboServiceValidator : ComboServiceValidator<AddComboServiceRequest>
+    public class UpdateComboServiceValidator : ComboServiceValidator<UpdateComboServiceRequest>
     {
-        public AddComboServiceValidator(UnitOfWork unitOfWork) : base(unitOfWork)
+        public UpdateComboServiceValidator(UnitOfWork unitOfWork) : base(unitOfWork)
         {
             AddComboServiceNameRules(request => request.Name);
             AddDiscountPercentageRules(request => request.DiscountPercentage);

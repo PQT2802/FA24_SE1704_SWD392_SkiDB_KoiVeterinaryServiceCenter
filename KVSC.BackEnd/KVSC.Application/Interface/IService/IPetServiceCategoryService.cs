@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
-using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.AddPetServiceCategroy;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.UpdatePetServiceCategory;
 using KVSC.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace KVSC.Application.Interface.IService
         public Task<Result> GetPetServiceCategoryByIdAsync(Guid id);
 
 
-        public Task<Result> UpdatePetServiceCategoryAsync(Guid id, AddPetServiceCategoryRequest addPetServiceCategory);
+        public Task<Result> UpdatePetServiceCategoryAsync(UpdatePetServiceCategoryRequest updatePetServiceRequest);
         public Task<Result> DeletePetServiceCategoryAsync(Guid id);
       
     }
