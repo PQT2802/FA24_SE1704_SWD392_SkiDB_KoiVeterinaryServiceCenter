@@ -35,5 +35,7 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Appointment for combo created successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
+
+
     }
 }

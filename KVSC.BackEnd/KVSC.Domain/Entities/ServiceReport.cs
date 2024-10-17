@@ -17,8 +17,7 @@ namespace KVSC.Domain.Entities
 
         public bool HasPrescription { get; set; }
         public Guid? PrescriptionId { get; set; }
-        public virtual Prescription? Prescription { get; set; }
-
+        public virtual Prescription? Prescription { get; set; } // One-to-one relationship
         public bool IsCompleted { get; set; }
     }
 }

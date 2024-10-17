@@ -8,7 +8,7 @@ namespace KVSC.Domain.Entities
 {
     public class ProductCategory : BaseEntity
     {
-        public string Name { get; set; } // Category name, e.g., "Accessories", "Fish Food"
+        public string Name { get; set; } 
         public string Description { get; set; } // Optional description
 
         // Navigation property for related Products (if needed)
