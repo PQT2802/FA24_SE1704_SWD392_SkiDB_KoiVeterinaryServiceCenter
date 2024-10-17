@@ -1,9 +1,11 @@
+using KoiVeterinaryServiceCenter_FE.Pages.User.Customer;
 using KoiVeterinaryServiceCenter_FE.StartUp;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 builder.Services.RegisterServices(builder.Configuration);
 
 // Add session services
@@ -12,6 +14,13 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
     options.Cookie.HttpOnly = true; // Make the session cookie HTTP-only for security
     options.Cookie.IsEssential = true; // Ensure session cookie is always stored
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
 });
 
 // Configure Cookie Policy
@@ -39,11 +48,13 @@ app.UseRouting();
 // Use session before authorization
 app.UseSession(); // Enable session middleware
 
+
 // Use Cookie Policy middleware
 app.UseCookiePolicy();
-
+app.UseCors("AllowAllOrigins");
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();

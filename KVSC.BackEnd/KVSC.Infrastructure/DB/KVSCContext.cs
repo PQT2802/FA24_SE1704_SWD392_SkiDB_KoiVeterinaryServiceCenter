@@ -41,6 +41,7 @@ namespace KVSC.Infrastructure.DB
         public DbSet<Prescription> Prescriptions { get; set; }
         public DbSet<PrescriptionDetail> PrescriptionDetails { get; set; }
         public DbSet<AppointmentVeterinarian> AppointmentVeterinarians { get; set; }
+        public DbSet<Message> Messages { get; set; }
         #endregion
 
 

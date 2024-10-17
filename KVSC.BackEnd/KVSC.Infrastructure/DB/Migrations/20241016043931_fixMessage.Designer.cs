@@ -4,6 +4,7 @@ using KVSC.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KVSC.Infrastructure.Migrations
 {
     [DbContext(typeof(KVSCContext))]
-    partial class KVSCContextModelSnapshot : ModelSnapshot
+    [Migration("20241016043931_fixMessage")]
+    partial class fixMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -492,7 +495,7 @@ namespace KVSC.Infrastructure.Migrations
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PetTypeId")
+                    b.Property<Guid>("PetTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Weight")
@@ -985,11 +988,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("4feb4940-94dc-4aed-b580-ee116b668704"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1764),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4017),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             FullName = "Admin",
@@ -1003,11 +1002,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1799),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4071),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@gmail.com",
                             FullName = "Manager",
@@ -1021,11 +1016,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1806),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4075),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "veterinarian1@gmail.com",
                             FullName = "Veterinarian_1",
@@ -1039,11 +1030,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1812),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4078),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "veterinarian2@gmail.com",
                             FullName = "Veterinarian_2",
@@ -1057,11 +1044,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("5f28fcb6-675b-4f97-a925-01ac8c68b5ac"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1816),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4091),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "staff1@gmail.com",
                             FullName = "Staff_1",
@@ -1075,11 +1058,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("0d1fbbab-a175-4d90-8291-d5d96ebb9359"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1821),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4094),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "staff2@gmail.com",
                             FullName = "Staff_2",
@@ -1093,11 +1072,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1825),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4098),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer1@gmail.com",
                             FullName = "Customer_1",
@@ -1111,11 +1086,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1829),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4100),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer2@gmail.com",
                             FullName = "Customer_2",
@@ -1129,11 +1100,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                             Address = "123 Main St",
-<<<<<<< HEAD
-                            CreatedDate = new DateTime(2024, 10, 16, 13, 59, 35, 529, DateTimeKind.Utc).AddTicks(1837),
-=======
                             CreatedDate = new DateTime(2024, 10, 16, 4, 39, 28, 743, DateTimeKind.Utc).AddTicks(4102),
->>>>>>> FE-CRUD_for_Service
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer3@gmail.com",
                             FullName = "Customer_3",
@@ -1407,7 +1374,8 @@ namespace KVSC.Infrastructure.Migrations
                     b.HasOne("KVSC.Domain.Entities.PetType", "PetType")
                         .WithMany("Pets")
                         .HasForeignKey("PetTypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Owner");
 
