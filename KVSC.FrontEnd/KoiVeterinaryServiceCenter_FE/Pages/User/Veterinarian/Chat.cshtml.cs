@@ -1,14 +1,11 @@
-﻿
-using KVSC.Application.Service.Interface;
-using KVSC.Infrastructure.DTOs.Message;
+﻿using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs.Message.AddMessage;
+using KVSC.Infrastructure.DTOs.Message;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.SignalR;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
-namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
+namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
 {
     public class ChatModel : PageModel
     {
@@ -20,14 +17,14 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
         public ConversationModel Conversations { get; set; } = new ConversationModel();
         public Guid CurrentUserId { get; set; }
         public Guid CurrentRecipientId { get; set; }
-        
-        public string RecipientName {  get; set; }
+
+        public string RecipientName { get; set; }
         public ChatModel(IMessageService messageService)
         {
             _messageService = messageService;
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid? recipientId , string recipientName)
+        public async Task<IActionResult> OnGetAsync(Guid? recipientId, string recipientName)
         {
             // Lấy token từ session
             RecipientName = recipientName;

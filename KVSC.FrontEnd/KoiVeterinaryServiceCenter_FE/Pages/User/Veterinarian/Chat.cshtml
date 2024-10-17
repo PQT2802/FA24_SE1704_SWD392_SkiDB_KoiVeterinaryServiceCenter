@@ -1,7 +1,6 @@
 ﻿@page
-@model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.ChatModel
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.ChatModel
 @{
-    Layout = "_LayoutCustomer";
 }
 <div class="overlay" id="overlay"></div>
 <div class="containerss  popup-open">
@@ -35,26 +34,26 @@
                     <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
                 </div>
                 <div class="messages-chat" id="messagesContainer" style="display: flex; flex-direction: column-reverse;">
-                     @foreach (var message in Model.Messages.Extensions?.Data)
+                    @foreach (var message in Model.Messages.Extensions?.Data)
                     {
-                    if (message.SenderId == Model.CurrentUserId)
-                    {
-                    <div class="message">
-                    <div class="response">
-                    <p class="text">@message.Content</p>
-                    </div>
-                    </div>
-                    }
-                    else
-                    {
-                    <div class="message">
-                    <div class="photo">
-                    <div class="online"></div>
-                    </div>
-                    <p class="text">@message.Content</p>
-                    </div>
-                    }
-                    <p class="time">@message.Timestamp.ToString("g")</p>
+                        if (message.SenderId == Model.CurrentUserId)
+                        {
+                            <div class="message">
+                                <div class="response">
+                                    <p class="text">@message.Content</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="message">
+                                <div class="photo">
+                                    <div class="online"></div>
+                                </div>
+                                <p class="text">@message.Content</p>
+                            </div>
+                        }
+                        <p class="time">@message.Timestamp.ToString("g")</p>
                     }
                 </div>
                 <div class="footer-chat">
@@ -182,17 +181,17 @@
             // Kiểm tra ai là người gửi để xác định kiểu hiển thị
             if (message.senderId === document.getElementById('CreateMessageRequest_SenderId').value) {
                 messageElement.innerHTML = `
-                <div class="response">
-                    <p class="text">${message.content}</p>
-                </div>
-            `;
+                    <div class="response">
+                        <p class="text">${message.content}</p>
+                    </div>
+                `;
             } else {
                 messageElement.innerHTML = `
-                <div class="photo">
-                    <div class="online"></div>
-                </div>
-                <p class="text">${message.content}</p>
-            `;
+                    <div class="photo">
+                        <div class="online"></div>
+                    </div>
+                    <p class="text">${message.content}</p>
+                `;
             }
 
             // Thêm tin nhắn mới vào đầu container

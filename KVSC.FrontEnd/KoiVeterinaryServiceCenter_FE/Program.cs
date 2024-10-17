@@ -15,6 +15,13 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true; // Make the session cookie HTTP-only for security
     options.Cookie.IsEssential = true; // Ensure session cookie is always stored
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 
 // Configure Cookie Policy
 builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -41,9 +48,10 @@ app.UseRouting();
 // Use session before authorization
 app.UseSession(); // Enable session middleware
 
+
 // Use Cookie Policy middleware
 app.UseCookiePolicy();
-
+app.UseCors("AllowAllOrigins");
 app.UseAuthorization();
 
 app.MapRazorPages();

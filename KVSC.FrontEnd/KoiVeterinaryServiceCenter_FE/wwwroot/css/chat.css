@@ -100,31 +100,28 @@
         }
 
 /* === CONVERSATIONS === */
+
 .discussions {
     width: 35%;
-    height: 700px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Bóng nhẹ, mềm hơn */
     overflow: hidden;
-    background-color: #5c85d6; /* Màu xanh dịu mắt hơn */
+    background-color: #a8e6cf; /* Màu xanh dịu mắt hơn */
     border-radius: 12px; /* Bo góc container */
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
     .discussions .discussion {
         width: 100%;
-        height: 90px;
         background-color: #FAFAFA;
         border-bottom: 1px solid #E0E0E0;
         display: flex;
-        align-items: center;
         padding: 10px 15px;
         cursor: pointer;
         transition: background-color 0.3s ease; /* Hiệu ứng hover */
     }
 
-        .discussions .discussion:hover {
-            background-color: #f0f4ff; /* Đổi màu khi hover */
-        }
 
     .discussions .search {
         display: flex;
@@ -133,7 +130,7 @@
         padding: 15px 5px;
         margin-top: 10px;
         border-radius: 6px;
-        color: #E0E0E0;
+        color: #B0B0B0;
     }
 
         .discussions .search .searchbar {
@@ -145,13 +142,10 @@
             border: 1px solid #DDD;
             display: flex;
             align-items: center;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng lõm */
             transition: box-shadow 0.3s ease;
         }
 
-            .discussions .search .searchbar:hover {
-                box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.15); /* Tăng hiệu ứng khi hover */
-            }
+            
 
             .discussions .search .searchbar input {
                 margin-left: 15px;
@@ -167,43 +161,30 @@
                     color: #B0B0B0;
                 }
 
-    .discussions .message-active {
-        width: 95%; /* Giảm nhẹ độ rộng cho cân đối */
-        height: 90px;
-        background-color: #FFF;
-        border: 1px solid #E0E0E0; /* Đổi border-bottom thành viền đều */
-        margin: 10px auto; /* Tạo khoảng cách thoáng hơn giữa các mục */
-        border-radius: 12px; /* Tăng bo góc cho mềm mại */
-        display: flex;
-        align-items: center;
-        padding: 10px; /* Thêm padding cho nội dung */
-        transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng mượt */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng mờ nhẹ cho mục */
-        overflow: hidden;
+.message-active {
+    width: 95%;
+    background-color: #FFF;
+    border: 1px solid #E0E0E0; /* Đổi border-bottom thành viền đều */
+    margin: 10px auto;
+    border-radius: 12px; /* Tăng bo góc cho mềm mại */
+    display: flex;
+    flex-direction: column;
+    padding: 10px; /* Thêm padding cho nội dung */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng mượt */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng mờ nhẹ cho mục */
+    height: 550px;
+}
+.conversation-item {
+    border-radius: 8px; /* Bo góc cho mềm mại */
+    background-color: #f9f9f9; /* Màu nền nhẹ */
+    margin-bottom: 10px; /* Tạo khoảng cách giữa các item */
+    padding: 5px;
+    border: 1px solid #76c7c0;
+}
+    .conversation-item:hover {
+        box-shadow: 0 4px 12px #C0C0C0; /* Tạo bóng mờ khi hover */
     }
-
-        .discussions .message-active:hover {
-            background-color: #eef3ff; /* Màu nền dịu khi hover */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Tăng bóng khi hover */
-        }
-
-    .discussions .discussion .photo {
-        margin-left: 15px;
-        width: 55px; /* Tăng nhẹ kích thước cho cân đối */
-        height: 55px;
-        background: #E6E7ED;
-        border-radius: 50%; /* Bo tròn avatar */
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Bóng nhẹ cho avatar */
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng khi hover */
-    }
-
-        .discussions .discussion .photo:hover {
-            transform: scale(1.05); /* Phóng to nhẹ khi hover */
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Bóng đậm hơn khi hover */
-        }
+        
 .online {
     position: relative;
     top: 30px;
@@ -264,12 +245,12 @@
 }
 
 .header-chat {
-    background-color: #FFF;
+    background-color: #d6f9ee;
     height: 90px;
     box-shadow: 0px 3px 2px rgba(0,0,0,0.100);
     display: flex;
     border-radius: 10px;
-    margin-top : 5px;
+    margin-top: 5px;
     align-items: center;
 }
 
@@ -294,7 +275,7 @@
 .chat .messages-chat {
     padding: 2px 5px;
     overflow-y: auto;
-    max-height: 450px; /* Căn chỉnh chiều cao cho phần tin nhắn */
+    height: 500px;
     flex-direction: column-reverse;
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: transparent transparent; /* Firefox */
@@ -333,10 +314,12 @@
 }
 
 .time {
-    font-size: 10px;
-    color: lightgrey;
-    margin-bottom: 10px;
-    margin-left: 85px;
+    font-size: 10px; /* Kích thước chữ */
+    color: lightgrey; /* Màu chữ */
+    margin-bottom: 10px; /* Khoảng cách dưới */
+    text-align: center; /* Căn giữa nội dung */
+    display: block; /* Đảm bảo phần tử có thể căn giữa */
+    width: 100%; /* Đặt chiều rộng bằng 100% để căn giữa chính xác */
 }
 
 .response-time {
@@ -371,19 +354,22 @@
 
 .chat .footer-chat .send {
     color: #fff;
-    background-color: #4f6ebd;
+    background-color: #a8e6cf;
     position: absolute;
     right: 50px;
     padding: 12px;
     border-radius: 15%;
     font-size: 14pt;
+    border: none;
 }
 
 .write-message {
     border: none !important;
     height: 50px;
     padding: 10px;
-    border-radius: 25px; /* Bo tròn góc cho ô nhập liệu */
+    width: 500px;
+    margin-left: 25px;
+    border-radius: 5px; /* Bo tròn góc cho ô nhập liệu */
     background-color: #f6f6f6; /* Nền cho ô nhập liệu */
 }
 
