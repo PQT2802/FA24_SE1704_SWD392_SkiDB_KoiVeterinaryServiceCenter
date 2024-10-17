@@ -16,7 +16,8 @@ namespace KVSC.Infrastructure.DTOs.Pet.UpdatePet
         public string Color { get; set; }
         public double Length { get; set; }
         public double Weight { get; set; }
+        public int Quantity { get; set; }
         public DateTime LastHealthCheck { get; set; }
-        public int HealthStatus { get; set; }
+        public string Note { get; set; }
     }
 }

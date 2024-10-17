@@ -10,6 +10,7 @@ namespace KVSC.Domain.Entities
     {
         public string HabitatType { get; set; }
 
+
         // Foreign key relationship
         public ICollection<PetType> PetTypes { get; set; }
 

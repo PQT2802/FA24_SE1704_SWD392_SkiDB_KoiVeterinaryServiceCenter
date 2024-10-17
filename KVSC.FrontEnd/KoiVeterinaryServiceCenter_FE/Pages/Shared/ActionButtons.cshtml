@@ -47,7 +47,6 @@
     </form>
 }
 else if (Model.ListType == "appointment")
-else if (Model.ListType == "appointment")
 {
     <!-- Appointment List Buttons -->
     @if (string.IsNullOrEmpty(Model.Status))
@@ -57,32 +56,28 @@ else if (Model.ListType == "appointment")
     }
     else
     {
-        @switch (Model.Status)
-        {
-            case "Pending Confirmation":
-                <button class="btn btn-sm btn-success">Accept</button>
-                <button class="btn btn-sm btn-warning">Reject</button>
-                break;
+        <form method="post">
+            <input type="hidden" name="AppointmentId" value="@Model.Item.Id" />
 
-            case "Waiting for Execution":
-                <button class="btn btn-sm btn-info">Mark In Progress</button>
-                break;
-
-            case "In Progress":
-                <button class="btn btn-sm btn-info">Complete</button>
-                break;
-
-            case "Completed":
-                <button class="btn btn-sm btn-secondary" disabled>Completed</button>
-                break;
-
-            case "Cancelled":
-                <button class="btn btn-sm btn-danger" disabled>Cancelled</button>
-                break;
-
-            default:
-                <button class="btn btn-sm btn-secondary" disabled>No Action</button>
-                break;
-        }
+            @switch (Model.Status)
+            {
+                case "Pending":
+                    <button class="btn btn-sm btn-success" formaction="/Veterinarian/AcceptAppointment">Accept</button>
+                    <button class="btn btn-sm btn-warning" formaction="/Veterinarian/RejectAppointment">Reject</button>
+                    break;
+                case "Waiting":
+                    <button class="btn btn-sm btn-info" formaction="/Veterinarian/MarkInProgress">Mark In Progress</button>
+                    break;
+                case "InProgress":
+                    <button class="btn btn-sm btn-info" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.Id">Report</button>
+                    break;
+                case "Reported":
+                    <button class="btn btn-sm btn-secondary" disabled>Completed</button>
+                    break;
+                default:
+                    <button class="btn btn-sm btn-secondary" disabled>No Action</button>
+                    break;
+            }
+        </form>
     }
 }

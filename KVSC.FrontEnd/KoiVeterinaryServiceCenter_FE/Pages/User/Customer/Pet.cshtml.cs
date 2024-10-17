@@ -34,7 +34,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             if (result.IsSuccess)
             {
                 PetList = result.Data;
-                
+
                 if (PetList.Extensions == null)
                 {
                     PetList.Extensions = new Extensions<List<PetData>>
@@ -104,14 +104,21 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                     switch (error.Code)
                     {
                         case "Pet.Empty":
-                            if (error.Description.Contains("Name", System.StringComparison.OrdinalIgnoreCase))
+                            if (error.Description.Contains("Name",
+                             System.StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["Name"] = error.Description;
                             else if (error.Description.Contains("Gender", System.StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["Gender"] = error.Description;
                             else if (error.Description.Contains("ImageUrl", System.StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["ImageUrl"] = error.Description;
-                            else if (error.Description.Contains("Color", System.StringComparison.OrdinalIgnoreCase))
+                            else if (error.Description.Contains("Color",
+                             System.StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["Color"] = error.Description;
+                            else if (error.Description.Contains("Quantity", System.StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Quantity"] = error.Description;
+                            else if (error.Description.Contains("Note",
+                             System.StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Note"] = error.Description;
                             break;
 
                         case "Pet.InvalidValue":

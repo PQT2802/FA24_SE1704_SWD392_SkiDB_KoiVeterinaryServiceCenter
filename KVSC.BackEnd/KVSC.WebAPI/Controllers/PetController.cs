@@ -62,7 +62,7 @@ namespace KVSC.WebAPI.Controllers
 
         //DELETE: api/pet/{id}
         [HttpDelete]
-        public async Task<IResult> DeletePet([FromBody] GetPetRequest request)
+        public async Task<IResult> DeletePet([FromQuery] GetPetRequest request)
         {
             Result result = await _petBusinessService.DeletePetAsync(request.Id);
             return result.IsSuccess

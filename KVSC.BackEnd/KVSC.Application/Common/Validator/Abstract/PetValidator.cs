@@ -22,7 +22,6 @@ namespace KVSC.Application.Common.Validator.Abstract
         protected void AddPetNameRules(Expression<Func<T, string>> petNameExpression)
         {
             RuleFor(petNameExpression)
-                .NotEmpty().WithState(_ => (PetErrorMessage.FieldIsEmpty("Pet name")))
                 .Length(1, 50).WithState(_ => PetErrorMessage.FieldLength("Pet name", 1, 50));
         }
 
@@ -30,12 +29,6 @@ namespace KVSC.Application.Common.Validator.Abstract
         {
             RuleFor(petAgeExpression)
                 .GreaterThan(0).WithState(_ => PetErrorMessage.FieldMustBePositive("Pet age"));
-        }
-
-        protected void AddPetGenderRules(Expression<Func<T, string>> petBreedExpression)
-        {
-            RuleFor(petBreedExpression)
-                .NotEmpty().WithState(_ => PetErrorMessage.FieldIsEmpty("Pet gender"));
         }
 
         protected void AddPetLengthRules(Expression<Func<T, double>> petLengthExpression)
@@ -48,6 +41,13 @@ namespace KVSC.Application.Common.Validator.Abstract
         {
             RuleFor(petWeightExpression)
                 .GreaterThan(0).WithState(_ => PetErrorMessage.FieldMustBePositive("Pet weight"));
+        }
+
+        protected void AddPetQuantityRules(Expression<Func<T, int>> petQuantityExpression)
+        {
+            RuleFor(petQuantityExpression)
+                .NotNull().WithState(_ => PetErrorMessage.FieldIsEmpty("Quantity"))
+                .GreaterThan(0).WithState(_ => PetErrorMessage.FieldMustBePositive("Quantity"));
         }
 
         //Pet type
