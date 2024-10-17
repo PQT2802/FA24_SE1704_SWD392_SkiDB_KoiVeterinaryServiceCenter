@@ -7,9 +7,9 @@ namespace KoiVeterinaryServiceCenter_FE.ViewComponents
 {
     public class AppointmentFormViewComponent : ViewComponent
     {
-        private readonly IPetServiceSerivce _petServiceService;
+        private readonly IPetServiceService _petServiceService;
 
-        public AppointmentFormViewComponent(IPetServiceSerivce petServiceService)
+        public AppointmentFormViewComponent(IPetServiceService petServiceService)
         {
             _petServiceService = petServiceService;
         }

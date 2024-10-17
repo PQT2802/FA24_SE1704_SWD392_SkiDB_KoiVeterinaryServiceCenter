@@ -26,7 +26,7 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             #region Services
             // Register other services here if needed.
             services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<IPetServiceSerivce, PetServiceSerivce>();
+            services.AddTransient<IPetServiceService, PetServiceService>();
             #endregion
 
             return services;

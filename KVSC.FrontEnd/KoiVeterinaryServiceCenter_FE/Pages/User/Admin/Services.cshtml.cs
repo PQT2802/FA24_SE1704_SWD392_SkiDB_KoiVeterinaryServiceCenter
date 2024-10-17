@@ -9,16 +9,16 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 {
     public class ServicesModel : PageModel
     {
-        private readonly IPetServiceSerivce _petServiceSerivce;
+        private readonly IPetServiceService _petServiceService;
 
         [BindProperty]
         public KoiServiceList KoiServiceList { get; set; }
         [BindProperty]
         public AddServiceRequest AddServiceRequest { get; set; }
 
-        public ServicesModel(IPetServiceSerivce petServiceSerivce)
+        public ServicesModel(IPetServiceService petServiceService)
         {
-            _petServiceSerivce = petServiceSerivce;
+            _petServiceService = petServiceService;
         }
 
 
@@ -29,7 +29,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
                 return Page();
             }
 
-            var result = await _petServiceSerivce.AddPetService(AddServiceRequest);
+            var result = await _petServiceService.AddPetService(AddServiceRequest);
             if (result.IsSuccess)
             {
                 // Redirect or show success message after successful addition
@@ -42,7 +42,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
         public async Task OnGetAsync()
         {
-            var result = await _petServiceSerivce.GetKoiServiceList();
+            var result = await _petServiceService.GetKoiServiceList();
             if (result.IsSuccess)
             {
             

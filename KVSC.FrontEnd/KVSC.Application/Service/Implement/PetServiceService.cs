@@ -9,13 +9,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PetServiceDto = KVSC.Infrastructure.DTOs.Service.ServiceDetail.PetServiceDto;
 
 namespace KVSC.Application.Service.Implement
 {
-    public class PetServiceSerivce : IPetServiceSerivce
+    public class PetServiceService : IPetServiceService
     {
         private readonly IPetServiceRepository _petServiceRepository;
-        public PetServiceSerivce(IPetServiceRepository petServiceRepository)
+        public PetServiceService(IPetServiceRepository petServiceRepository)
         {
             _petServiceRepository = petServiceRepository;
         }
@@ -30,6 +31,11 @@ namespace KVSC.Application.Service.Implement
         {
             var response = await _petServiceRepository.GetKoiServiceList();
             return response;
+        }
+        
+        public async Task<ResponseDto<PetServiceDto>> GetPetServiceByIdAsync(Guid id)
+        {
+            return await _petServiceRepository.GetPetServiceByIdAsync(id);
         }
     }
 }

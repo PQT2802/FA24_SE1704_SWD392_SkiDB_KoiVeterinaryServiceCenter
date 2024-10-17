@@ -11,4 +11,12 @@ namespace KVSC.Infrastructure.DTOs
         public string Message { get; set; }
         public T Data { get; set; }
     }
+    
+    public class ApiResponseDto<T>
+    {
+        public int StatusCode { get; set; }
+        public string Title { get; set; }
+        public string Type { get; set; }
+        public Extensions<T> Extensions { get; set; }
+    }
 }

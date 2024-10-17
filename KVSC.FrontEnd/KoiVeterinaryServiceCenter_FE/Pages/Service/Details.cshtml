@@ -1,0 +1,53 @@
+﻿@page "/service/details/{id:guid}"
+@model DetailsModel
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">Service Details</h2>
+                </div>
+                <div class="card-body">
+                    @if (Model.ServiceDetails != null)
+                    {
+                        <div class="service-details">
+                            <h3>@Model.ServiceDetails.Name</h3>
+                            <p><strong>Description:</strong> @Model.ServiceDetails.Description</p>
+                            <p><strong>Price:</strong> $@Model.ServiceDetails.BasePrice</p>
+                            <p><strong>Duration:</strong> @Model.ServiceDetails.Duration</p>
+                            <p><strong>Available From:</strong> @Model.ServiceDetails.AvailableFrom.ToString("MM/dd/yyyy")</p>
+                            <p><strong>Available To:</strong> @Model.ServiceDetails.AvailableTo.ToString("MM/dd/yyyy")</p>
+                            <p><strong>Travel Cost:</strong> $@Model.ServiceDetails.TravelCost</p>
+                            <img src="@Model.ServiceDetails.ImageUrl" alt="Service Image" style="width: 100%; height: auto;" />
+                        </div>
+                    }
+                    else if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            @Model.ErrorMessage
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Loading...</p>
+                    }
+
+                    else if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger text-center">
+                            @Model.ErrorMessage
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-center">Loading...</p>
+                    }
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/" class="btn btn-primary">Go Back to Services</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
