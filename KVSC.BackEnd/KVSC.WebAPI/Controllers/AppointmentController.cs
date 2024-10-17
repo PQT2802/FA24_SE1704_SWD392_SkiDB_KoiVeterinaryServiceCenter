@@ -48,7 +48,7 @@ namespace KVSC.WebAPI.Controllers
 
         // GET: api/appointment/list/vet/{vetId}
         [HttpGet("list/vet/{vetId}")]
-        public async Task<IResult> GetAppointmentListByVetIdAsync()
+        public async Task<IResult> GetAppointmentListByVetIdAsync(  )
         {
             CurrentUserObject c = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
             Result result = await _appointmentService.GetAppointmentListByVetIdAsync(c.UserId);
