@@ -247,40 +247,45 @@ INSERT INTO [dbo].[PetService]
 GO
 
 
+-- Insert sample data into PetType table
+INSERT INTO [KoiCenterDB].[dbo].[PetType]
+    ([Id], [GeneralType], [SpecificType], [PetHabitatId], [CreatedDate], [CreatedBy], [ModifiedDate], [ModifiedBy], [IsDeleted])
+VALUES
+    (NEWID(), 'Fish', 'Koi', (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetHabitat] WHERE [HabitatType] = 'Pond'), GETDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Fish', 'Goldfish', (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetHabitat] WHERE [HabitatType] = 'Aquarium'), GETDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Reptile', 'Turtle', (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetHabitat] WHERE [HabitatType] = 'Lake'), GETDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Fish', 'Carp', (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetHabitat] WHERE [HabitatType] = 'River'), GETDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Amphibian', 'Frog', (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetHabitat] WHERE [HabitatType] = 'Outdoor Garden'), GETDATE(), NULL, NULL, NULL, 0);
 
--- Insert sample data into PetHabitat table
+-- Insert sample data into PetHabitat table with BaseEntity structure
 INSERT INTO [KoiCenterDB].[dbo].[PetHabitat]
     ([Id], [HabitatType], [CreatedDate], [CreatedBy], [ModifiedDate], [ModifiedBy], [IsDeleted])
 VALUES
-    (NEWID(), 'Pond', GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Aquarium', GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Outdoor Water Garden', GETDATE(), 'Admin', GETDATE(), 'Admin', 0);
-
--- Retrieve the generated GUIDs for PetHabitat
-SELECT [Id], [HabitatType] 
-FROM [KoiCenterDB].[dbo].[PetHabitat];
+    (NEWID(), 'Pond', GETDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Aquarium', GETDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Lake', GETDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'River', GETDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Outdoor Garden', GETDATE(), NULL, NULL, NULL, 0);
 
 
-
-	INSERT INTO [KoiCenterDB].[dbo].[PetType]
-    ([Id], [GeneralType], [SpecificType], [PetHabitatId], [CreatedDate], [CreatedBy], [ModifiedDate], [ModifiedBy], [IsDeleted])
-VALUES
-    (NEWID(), 'Fish', 'Koi Fish', '/* Pond Habitat Id here */', GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Fish', 'Goldfish', '/* Aquarium Habitat Id here */', GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Fish', 'Shubunkin', '/* Outdoor Water Garden Habitat Id here */', GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Fish', 'Butterfly Koi', '/* Pond Habitat Id here */', GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Fish', 'Comet Goldfish', '/* Aquarium Habitat Id here */', GETDATE(), 'Admin', GETDATE(), 'Admin', 0);
-
-
+-- Insert sample data into Pet table
 INSERT INTO [KoiCenterDB].[dbo].[Pet]
     ([Id], [Name], [Age], [Gender], [ImageUrl], [Color], [Length], [Weight], [LastHealthCheck], [HealthStatus], [OwnerId], [PetTypeId], [CreatedDate], [CreatedBy], [ModifiedDate], [ModifiedBy], [IsDeleted])
 VALUES
-    (NEWID(), 'Koi A', 2, 'Male', 'https://example.com/koi_a.jpg', 'Orange', 30.5, 2.1, '2023-10-01', 1, 'DD0E9F37-D587-401D-932E-7F098EB60B3E', NULL, GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Koi B', 3, 'Female', 'https://example.com/koi_b.jpg', 'White', 35.0, 2.4, '2023-09-15', 2, '45A9DC1C-FB8A-4607-9A7E-D6B1359384D7', NULL, GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Koi C', 1, 'Male', 'https://example.com/koi_c.jpg', 'Black', 25.2, 1.9, '2023-09-20', 1, 'BCA84E29-DE4D-475B-A3AD-A02E937EFA14', NULL, GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Koi D', 4, 'Female', 'https://example.com/koi_d.jpg', 'Gold', 40.3, 3.0, '2023-08-25', 3, 'DD0E9F37-D587-401D-932E-7F098EB60B3E', NULL, GETDATE(), 'Admin', GETDATE(), 'Admin', 0),
-    (NEWID(), 'Koi E', 2, 'Male', 'https://example.com/koi_e.jpg', 'Red', 32.8, 2.2, '2023-10-05', 1, '45A9DC1C-FB8A-4607-9A7E-D6B1359384D7', NULL, GETDATE(), 'Admin', GETDATE(), 'Admin', 0);
-
+    (NEWID(), 'Koi A', 2, 'Male', 'https://example.com/koi_a.jpg', 'Orange', 30.5, 2.1, '2023-10-01', 1, 'DD0E9F37-D587-401D-932E-7F098EB60B3E', 
+        (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetType] WHERE [SpecificType] = 'Koi'), GETDATE(), NULL, NULL, NULL, 0),
+        
+    (NEWID(), 'Goldfish B', 3, 'Female', 'https://example.com/goldfish_b.jpg', 'White', 20.0, 1.2, '2023-09-15', 2, '45A9DC1C-FB8A-4607-9A7E-D6B1359384D7', 
+        (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetType] WHERE [SpecificType] = 'Goldfish'), GETDATE(), NULL, NULL, NULL, 0),
+        
+    (NEWID(), 'Carp C', 4, 'Male', 'https://example.com/carp_c.jpg', 'Black', 40.0, 2.5, '2023-09-20', 1, 'BCA84E29-DE4D-475B-A3AD-A02E937EFA14', 
+        (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetType] WHERE [SpecificType] = 'Carp'), GETDATE(), NULL, NULL, NULL, 0),
+        
+    (NEWID(), 'Turtle D', 5, 'Female', 'https://example.com/turtle_d.jpg', 'Green', 25.0, 5.0, '2023-08-25', 3, 'DD0E9F37-D587-401D-932E-7F098EB60B3E', 
+        (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetType] WHERE [SpecificType] = 'Turtle'), GETDATE(), NULL, NULL, NULL, 0),
+        
+    (NEWID(), 'Frog E', 1, 'Male', 'https://example.com/frog_e.jpg', 'Green', 15.0, 0.5, '2023-10-05', 1, '45A9DC1C-FB8A-4607-9A7E-D6B1359384D7', 
+        (SELECT TOP 1 [Id] FROM [KoiCenterDB].[dbo].[PetType] WHERE [SpecificType] = 'Frog'), GETDATE(), NULL, NULL, NULL, 0);
 
 
 
