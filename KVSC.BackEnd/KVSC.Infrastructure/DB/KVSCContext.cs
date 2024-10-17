@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DB.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +12,6 @@ namespace KVSC.Infrastructure.DB
             : base(options)
         {
         }
-
 
         #region DBSet
         public DbSet<User> Users { get; set; }
@@ -44,23 +39,31 @@ namespace KVSC.Infrastructure.DB
         public DbSet<Message> Messages { get; set; }
         #endregion
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Entity Configurations
 
-            #region
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            // Apply entity configurations
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new PetServiceCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new PetServiceConfiguration());
+            modelBuilder.ApplyConfiguration(new VeterinarianConfiguration());
+            modelBuilder.ApplyConfiguration(new VeterinarianScheduleConfiguration());
+            modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
+            modelBuilder.ApplyConfiguration(new AppointmentVeterinarianConfiguration());
+            modelBuilder.ApplyConfiguration(new PetConfiguration());
+            modelBuilder.ApplyConfiguration(new PetTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceReportConfiguration());
+            modelBuilder.ApplyConfiguration(new PrescriptionConfiguration());
+            modelBuilder.ApplyConfiguration(new PrescriptionDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new PetHabitatConfiguration());
+
             #endregion
 
-
-
-
-
-
-
-
-            // Define table names
+            #region Table Mappings
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Pet>().ToTable("Pet");
             modelBuilder.Entity<Product>().ToTable("Product");
@@ -83,8 +86,9 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<Prescription>().ToTable("Prescription");
             modelBuilder.Entity<PrescriptionDetail>().ToTable("PrescriptionDetail");
             modelBuilder.Entity<AppointmentVeterinarian>().ToTable("AppointmentVeterinarian");
+            #endregion
 
-            // Relationships and additional configuration
+            #region Relationships and Additional Configuration
 
             // User has many Pets
             modelBuilder.Entity<User>()
@@ -116,12 +120,12 @@ namespace KVSC.Infrastructure.DB
                 .WithOne(oi => oi.Order)
                 .HasForeignKey(oi => oi.OrderId);
 
-            // OrderItem relationships (optional foreign keys)
+            // OrderItem relationships
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.Pet)
                 .WithMany()
                 .HasForeignKey(oi => oi.PetId)
-                .OnDelete(DeleteBehavior.Restrict); // Optional, can change based on your needs
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.PetService)
@@ -141,47 +145,17 @@ namespace KVSC.Infrastructure.DB
                 .HasForeignKey(oi => oi.VeterinarianId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // PetService has many OrderItems
-            modelBuilder.Entity<PetService>()
-                .HasMany(ps => ps.OrderItems)
-                .WithOne(oi => oi.PetService)
-                .HasForeignKey(oi => oi.ServiceId);
-
-            // Product has many OrderItems
-            modelBuilder.Entity<Product>()
-                .HasMany(p => p.OrderItems)
-                .WithOne(oi => oi.Product)
-                .HasForeignKey(oi => oi.ProductId);
-
             // PetServiceCategory has many PetServices
             modelBuilder.Entity<PetServiceCategory>()
                 .HasMany(psc => psc.PetServices)
                 .WithOne(ps => ps.PetServiceCategory)
                 .HasForeignKey(ps => ps.PetServiceCategoryId);
 
-
-            // ProductCategory has many Products
-            modelBuilder.Entity<ProductCategory>()
-                    .HasMany(pc => pc.Products)
-                    .WithOne(p => p.ProductCategory)
-                    .HasForeignKey(p => p.ProductCategoryId)
-                    .OnDelete(DeleteBehavior.Cascade); // Adjust behavior based on your requirements
-
-
-
             // ComboService -> ComboServiceItem (1-to-many)
             modelBuilder.Entity<ComboService>()
                 .HasMany(c => c.ComboServiceItems)
                 .WithOne(csi => csi.ComboService)
                 .HasForeignKey(csi => csi.ComboServiceId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
-            // PetService -> ComboServiceItem (1-to-many)
-            modelBuilder.Entity<PetService>()
-                .HasMany(ps => ps.ComboServiceItems)
-                .WithOne(csi => csi.PetService)
-                .HasForeignKey(csi => csi.PetServiceId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Appointment relationships
@@ -201,19 +175,12 @@ namespace KVSC.Infrastructure.DB
                 .HasForeignKey(a => a.PetServiceId);
 
             modelBuilder.Entity<Appointment>()
-               .HasOne(a => a.ComboService)
-               .WithMany()
-               .HasForeignKey(a => a.ComboServiceId);
+                .HasMany(av => av.AppointmentVeterinarians)
+                .WithOne(a => a.Appointment)
+                .HasForeignKey(av => av.AppointmentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Appointment>()
-               .HasMany(av => av.AppointmentVeterinarians)
-               .WithOne(a => a.Appointment)
-               .HasForeignKey(av => av.AppointmentId)
-               .OnDelete(DeleteBehavior.Restrict);
-
-
-
-            // Quan hệ một-một giữa User và Veterinarian
+            // Veterinarian and User one-to-one relationship
             modelBuilder.Entity<Veterinarian>()
                 .HasOne(v => v.User)
                 .WithOne(u => u.Veterinarian)
@@ -225,50 +192,35 @@ namespace KVSC.Infrastructure.DB
                 .WithMany(v => v.VeterinarianSchedules)
                 .HasForeignKey(vs => vs.VeterinarianId);
 
-            modelBuilder.Entity<Pet>()
-                .HasOne(p => p.PetType)
-                .WithMany(pt => pt.Pets)
-                .HasForeignKey(p => p.PetTypeId)
+            // PetService -> ComboServiceItem (1-to-many)
+            modelBuilder.Entity<PetService>()
+                .HasMany(ps => ps.ComboServiceItems)
+                .WithOne(csi => csi.PetService)
+                .HasForeignKey(csi => csi.PetServiceId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<PetType>()
-                .HasOne(pt => pt.PetHabitat)
-                .WithMany(ph => ph.PetTypes)
-                .HasForeignKey(pt => pt.PetHabitatId)
-                .OnDelete(DeleteBehavior.Restrict);
-
 
             // PrescriptionDetail and Product - many-to-one relationship
             modelBuilder.Entity<PrescriptionDetail>()
                 .HasOne(pd => pd.Medicine)
                 .WithMany()
-                .HasForeignKey(pd => pd.MedicineId).OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<AppointmentVeterinarian>()
-    .HasOne(av => av.Appointment)
-    .WithMany(a => a.AppointmentVeterinarians)
-    .HasForeignKey(av => av.AppointmentId).OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<AppointmentVeterinarian>()
-                .HasOne(av => av.Veterinarian) // Reference the Veterinarian entity, not User
-                .WithMany(v => v.AppointmentVeterinarians)
-                .HasForeignKey(av => av.VeterinarianId)
+                .HasForeignKey(pd => pd.MedicineId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
-            modelBuilder.Entity<PrescriptionDetail>()
-        .HasOne(pd => pd.Medicine)
-        .WithMany()
-        .HasForeignKey(pd => pd.MedicineId)
-        .OnDelete(DeleteBehavior.Restrict);
-
+            // ServiceReport has a one-to-one relationship with Prescription
             modelBuilder.Entity<ServiceReport>()
-    .HasOne(sr => sr.Prescription)
-    .WithOne(p => p.ServiceReport)
-    .HasForeignKey<Prescription>(p => p.ServiceReportId);
-            // Call base method
-            base.OnModelCreating(modelBuilder);
+                .HasOne(sr => sr.Prescription)
+                .WithOne(p => p.ServiceReport)
+                .HasForeignKey<Prescription>(p => p.ServiceReportId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // ServiceReport has one Appointment (foreign key relationship)
+            modelBuilder.Entity<ServiceReport>()
+                .HasOne(sr => sr.Appointment)
+                .WithMany()
+                .HasForeignKey(sr => sr.AppointmentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            #endregion
         }
     }
 }
-

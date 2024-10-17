@@ -23,7 +23,13 @@ namespace KVSC.Infrastructure.Interface
 
         IPetTypeRepository PetTypeRepository { get; }
         IPetHabitatRepository PetHabitatRepository { get; }
+<<<<<<< HEAD
         IMessageRepository MessageRepository { get; }
+=======
+
+        IServiceReportRepository ServiceReportRepository { get; }
+        IPrescriptionRepository PrescriptionRepository { get; }
+>>>>>>> Thang
         int Complete();
     }
 }

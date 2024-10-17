@@ -176,6 +176,14 @@ namespace KVSC.Application.Implement.Service
             return deleteResult ? Result.Success() : Result.Failure(ProductErrorMessage.ProductDeletionFailed());
         }
 
-        
+        public async Task<Result> GetMedicinesAsync()
+        {
+            var medicine = await _unitOfWork.ProductRepository.GetMedicinesAsync();
+            if (medicine == null) 
+            {
+                return Result.Failure(ProductErrorMessage.ProductNotFound());
+            }
+            return Result.SuccessWithObject(medicine);
+        }
     }
 }

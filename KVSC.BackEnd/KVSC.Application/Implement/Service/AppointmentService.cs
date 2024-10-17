@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Azure.Core;
+using FluentValidation;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
@@ -123,6 +124,30 @@ namespace KVSC.Application.Implement.Service
             await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
             var response = new CreateResponse { Id = appointment.Id };
             return Result.SuccessWithObject(response);
+        }
+        public async Task<Result> GetAllAppointmentsAsync()
+        {
+            var availableVeterinarian = await _unitOfWork.AppointmentRepository.GetAllAppointmentsAsync();
+            return null;
+        }
+
+        public async Task<Result> GetAppointmentListAsync()
+        {
+            var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentListAsync();
+            return Result.SuccessWithObject(appointments);
+        }
+
+        public async Task<Result> GetAppointmentListByUserIdAsync(Guid userId)
+        {
+            var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentListByUserIdAsync(userId);
+
+            if (appointments == null || !appointments.Any())
+            {
+                var error = Error.NotFound("AppointmentNotFound", "No appointments found for the specified veterinarian.");
+                return Result.Failure(error);
+            }
+
+            return Result.SuccessWithObject(appointments);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿@model dynamic
 
-@* @if (Model == "service") *@
 @if (Model.ListType == "service")
 {
     <!-- Service List Buttons -->
@@ -24,6 +23,7 @@
         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
     </form>
 }
+<<<<<<< HEAD
 @if (Model.ListType == "pet")
 {
     <!-- Service List Buttons -->
@@ -47,9 +47,40 @@
         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
     </form>
 }
+=======
+>>>>>>> Thang
 else if (Model.ListType == "appointment")
 {
     <!-- Appointment List Buttons -->
-    <button class="btn btn-sm btn-success">Accept</button>
-    <button class="btn btn-sm btn-warning">Reject</button>
+    @if (string.IsNullOrEmpty(Model.Status))
+    {
+        <!-- Handle case when Status is null or empty -->
+        <button class="btn btn-sm btn-secondary" disabled>No Status Available</button>
+    }
+    else
+    {
+        <form method="post">
+            <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
+
+            @switch (Model.Status)
+            {
+                case "Pending":
+                    <button class="btn btn-sm btn-success" formaction="/Veterinarian/AcceptAppointment">Accept</button>
+                    <button class="btn btn-sm btn-warning" formaction="/Veterinarian/RejectAppointment">Reject</button>
+                    break;
+                case "Waiting":
+                    <button class="btn btn-sm btn-info" formaction="/Veterinarian/MarkInProgress">Mark In Progress</button>
+                    break;
+                case "InProgress":
+                    <button class="btn btn-sm btn-info" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.AppointmentListId">Report</button>
+                    break;
+                case "Reported":
+                    <button class="btn btn-sm btn-secondary" disabled>Completed</button>
+                    break;
+                default:
+                    <button class="btn btn-sm btn-secondary" disabled>No Action</button>
+                    break;
+            }
+        </form>
+    }
 }

@@ -25,6 +25,5 @@ namespace KVSC.Domain.Entities
 
         // Many-to-many relationship with Veterinarian
         public ICollection<AppointmentVeterinarian> AppointmentVeterinarians { get; set; }
-
     }
 }

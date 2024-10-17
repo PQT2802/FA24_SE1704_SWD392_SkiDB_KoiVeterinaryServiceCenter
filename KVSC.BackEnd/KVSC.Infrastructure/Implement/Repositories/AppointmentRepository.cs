@@ -1,5 +1,6 @@
 ﻿using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DB;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppointment;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,58 @@ namespace KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.Appointments.Where(a => !a.IsDeleted).ToListAsync();
         }
+
+
+        public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListAsync()
+        {
+            return await _context.Appointments
+                .Where(a => !a.IsDeleted)
+                .Select(a => new GetAllAppointment
+                {
+                    AppointmentListId = a.Id,
+                    CustomerId = a.CustomerId,
+                    PetServiceId = a.PetServiceId ?? Guid.Empty, // Handle null PetServiceId with default value
+                    VeterinarianId = a.AppointmentVeterinarians
+                                        .Select(av => av.VeterinarianId)
+                                        .FirstOrDefault(), // Return the first VeterinarianId or default
+                    CustomerName = a.Customer != null ? a.Customer.FullName : "Unknown", // Handle null Customer
+                    VeterinarianName = a.AppointmentVeterinarians
+                                        .Select(av => av.Veterinarian != null ? av.Veterinarian.User.FullName : "Unknown")
+                                        .FirstOrDefault(), // Handle null Veterinarian or User
+                    ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService
+                    Status = a.Status,
+                    AppointmentDate = a.AppointmentDate
+                })
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByUserIdAsync(Guid userId)
+        {
+            return await _context.Appointments
+                .Where(a => !a.IsDeleted && a.AppointmentVeterinarians
+                    .Any(av => av.Veterinarian.UserId == userId)) // Filter by veterinarian's UserId
+                .Select(a => new GetAllAppointment
+                {
+                    AppointmentListId = a.Id,
+                    CustomerId = a.CustomerId,
+                    PetServiceId = a.PetServiceId ?? Guid.Empty, // Handle nullable PetServiceId with Guid.Empty
+                    VeterinarianId = a.AppointmentVeterinarians
+                                        .Where(av => av.Veterinarian.UserId == userId) // Filter by the provided UserId
+                                        .Select(av => av.VeterinarianId)
+                                        .FirstOrDefault(), // Return the first matching VeterinarianId
+                    CustomerName = a.Customer != null ? a.Customer.FullName : "Unknown", // Handle null Customer safely
+                    VeterinarianName = a.AppointmentVeterinarians
+                                        .Where(av => av.Veterinarian.UserId == userId) // Filter for the correct veterinarian
+                                        .Select(av => av.Veterinarian != null ? av.Veterinarian.User.FullName : "Unknown")
+                                        .FirstOrDefault(), // Handle null Veterinarian or User
+                    ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService safely
+                    Status = a.Status,
+                    AppointmentDate = a.AppointmentDate
+                })
+                .ToListAsync();
+        }
+
+
+
         public async Task<Veterinarian> GetAvailableVeterinarianAsync(DateTime appointmentDate)
         {
             var appointmentDay = appointmentDate.Date;   
@@ -63,6 +116,10 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 _context.VeterinarianSchedules.Update(schedule);
                 await _context.SaveChangesAsync(); 
             }
+        }
+        public async Task<bool> AppointmentExistsAsync(Guid appointmentId)
+        {
+            return await _context.Appointments.AnyAsync(a => a.Id == appointmentId && !a.IsDeleted);
         }
     } 
 }

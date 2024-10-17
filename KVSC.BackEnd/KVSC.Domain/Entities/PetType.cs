@@ -13,7 +13,7 @@ namespace KVSC.Domain.Entities
 
         // Relationship
         public Guid PetHabitatId { get; set; }
-        public PetHabitat PetHabitat { get; set; }
+        public PetHabitat? PetHabitat { get; set; }
         public ICollection<Pet> Pets { get; set; }
     }
 }

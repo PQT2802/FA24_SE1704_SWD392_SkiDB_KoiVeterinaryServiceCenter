@@ -1,0 +1,122 @@
+﻿@page
+@using KVSC.Infrastructure.DTOs.Service
+@using KVSC.Infrastructure.DTOs
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.AppointmentsModel
+@{
+    Layout = "_LayoutBoard";
+}
+
+@await Component.InvokeAsync("GenericTable", new { items = Model.AppointmentList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "appointment" })
+
+<!-- Report Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">Submit Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="SubmitReport">
+                    <input type="hidden" id="appointmentId" name="AppointmentId" value="" />
+                    <div class="mb-3">
+                        <label for="reportContent" class="form-label">Report Content</label>
+                        <input type="text" class="form-control" id="reportContent" name="AddServiceReport.ReportContent" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="recommendations" class="form-label">Recommendations</label>
+                        <textarea class="form-control" id="recommendations" name="AddServiceReport.Recommendations" rows="4" required></textarea>
+                    </div>
+
+                    <!-- Prescription Form Container -->
+                    <div id="prescriptionContainer">
+                        <!-- Prescription Details will be dynamically added here -->
+                    </div>
+
+                    <!-- Add/Remove Prescription Buttons -->
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-secondary" id="addPrescriptionBtn">+ Add Prescription</button>
+                        <button type="button" class="btn btn-danger" id="removePrescriptionBtn" disabled>- Remove Prescription</button>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Track the number of prescription forms
+    let prescriptionIndex = 0;
+
+    // Get references to buttons
+    const addPrescriptionBtn = document.getElementById('addPrescriptionBtn');
+    const removePrescriptionBtn = document.getElementById('removePrescriptionBtn');
+    const prescriptionContainer = document.getElementById('prescriptionContainer');
+
+    // Add Prescription Function
+    addPrescriptionBtn.addEventListener('click', function () {
+        prescriptionIndex++;
+
+        // Enable the remove button when there is at least one prescription
+        removePrescriptionBtn.disabled = false;
+
+        // Create the prescription form dynamically
+        const prescriptionForm = `
+                <div class="prescription-form mb-3" id="prescriptionForm_${prescriptionIndex}">
+                    <h6>Prescription Details #${prescriptionIndex}</h6>
+                    <div class="mb-3">
+                        <label for="medicineId_${prescriptionIndex}" class="form-label">Select Medicine</label>
+                        <select class="form-select" name="AddServiceReport.PrescriptionDetails[${prescriptionIndex}].MedicineId" id="medicineId_${prescriptionIndex}">
+                            <option value="">Select a medicine</option>
+    @foreach (var medicine in Model.GetMedicine.Extensions.Data)
+    {
+                                    <option value="@medicine.MedicineId">@medicine.MedicineName</option>
+    }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity_${prescriptionIndex}" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" name="AddServiceReport.PrescriptionDetails[${prescriptionIndex}].Quantity" id="quantity_${prescriptionIndex}" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="price_${prescriptionIndex}" class="form-label">Price</label>
+                        <input type="number" class="form-control" name="AddServiceReport.PrescriptionDetails[${prescriptionIndex}].Price" id="price_${prescriptionIndex}" />
+                    </div>
+                </div>
+            `;
+
+        // Append the form to the prescription container
+        prescriptionContainer.insertAdjacentHTML('beforeend', prescriptionForm);
+    });
+
+    // Remove Prescription Function
+    removePrescriptionBtn.addEventListener('click', function () {
+        if (prescriptionIndex > 0) {
+            // Remove the last prescription form
+            const lastForm = document.getElementById(`prescriptionForm_${prescriptionIndex}`);
+            lastForm.remove();
+            prescriptionIndex--;
+
+            // Disable the remove button if there are no more prescription forms
+            if (prescriptionIndex === 0) {
+                removePrescriptionBtn.disabled = true;
+            }
+        }
+    });
+
+    // Modal Handling to reset the form
+    const reportModal = document.getElementById('reportModal');
+    reportModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const appointmentId = button.getAttribute('data-id');
+        const modalInput = reportModal.querySelector('#appointmentId');
+        modalInput.value = appointmentId;
+
+        // Reset prescription form on opening
+        prescriptionContainer.innerHTML = '';
+        prescriptionIndex = 0;
+        removePrescriptionBtn.disabled = true;
+    });
+</script>

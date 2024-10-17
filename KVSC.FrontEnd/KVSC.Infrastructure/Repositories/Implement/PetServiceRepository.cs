@@ -3,9 +3,7 @@ using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.Service.AddService;
 using KVSC.Infrastructure.DTOs.Service.DeleteService;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
-using KVSC.Infrastructure.DTOs.User;
-using KVSC.Infrastructure.DTOs.User.Login;
-using KVSC.Infrastructure.DTOs.User.Register;
+
 using KVSC.Infrastructure.Repositories.Interface;
 using System.Net.Http.Json;
 using System.Text.Json;

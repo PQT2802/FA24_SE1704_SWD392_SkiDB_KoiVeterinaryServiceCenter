@@ -1,4 +1,5 @@
 ﻿using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Product.GetProduct;
 using KVSC.Infrastructure.DTOs.Product.SearchProduct;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         Task<bool> RemoveProductAsync(Product product);
         Task<bool> RemoveProductByIdAsync(Guid productId);
         Task<SearchProductResponse> GetProductsAsync(SearchProductRequest productName);
+        Task<List<GetMedicines>> GetMedicinesAsync();
     }
 }

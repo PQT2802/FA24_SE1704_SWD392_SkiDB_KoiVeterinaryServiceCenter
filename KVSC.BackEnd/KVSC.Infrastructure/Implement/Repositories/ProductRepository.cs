@@ -1,5 +1,6 @@
 ﻿using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DB;
+using KVSC.Infrastructure.DTOs.Product.GetProduct;
 using KVSC.Infrastructure.DTOs.Product.SearchProduct;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
@@ -165,7 +166,19 @@ namespace KVSC.Infrastructure.Implement.Repositories
             return response;
         }
 
+        public async Task<List<GetMedicines>> GetMedicinesAsync()
+        {
+            var medicines = await _context.Products
+            .Where(p => p.ProductCategory.Name == "Medicines")
+            .Select(p => new GetMedicines
+            {
+                MedicineId = p.Id, // Convert GUID to string
+                MedicineName = p.Name
+            })
+            .ToListAsync();
 
+            return medicines;
+        }
 
 
         #endregion

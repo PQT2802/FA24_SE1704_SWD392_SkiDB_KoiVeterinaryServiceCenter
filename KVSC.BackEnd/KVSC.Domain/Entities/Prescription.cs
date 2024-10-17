@@ -8,12 +8,10 @@ namespace KVSC.Domain.Entities
 {
     public class Prescription : BaseEntity
     {
-        public Guid ReportId { get; set; }
-        public virtual ServiceReport Report { get; set; }
-
         public DateTime PrescriptionDate { get; set; }
         public Guid? ServiceReportId { get; set; }
+        public virtual ServiceReport ServiceReport { get; set; } // One-to-one relationship
+
         public virtual ICollection<PrescriptionDetail> PrescriptionDetails { get; set; }
-        public virtual ServiceReport ServiceReport { get; set; }
     }
 }

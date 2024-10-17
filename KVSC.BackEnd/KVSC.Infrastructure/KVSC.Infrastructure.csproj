@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\ServiceReport\DeleteServiceReport\" />
     <Folder Include="Middleware\" />
   </ItemGroup>
 

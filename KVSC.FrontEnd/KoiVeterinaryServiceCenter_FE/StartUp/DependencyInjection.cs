@@ -22,12 +22,22 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
+
             services.AddHttpClient<IPetRepository, PetRepository>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
 
             services.AddHttpClient<IMessageRepository, MessageRepository>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7283");
+            });
+
+            services.AddHttpClient<IAppointmentRepository, AppointmentRepository>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7283");
+            });
+            services.AddHttpClient<IProductRepository, ProductRepository>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
@@ -44,8 +54,10 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             services.AddTransient<IPetServiceService, PetServiceService>();
             services.AddTransient<IPetServiceCategoryService, PetServiceCategoryService>();
             services.AddTransient<IPetBusinessService, PetBusinessService>();
-
             services.AddScoped<IMessageService, MessageService>();
+
+            services.AddTransient<IAppointmentService, AppointmentService>();
+            services.AddTransient<IProductService, ProductService>();
 
             #endregion
 
