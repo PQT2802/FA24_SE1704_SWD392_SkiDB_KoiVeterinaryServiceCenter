@@ -12,6 +12,6 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<AddPetResponse>> AddPetAsync(AddPetRequest request);
         Task<ResponseDto<UpdatePetResponse>> UpdatePetAsync(UpdatePetRequest request);
         Task<ResponseDto<DeletePetResponse>> DeletePetAsync(DeletePetRequest request);
-        Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string ownerId);
+        Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string token);
     }
 }
