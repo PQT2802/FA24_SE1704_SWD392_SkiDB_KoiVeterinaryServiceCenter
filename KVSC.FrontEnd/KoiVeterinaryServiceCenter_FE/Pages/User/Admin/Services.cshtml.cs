@@ -15,7 +15,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 {
     public class ServicesModel : PageModel
     {
-        private readonly IPetServiceSerivce _petServiceSerivce;
+        private readonly IPetServiceService _petServiceSerivce;
         private readonly IPetServiceCategoryService _petServiceCategoryService;
 
         [BindProperty]
@@ -30,7 +30,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
         public List<KoiServiceCategoryList> Categories { get; set; } = new List<KoiServiceCategoryList>();
 
-        public ServicesModel(IPetServiceSerivce petServiceSerivce , IPetServiceCategoryService petServiceCategoryService)
+        public ServicesModel(IPetServiceService petServiceSerivce , IPetServiceCategoryService petServiceCategoryService)
         {
             _petServiceSerivce = petServiceSerivce;
             _petServiceCategoryService = petServiceCategoryService;
@@ -119,7 +119,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
         public async Task OnGetAsync()
         {
-            var result = await _petServiceService.GetKoiServiceList();
+            var result = await _petServiceSerivce.GetKoiServiceList();
             if (result.IsSuccess)
             {
             
