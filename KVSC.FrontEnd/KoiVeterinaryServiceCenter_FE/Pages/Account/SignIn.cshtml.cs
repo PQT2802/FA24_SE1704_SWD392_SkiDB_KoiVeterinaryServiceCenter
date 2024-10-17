@@ -34,9 +34,17 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
                 if (getResult.IsSuccess)
                 {
                     var userInfor = getResult.Data;
+
+                    // Store User Info in Session
                     HttpContext.Session.SetString("ActorRole", userInfor.Extensions.Data.RoleName);
                     HttpContext.Session.SetString("ActorName", userInfor.Extensions.Data.UserName);
                     HttpContext.Session.SetString("Token", accessToken);
+
+                    // Check if the Id is available and store it in the session as a string
+                    if (userInfor.Extensions.Data.UserId != null)
+                    {
+                        HttpContext.Session.SetString("UserId", userInfor.Extensions.Data.UserId); // Storing GUID as a string
+                    }
 
                     // Redirect based on role
                     if (userInfor.Extensions.Data.RoleName == "Admin")
@@ -57,7 +65,6 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
                     }
                     else
                     {
-                        // If no specific role is found, redirect to a default page
                         return RedirectToPage("/Index");
                     }
                 }
@@ -67,6 +74,8 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
             ErrorMessage = result.Errors;
             return Page();
         }
+
+
 
 
         public void OnGet()

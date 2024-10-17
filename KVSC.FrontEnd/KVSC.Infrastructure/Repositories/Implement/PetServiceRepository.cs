@@ -1,19 +1,80 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.Service.AddService;
+using KVSC.Infrastructure.DTOs.Service.DeleteService;
+using KVSC.Infrastructure.DTOs.Service.UpdateService;
+using KVSC.Infrastructure.DTOs.User;
+using KVSC.Infrastructure.DTOs.User.Login;
+using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Repositories.Interface;
 using System.Net.Http.Json;
 using System.Text.Json;
+using PetServiceDto = KVSC.Infrastructure.DTOs.Service.ServiceDetail.PetServiceDto;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
     public class PetServiceRepository : IPetServiceRepository
     {
         private readonly HttpClient _httpClient;
+
         public PetServiceRepository(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
+
+
+        public async Task<ResponseDto<PetServiceDto>> GetPetServiceByIdAsync(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/PetService/{id}");
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"API Response: {responseContent}");  // Log raw API response for debugging
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var errorResponse = JsonSerializer.Deserialize<ApiResponseDto<object>>(responseContent, options);
+                    return new ResponseDto<PetServiceDto>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Message = errorResponse.Extensions.Message
+                    };
+                }
+
+                var apiResponse = JsonSerializer.Deserialize<ApiResponseDto<PetServiceDto>>(responseContent, options);
+
+                return new ResponseDto<PetServiceDto>
+                {
+                    IsSuccess = true,
+                    Data = apiResponse.Extensions.Data,
+                    Message = apiResponse.Extensions.Message
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<PetServiceDto>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<PetServiceDto>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+
+
 
         public async Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request)
         {
@@ -26,8 +87,6 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 {
                     PropertyNameCaseInsensitive = true
                 };
-
-                // Check if the response indicates failure
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
@@ -43,7 +102,6 @@ namespace KVSC.Infrastructure.Repositories.Implement
                         Message = "An error occurred during adding."
                     };
                 }
-
                 // If successful, deserialize the login response
                 var addingResponse = await response.Content.ReadFromJsonAsync<AddServiceResponse>(options);
 
@@ -75,14 +133,122 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
-
-        public async Task<ResponseDto<KoiServiceList>> GetKoiServiceList()
+        public async Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request)
         {
             try
             {
 
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Gọi API PUT với dữ liệu request
+                var response = await _httpClient.PutAsJsonAsync("api/PetService", request);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize lỗi trả về từ API
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<UpdateServiceResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during updating."
+                    };
+                }
+
+                // Nếu thành công, lấy dữ liệu phản hồi
+                var updateResponse = await response.Content.ReadFromJsonAsync<UpdateServiceResponse>(options);
+
+                return new ResponseDto<UpdateServiceResponse>
+                {
+                    IsSuccess = true,
+                    Data = updateResponse,
+                    Message = "Update service successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<UpdateServiceResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<UpdateServiceResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<DeleteServiceResponse>> DeletePetService(DeleteServiceRequest request)
+        {
+            try
+            {
+                var url = $"api/PetService?Id={request.Id}";
+
+                // Call the API DELETE with the service ID in the URL
+                var response = await _httpClient.DeleteAsync(url);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK) // Kiểm tra mã trạng thái
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize lỗi trả về từ API
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent);
+
+                    return new ResponseDto<DeleteServiceResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during deletion."
+                    };
+                }
+
+                // Nếu thành công, trả về thông điệp thành công
+                return new ResponseDto<DeleteServiceResponse>
+                {
+                    IsSuccess = true,
+                    Data = null,
+                    Message = "Delete service successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<DeleteServiceResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<DeleteServiceResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<KoiServiceList>> GetKoiServiceList()
+        {
+            try
+            {
                 // Send the request and get the response
-                var response = await _httpClient.GetAsync("api/PetService");
+                var response = await _httpClient.GetAsync("api/PetService/all");
 
                 var options = new JsonSerializerOptions
                 {
@@ -137,7 +303,5 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
-
-
     }
 }

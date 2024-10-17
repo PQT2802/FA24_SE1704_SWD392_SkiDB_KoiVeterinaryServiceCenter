@@ -3,15 +3,9 @@ using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Repositories.Interface;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
@@ -48,7 +42,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     {
                         IsSuccess = false,
                         Data = null,
-                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                       Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
                         Message = "An error occurred during sign-in."
                     };
                 }
@@ -100,7 +94,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 return new ResponseDto<LoginResponse>
                 {
                     IsSuccess = false,
-                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                   Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
                     Message = "Google sign-in failed."
                 };
             }

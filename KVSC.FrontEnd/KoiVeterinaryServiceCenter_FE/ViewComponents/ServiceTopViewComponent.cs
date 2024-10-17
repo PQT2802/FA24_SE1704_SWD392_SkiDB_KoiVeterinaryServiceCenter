@@ -6,9 +6,9 @@ namespace KoiVeterinaryServiceCenter_FE.ViewComponents
 {
     public class ServiceTopViewComponent : ViewComponent
     {
-        private readonly IPetServiceSerivce _petServiceService;
+        private readonly IPetServiceService _petServiceService;
 
-        public ServiceTopViewComponent(IPetServiceSerivce petServiceService)
+        public ServiceTopViewComponent(IPetServiceService petServiceService)
         {
             _petServiceService = petServiceService;
         }

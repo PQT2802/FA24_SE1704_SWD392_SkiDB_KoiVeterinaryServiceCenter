@@ -1,4 +1,5 @@
 ﻿using KVSC.Application.KVSC.Application.Common.Result;
+using KVSC.Infrastructure.DTOs.ComboService.UpdateComboService;
 using KVSC.Infrastructure.DTOs.Pet.AddComboService;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace KVSC.Application.Interface.IService
         public Task<Result> CreateComboServiceAsync(AddComboServiceRequest addComboService);
         public Task<Result> GetComboServiceByIdAsync(Guid id);
         public Task<Result> GetAllComboServicesAsync();
-        public Task<Result> UpdateComboServiceAsync(Guid id, AddComboServiceRequest addComboService);
+        public Task<Result> UpdateComboServiceAsync(UpdateComboServiceRequest request);
         public Task<Result> DeleteComboServiceAsync(Guid id);
     }
 }

@@ -4,18 +4,13 @@ using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Repositories.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KVSC.Application.Service.Implement
 {
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
-        public AuthService(IUserRepository userRepository) 
+        public AuthService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

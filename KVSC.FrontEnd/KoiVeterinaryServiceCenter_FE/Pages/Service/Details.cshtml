@@ -1,0 +1,90 @@
+﻿@page "/service/details/{id:guid}"
+@model DetailsModel
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Service Detail Start -->
+            <div class="mb-5">
+                @if (Model.ServiceDetails != null)
+                {
+                    <!-- Image Section -->
+                    <img class="img-fluid w-100 rounded mb-5" src="https://i.ytimg.com/vi/KGv9J_cAnTE/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCWTy88d4xsrpGgfLU1ZMfP8jnB0g" alt="Service Image">
+
+                    <!-- Title and Description -->
+                    <h1 class="mb-4">@Model.ServiceDetails.Name</h1>
+                    <p>
+                        At our veterinary service center, we provide top-notch care for your beloved pets. Our @Model.ServiceDetails.Name service ensures that your pet receives the specialized attention it deserves. With years of experience in handling a wide range of animal health issues, we have designed this service to meet your pet’s unique needs with care and precision.
+                    </p>
+
+                    <p>
+                        Our dedicated team of veterinarians and support staff is here to provide comprehensive @Model.ServiceDetails.Name services, from initial consultation to complete care. We use state-of-the-art medical equipment and the latest treatment techniques to ensure your pet’s health and well-being.
+                    </p>
+
+                    <p>
+                        Whether it's a routine checkup, surgery, or emergency care, we treat every pet like family. Our service includes everything from initial diagnosis to follow-up care, ensuring that your pet gets the best possible treatment every step of the way.
+                    </p>
+
+                    <p>
+                        Trust us to provide compassionate, expert care for your pets. We're passionate about animal welfare and strive to exceed your expectations at every visit. Book your @Model.ServiceDetails.Name service today and ensure your pet stays happy and healthy!
+                    </p>
+
+
+                    <div class="service-details mt-4" style="font-size: 1.1rem; line-height: 1.6;">
+                        <h3 style="color: #333; font-weight: bold; margin-bottom: 20px;">@Model.ServiceDetails.Name</h3>
+
+                        <p style="margin-bottom: 20px; color: #555;">
+                            @Model.ServiceDetails.Description
+                        </p>
+
+                        <p style="margin-bottom: 10px;">
+                            <strong style="color: #333;">Price:</strong>
+                            <span style="color: #555;">$@Model.ServiceDetails.BasePrice</span>
+                        </p>
+
+                        <p style="margin-bottom: 10px;">
+                            <strong style="color: #333;">Duration:</strong>
+                            <span style="color: #555;">@Model.ServiceDetails.Duration</span>
+                        </p>
+
+                        <p style="margin-bottom: 10px;">
+                            <strong style="color: #333;">Available From:</strong>
+                            <span style="color: #555;">@Model.ServiceDetails.AvailableFrom.ToString("MM/dd/yyyy")</span>
+                        </p>
+
+                        <p style="margin-bottom: 10px;">
+                            <strong style="color: #333;">Available To:</strong>
+                            <span style="color: #555;">@Model.ServiceDetails.AvailableTo.ToString("MM/dd/yyyy")</span>
+                        </p>
+
+                        <p style="margin-bottom: 10px;">
+                            <strong style="color: #333;">Travel Cost:</strong>
+                            <span style="color: #555;">$@Model.ServiceDetails.TravelCost</span>
+                        </p>
+                    </div>
+                   
+
+                  
+                }
+                else if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    <div class="alert alert-danger">
+                        @Model.ErrorMessage
+                    </div>
+                }
+                else
+                {
+                    <p>Loading...</p>
+                }
+            </div>
+
+            <!-- Appointment Form -->
+            @await Component.InvokeAsync("AppointmentForm")
+
+            <!-- Service Detail End -->
+            <div class="text-center">
+                <a href="/" class="btn btn-primary">Go Back to Services</a>
+            </div>
+        </div>
+    </div>
+</div>

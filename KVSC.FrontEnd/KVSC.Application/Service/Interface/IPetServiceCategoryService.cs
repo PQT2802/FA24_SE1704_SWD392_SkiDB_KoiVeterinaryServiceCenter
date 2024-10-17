@@ -5,13 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KVSC.Infrastructure.DTOs.Service.AddService;
 
 namespace KVSC.Application.Service.Interface
 {
-    public interface IPetServiceSerivce
+    public interface IPetServiceCategoryService
     {
-        Task<ResponseDto<KoiServiceList>> GetKoiServiceList();
-        Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request);
+        Task<ResponseDto<KoiServiceCategory>> GetKoiServiceCategory();
+        Task<ResponseDto<KoiServiceCategoryList>> GetKoiServiceCategoryList();
     }
 }

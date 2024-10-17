@@ -8,5 +8,6 @@ namespace KVSC.Infrastructure.DTOs.Pet.AddPet
 {
     public class AddPetResponse
     {
+        public Guid Id { get; set; }
     }
 }

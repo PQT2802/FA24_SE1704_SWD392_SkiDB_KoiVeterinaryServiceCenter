@@ -54,10 +54,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\User\Customer\" />
     <Folder Include="Pages\User\Manager\" />
     <Folder Include="Pages\User\Veterinarian\" />
     <Folder Include="Pages\User\Staff\" />
+    <Folder Include="wwwroot\img\service-img\" />
   </ItemGroup>
 
   <ItemGroup>

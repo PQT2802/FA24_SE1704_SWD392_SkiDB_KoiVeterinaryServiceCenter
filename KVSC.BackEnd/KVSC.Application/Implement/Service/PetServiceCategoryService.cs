@@ -1,9 +1,13 @@
-﻿using FluentValidation;
+﻿using Azure.Core;
+using FluentValidation;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.AddPetServiceCategroy;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.GetPetServiceCategory;
+using KVSC.Infrastructure.DTOs.PetServiceCategory.UpdatePetServiceCategory;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 using System;
@@ -18,6 +22,7 @@ namespace KVSC.Application.Implement.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<AddPetServiceCategoryRequest> _petServiceCategoryValidator;
+        private readonly IValidator<UpdatePetServiceCategoryRequest> _updatePetServiceCategoryValidator;
 
         public PetServiceCategoryService(IUnitOfWork unitOfWork, IValidator<AddPetServiceCategoryRequest> petServiceCategoryValidator)
         {
@@ -59,23 +64,40 @@ namespace KVSC.Application.Implement.Service
         public async Task<Result> GetAllPetServiceCategoriesAsync()
         {
             var petServiceCategories = await _unitOfWork.PetServiceCategoryRepository.GetAllAsync();
-            return Result.SuccessWithObject(petServiceCategories);
+            var response = petServiceCategories.Select(category => new GetPetServiceCategoryResponse
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                ServiceType = category.ServiceType,
+                ApplicableTo = category.ApplicableTo
+            }).ToList();
+
+            return Result.SuccessWithObject(response);
         }
 
-        public async Task<Result> GetPetServiceCategoryByIdAsync(Guid id)
+        public async Task<Result> GetPetServiceCategoryByIdAsync(Guid Id)
         {
-            var petServiceCategory = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(id);
+            var petServiceCategory = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(Id);
             if (petServiceCategory == null)
             {
                 return Result.Failure(PetServiceCategoryErrorMessage.PetServiceCategoryNotFound());
             }
+            var response = new GetPetServiceCategoryResponse
+            {
+                Id = petServiceCategory.Id,
+                Name = petServiceCategory.Name,
+                Description = petServiceCategory.Description,
+                ServiceType = petServiceCategory.ServiceType,
+                ApplicableTo = petServiceCategory.ApplicableTo
+            };
 
-            return Result.SuccessWithObject(petServiceCategory);
+            return Result.SuccessWithObject(response);
         }
 
-        public async Task<Result> UpdatePetServiceCategoryAsync(Guid id, AddPetServiceCategoryRequest addPetServiceCategory)
+        public async Task<Result> UpdatePetServiceCategoryAsync(UpdatePetServiceCategoryRequest updatePetServiceCategoryRequest)
         {
-            var validationResult = await _petServiceCategoryValidator.ValidateAsync(addPetServiceCategory);
+            var validationResult = await _updatePetServiceCategoryValidator.ValidateAsync(updatePetServiceCategoryRequest);
             if (!validationResult.IsValid)
             {
                 var errors = validationResult.Errors
@@ -84,17 +106,16 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failures(errors);
             }
 
-            var existingPetServiceCategory = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(id);
+            var existingPetServiceCategory = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(updatePetServiceCategoryRequest.Id);
             if (existingPetServiceCategory == null)
             {
                 return Result.Failure(PetServiceCategoryErrorMessage.PetServiceCategoryNotFound());
             }
 
-            existingPetServiceCategory.Name = addPetServiceCategory.Name;
-            existingPetServiceCategory.Name = addPetServiceCategory.Name;
-            existingPetServiceCategory.Description = addPetServiceCategory.Description;
-            existingPetServiceCategory.ServiceType = addPetServiceCategory.ServiceType;
-            existingPetServiceCategory.ApplicableTo = addPetServiceCategory.ApplicableTo;
+            existingPetServiceCategory.Name = updatePetServiceCategoryRequest.Name;
+            existingPetServiceCategory.Description = updatePetServiceCategoryRequest.Description;
+            existingPetServiceCategory.ServiceType = updatePetServiceCategoryRequest.ServiceType;
+            existingPetServiceCategory.ApplicableTo = updatePetServiceCategoryRequest.ApplicableTo;
             // Update the category
             var updateResult = await _unitOfWork.PetServiceCategoryRepository.UpdateAsync(existingPetServiceCategory);
             if (updateResult == 0)
@@ -127,5 +148,7 @@ namespace KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(deleteResult);
         }
+
+        
     }
 }
