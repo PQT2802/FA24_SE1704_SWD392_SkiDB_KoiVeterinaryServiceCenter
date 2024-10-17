@@ -5,12 +5,14 @@
 }
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title>HTML Codex - Login Form Template</title>
+    <title>KoiVet - Login</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Login Form Template" name="keywords">
-    <meta content="Login Form Template" name="description">
+    <meta content="Login Form" name="keywords">
+    <meta content="Login Form for Koi Veterinary Service Center" name="description">
+
 
     <!-- Favicon -->
     <link href="~/img/favicon.ico" rel="icon">
@@ -20,59 +22,58 @@
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
+
 <body>
-    <div class="wrapper login-1">
+    <div class="wrapper login-page">
         <div class="container">
-            <div class="col-left">
-                <div class="login-text">
-                    <h2>Welcome Back</h2>
-                    <p>Create your account.<br>It's totally free.</p>
-                    <a class="btn" href="/Account/Register">Sign Up</a>
+            <div class="login-left">
+                <div class="welcome-text">
+                    <h2>Welcome Back to KoiVet</h2>
+                    <p>New here? Create your account. <br>It’s easy and free.</p>
+                    <a class="btn-signup" href="/Account/Register">Sign Up</a>
                 </div>
             </div>
-            <div class="col-right">
+            <div class="login-right">
                 <div class="login-form">
                     <h2>Login</h2>
 
                     <!-- Error Message Display -->
                     @if (Model.ErrorMessage != null && Model.ErrorMessage.Any())
                     {
-                        <div class="alert alert-danger">
-                            <ul>
+                            <div class="alert alert-danger">
+                                <ul>
                                 @foreach (var error in Model.ErrorMessage)
                                 {
-                                    <li>@error.Description</li>
+                                            <li>@error.Description</li>
                                 }
-                            </ul>
-                        </div>
+                                </ul>
+                            </div>
                     }
 
                     <form method="post">
-                        <p>
+                        <div class="form-group">
                             <label asp-for="LoginRequest.Email"></label>
                             <input asp-for="LoginRequest.Email" placeholder="Email" required>
                             <span asp-validation-for="LoginRequest.Email" class="text-danger"></span>
-                        </p>
-                        <p>
+                        </div>
+                        <div class="form-group">
                             <label asp-for="LoginRequest.Password"></label>
                             <input asp-for="LoginRequest.Password" placeholder="Password" type="password" required>
                             <span asp-validation-for="LoginRequest.Password" class="text-danger"></span>
-                        </p>
-                        <p>
-                            <input type="submit" value="Sign In" />
-                        </p>
-                        <p>
-                            <a href="/Account/ForgotPassword">Forget Password?</a>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn-submit" type="submit" value="Sign In">
+                        </div>
+                        <p class="forgot-password">
+                            <a href="/Account/ForgotPassword">Forgot Password?</a>
                         </p>
                     </form>
                 </div>
-                <div id="g_id_onload"
-                     data-client_id="461997059059-rcigqraco900cl7jci2o2250ht07urn5.apps.googleusercontent.com"
-                     data-callback="handleCredentialResponse"
-                     data-ux_mode="popup"   
-                     data-auto_prompt="false">
-                </div>
+
+                <!-- Google Sign-In Button -->
+                <div id="g_id_onload" data-client_id="461997059059-rcigqraco900cl7jci2o2250ht07urn5.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-ux_mode="popup" data-auto_prompt="false"></div>
                 <div class="g_id_signin" data-type="standard"></div>
+
                 <script>
                     function handleCredentialResponse(response) {
                         var idToken = response.credential;
@@ -103,4 +104,5 @@
         </div>
     </div>
 </body>
+
 </html>

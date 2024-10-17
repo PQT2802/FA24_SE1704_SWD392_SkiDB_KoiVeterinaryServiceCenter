@@ -1,0 +1,9 @@
+﻿@page
+@using KVSC.Infrastructure.DTOs.Service
+@using KVSC.Infrastructure.DTOs
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.AppointmentsModel
+@{
+    Layout = "_LayoutBoard";
+}
+
+@await Component.InvokeAsync("GenericTable", new { items = Model.AppointmentList.Cast<IPropertyNameProvider>(), listType = "appointment" })

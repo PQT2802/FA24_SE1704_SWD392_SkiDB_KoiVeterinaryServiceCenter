@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KVSC.Infrastructure.DTOs.Appointment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

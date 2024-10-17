@@ -55,8 +55,13 @@
 
   <ItemGroup>
     <Folder Include="Pages\User\Manager\" />
-    <Folder Include="Pages\User\Veterinarian\" />
     <Folder Include="Pages\User\Staff\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\img\about.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
