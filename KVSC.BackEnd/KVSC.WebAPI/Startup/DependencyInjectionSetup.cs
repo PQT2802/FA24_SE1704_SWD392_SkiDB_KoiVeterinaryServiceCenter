@@ -46,6 +46,9 @@ using KVSC.Application.Common.Validator.ComboService;
 using KVSC.Infrastructure.DTOs.PetService.UpdatePetService;
 using KVSC.Infrastructure.DTOs.PetServiceCategory.UpdatePetServiceCategory;
 using KVSC.Infrastructure.DTOs.ComboService.UpdateComboService;
+using KVSC.Application.Common.Validator.ServiceReport;
+using KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport;
+using KVSC.Infrastructure.DTOs.ServiceReport.UpdateServiceReport;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -114,6 +117,8 @@ namespace KVSC.WebAPI.Startup
 
             services.AddTransient<IValidator<MakeAppointmentForServiceRequest>, MakeAppointmentForServiceValidator>();
             services.AddTransient<IValidator<MakeAppointmentForComboRequest>, MakeAppointmentForComboValidator>();
+            services.AddTransient<IValidator<AddServiceReportRequest>, AddServiceReportValidator>();
+            services.AddTransient<IValidator<UpdateServiceReportRequest>, UpdateServiceReportValidator>();
 
             //Validator
 
@@ -133,6 +138,8 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IPetServiceCategoryRepository, PetServiceCategoryRepository>();
             services.AddTransient<IComboServiceRepository, ComboServiceRepository>();
             services.AddTransient<IAppointmentRepository, AppointmentRepository>();
+            services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
+            services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
 
             #endregion
 
@@ -141,6 +148,7 @@ namespace KVSC.WebAPI.Startup
 
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
             services.AddTransient<IGenericRepository<Product>, GenericRepository<Product>>();
+            services.AddTransient<IGenericRepository<PrescriptionRepository>, GenericRepository<PrescriptionRepository>>();
             services
                 .AddTransient<IGenericRepository<ProductCategoryRepository>,
                     GenericRepository<ProductCategoryRepository>>();
@@ -164,6 +172,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IComboServiceService, ComboServiceService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IServiceReportService, ServiceReportService>();
 
 
             services.AddTransient<IUserService, UserService>();

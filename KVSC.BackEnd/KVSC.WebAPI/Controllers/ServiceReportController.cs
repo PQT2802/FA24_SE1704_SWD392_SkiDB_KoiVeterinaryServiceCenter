@@ -1,4 +1,5 @@
 ﻿using KVSC.Application.Interface.IService;
+using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport;
 using KVSC.Infrastructure.DTOs.ServiceReport.GetServiceReport;
 using KVSC.Infrastructure.DTOs.ServiceReport.UpdateServiceReport;
@@ -20,13 +21,13 @@ namespace KVSC.WebAPI.Controllers
 
             // Add a new service report
             [HttpPost("add")]
-            public async Task<IActionResult> AddServiceReportAsync([FromBody] AddServiceReportRequest request)
+            public async Task<IResult> AddServiceReportAsync([FromBody] AddServiceReportRequest request)
             {
                 var result = await _serviceReportService.AddServiceReportAsync(request);
-                if (result.IsSuccess)
-                    return Ok(result);
-                return BadRequest(result.Errors);
-            }
+            return result.IsSuccess
+            ? ResultExtensions.ToSuccessDetails(result, "Report created successfully")
+            : ResultExtensions.ToProblemDetails(result);
+        }
 
             // Get a service report by ID
             [HttpGet("{id}")]

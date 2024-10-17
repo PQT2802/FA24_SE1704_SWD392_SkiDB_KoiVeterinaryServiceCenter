@@ -25,6 +25,7 @@ namespace KVSC.Infrastructure.Interface
         IPetHabitatRepository PetHabitatRepository { get; }
 
         IServiceReportRepository ServiceReportRepository { get; }
+        IPrescriptionRepository PrescriptionRepository { get; }
         int Complete();
     }
 }

@@ -16,24 +16,24 @@ namespace KVSC.Application.Common.Validator.ServiceReport
         public AddServiceReportValidator(UnitOfWork unitOfWork) : base(unitOfWork)
         {
             AddReportContentRules(x => x.ReportContent, isRequired: true); // Report content is required
-            AddReportDateRules(x => x.ReportDate);                         // Report date validation
+           // AddReportDateRules(x => x.ReportDate);                         // Report date validation
             AddRecommendationsRules(x => x.Recommendations, isRequired: false); // Recommendations not required
 
             // Optional additional validation logic
             RuleFor(x => x.AppointmentId)
                 .NotEmpty().WithState(_ => ServiceReportErrorMessage.FieldIsEmpty("Appointment ID"));
 
-            RuleFor(x => x.HasPrescription)
-                .Must(ValidatePrescriptionId).WithState(_ => ServiceReportErrorMessage.PrescriptionIdRequired());
+            //RuleFor(x => x.HasPrescription)
+            //    .Must(ValidatePrescriptionId).WithState(_ => ServiceReportErrorMessage.PrescriptionIdRequired());
         }
-        private bool ValidatePrescriptionId(AddServiceReportRequest request, bool hasPrescription)
-        {
-            // Ensure PrescriptionId is provided if HasPrescription is true
-            if (hasPrescription && request.PrescriptionId == null)
-            {
-                return false;
-            }
-            return true;
-        }
+        //private bool ValidatePrescriptionId(AddServiceReportRequest request, bool hasPrescription)
+        //{
+        //    // Ensure PrescriptionId is provided if HasPrescription is true
+        //    if (hasPrescription && request.PrescriptionId == null)
+        //    {
+        //        return false;
+        //    }
+        //    return true;
+        //}
     }
 }

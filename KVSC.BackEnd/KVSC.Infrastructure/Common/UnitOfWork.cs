@@ -24,6 +24,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IPetTypeRepository PetTypeRepository { get; private set; }
         public IPetHabitatRepository PetHabitatRepository { get; private set; }
         public IServiceReportRepository ServiceReportRepository { get; private set; }
+        public IPrescriptionRepository PrescriptionRepository { get; private set; }
 
         public UnitOfWork(KVSCContext context, StorageClient storageClient)
         {
@@ -40,6 +41,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
             PetTypeRepository = new PetTypeRepository(_context);
             PetHabitatRepository = new PetHabitatRepository(_context);
             ServiceReportRepository = new ServiceReportRepository(_context);
+            PrescriptionRepository = new PrescriptionRepository(_context);
         }
 
         public int Complete()

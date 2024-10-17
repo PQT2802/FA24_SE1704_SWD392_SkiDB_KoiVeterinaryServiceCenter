@@ -8,13 +8,17 @@ namespace KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport
 {
     public class AddServiceReportRequest
     {
-        public Guid AppointmentId { get; set; }         // Link to Appointment
-        public string ReportContent { get; set; }       // Content of the report
-        public DateTime ReportDate { get; set; }        // Date the report was created
-        public string Recommendations { get; set; }     // Doctor's recommendations
+        public Guid AppointmentId { get; set; }
+        public string ReportContent { get; set; }
+        public string Recommendations { get; set; }
+        public bool HasPrescription { get; set; }
+        public List<PrescriptionDetailRequest> PrescriptionDetails { get; set; } = new List<PrescriptionDetailRequest>();
+    }
 
-        public bool HasPrescription { get; set; }       // Flag indicating if there is a prescription
-        public Guid? PrescriptionId { get; set; }       // Optional Prescription ID (nullable)
-        public bool? IsCompleted { get; set; }
+    public class PrescriptionDetailRequest
+    {
+        public Guid MedicineId { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
     }
 }

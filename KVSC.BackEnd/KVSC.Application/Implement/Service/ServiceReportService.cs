@@ -36,6 +36,7 @@ namespace KVSC.Application.Implement.Service
         // Create Service Report
         public async Task<Result> AddServiceReportAsync(AddServiceReportRequest addServiceReportRequest)
         {
+            // Validate the request
             var validate = await _addServiceReportRequestValidator.ValidateAsync(addServiceReportRequest);
             if (!validate.IsValid)
             {
@@ -43,31 +44,60 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failures(errors);
             }
 
+            // Check if the appointment exists
             var appointmentExists = await _unitOfWork.AppointmentRepository.AppointmentExistsAsync(addServiceReportRequest.AppointmentId);
             if (!appointmentExists)
             {
                 return Result.Failure(ServiceReportErrorMessage.AppointmentNotExist());
             }
 
+            // Create a new ServiceReport entity
             var serviceReport = new ServiceReport
             {
                 AppointmentId = addServiceReportRequest.AppointmentId,
                 ReportContent = addServiceReportRequest.ReportContent,
-                ReportDate = addServiceReportRequest.ReportDate,
+                ReportDate = DateTime.UtcNow, // Assuming the report date is the current date
                 Recommendations = addServiceReportRequest.Recommendations,
                 HasPrescription = addServiceReportRequest.HasPrescription,
-                PrescriptionId = addServiceReportRequest.PrescriptionId,
-                IsCompleted = addServiceReportRequest.IsCompleted ?? false
+                IsCompleted = false
             };
 
+            // Add the service report to the repository
             var createResult = await _unitOfWork.ServiceReportRepository.CreateServiceReportAsync(serviceReport);
-            if (createResult == 0) // 
+            if (createResult == 0)
             {
                 return Result.Failure(ServiceReportErrorMessage.ReportCreationFailed());
             }
 
+            // If the service report has a prescription, create it
+            if (addServiceReportRequest.HasPrescription && addServiceReportRequest.PrescriptionDetails.Any())
+            {
+                var prescription = new Prescription
+                {
+                    PrescriptionDate = DateTime.UtcNow,
+                    ServiceReportId = serviceReport.Id,
+                    PrescriptionDetails = addServiceReportRequest.PrescriptionDetails.Select(detail => new PrescriptionDetail
+                    {
+                        MedicineId = detail.MedicineId,
+                        Quantity = detail.Quantity,
+                        Price = detail.Price
+                    }).ToList()
+                };
+
+                var prescriptionResult = await  _unitOfWork.PrescriptionRepository.CreateAsync(prescription);
+                if (prescriptionResult == 0)
+                {
+                    return Result.Failure(ServiceReportErrorMessage.ReportCreationFailed());
+                }
+
+                // Link prescription with the service report
+                serviceReport.PrescriptionId = prescription.Id;
+                await _unitOfWork.ServiceReportRepository.UpdateServiceReportAsync(serviceReport);
+            }
+
             return Result.SuccessWithObject(createResult);
         }
+
 
         // Read (Retrieve a ServiceReport by ID)
         public async Task<Result> GetServiceReportByIdAsync(Guid serviceReportId)

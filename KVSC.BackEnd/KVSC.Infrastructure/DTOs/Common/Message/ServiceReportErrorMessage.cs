@@ -43,6 +43,7 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
             => Error.NotFound("ServiceReport.Appointment.NotExist", $"The appointment does not exist.");
         public static Error ReportCreationFailed() 
         => Error.Conflict("ServiceReport.Create.Failed", $"Failed to create the service report.");
+
     }
 }
 
