@@ -5,6 +5,8 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.PetService.GetPetService;
+using KVSC.Infrastructure.DTOs.PetService.UpdatePetService;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
@@ -20,11 +22,13 @@ namespace KVSC.Application.Implement.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<AddPetServiceRequest> _petServiceValidator;
+        private readonly IValidator<UpdatePetServiceRequest> _updatePetServiceValidator;
 
-        public PetServiceService(IUnitOfWork unitOfWork, IValidator<AddPetServiceRequest> petServiceValidator)
+        public PetServiceService(IUnitOfWork unitOfWork, IValidator<AddPetServiceRequest> petServiceValidator, IValidator<UpdatePetServiceRequest> updatePetServiceValidator)
         {
             _unitOfWork = unitOfWork;
             _petServiceValidator = petServiceValidator;
+            _updatePetServiceValidator = updatePetServiceValidator;
         }
 
         public async Task<Result> CreatePetServiceAsync(AddPetServiceRequest addPetService)
@@ -73,7 +77,20 @@ namespace KVSC.Application.Implement.Service
         public async Task<Result> GetAllPetServicesAsync()
         {
             var petServices = await _unitOfWork.PetServiceRepository.GetAllServicesAsync();
-            return Result.SuccessWithObject(petServices);
+            var petServiceRespone = petServices.Select(service => new GetPetServiceResponse
+            {
+                Id = service.Id,
+                Name = service.Name,
+                BasePrice = service.BasePrice,
+                Duration = service.Duration,
+                ImageUrl = service.ImageUrl,
+                AvailableFrom = service.AvailableFrom,
+                AvailableTo = service.AvailableTo,
+                TravelCost = service.TravelCost,
+                ServiceCategory = service.PetServiceCategory?.Name,
+                PetServiceCategoryId = service.PetServiceCategoryId
+            }).ToList();
+            return Result.SuccessWithObject(petServiceRespone);
         }
 
         public async Task<Result> GetPetServiceByIdAsync(Guid id)
@@ -83,14 +100,27 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
             }
+            var petServiceRespone = new GetPetServiceResponse 
+            { 
+                Id = petService.Id,
+                Name = petService.Name,
+                BasePrice = petService.BasePrice,
+                Duration = petService.Duration,
+                ImageUrl = petService.ImageUrl,
+                AvailableFrom = petService.AvailableFrom,
+                AvailableTo = petService.AvailableTo,
+                TravelCost = petService.TravelCost,
+                ServiceCategory = petService.PetServiceCategory?.Name,
+                PetServiceCategoryId = petService.PetServiceCategoryId
+            };
 
-            return Result.SuccessWithObject(petService);
+            return Result.SuccessWithObject(petServiceRespone);
         }
 
-        public async Task<Result> UpdatePetServiceAsync(Guid id, AddPetServiceRequest addPetService)
+        public async Task<Result> UpdatePetServiceAsync(UpdatePetServiceRequest updatePetServiceRequest)
         {
             // Validate the input
-            var validationResult = await _petServiceValidator.ValidateAsync(addPetService);
+            var validationResult = await _updatePetServiceValidator.ValidateAsync(updatePetServiceRequest);
             if (!validationResult.IsValid)
             {
                 var errors = validationResult.Errors
@@ -98,25 +128,25 @@ namespace KVSC.Application.Implement.Service
                     .ToList();
                 return Result.Failures(errors);
             }
-            var existingPetService = await _unitOfWork.PetServiceRepository.GetServiceByIdAsync(id);
+            var existingPetService = await _unitOfWork.PetServiceRepository.GetServiceByIdAsync(updatePetServiceRequest.Id);
             if (existingPetService == null)
             {
                 return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
             }
-            var categoryExists = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(addPetService.PetServiceCategoryId);
+            var categoryExists = await _unitOfWork.PetServiceCategoryRepository.GetByIdAsync(updatePetServiceRequest.PetServiceCategoryId);
             if (categoryExists == null)
             {
                 return Result.Failure(PetServiceErrorMessage.InvalidFieldValue("PetServiceCategory"));
             }
             // Update the properties
-            existingPetService.Name = addPetService.Name; // Update Name
-            existingPetService.PetServiceCategoryId = addPetService.PetServiceCategoryId;
-            existingPetService.BasePrice = addPetService.BasePrice;
-            existingPetService.Duration = addPetService.Duration;
-            existingPetService.ImageUrl = addPetService.ImageUrl;
-            existingPetService.AvailableFrom = addPetService.AvailableFrom;
-            existingPetService.AvailableTo = addPetService.AvailableTo;
-            existingPetService.TravelCost = addPetService.TravelCost;
+            existingPetService.Name = updatePetServiceRequest.Name; // Update Name
+            existingPetService.PetServiceCategoryId = updatePetServiceRequest.PetServiceCategoryId;
+            existingPetService.BasePrice = updatePetServiceRequest.BasePrice;
+            existingPetService.Duration = updatePetServiceRequest.Duration;
+            existingPetService.ImageUrl = updatePetServiceRequest.ImageUrl;
+            existingPetService.AvailableFrom = updatePetServiceRequest.AvailableFrom;
+            existingPetService.AvailableTo = updatePetServiceRequest.AvailableTo;
+            existingPetService.TravelCost = updatePetServiceRequest.TravelCost;
             existingPetService.ModifiedDate = DateTime.UtcNow;
 
             // Update the service

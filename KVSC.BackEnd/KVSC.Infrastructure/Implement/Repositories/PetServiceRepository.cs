@@ -26,12 +26,12 @@ namespace KVSC.Infrastructure.Implement.Repositories
         // READ
         public async Task<IEnumerable<PetService>> GetAllServicesAsync()
         {
-            return await _context.PetServices.Where(s => !s.IsDeleted).ToListAsync();
+            return await _context.PetServices.Include(i => i.PetServiceCategory).Where(s => !s.IsDeleted).ToListAsync();
         }
 
         public async Task<PetService> GetServiceByIdAsync(Guid id)
         {
-            return await _context.PetServices.FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
+            return await _context.PetServices.Include(i => i.PetServiceCategory).FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
         }
         //get by list id
         public async Task<List<PetService>> GetByIdsAsync(List<Guid> serviceIds)

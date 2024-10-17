@@ -2,6 +2,7 @@
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Pet.GetPet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,35 +20,28 @@ namespace KVSC.WebAPI.Controllers
             _petBusinessService = petBusinessService;
         }
 
-
-        /// <summary>
-        /// Get a pet by its ID.
-        /// </summary>
-        [HttpGet("{id}")]
-        public async Task<IResult> GetPetById(Guid id)
+        //GET: api/pet/{id}
+        [HttpGet]
+        public async Task<IResult> GetPetById([FromQuery] GetPetRequest request)
         {
-            Result result = await _petBusinessService.GetPetByIdAsync(id);
+            Result result = await _petBusinessService.GetPetByIdAsync(request.Id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "View pet successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        /// <summary>
-        /// Get all pets.
-        /// </summary>
-        [HttpGet("All-pet")]
+        //GET: api/pet/all
+        [HttpGet("all")]
         public async Task<IResult> GetAllPet()
         {
-            var result = await _petBusinessService.GetAllPetAsync();
+            Result result = await _petBusinessService.GetAllPetAsync();
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "View all pets successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        /// <summary>
-        /// Add a new pet to the system.
-        /// </summary>
-        [HttpPost("Create-pet")]
+        //POST: api/pet
+        [HttpPost]
         public async Task<IResult> CreatePet([FromBody] AddPetRequest addPet)
         {
             Result result = await _petBusinessService.CreatePetAsync(addPet);
@@ -56,28 +50,32 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-
-        /// <summary>
-        /// Update an existing pet.
-        /// </summary>
-        [HttpPut("Update-pet")]
-        public async Task<IResult> UpdatePet(Guid id, [FromBody] UpdatePetRequest updatePet)
+        //PUT: api/pet/{id}
+        [HttpPut]
+        public async Task<IResult> UpdatePet([FromBody] UpdatePetRequest updatePet)
         {
-            Result result = await _petBusinessService.UpdatePetAsync(id, updatePet);
+            Result result = await _petBusinessService.UpdatePetAsync(updatePet);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Update pet successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        /// <summary>
-        /// Delete a pet by its ID.
-        /// </summary>
-        [HttpDelete("Delete-pet/{id}")]
-        public async Task<IResult> DeletePet(Guid id)
+        //DELETE: api/pet/{id}
+        [HttpDelete]
+        public async Task<IResult> DeletePet([FromBody] GetPetRequest request)
         {
-            Result result = await _petBusinessService.DeletePetAsync(id);
+            Result result = await _petBusinessService.DeletePetAsync(request.Id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Delete pet successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpGet("owner-pet")]
+        public async Task<IResult> GetAllPetByOwnerId([FromQuery] GetPetRequest request)
+        {
+            Result result = await _petBusinessService.GetAllPetByOwnerIdAsync(request.Id);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "View all pet by ownerId successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
     }

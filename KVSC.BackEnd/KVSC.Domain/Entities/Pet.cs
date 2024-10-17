@@ -23,8 +23,8 @@ namespace KVSC.Domain.Entities
         public User Owner { get; set; } // Reference to the User
 
         // Foreign key relationship 
-        public Guid PetTypeId { get; set; }
-        public PetType PetType { get; set; } // Reference to PetType
+        public Guid? PetTypeId { get; set; }
+        public PetType? PetType { get; set; }  // Reference to PetType
 
         // Thêm quan hệ với Appointment
         public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment

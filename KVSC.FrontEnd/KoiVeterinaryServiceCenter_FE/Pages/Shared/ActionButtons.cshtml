@@ -1,12 +1,53 @@
-﻿@model string
+﻿@model dynamic
 
-@if (Model == "service")
+@* @if (Model == "service") *@
+@if (Model.ListType == "service")
 {
     <!-- Service List Buttons -->
-    <button class="btn btn-sm btn-primary">Edit</button>
-    <button class="btn btn-sm btn-danger">Delete</button>
+    <button class="btn btn-sm btn-primary edit-service-button"
+            data-id="@Model.Item.Id"
+            data-name="@Model.Item.Name"
+            data-category="@Model.Item.PetServiceCategoryId"
+            data-categoryname="@Model.Item.serviceCategory"
+            data-baseprice="@Model.Item.BasePrice"
+            data-duration="@Model.Item.Duration"
+            data-imageurl="@Model.Item.ImageUrl"
+            data-availablefrom="@Model.Item.AvailableFrom.ToString("yyyy-MM-ddTHH:mm")"
+            data-availableto="@Model.Item.AvailableTo.ToString("yyyy-MM-ddTHH:mm")"
+            data-travelcost="@Model.Item.TravelCost"
+            data-bs-toggle="modal"
+            data-bs-target="#updateServiceModal">
+        Edit
+    </button>
+    <form method="post" asp-page-handler="DeleteService" onsubmit="return confirm('Are you sure you want to delete?');">
+        <input type="hidden" name="Id" value="@Model.Item.Id" />
+        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+    </form>
 }
-else if (Model == "appointment")
+@if (Model.ListType == "pet")
+{
+    <!-- Service List Buttons -->
+    <button class="btn btn-sm btn-primary edit-pet-button"
+            data-id="@Model.Item.Id"
+            data-name="@Model.Item.Name"
+            data-age="@Model.Item.Age"
+            data-gender="@Model.Item.Gender"
+            data-imageurl="@Model.Item.ImageUrl"
+            data-color="@Model.Item.Color"
+            data-length="@Model.Item.Length"
+            data-weight="@Model.Item.Weight"
+            data-lasthealthcheck="@Model.Item.LastHealthCheck.ToString("yyyy-MM-ddTHH:mm")"
+            data-healthstatus="@Model.Item.HealthStatus"
+            data-bs-toggle="modal"
+            data-bs-target="#updatePetModal">
+        Edit
+    </button>
+    <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this pet?');">
+        <input type="hidden" name="Id" value="@Model.Item.Id" />
+        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+    </form>
+}
+else if (Model.ListType == "appointment")
 {
     <!-- Appointment List Buttons -->
     <button class="btn btn-sm btn-success">Accept</button>

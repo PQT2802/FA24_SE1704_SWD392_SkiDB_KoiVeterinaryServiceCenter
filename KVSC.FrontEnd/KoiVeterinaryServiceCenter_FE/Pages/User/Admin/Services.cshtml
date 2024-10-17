@@ -5,15 +5,27 @@
 @{
     Layout = "_LayoutBoard";
 }
+@*-------------------------------- thongbao -----------------------------------------------*@
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert @TempData["AlertClass"] alert-dismissible fade show" role="alert" id="alertMessage">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+@*-------------------------------- thongbao -----------------------------------------------*@
 <!-- Trigger Button for Modal -->
 <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createServiceModal">Add Service</button>
 
 <!-- Table for displaying services -->
 @await Component.InvokeAsync("GenericTable", new { items = Model.KoiServiceList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "service" })
 
-<!-- Modal for Creating a New Service -->
-<div class="modal fade" id="createServiceModal" tabindex="-1" aria-labelledby="createServiceModalLabel" aria-hidden="true">
+<div class="modal fade @(Model.ShowModal ? "show" : "")" id="createServiceModal" tabindex="-1" aria-labelledby="createServiceModalLabel" aria-hidden="true" style="display:@(Model.ShowModal ? "block" : "none");">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,9 +33,252 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Render the form from the partial view -->
-                @await Html.PartialAsync("_PetServiceForm")
+                @* @await Html.PartialAsync("_PetServiceForm") *@
+
+
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">Pet Service Form</h6>
+
+                    <!-- Validation Summary (Tổng hợp lỗi) -->
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <form id="createServiceForm" method="post" asp-page-handler="CreateService">
+                        <!-- Name Input -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="name" name="AddServiceRequest.Name" placeholder="Service Name">
+                            <label for="name">Service Name</label>
+                            <span asp-validation-for="AddServiceRequest.Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Service Category -->
+                        <div class="form-floating mb-3">
+                            <select asp-for="AddServiceRequest.PetServiceCategoryId" class="form-select" asp-items="ViewBag.Categories" id="petServiceCategoryId">
+                            </select>
+
+                        </div>
+
+                        <!-- Base Price -->
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="basePrice" name="AddServiceRequest.BasePrice" placeholder="Base Price" min="0" value="0">
+                            <label for="basePrice">Base Price</label>
+                            <span asp-validation-for="AddServiceRequest.BasePrice" class="text-danger"></span>
+                        </div>
+
+                        <!-- Duration -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="duration" name="AddServiceRequest.Duration" placeholder="Duration">
+                            <label for="duration">Duration</label>
+                            <span asp-validation-for="AddServiceRequest.Duration" class="text-danger"></span>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="imageUrl" name="AddServiceRequest.ImageUrl" placeholder="Image URL">
+                            <label for="imageUrl">Image URL</label>
+                            <span asp-validation-for="AddServiceRequest.ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <!-- Available From -->
+                        <div class="form-floating mb-3">
+                            <input type="datetime-local" class="form-control" id="availableFrom" name="AddServiceRequest.AvailableFrom" placeholder="Available From" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+                            <label for="availableFrom">Available From</label>
+                            <span asp-validation-for="AddServiceRequest.AvailableFrom" class="text-danger"></span>
+                        </div>
+
+                        <!-- Available To -->
+                        <div class="form-floating mb-3">
+                            <input type="datetime-local" class="form-control" id="availableTo" name="AddServiceRequest.AvailableTo" placeholder="Available To" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+                            <label for="availableTo">Available To</label>
+                        </div>
+
+                        <!-- Travel Cost -->
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="travelCost" name="AddServiceRequest.TravelCost" placeholder="Travel Cost" min="0" value="0">
+                            <label for="travelCost">Travel Cost</label>
+                            <span asp-validation-for="AddServiceRequest.TravelCost" class="text-danger"></span>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary" id="submitServiceForm">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Services.cshtml -->
+<div class="modal fade" id="updateServiceModal" tabindex="-1" aria-labelledby="updateServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateServiceModalLabel">Edit Service</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateServiceForm" method="post" asp-page-handler="UpdateService">
+                    <input type="hidden" id="serviceId" name="UpdateServiceRequest.Id" />
+
+                    <!-- Name Input -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" name="UpdateServiceRequest.Name" placeholder="Service Name" >
+                        <label for="name">Service Name</label>
+                        <span asp-validation-for="UpdateServiceRequest.Name" class="text-danger"></span>
+                    </div>
+
+                    <!-- Service Category -->
+                    <div class="form-floating mb-3">
+                        <select asp-for="UpdateServiceRequest.PetServiceCategoryId" class="form-select" asp-items="ViewBag.Categories" id="petServiceCategoryId">
+                        </select>
+                    </div>
+
+                    <!-- Base Price -->
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="basePrice" name="UpdateServiceRequest.BasePrice" placeholder="Base Price" min="0" >
+                        <label for="basePrice">Base Price</label>
+                        <span asp-validation-for="UpdateServiceRequest.BasePrice" class="text-danger"></span>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="duration" name="UpdateServiceRequest.Duration" placeholder="Duration" >
+                        <label for="duration">Duration</label>
+                        <span asp-validation-for="UpdateServiceRequest.Duration" class="text-danger"></span>
+                    </div>
+
+                    <!-- Image URL -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="imageUrl" name="UpdateServiceRequest.ImageUrl" placeholder="Image URL" >
+                        <label for="imageUrl">Image URL</label>
+                        <span asp-validation-for="UpdateServiceRequest.ImageUrl" class="text-danger"></span>
+                    </div>
+
+                    <!-- Available From -->
+                    <div class="form-floating mb-3">
+                        <input type="datetime-local" class="form-control" id="availableFrom" name="UpdateServiceRequest.AvailableFrom" placeholder="Available From" >
+                        <label for="availableFrom">Available From</label>
+                        <span asp-validation-for="UpdateServiceRequest.AvailableFrom" class="text-danger"></span>
+                    </div>
+
+                    <!-- Available To -->
+                    <div class="form-floating mb-3">
+                        <input type="datetime-local" class="form-control" id="availableTo" name="UpdateServiceRequest.AvailableTo" placeholder="Available To" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+                        <label for="availableTo">Available To</label>
+                    </div>
+
+                    <!-- Travel Cost -->
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="travelCost" name="UpdateServiceRequest.TravelCost" placeholder="Travel Cost" min="0" >
+                        <label for="travelCost">Travel Cost</label>
+                        <span asp-validation-for="UpdateServiceRequest.TravelCost" class="text-danger"></span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
+<script>
+    $(document).ready(function () {
+        $('#submitServiceForm').click(function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định
+
+            $.ajax({
+                type: "POST",
+                url: window.location.pathname + "?handler=CreateService", // Gửi đến đúng handler
+                data: $('#createServiceForm').serialize(),
+                success: function (response) {
+                    if (response.isSuccess) {
+                        $('#createServiceModal').modal('hide');
+                        alert('Create successful');
+                        location.reload();
+                    } else {
+                        $('span[data-valmsg-for]').text('');
+                        // Hiển thị lỗi vào các input tương ứng
+                        for (const [key, value] of Object.entries(response.errors)) {
+                            $(`span[data-valmsg-for='AddServiceRequest.${key}']`).text(value);
+                        }
+                    }
+                },
+                error: function () {
+                    console.log('Có lỗi xảy ra.');
+                }
+            });
+        });
+    });
+</script>
+@*-------------------------------------------------------------- Update ------------------------------------------------------------------*@
+<script>
+    $(document).ready(function () {
+        // Khi nhấn nút "Edit"
+        $('.edit-service-button').click(function () {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var category = $(this).data('category');
+            var categoryname = $(this).data('categoryname');
+            var basePrice = $(this).data('baseprice');
+            var duration = $(this).data('duration');
+            var imageUrl = $(this).data('imageurl');
+            var availableFrom = $(this).data('availablefrom');
+            var availableTo = $(this).data('availableto');
+            var travelCost = $(this).data('travelcost');
+
+            // Cập nhật các trường trong modal
+            $('#updateServiceModal #serviceId').val(id);
+            $('#updateServiceModal #name').val(name);
+            $('#updateServiceModal #petServiceCategoryId').val(category);
+            $('#updateServiceModal #serviceCategory').val(categoryname);
+            $('#updateServiceModal #basePrice').val(basePrice);
+            $('#updateServiceModal #duration').val(duration);
+            $('#updateServiceModal #imageUrl').val(imageUrl);
+            $('#updateServiceModal #availableFrom').val(availableFrom);
+            $('#updateServiceModal #availableTo').val(availableTo);
+            $('#updateServiceModal #travelCost').val(travelCost);
+
+            // Hiển thị modal
+            $('#updateServiceModal').modal('show');
+        });
+
+        // Xử lý submit form cập nhật
+        $('#updateServiceForm').submit(function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định
+
+            $.ajax({
+                type: "POST",
+                url: window.location.pathname + "?handler=UpdateService", // Gửi đến đúng handler
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.isSuccess) {
+                        $('#updateServiceModal').modal('hide');
+                        alert('Update successful');
+                        location.reload();
+                    } else {
+                        $('span[data-valmsg-for]').text('');
+                        // Hiển thị lỗi vào các input tương ứng
+                        for (const [key, value] of Object.entries(response.errors)) {
+                            $(`span[data-valmsg-for='UpdateServiceRequest.${key}']`).text(value);
+                        }
+                    }
+                },
+                error: function () {
+                    console.log('Có lỗi xảy ra.');
+                }
+            });
+        });
+    });
+</script>
+ @*-------------------------------------------------------------- delete ------------------------------------------------------------------*@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alertElement = document.getElementById('alertMessage');
+        if (alertElement) {
+            setTimeout(function () {
+                alertElement.classList.add('fade');
+                alertElement.classList.remove('show');
+            }, 3000); // 3 giây
+        }
+    });
+</script>

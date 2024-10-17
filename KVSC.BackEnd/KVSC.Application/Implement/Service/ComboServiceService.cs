@@ -1,7 +1,10 @@
-﻿using FluentValidation;
+﻿using Azure.Core;
+using FluentValidation;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.ComboService.GetComboServiceResponse;
+using KVSC.Infrastructure.DTOs.ComboService.UpdateComboService;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Pet.AddComboService;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
@@ -19,6 +22,7 @@ namespace KVSC.Application.Implement.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<AddComboServiceRequest> _comboServiceValidator;
+        private readonly IValidator<UpdateComboServiceRequest> _updateComboServiceValidator;
         public ComboServiceService(IUnitOfWork unitOfWork, IValidator<AddComboServiceRequest> comboServiceValidator)
         {
             _unitOfWork = unitOfWork;
@@ -82,7 +86,7 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(ComboServiceErrorMessage.ComboServiceNotFound());
             }
 
-            var comboServiceResponse = new ComboServiceResponse
+            var comboServiceResponse = new GetComboServiceResponse
             {
                 Id = comboService.Id,
                 Name = comboService.Name,
@@ -90,6 +94,9 @@ namespace KVSC.Application.Implement.Service
                 ServiceIds = comboService.ComboServiceItems
                                          .Select(csi => csi.PetServiceId)
                                          .ToList(),
+                ServiceName = comboService.ComboServiceItems
+                                    .Select(csi => csi.PetService.Name)
+                                    .ToList(),
                 TotalPrice = comboService.TotalPrice
             };
 
@@ -101,13 +108,16 @@ namespace KVSC.Application.Implement.Service
 
             var comboServiceResponses = comboServices
                 .Where(cs => !cs.IsDeleted) // Lọc bỏ các combo đã bị xóa
-                .Select(cs => new ComboServiceResponse
+                .Select(cs => new GetComboServiceResponse
                 {
                     Id = cs.Id,
                     Name = cs.Name,
                     DiscountPercentage = cs.DiscountPercentage,
                     ServiceIds = cs.ComboServiceItems
                                     .Select(csi => csi.PetServiceId)
+                                    .ToList(),
+                    ServiceName = cs.ComboServiceItems
+                                    .Select(csi => csi.PetService.Name)
                                     .ToList(),
                     TotalPrice = cs.TotalPrice
                 })
@@ -116,15 +126,23 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(comboServiceResponses);
         }
 
-        public async Task<Result> UpdateComboServiceAsync(Guid id, AddComboServiceRequest addComboService)
+        public async Task<Result> UpdateComboServiceAsync(UpdateComboServiceRequest request)
         {
-            var comboService = await _unitOfWork.ComboServiceRepository.GetComboByIdAsync(id);
+            var validationResult = await _updateComboServiceValidator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors
+                       .Select(e => (Error)e.CustomState)
+                       .ToList();
+                return Result.Failures(errors);
+            }
+            var comboService = await _unitOfWork.ComboServiceRepository.GetComboByIdAsync(request.Id);
             if (comboService == null || comboService.IsDeleted)
             {
                 return Result.Failure(ComboServiceErrorMessage.ComboServiceNotFound());
             }
             // Kiểm tra các serviceId có tồn tại không
-            var distinctServiceIds = addComboService.ServiceIds.Distinct().ToList();
+            var distinctServiceIds = request.ServiceIds.Distinct().ToList();
             if (distinctServiceIds.Count < 2)
             {
                 return Result.Failure(ComboServiceErrorMessage.ComboServiceInsufficientServices());
@@ -137,8 +155,8 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(ComboServiceErrorMessage.ComboServiceInvalidServiceIds());
             }
 
-            comboService.Name = addComboService.Name;
-            comboService.DiscountPercentage = addComboService.DiscountPercentage;
+            comboService.Name = request.Name;
+            comboService.DiscountPercentage = request.DiscountPercentage;
             comboService.ModifiedDate = DateTime.UtcNow;
             // Xóa các ComboServiceItem không còn nằm trong danh sách distinctServiceIds
             var itemsToRemove = comboService.ComboServiceItems
