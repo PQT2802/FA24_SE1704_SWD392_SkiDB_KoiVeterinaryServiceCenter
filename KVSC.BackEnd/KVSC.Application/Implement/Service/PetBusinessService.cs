@@ -4,7 +4,10 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.Pet.GetPet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
+using KVSC.Infrastructure.DTOs.PetService.GetPetService;
 using KVSC.Infrastructure.Implement.Repositories;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.Interface.IRepositories;
@@ -43,13 +46,43 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(PetErrorMessage.PetNotFound());
             }
 
-            return Result.SuccessWithObject(pet);
+            var petResponse = new GetPetResponse
+            {
+                Id = pet.Id,
+                Name = pet.Name,
+                Age = pet.Age,
+                Gender = pet.Gender,
+                ImageUrl = pet.ImageUrl,
+                Color = pet.Color,
+                Length = pet.Length,
+                Weight = pet.Weight,
+                LastHealthCheck = pet.LastHealthCheck,
+                HealthStatus = pet.HealthStatus,
+                OwnerId = pet.OwnerId
+            };
+
+            return Result.SuccessWithObject(petResponse);
         }
 
         public async Task<Result> GetAllPetAsync()
         {
             var pets = await _unitOfWork.PetRepository.GetAllPetAsync();
-            return Result.SuccessWithObject(pets);
+            var petResponse = pets.Select(pet => new GetPetResponse
+            {
+                Id = pet.Id,
+                Name = pet.Name,
+                Age = pet.Age,
+                Gender = pet.Gender,
+                ImageUrl = pet.ImageUrl,
+                Color = pet.Color,
+                Length = pet.Length,
+                Weight = pet.Weight,
+                LastHealthCheck = pet.LastHealthCheck,
+                HealthStatus = pet.HealthStatus,
+                OwnerId = pet.OwnerId
+            }).ToList();
+
+            return Result.SuccessWithObject(petResponse);
         }
 
         public async Task<Result> CreatePetAsync(AddPetRequest addPet)
@@ -92,10 +125,11 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(PetErrorMessage.PetCreateFailed());
             }
 
-            return Result.SuccessWithObject(createResult.Id);
+            var response = new AddPetResponse { Id = pet.Id };
+            return Result.SuccessWithObject(response);
         }
 
-        public async Task<Result> UpdatePetAsync(Guid id, UpdatePetRequest updatePet)
+        public async Task<Result> UpdatePetAsync(UpdatePetRequest updatePet)
         {
             var validate = await _updatePetRequestValidator.ValidateAsync(updatePet);
             if (!validate.IsValid)
@@ -107,7 +141,7 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failures(errors);
             }
 
-            var pet = await _unitOfWork.PetRepository.GetPetByIdAsync(id);
+            var pet = await _unitOfWork.PetRepository.GetPetByIdAsync(updatePet.Id);
             if (pet == null)
             {
                 return Result.Failure(PetErrorMessage.PetNotFound());
@@ -129,7 +163,8 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(PetErrorMessage.PetUpdateFailed());
             }
 
-            return Result.SuccessWithObject(updateResult);
+            var response = new AddPetResponse { Id = pet.Id };
+            return Result.SuccessWithObject(response);
         }
 
         public async Task<Result> DeletePetAsync(Guid id)
@@ -147,6 +182,31 @@ namespace KVSC.Application.Implement.Service
             }
 
             return Result.SuccessWithObject(deleteResult);
+        }
+
+        public async Task<Result> GetAllPetByOwnerIdAsync(Guid ownerId)
+        {
+            var pets = await _unitOfWork.PetRepository.GetAllPetsByOwnerIdAsync(ownerId);
+            if (pets == null)
+            {
+                return Result.Failure(PetErrorMessage.PetNotFound());
+            }
+
+            var petResponseList = pets.Select(pet => new UpdatePetResponse 
+            {
+                Id = pet.Id,
+                Name = pet.Name,
+                Age = pet.Age,
+                Gender = pet.Gender,
+                ImageUrl = pet.ImageUrl,
+                Color = pet.Color,
+                Length = pet.Length,
+                Weight = pet.Weight,
+                LastHealthCheck = pet.LastHealthCheck,
+                HealthStatus = pet.HealthStatus
+            }).ToList();
+
+            return Result.SuccessWithObject(petResponseList);
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.DTOs.Pet.UpdatePet
+namespace KVSC.Infrastructure.DTOs.Pet.GetPet
 {
-    public class UpdatePetRequest
+    public class GetPetResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -18,5 +18,6 @@ namespace KVSC.Infrastructure.DTOs.Pet.UpdatePet
         public double Weight { get; set; }
         public DateTime LastHealthCheck { get; set; }
         public int HealthStatus { get; set; }
+        public Guid OwnerId { get; set; }
     }
 }

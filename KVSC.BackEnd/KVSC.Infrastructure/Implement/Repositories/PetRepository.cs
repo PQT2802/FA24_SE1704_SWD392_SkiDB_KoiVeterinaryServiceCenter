@@ -59,5 +59,12 @@ namespace KVSC.Infrastructure.Implement.Repositories
             }
             return 0;
         }
+
+        public async Task<List<Pet>> GetAllPetsByOwnerIdAsync(Guid ownerId)
+        {
+            return await _context.Pets
+            .Where(p => p.OwnerId == ownerId && !p.IsDeleted)
+            .ToListAsync();
+        }
     }
 }
