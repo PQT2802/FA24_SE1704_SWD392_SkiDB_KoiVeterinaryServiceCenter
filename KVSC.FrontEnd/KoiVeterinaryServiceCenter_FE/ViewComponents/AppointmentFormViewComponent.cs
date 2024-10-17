@@ -43,10 +43,10 @@ namespace KoiVeterinaryServiceCenter_FE.ViewComponents
         {
             var userInfor = getResult.Data;
 
-            
+            var token = HttpContext.Session.GetString("Token");
 
             // Fetch pets by owner ID
-            var petResponse = await _petBusinessService.GetPetsByOwnerIdAsync("45A9DC1C-FB8A-4607-9A7E-D6B1359384D7");
+            var petResponse = await _petBusinessService.GetPetsByOwnerIdAsync(token);
             var pets = petResponse.IsSuccess 
                 ? petResponse.Data?.Extensions?.Data ?? new List<PetData>() 
                 : new List<PetData>();

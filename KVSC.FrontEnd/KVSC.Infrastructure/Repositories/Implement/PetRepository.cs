@@ -1,4 +1,5 @@
-﻿using KVSC.Infrastructure.DTOs.Pet.AddPet;
+﻿using System.Net.Http.Headers;
+using KVSC.Infrastructure.DTOs.Pet.AddPet;
 using KVSC.Infrastructure.DTOs;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -6,6 +7,7 @@ using KVSC.Infrastructure.Repositories.Interface;
 using KVSC.Infrastructure.DTOs.Pet;
 using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
+using KVSC.Infrastructure.DTOs.User;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
@@ -21,15 +23,15 @@ namespace KVSC.Infrastructure.Repositories.Implement
         
         
 
-        public async Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string ownerId)
+        public async Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string token)
         {
             try
             {
-                // Construct the request URL
-                var url = $"https://localhost:7283/api/Pet/owner-pet/{ownerId}";
+                // Set the request with authorization token in headers
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 // Send the request and get the response
-                var response = await _httpClient.GetAsync(url);
+                var response = await _httpClient.GetAsync("api/Pet/owner-pet");
 
                 var options = new JsonSerializerOptions
                 {
@@ -41,7 +43,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
 
-                    // Deserialize the error response
+                    // Deserialize the error response using the options for case insensitivity
                     var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
 
                     return new ResponseDto<PetList>
@@ -49,18 +51,18 @@ namespace KVSC.Infrastructure.Repositories.Implement
                         IsSuccess = false,
                         Data = null,
                         Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
-                        Message = "An error occurred while retrieving the pets."
+                        Message = "An error occurred during get infor."
                     };
                 }
 
-                // If successful, deserialize the response into PetList
-                var petList = await response.Content.ReadFromJsonAsync<PetList>(options);
+                // If successful, deserialize the UserInfo response
+                var petlist = await response.Content.ReadFromJsonAsync<PetList>(options);
 
                 return new ResponseDto<PetList>
                 {
                     IsSuccess = true,
-                    Data = petList,
-                    Message = "Pets retrieved successfully."
+                    Data = petlist,
+                    Message = "Get data successful."
                 };
             }
             catch (HttpRequestException httpEx)
