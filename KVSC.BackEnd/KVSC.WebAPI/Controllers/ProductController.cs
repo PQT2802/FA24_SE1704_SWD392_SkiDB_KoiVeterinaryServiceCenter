@@ -35,6 +35,14 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Products retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        [HttpGet("medicine")]
+        public async Task<IResult> GetMedicines()
+        {
+            var result = await _productService.GetMedicinesAsync();
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Medicine retrieved successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
 
         // Get products with search criteria
         [HttpPost("search")]
