@@ -105,5 +105,9 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 await _context.SaveChangesAsync(); 
             }
         }
+        public async Task<bool> AppointmentExistsAsync(Guid appointmentId)
+        {
+            return await _context.Appointments.AnyAsync(a => a.Id == appointmentId && !a.IsDeleted);
+        }
     } 
 }

@@ -19,5 +19,6 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         public Task<IEnumerable<GetAllAppointment>> GetAppointmentListByVetIdAsync(Guid veterinarianId);
         public Task<Veterinarian> GetAvailableVeterinarianAsync(DateTime appointmentDate);
         public Task UpdateScheduleAvailabilityAsync(Guid veterinarianId, DateTime appointmentDate);
+        public Task<bool> AppointmentExistsAsync(Guid appointmentId);
     }
 }
