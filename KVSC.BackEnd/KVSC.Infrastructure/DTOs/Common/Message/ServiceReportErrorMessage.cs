@@ -35,5 +35,10 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
 
         public static Error ReportDeletionFailed()
             => Error.Conflict("ServiceReport.Delete.Failed", $"Failed to delete the service report.");
+
+        // Add the missing PrescriptionIdRequired error message
+        public static Error PrescriptionIdRequired()
+            => Error.Validation("ServiceReport.Prescription.Required", $"Prescription ID is required when there is a prescription.");
     }
 }
+
