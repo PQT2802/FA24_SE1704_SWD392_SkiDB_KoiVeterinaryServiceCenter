@@ -12,5 +12,7 @@ namespace KVSC.Application.Interface.IService
     {
         public Task<Result> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request);
         public Task<Result> MakeAppointmentForComboAsync(MakeAppointmentForComboRequest request);
+        public Task<Result> GetAppointmentListByVetIdAsync(Guid veterinarianId);
+        public Task<Result> GetAppointmentListAsync();
     }
 }
