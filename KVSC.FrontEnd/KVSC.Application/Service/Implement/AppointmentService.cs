@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using KVSC.Infrastructure.DTOs;
+﻿using KVSC.Infrastructure.DTOs;
 
 public class AppointmentService : IAppointmentService
 {

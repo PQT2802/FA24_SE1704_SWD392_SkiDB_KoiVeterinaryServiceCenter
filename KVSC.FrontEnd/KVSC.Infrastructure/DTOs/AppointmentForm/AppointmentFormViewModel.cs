@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using KVSC.Infrastructure.DTOs.Service;
+﻿using KVSC.Infrastructure.DTOs.Service.ServiceDetail;
 
 namespace KVSC.Infrastructure.DTOs
 {
@@ -9,6 +7,8 @@ namespace KVSC.Infrastructure.DTOs
         public Guid CustomerId { get; set; }
         public Guid PetServiceId { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public List<Data> Services { get; set; } = new List<Data>(); // List of services available for selection
+
+        public List<PetServiceDto> Services { get; set; } = new List<PetServiceDto>();
     }
+
 }

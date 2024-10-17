@@ -1,82 +1,82 @@
-﻿@model KVSC.Infrastructure.DTOs.AppointmentFormViewModel
-
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8">
-            <div class="card shadow-lg p-4">
-                <h2 class="text-center mb-4">Book an Appointment</h2>
-
-                @if (!string.IsNullOrEmpty(ViewBag.Message))
-                {
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        @ViewBag.Message
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                }
-
-                @if (!string.IsNullOrEmpty(ViewBag.Error))
-                {
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        @ViewBag.Error
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                }
-
-                <form asp-action="SubmitAppointment" asp-controller="AppointmentForm" method="post" class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <label for="customerId" class="form-label">Customer ID</label>
-                        <input type="text" class="form-control" id="customerId" name="CustomerId" value="@Model.CustomerId" required />
-                        <div class="invalid-feedback">
-                            Please enter your Customer ID.
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="petServiceId" class="form-label">Pet Service</label>
-                        <select class="form-select" id="petServiceId" name="PetServiceId" required>
-                            <option value="">Select a service</option>
-                            @foreach (var service in Model.Services)
-                            {
-                                <option value="@service.Id">@service.Name</option>
-                            }
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a pet service.
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="appointmentDate" class="form-label">Appointment Date</label>
-                        <input type="datetime-local" class="form-control" id="appointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" required />
-                        <div class="invalid-feedback">
-                            Please choose a valid appointment date and time.
-                        </div>
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg">Book Appointment</button>
-                    </div>
-                </form>
-            </div>
+﻿<form id="appointmentForm" class="needs-validation" novalidate>
+    <!-- Customer ID Input -->
+    <div class="mb-4">
+        <label for="customerId" class="form-label" style="font-weight: bold; color: #333;">Customer ID</label>
+        <input type="text" class="form-control" id="customerId" name="CustomerId" value="@Model.CustomerId" required />
+        <div class="invalid-feedback">
+            Please enter your Customer ID.
         </div>
     </div>
-</div>
+
+    <!-- Pet Service Dropdown -->
+    <div class="mb-4">
+        <label for="petServiceId" class="form-label" style="font-weight: bold; color: #333;">Pet Service</label>
+        <select class="form-select" id="petServiceId" name="PetServiceId" required>
+            <option value="">Select a service</option>
+            @foreach (var service in Model.Services)
+            {
+                <option value="@service.Id">@service.Name</option>
+            }
+        </select>
+        <div class="invalid-feedback">
+            Please select a pet service.
+        </div>
+    </div>
+
+    <!-- Pet Dropdown (Optional) -->
+    <div class="mb-4">
+        <label for="petId" class="form-label" style="font-weight: bold; color: #333;">Select Pet (Optional)</label>
+        <select class="form-select" id="petId" name="PetId">
+            <option value="">Select a pet</option>
+            @foreach (var pet in Model.Pets)
+            {
+                <option value="@pet.Id">@pet.Name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Appointment Date Input -->
+    <div class="mb-4">
+        <label for="appointmentDate" class="form-label" style="font-weight: bold; color: #333;">Appointment Date</label>
+        <input type="datetime-local" class="form-control" id="appointmentDate" name="AppointmentDate" required />
+        <div class="invalid-feedback">
+            Please choose a valid appointment date and time.
+        </div>
+    </div>
+
+    <!-- Notes (Optional) -->
+    <div class="mb-4">
+        <label for="notes" class="form-label" style="font-weight: bold; color: #333;">Notes</label>
+        <textarea class="form-control" id="notes" name="Notes" rows="3"></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-grid">
+        <button type="button" id="submitAppointment" class="btn btn-primary btn-lg">Book Appointment</button>
+    </div>
+</form>
 
 <script>
-    (function () {
-        'use strict'
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
+    document.getElementById("submitAppointment").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(document.getElementById("appointmentForm"));
+
+    fetch('/AppointmentForm/SubmitAppointment', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Appointment successfully booked!");
+            window.location.reload();
+        } else {
+            alert("Failed to book appointment: " + data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
 </script>
+

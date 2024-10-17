@@ -21,8 +21,7 @@ public class DetailsModel : PageModel
     {
         if (id == Guid.Empty)
         {
-            // If no ID is provided, return a 404 or some error handling
-            return NotFound();
+            return NotFound(); // Return 404 if the ID is invalid
         }
 
         // Fetch the service details based on the ID
@@ -30,13 +29,13 @@ public class DetailsModel : PageModel
 
         if (result.IsSuccess)
         {
-            ServiceDetails = result.Data;
-            return Page(); // Return the page if successful
+            ServiceDetails = result.Data;  // Ensure this is populated
+            return Page();
         }
         else
         {
-            ErrorMessage = result.Message;
-            return Page(); // Return the page even if there's an error
+            ErrorMessage = result.Message;  // Set the error message if something goes wrong
+            return Page();
         }
     }
 }
