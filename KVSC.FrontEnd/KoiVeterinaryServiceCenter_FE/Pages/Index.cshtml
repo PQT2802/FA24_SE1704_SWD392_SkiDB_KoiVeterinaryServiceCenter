@@ -8,5 +8,12 @@
 <div>
     @await Html.PartialAsync("_HeroCustomer")
     @await Html.PartialAsync("_AboutCustomer")
-
+    <div id="chatIcon" class="chat-icon">
+        <i class="fa fa-comment"></i>
+    </div>
 </div>
+<script>
+    document.getElementById('chatIcon').addEventListener('click', function () {
+        window.location.href = '/user/customer/chat';
+    });
+</script>
