@@ -48,6 +48,7 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero // Optional: Reduces time tolerance when validating token expiration
     };
 });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));

@@ -1,7 +1,5 @@
-﻿using Azure.Core;
-using KVSC.Application.Interface.IService;
+﻿using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
-using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.DTOs.PetService.GetPetService;
 using KVSC.Infrastructure.DTOs.PetService.UpdatePetService;
