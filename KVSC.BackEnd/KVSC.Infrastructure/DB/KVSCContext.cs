@@ -86,6 +86,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<Prescription>().ToTable("Prescription");
             modelBuilder.Entity<PrescriptionDetail>().ToTable("PrescriptionDetail");
             modelBuilder.Entity<AppointmentVeterinarian>().ToTable("AppointmentVeterinarian");
+            modelBuilder.Entity<Message>().ToTable("Message");
             #endregion
 
             #region Relationships and Additional Configuration

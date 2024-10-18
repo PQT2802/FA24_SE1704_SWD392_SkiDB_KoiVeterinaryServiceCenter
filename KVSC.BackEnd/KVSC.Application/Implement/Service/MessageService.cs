@@ -1,7 +1,6 @@
 ﻿using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
-using KVSC.Infrastructure.DTOs.Chat;
 using KVSC.Infrastructure.DTOs.Chat.AddMessage;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;

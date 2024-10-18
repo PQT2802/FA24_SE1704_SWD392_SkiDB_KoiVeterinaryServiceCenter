@@ -50,12 +50,12 @@ namespace KVSC.Application.Implement.Service
             {
                 Id = pet.Id,
                 Name = pet.Name,
-                Age = pet.Age,
-                Gender = pet.Gender,
+                Age = pet.Age ?? 0,
+                Gender = pet.Gender ?? "",
                 ImageUrl = pet.ImageUrl,
-                Color = pet.Color,
-                Length = pet.Length,
-                Weight = pet.Weight,
+                Color = pet.Color ?? "",
+                Length = pet.Length ?? 0,
+                Weight = pet.Weight ?? 0,
                 LastHealthCheck = pet.LastHealthCheck,
                 HealthStatus = pet.HealthStatus,
                 OwnerId = pet.OwnerId
@@ -70,13 +70,13 @@ namespace KVSC.Application.Implement.Service
             var petResponse = pets.Select(pet => new GetPetResponse
             {
                 Id = pet.Id,
-                Name = pet.Name,
-                Age = pet.Age,
-                Gender = pet.Gender,
-                ImageUrl = pet.ImageUrl,
-                Color = pet.Color,
-                Length = pet.Length,
-                Weight = pet.Weight,
+                Name = pet.Name ?? "",
+                Age = pet.Age ?? 0,
+                Gender = pet.Gender ?? "",
+                ImageUrl = pet.ImageUrl ?? "",
+                Color = pet.Color ?? "",
+                Length = pet.Length ?? 0,
+                Weight = pet.Weight ?? 0,
                 LastHealthCheck = pet.LastHealthCheck,
                 HealthStatus = pet.HealthStatus,
                 OwnerId = pet.OwnerId
@@ -196,12 +196,12 @@ namespace KVSC.Application.Implement.Service
             {
                 Id = pet.Id,
                 Name = pet.Name,
-                Age = pet.Age,
-                Gender = pet.Gender,
-                ImageUrl = pet.ImageUrl,
-                Color = pet.Color,
-                Length = pet.Length,
-                Weight = pet.Weight,
+                Age = pet.Age ?? 0,
+                Gender = pet.Gender ?? "",
+                ImageUrl = pet.ImageUrl?? "",
+                Color = pet.Color ?? "",
+                Length = pet.Length ?? 0,
+                Weight = pet.Weight ?? 0,
                 LastHealthCheck = pet.LastHealthCheck,
                 HealthStatus = pet.HealthStatus
             }).ToList();

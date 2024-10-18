@@ -26,11 +26,7 @@ namespace KVSC.Domain.Entities
 
         // Foreign key relationship 
         public Guid? PetTypeId { get; set; }
-<<<<<<< HEAD
-        public PetType? PetType { get; set; }  // Reference to PetType
-=======
         public PetType? PetType { get; set; } // Reference to PetType
->>>>>>> Thang
 
         // Thêm quan hệ với Appointment
         public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment

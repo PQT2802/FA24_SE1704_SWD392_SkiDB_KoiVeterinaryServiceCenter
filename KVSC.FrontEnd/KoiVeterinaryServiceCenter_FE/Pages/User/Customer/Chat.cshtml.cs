@@ -17,6 +17,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
         [BindProperty]
         public CreateMessageRequest CreateMessageRequest { get; set; } = new CreateMessageRequest();
         public MessageModel Messages { get; set; } = new MessageModel();
+        [BindProperty]
         public ConversationModel Conversations { get; set; } = new ConversationModel();
         public Guid CurrentUserId { get; set; }
         public Guid CurrentRecipientId { get; set; }
