@@ -41,14 +41,16 @@ namespace KVSC.WebAPI.Controllers
         }
 
         // GET: api/petservice/{id}
-        [HttpGet]
-        public async Task<IResult> GetPetServiceById([FromQuery] GetPetServiceRequest request)
+        [HttpGet("{id}")]
+        public async Task<IResult> GetPetServiceById(Guid id)  // Using {id} in the route
         {
-            Result result = await _petServiceService.GetPetServiceByIdAsync(request.Id);
+            Result result = await _petServiceService.GetPetServiceByIdAsync(id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Pet service retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
+
+
 
         // PUT: api/petservice/{id}
         [HttpPut]

@@ -32,6 +32,8 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                 UserName = user.Username,
                 Email = user.Email,
                 Avatar = user.ProfilePictureUrl,
+                PhoneNUmber = user.PhoneNumber,
+                Address = user.Address,
                 RoleName = user.role switch
                 {
                     1 => "Admin",

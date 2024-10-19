@@ -1,9 +1,12 @@
-﻿using KVSC.Application.Interface.IService;
+﻿using KVSC.Application.Common;
+using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Common;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
 using KVSC.Infrastructure.DTOs.Pet.GetPet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +16,13 @@ namespace KVSC.WebAPI.Controllers
     [ApiController]
     public class PetController : ControllerBase
     {
+        private readonly IHttpContextAccessor _contextAccessor;
         private readonly IPetBusinessService _petBusinessService;
 
-        public PetController(IPetBusinessService petBusinessService)
+        public PetController(IPetBusinessService petBusinessService, IHttpContextAccessor contextAccessor)
         {
             _petBusinessService = petBusinessService;
+            _contextAccessor = contextAccessor;
         }
 
         //GET: api/pet/{id}
@@ -70,13 +75,16 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
+        [Authorize]
         [HttpGet("owner-pet")]
-        public async Task<IResult> GetAllPetByOwnerId([FromQuery] GetPetRequest request)
+        public async Task<IResult> GetAllPetByOwnerId()
         {
-            Result result = await _petBusinessService.GetAllPetByOwnerIdAsync(request.Id);
+            CurrentUserObject c = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
+            Result result = await _petBusinessService.GetAllPetByOwnerIdAsync(c.UserId);
             return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "View all pet by ownerId successfully")
+                ? ResultExtensions.ToSuccessDetails(result, "View all pets by ownerId successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
+
     }
 }

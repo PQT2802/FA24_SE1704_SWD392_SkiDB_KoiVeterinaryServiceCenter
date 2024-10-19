@@ -11,7 +11,7 @@ namespace KVSC.Infrastructure.DTOs.Appointment.MakeAppointment
         public Guid CustomerId { get; set; }
         public Guid PetId { get; set; }
         public Guid PetServiceId { get; set; }
-        public List<Guid> VeterinarianIds { get; set; }
+        public List<Guid>? VeterinarianIds { get; set; }
         public DateTime AppointmentDate { get; set; }
     }
 }

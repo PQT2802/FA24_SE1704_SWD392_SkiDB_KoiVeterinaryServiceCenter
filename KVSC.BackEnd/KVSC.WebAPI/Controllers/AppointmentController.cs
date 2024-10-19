@@ -25,6 +25,8 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Appointment for service created successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        
+        
 
         // POST: api/appointment/combo
         [HttpPost("combo")]
