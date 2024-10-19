@@ -4,6 +4,7 @@ using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
+using KVSC.Infrastructure.DTOs.Firebase.AddImage;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.DTOs.PetService.GetPetService;
 using KVSC.Infrastructure.DTOs.PetService.UpdatePetService;
@@ -33,7 +34,7 @@ namespace KVSC.Application.Implement.Service
 
         public async Task<Result> CreatePetServiceAsync(AddPetServiceRequest addPetService)
         {
-            // Validate the input
+            // Validate the input   
             var validationResult = await _petServiceValidator.ValidateAsync(addPetService);
             if (!validationResult.IsValid)
             {
@@ -49,6 +50,16 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(PetServiceErrorMessage.InvalidFieldValue("PetServiceCategory"));
             }
 
+            //// Upload the image if provided
+            //    var imageRequest = new AddImageRequest(addPetService.ImageFile, "PetServices");
+            //    var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest);
+
+            //    if (!uploadImageResult.Success)
+            //    {
+            //        return Result.Failure(uploadImageResult.Error);
+            //    }
+
+            // Create the PetService entity
             var petService = new PetService
             {
                 Name = addPetService.Name,
@@ -87,7 +98,7 @@ namespace KVSC.Application.Implement.Service
                 AvailableFrom = service.AvailableFrom,
                 AvailableTo = service.AvailableTo,
                 TravelCost = service.TravelCost,
-                ServiceCategory = service.PetServiceCategory?.Name,
+                ServiceCategory = service.PetServiceCategory?.Name  ?? string.Empty,
                 PetServiceCategoryId = service.PetServiceCategoryId
             }).ToList();
             return Result.SuccessWithObject(petServiceRespone);
@@ -110,7 +121,7 @@ namespace KVSC.Application.Implement.Service
                 AvailableFrom = petService.AvailableFrom,
                 AvailableTo = petService.AvailableTo,
                 TravelCost = petService.TravelCost,
-                ServiceCategory = petService.PetServiceCategory?.Name,
+                ServiceCategory = petService.PetServiceCategory?.Name ?? string.Empty,
                 PetServiceCategoryId = petService.PetServiceCategoryId
             };
 
@@ -138,17 +149,32 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetServiceErrorMessage.InvalidFieldValue("PetServiceCategory"));
             }
+            //if (updatePetServiceRequest.ImageFile != null)
+            //{
+            //    // Create a new AddImageRequest for the image file
+            //    var imageRequest = new AddImageRequest(updatePetServiceRequest.ImageFile, "PetServices");
+
+            //    // Upload the image and get the result
+            //    var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest);
+
+            //    if (!uploadImageResult.Success)
+            //    {
+            //        return Result.Failure(uploadImageResult.Error); // Return the error from image upload
+            //    }
+
+            //    // Update the ImageUrl with the new uploaded image path
+            //    existingPetService.ImageUrl = uploadImageResult.FilePath;
+            //}
             // Update the properties
             existingPetService.Name = updatePetServiceRequest.Name; // Update Name
             existingPetService.PetServiceCategoryId = updatePetServiceRequest.PetServiceCategoryId;
             existingPetService.BasePrice = updatePetServiceRequest.BasePrice;
             existingPetService.Duration = updatePetServiceRequest.Duration;
-            existingPetService.ImageUrl = updatePetServiceRequest.ImageUrl;
             existingPetService.AvailableFrom = updatePetServiceRequest.AvailableFrom;
             existingPetService.AvailableTo = updatePetServiceRequest.AvailableTo;
             existingPetService.TravelCost = updatePetServiceRequest.TravelCost;
             existingPetService.ModifiedDate = DateTime.UtcNow;
-
+            existingPetService.ImageUrl = updatePetServiceRequest.ImageUrl;
             // Update the service
             var updateResult = await _unitOfWork.PetServiceRepository.UpdateAsync(existingPetService);
 

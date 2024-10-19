@@ -81,6 +81,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<Veterinarian>().ToTable("Veterinarian");
             modelBuilder.Entity<VeterinarianSchedule>().ToTable("VeterinarianSchedule");
             modelBuilder.Entity<PetType>().ToTable("PetType");
+            modelBuilder.Entity<Message>().ToTable("Message");
             modelBuilder.Entity<PetHabitat>().ToTable("PetHabitat");
             modelBuilder.Entity<ServiceReport>().ToTable("ServiceReport");
             modelBuilder.Entity<Prescription>().ToTable("Prescription");
