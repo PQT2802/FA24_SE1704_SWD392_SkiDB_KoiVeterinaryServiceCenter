@@ -23,10 +23,11 @@ namespace KVSC.Infrastructure.DTOs.User
     {
         public Guid Id { get; set; }
         public string FullName { get; set; } = string.Empty;
-        public string username { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
+        public string ProfilePictureUrl { get; set; } = string.Empty;
         public DateTime DateOfBirth { get; set; }
         public DateTime CreatedDate { get; set; }
         public int Role { get; set; } 

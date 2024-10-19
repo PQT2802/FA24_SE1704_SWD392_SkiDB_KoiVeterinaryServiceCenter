@@ -27,10 +27,11 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
         private readonly IValidator<AddUserRequest> _userValidator;
         private readonly IValidator<UpdateUserRequest> _updateUserValidator;
 
-        public UserService(UnitOfWork unitOfWork, IValidator<AddUserRequest> userValiator) 
+        public UserService(UnitOfWork unitOfWork, IValidator<AddUserRequest> userValiator, IValidator<UpdateUserRequest> updateUserValidator) 
         {
             _unitOfWork = unitOfWork;
             _userValidator = userValiator;
+            _updateUserValidator = updateUserValidator;
         }
 
         public async Task<Result> GetUserByEmail(string email)
@@ -97,8 +98,8 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                Username = request.Username,
-                PasswordHash = request.PasswordHash,
+                Username = request.UserName,
+                PasswordHash = request.Password,
                 ProfilePictureUrl = request.ProfilePictureUrl,
                 DateOfBirth = request.DateOfBirth,
                 role = request.Role,
@@ -126,6 +127,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                 FullName = user.FullName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
+                ProfilePictureUrl = user.ProfilePictureUrl,
                 Address = user.Address,
                 Role = user.role
             };
@@ -136,7 +138,9 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             var validationResult = await _updateUserValidator.ValidateAsync(request);
             if (!validationResult.IsValid)
             {
-                var errors = validationResult.Errors.Select(e => (Error)e.CustomState).ToList();
+                var errors = validationResult.Errors
+                    .Select(e => (Error)e.CustomState)
+                    .ToList();
                 return Result.Failures(errors);
             }
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(request.Id);
@@ -146,6 +150,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             }
 
             user.FullName = request.FullName;
+            user.Username = request.UserName;
             user.Email = request.Email;
             user.PhoneNumber = request.PhoneNumber;
             user.Address = request.Address;
@@ -154,8 +159,13 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             user.role = request.Role;
             user.ModifiedDate = DateTime.UtcNow;
 
-            await _unitOfWork.UserRepository.UpdateUserAsync(user);
-            return Result.Success();
+            var updateResult = await _unitOfWork.UserRepository.UpdateAsync(user);
+            if (updateResult == 0)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceUpdateFailed());
+            }
+            var response = new CreateResponse { Id = user.Id };
+            return Result.SuccessWithObject(response);
         }
         public async Task<Result> DeleteUserAsync(Guid id)
         {

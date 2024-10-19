@@ -1,7 +1,9 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.User;
+using KVSC.Infrastructure.DTOs.User.DeleteUser;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
+using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.Repositories.Interface;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -332,6 +334,97 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 {
                     IsSuccess = false,
                     Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request)
+        {
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var response = await _httpClient.PutAsJsonAsync("api/User", request);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<UpdateUserResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during updating."
+                    };
+                }
+
+                var updateResponse = await response.Content.ReadFromJsonAsync<UpdateUserResponse>(options);
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = true,
+                    Data = updateResponse,
+                    Message = "Update user successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/User?Id={request.Id}");
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent);
+
+                    return new ResponseDto<DeleteUserResponse>
+                    {
+                        IsSuccess = false,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "Failed to delete user."
+                    };
+                }
+
+                return new ResponseDto<DeleteUserResponse>
+                {
+                    IsSuccess = true,
+                    Message = "User deleted successfully."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<DeleteUserResponse>
+                {
+                    IsSuccess = false,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<DeleteUserResponse>
+                {
+                    IsSuccess = false,
                     Message = $"An unexpected error occurred: {ex.Message}"
                 };
             }

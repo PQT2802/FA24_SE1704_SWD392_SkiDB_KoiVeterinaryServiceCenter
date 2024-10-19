@@ -32,7 +32,8 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
             => Error.Validation("User.Email.Format", $"The email is invalid.");
         public static Error EmailIsExist()
             => Error.Validation("User.Email.Exist", $"The email is exist.");
-
+        public static Error PhoneInvalidFormat()
+            => Error.Validation("User.Phone.Format", $" number must be 10-11 digits.");
 
         public static Error PasswordInValidLength()
             => Error.Validation("User.Password.Length", $"The password must be at least 3 characters.");
@@ -42,6 +43,8 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
             => Error.Validation("User.Password.SpecialChar", $"Password must contain at least one special character.");
         public static Error UserDeleteFailed()
         => Error.Validation("User.DeleteFailed", "Failed to delete user.");
+        public static Error UserUpdateFailed()
+        => Error.Validation("User.UpdateFailed", "Failed to update user.");
 
     }
 }

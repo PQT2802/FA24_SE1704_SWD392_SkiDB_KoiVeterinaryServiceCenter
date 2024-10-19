@@ -17,7 +17,6 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         Task<User> GetUserByNameAsync(string userName);
         Task<User> CreateUserAsync(User user);
         Task<User> GetUserByIdAsync(Guid id);
-        Task UpdateUserAsync(User user);
         Task<int> DeleteUserAsync(Guid id);
         Task<(List<GetUserResponse> Users, int TotalCount)> GetAllUsersAsync(
         string? fullName = null,

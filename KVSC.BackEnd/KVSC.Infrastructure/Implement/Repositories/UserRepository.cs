@@ -101,6 +101,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
                     Username = u.Username, // Chỉnh sửa tên thuộc tính thành chữ hoa
                     Email = u.Email,
                     PhoneNumber = u.PhoneNumber,
+                    ProfilePictureUrl = u.ProfilePictureUrl,
                     Address = u.Address,
                     DateOfBirth = u.DateOfBirth,
                     CreatedDate = u.CreatedDate,
@@ -109,11 +110,6 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
                 .ToListAsync();
 
             return (users, totalCount);
-        }
-        public async Task UpdateUserAsync(User user)
-        {
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
         }
         public async Task<int> DeleteUserAsync(Guid id)
         {

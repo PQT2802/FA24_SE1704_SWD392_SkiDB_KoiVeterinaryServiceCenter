@@ -50,17 +50,28 @@
     </form>
     </div>
 }
-@if (Model.ListType == "user")
+@if (Model.ListType == "user" && Model.Item.Role != 1)
 {
-     <div class="d-flex align-items-center ">
-    <!-- Service List Buttons -->
-        <button class="btn btn-sm btn-primary edit-pet-button  me-2">
-        Edit
-    </button>
-    <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this pet?');">
-        <input type="hidden" name="Id" value="@Model.Item.Id" />
-        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-    </form>
+    <!-- User List Buttons -->
+    <div class="d-flex align-items-center">
+        <button class="btn btn-sm btn-primary edit-user-button me-2"
+                data-id="@Model.Item.Id"
+                data-fullname="@Model.Item.FullName"
+                data-username="@Model.Item.UserName"
+                data-email="@Model.Item.Email"
+                data-phonenumber="@Model.Item.PhoneNumber"
+                data-address="@Model.Item.Address"
+                data-profilepictureurl="@Model.Item.ProfilePictureUrl"
+                data-dateofbirth="@Model.Item.DateOfBirth.ToString("yyyy-MM-dd")"
+                data-role="@Model.Item.Role"
+                data-bs-toggle="modal"
+                data-bs-target="#updateUserModal">
+            Edit
+        </button>
+        <form method="post" asp-page-handler="DeleteUser" onsubmit="return confirm('Are you sure you want to delete this user?');">
+            <input type="hidden" name="Id" value="@Model.Item.Id" />
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
     </div>
 }
 else if (Model.ListType == "appointment")

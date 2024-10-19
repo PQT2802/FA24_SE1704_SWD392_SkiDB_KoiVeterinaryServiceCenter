@@ -180,7 +180,7 @@ namespace KVSC.Application.Implement.Service
 
             if (updateResult == 0)
             {
-                return Result.Failure(PetServiceErrorMessage.PetServiceUpdateFailed());
+                return Result.Failure(UserErrorMessage.UserUpdateFailed());
             }
 
             var response = new CreateResponse { Id = existingPetService.Id };

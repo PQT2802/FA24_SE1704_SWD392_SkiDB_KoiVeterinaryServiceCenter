@@ -56,14 +56,14 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        [HttpPost]
-        public async Task<IResult> CreateUser([FromBody] AddUserRequest addUserRequest)
-        {
-            var result = await _userService.CreateUserAsync(addUserRequest);
-            return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "User created successfully")
-                : ResultExtensions.ToProblemDetails(result);
-        }
+        //[HttpPost]
+        //public async Task<IResult> CreateUser([FromBody] AddUserRequest addUserRequest)
+        //{
+        //    var result = await _userService.CreateUserAsync(addUserRequest);
+        //    return result.IsSuccess
+        //        ? ResultExtensions.ToSuccessDetails(result, "User created successfully")
+        //        : ResultExtensions.ToProblemDetails(result);
+        //}
 
         [HttpGet]
         public async Task<IResult> GetUserById([FromQuery] GetUserRequest request)
