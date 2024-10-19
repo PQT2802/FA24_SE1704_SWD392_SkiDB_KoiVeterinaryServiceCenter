@@ -13,7 +13,7 @@
                         <input type="text" id="searchInput" placeholder="Search..."></input>
                     </div>
                 </div>
-                <div id="conversationList" class="discussion message-active">
+                <div id="conversationList" class="discussion message-active"> 
                     @if (Model.Conversations.Extensions?.Data != null && Model.Conversations.Extensions.Data.Any())
                     {
                         foreach (var conversation in Model.Conversations.Extensions.Data)

@@ -40,6 +40,8 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
             => Error.Validation("User.Password.Uppercase", $"Password must start with a strong character (uppercase letter).");
         public static Error PasswordInValidSpecialChar()
             => Error.Validation("User.Password.SpecialChar", $"Password must contain at least one special character.");
+        public static Error UserDeleteFailed()
+        => Error.Validation("User.DeleteFailed", "Failed to delete user.");
 
     }
 }

@@ -1,12 +1,7 @@
 ﻿using KVSC.Infrastructure.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KVSC.Infrastructure.DTOs.User.Register;
-using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User;
+using KVSC.Infrastructure.DTOs.User.Login;
+using KVSC.Infrastructure.DTOs.User.Register;
 
 namespace KVSC.Infrastructure.Repositories.Interface
 {
@@ -16,5 +11,7 @@ namespace KVSC.Infrastructure.Repositories.Interface
         public Task<ResponseDto<LoginResponse>> GoogleSignIn(GoogleSignInRequest googleSignInRequest);
         Task<ResponseDto<SignUpResponse>> SignUp(SignUpRequest signUpRequest);
         Task<ResponseDto<UserInfo>> GetUserInforByToken(string token);
+        Task<ResponseDto<UserList>> GetUserList(string fullName, string email, string phoneNumber, string address, int role, int pageNumber, int pageSize);
+        Task<ResponseDto<RoleList>> GetRoleList();
     }
 }

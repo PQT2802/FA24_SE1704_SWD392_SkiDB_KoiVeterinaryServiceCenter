@@ -27,6 +27,7 @@ namespace KVSC.Infrastructure.Interface
 
         IServiceReportRepository ServiceReportRepository { get; }
         IPrescriptionRepository PrescriptionRepository { get; }
+
         int Complete();
     }
 }

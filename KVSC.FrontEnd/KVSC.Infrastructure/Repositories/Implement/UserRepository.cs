@@ -233,5 +233,108 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+
+        public async Task<ResponseDto<UserList>> GetUserList(string fullName, string email, string phoneNumber, string address, int role, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/User/users/search?fullName={fullName}&email={email}&phoneNumber={phoneNumber}&address={address}&role={role}&pageNumber={pageNumber}&pageSize={pageSize}");
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var errorResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>(options);
+                    return new ResponseDto<UserList>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during fetching user data."
+                    };
+                }
+
+                var userList = await response.Content.ReadFromJsonAsync<UserList>(options);
+                return new ResponseDto<UserList>
+                {
+                    IsSuccess = true,
+                    Data = userList,
+                    Message = "User data fetched successfully."
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseDto<UserList>
+                {
+                    IsSuccess = false,
+                    Message = $"Request error: {ex.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<UserList>
+                {
+                    IsSuccess = false,
+                    Message = $"Unexpected error: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<RoleList>> GetRoleList()
+        {
+            try
+            {
+                // Gửi yêu cầu GET đến API để lấy danh sách vai trò
+                var response = await _httpClient.GetAsync("api/User/roleList");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Kiểm tra xem phản hồi có thành công hay không
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<RoleList>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get role list."
+                    };
+                }
+
+                // Nếu thành công, deserialize phản hồi để lấy danh sách vai trò
+                var roleList = await response.Content.ReadFromJsonAsync<RoleList>(options);
+
+                return new ResponseDto<RoleList>
+                {
+                    IsSuccess = true,
+                    Data = roleList,
+                    Message = "Get role list successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Xử lý lỗi yêu cầu HTTP
+                return new ResponseDto<RoleList>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Xử lý các lỗi khác
+                return new ResponseDto<RoleList>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
     }
 }

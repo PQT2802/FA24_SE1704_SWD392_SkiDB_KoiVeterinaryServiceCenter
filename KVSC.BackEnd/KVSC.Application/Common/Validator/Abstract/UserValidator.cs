@@ -57,5 +57,26 @@ namespace KVSC.Application.KVSC.Application.Common.Validator.Abstract
                 .Matches(@"^[A-Z].*").WithState(_ => UserErrorMessage.PasswordInValidUppercase())
                 .Matches(@"[!@#$%^&*(),.?""{}|<>]").WithState(_ => UserErrorMessage.PasswordInValidSpecialChar());
         }
+
+        /*==================================CRUD USER==================================*/
+        protected void AddUserNameRules(Expression<Func<T, string>> fullNameSelector)
+        {
+            RuleFor(fullNameSelector)
+                .NotEmpty().WithMessage("Username cannot be blank.")
+                .MinimumLength(3).WithMessage("Username must be at least 3 characters.");
+        }
+
+        protected void AddEmailRules(Expression<Func<T, string>> emailSelector)
+        {
+            RuleFor(emailSelector)
+                .NotEmpty().WithMessage("Email cannot be empty.")
+                .EmailAddress().WithMessage("Invalid email...");
+        }
+
+        protected void AddPhoneNumberRules(Expression<Func<T, string>> phoneNumberSelector)
+        {
+            RuleFor(phoneNumberSelector)
+                .Matches(@"^\d{10,11}$").WithMessage("Phone number must be 10-11 digits.");
+        }
     }
 }

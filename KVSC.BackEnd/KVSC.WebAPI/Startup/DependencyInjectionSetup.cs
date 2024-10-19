@@ -49,6 +49,8 @@ using KVSC.Infrastructure.DTOs.ComboService.UpdateComboService;
 using KVSC.Application.Common.Validator.ServiceReport;
 using KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport;
 using KVSC.Infrastructure.DTOs.ServiceReport.UpdateServiceReport;
+using KVSC.Infrastructure.DTOs.User.UpdateUser;
+using KVSC.Infrastructure.DTOs.User.AddUser;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -119,6 +121,9 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<MakeAppointmentForComboRequest>, MakeAppointmentForComboValidator>();
             services.AddTransient<IValidator<AddServiceReportRequest>, AddServiceReportValidator>();
             services.AddTransient<IValidator<UpdateServiceReportRequest>, UpdateServiceReportValidator>();
+
+            services.AddTransient<IValidator<UpdateUserRequest>, UpdateUserValidator>();
+            services.AddTransient<IValidator<AddUserRequest>, AddUserValidator>();
 
             //Validator
 

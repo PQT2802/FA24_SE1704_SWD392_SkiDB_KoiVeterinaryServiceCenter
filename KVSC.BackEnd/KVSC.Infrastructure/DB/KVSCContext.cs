@@ -37,6 +37,7 @@ namespace KVSC.Infrastructure.DB
         public DbSet<PrescriptionDetail> PrescriptionDetails { get; set; }
         public DbSet<AppointmentVeterinarian> AppointmentVeterinarians { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Role> Roles { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
