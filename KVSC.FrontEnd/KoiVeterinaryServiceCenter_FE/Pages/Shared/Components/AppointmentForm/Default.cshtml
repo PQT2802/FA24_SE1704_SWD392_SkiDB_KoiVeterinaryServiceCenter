@@ -2,36 +2,42 @@
 @model KVSC.Infrastructure.DTOs.AppointmentFormViewModel
 
 <div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-            <div class="card p-4">
-                <h2 class="text-center mb-4">Book an Appointment</h2>
+    <div class="row">
+        <div class="col-lg-12 mx-auto">
+            <!-- Set to col-lg-12 to make it full-width -->
+            <!-- Appointment Form Start -->
+            <div class="card p-4 border-0 shadow-sm rounded-3">
+                <h2 class="text-center mb-4 font-weight-bold text-dark">Book an Appointment</h2>
+
 
                 <form id="appointmentForm" class="needs-validation" novalidate>
-                    <!-- Customer Information (Read-Only) -->
-                    <div class="form-group mb-3">
-                        <label for="customerName">Name</label>
-                        <input type="text" class="form-control" id="customerName" name="CustomerName" value="@Model.CustomerName" readonly />
+                    <!-- Customer Information (Name and Phone Number on the same line) -->
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="customerName" class="text-muted">Name</label>
+                            <input type="text" class="form-control bg-light border-0 p-3" id="customerName" name="CustomerName" value="@Model.CustomerName" readonly />
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="customerPhone" class="text-muted">Phone Number</label>
+                            <input type="text" class="form-control bg-light border-0 p-3" id="customerPhone" name="CustomerPhone" value="@Model.CustomerPhone" readonly />
+                        </div>
                     </div>
 
+                    <!-- Customer Email (Full width) -->
                     <div class="form-group mb-3">
-                        <label for="customerEmail">Email Address</label>
-                        <input type="text" class="form-control" id="customerEmail" name="CustomerEmail" value="@Model.CustomerEmail" readonly />
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="customerPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="customerPhone" name="CustomerPhone" value="@Model.CustomerPhone" readonly />
+                        <label for="customerEmail" class="text-muted">Email Address</label>
+                        <input type="text" class="form-control bg-light border-0 p-3" id="customerEmail" name="CustomerEmail" value="@Model.CustomerEmail" readonly />
                     </div>
 
                     <!-- Pet Selection Dropdown -->
                     <div class="form-group mb-3">
-                        <label for="petId">Select Your Pet</label>
-                        <select class="form-control" id="petId" name="PetId" required>
+                        <label for="petId" class="text-muted">Select Your Pet</label>
+                        <select class="form-control bg-light border-0 p-3" id="petId" name="PetId" required>
                             <option value="">-- Select a Pet --</option>
                             @foreach (var pet in Model.Pets)
                             {
-                            <option value="@pet.Id">@pet.Name</option>
+                                <option value="@pet.Id">@pet.Name</option>
                             }
                         </select>
                         <div class="invalid-feedback">Please select a pet.</div>
@@ -39,12 +45,12 @@
 
                     <!-- Service Selection Dropdown -->
                     <div class="form-group mb-3">
-                        <label for="serviceId">Select a Service</label>
-                        <select class="form-control" id="serviceId" name="ServiceId" required>
+                        <label for="serviceId" class="text-muted">Select a Service</label>
+                        <select class="form-control bg-light border-0 p-3" id="serviceId" name="ServiceId" required>
                             <option value="">-- Select a Service --</option>
                             @foreach (var service in Model.Services)
                             {
-                            <option value="@service.Id">@service.Name - @service.BasePrice.ToString("C") (@service.Duration)</option>
+                                <option value="@service.Id">@service.Name - @service.BasePrice.ToString("C") (@service.Duration)</option>
                             }
                         </select>
                         <div class="invalid-feedback">Please select a service.</div>
@@ -52,19 +58,19 @@
 
                     <!-- Appointment Date and Time -->
                     <div class="form-group mb-3">
-                        <label for="appointmentDate">Appointment Date & Time</label>
-                        <input type="datetime-local" class="form-control" id="appointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" required />
+                        <label for="appointmentDate" class="text-muted">Appointment Date & Time</label>
+                        <input type="datetime-local" class="form-control bg-light border-0 p-3" id="appointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" required />
                         <div class="invalid-feedback">Please select a valid date and time.</div>
                     </div>
 
                     <!-- Notes (Optional) -->
                     <div class="form-group mb-3">
-                        <label for="notes">Notes (Optional)</label>
-                        <textarea class="form-control" id="notes" name="Notes" rows="3"></textarea>
+                        <label for="notes" class="text-muted">Notes (Optional)</label>
+                        <textarea class="form-control bg-light border-0 p-3" id="notes" name="Notes" rows="3"></textarea>
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary btn-block" id="submitAppointment">Book Appointment</button>
+                    <button type="submit" class="btn btn-primary btn-block py-3" id="submitAppointment">Book Appointment</button>
 
                     <!-- Success/Error Message Display -->
                     <div id="message" class="mt-3"></div>
@@ -73,6 +79,104 @@
         </div>
     </div>
 </div>
+
+<!-- Add the CSS style directly inside the page -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    /* General Container Styles */
+    .container {
+        max-width: 100%;
+    }
+
+    .row {
+        width: 100%;
+    }
+
+    .form-container-wide {
+        max-width: 100%; /* Ensure it takes full width */
+        padding: 0 15px; /* Adjust padding as needed */
+    }
+    .col-lg-8, .col-md-10 {
+        max-width: 85%; /* Wider form width */
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        padding: 3rem; /* Reduced padding to keep height low */
+    }
+
+    h2 {
+        font-size: 1.75rem;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    /* Input Styles */
+    input.form-control,
+    select.form-control,
+    textarea.form-control {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 1rem;
+        background-color: #fafafa;
+        transition: border-color 0.2s ease;
+    }
+
+        input.form-control:focus,
+        select.form-control:focus,
+        textarea.form-control:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+    /* Button Styles */
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+    /* Add some subtle spacing */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Error Messages */
+    .invalid-feedback {
+        font-size: 0.875rem;
+        color: #dc3545;
+        margin-top: 0.25rem;
+    }
+
+    /* Success/Error Message */
+    #message {
+        font-size: 1rem;
+        color: #28a745;
+        text-align: center;
+        padding-top: 1rem;
+    }
+</style>
+
+
 
 <script>
     document.getElementById("appointmentForm").addEventListener("submit", function (e) {
