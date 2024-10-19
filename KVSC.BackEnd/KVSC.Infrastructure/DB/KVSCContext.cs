@@ -60,6 +60,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.ApplyConfiguration(new PrescriptionConfiguration());
             modelBuilder.ApplyConfiguration(new PrescriptionDetailConfiguration());
             modelBuilder.ApplyConfiguration(new PetHabitatConfiguration());
+            modelBuilder.ApplyConfiguration(new MessageConfiguration());
 
             #endregion
 
