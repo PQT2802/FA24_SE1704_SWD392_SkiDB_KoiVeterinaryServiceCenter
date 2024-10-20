@@ -74,7 +74,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
 
             return errorDictionary.ToDictionary(
                                     kvp => kvp.Key,
-                                    kvp => string.Join(Environment.NewLine, kvp.Value) // Sử dụng xuống dòng cho mỗi lỗi
+                                    kvp => string.Join(Environment.NewLine, kvp.Value) 
                                     );
         }
 

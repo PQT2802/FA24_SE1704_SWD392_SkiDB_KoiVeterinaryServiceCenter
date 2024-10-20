@@ -80,7 +80,9 @@
                             <div class="form-floating mb-3">
                                 <input type="password" class="form-control" id="password" name="SignUpRequest.Password" placeholder="Password" >
                                 <label for="password">Password</label>
+                                <div class="invalid-feedback">
                                 <span asp-validation-for="SignUpRequest.Password" class="text-danger"></span>
+                                </div>
                             </div>
 
                             <!-- Full Name Input -->
@@ -120,7 +122,12 @@
                 </div>
             </div>
         </div>
-
+        <style>
+            .invalid-feedback {
+                display: block;
+                white-space: pre-line; /* Đảm bảo xuống dòng được tôn trọng */
+            }
+        </style>
         <script>
             $(document).ready(function () {
                 $('#signUpForm').click(function (e) {
@@ -147,6 +154,7 @@
                     });
                 });
             });
+            
         </script>
         <!-- Sign Up End -->
     </div>
