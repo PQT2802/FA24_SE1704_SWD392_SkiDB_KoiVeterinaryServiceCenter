@@ -16,7 +16,8 @@ namespace KVSC.WebAPI.Controllers
     {
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IUserService _userService;
-        public UserController (IHttpContextAccessor contextAccessor,IUserService userService)
+
+        public UserController(IHttpContextAccessor contextAccessor, IUserService userService)
         {
             _contextAccessor = contextAccessor;
             _userService = userService;
@@ -33,5 +34,13 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
+        [HttpGet("veterinarians")]
+        public async Task<IResult> GetAllVeterinarians()
+        {
+            var result = await _userService.GetAllVeterinariansAsync();
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Veterinarians fetched successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
     }
 }

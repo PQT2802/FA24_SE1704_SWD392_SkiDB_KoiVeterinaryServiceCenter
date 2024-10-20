@@ -8,25 +8,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 
 namespace KVSC.Application.KVSC.Application.Implement.Service
 {
     public class UserService : IUserService
     {
         private readonly UnitOfWork _unitOfWork;
-        public UserService(UnitOfWork unitOfWork) 
+
+        public UserService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        
         }
 
         public async Task<Result> GetUserByEmail(string email)
         {
             var user = await _unitOfWork.UserRepository.GetByAsync("Email", email);
-            if (user == null) 
+            if (user == null)
             {
                 return Result.Failure(UserErrorMessage.UserNotExist());
             }
+
             var userInfor = new UserInfor
             {
                 UserName = user.Username,
@@ -44,9 +46,39 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                     _ => throw new InvalidOperationException("Unknown role.")
                 }
             };
-            
+
             return Result.SuccessWithObject(userInfor);
-                
         }
+        public async Task<Result> GetAllVeterinariansAsync()
+        {
+            try
+            {
+                var veterinarians = await _unitOfWork.UserRepository.GetAllVeterinariansAsync();
+    
+                var vetInfoList = veterinarians
+                    .Where(vet => vet.Veterinarian != null) // Ensure Veterinarian object is not null
+                    .Select(vet => new VeterinarianInfo
+                    {
+                        FullName = vet.FullName,
+                        Email = vet.Email,
+                        PhoneNumber = vet.PhoneNumber,
+                        Address = vet.Address,
+                        LicenseNumber = vet.Veterinarian?.LicenseNumber, // Use ?. to safely access the properties
+                        Specialty = vet.Veterinarian?.Specialty,
+                        Qualifications = vet.Veterinarian?.Qualifications
+                    }).ToList();
+
+                return Result.SuccessWithObject(vetInfoList);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception if needed, for example:
+                // _logger.LogError(ex, "Error occurred while fetching veterinarians");
+
+                return Result.Failure(Error.Failure("GetVeterinariansError", "An error occurred while fetching veterinarians."));
+            }
+        }
+
+
     }
 }

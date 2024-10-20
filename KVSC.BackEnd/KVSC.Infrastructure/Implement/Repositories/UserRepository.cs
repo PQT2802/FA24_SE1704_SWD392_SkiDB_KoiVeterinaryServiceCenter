@@ -38,5 +38,14 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Username == userName);
         }
+        
+        public async Task<List<User>> GetAllVeterinariansAsync()
+        {
+            return await _context.Users
+                .Include(u => u.Veterinarian) // Eagerly load the Veterinarian relationship
+                .Where(u => u.role == 3) // Role 3 is for veterinarians
+                .ToListAsync();
+        }
+
     }
 }
