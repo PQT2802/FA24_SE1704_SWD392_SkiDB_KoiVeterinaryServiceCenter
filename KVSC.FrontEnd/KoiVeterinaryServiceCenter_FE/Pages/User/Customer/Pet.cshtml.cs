@@ -31,6 +31,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
         }
         public async Task OnGetAsync()
         {
+            
             var result = await _petService.GetPetList();
             if (result.IsSuccess)
             {
