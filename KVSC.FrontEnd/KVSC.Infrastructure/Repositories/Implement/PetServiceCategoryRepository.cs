@@ -1,10 +1,14 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Service;
-using KVSC.Infrastructure.DTOs.Service.AddServiceCategory;
+using KVSC.Infrastructure.DTOs.ServiceCategory;
+using KVSC.Infrastructure.DTOs.ServiceCategory.AddServiceCategory;
+using KVSC.Infrastructure.DTOs.ServiceCategory.DeleteServiceCategory;
+using KVSC.Infrastructure.DTOs.ServiceCategory.UpdateServiceCategory;
 using KVSC.Infrastructure.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -139,6 +143,150 @@ namespace KVSC.Infrastructure.Repositories.Implement
             {
                 // Handling any other exceptions
                 return new ResponseDto<KoiServiceCategory>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<AddServiceCategoryResponse>> CreateCategoryAsync(AddServiceCategoryRequest request)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/PetServiceCategory", request);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(errorContent, options);
+
+                    return new ResponseDto<AddServiceCategoryResponse>
+                    {
+                        IsSuccess = false,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "Failed to create category."
+                    };
+                }
+
+                var categoryResponse = await response.Content.ReadFromJsonAsync<AddServiceCategoryResponse>(options);
+
+                return new ResponseDto<AddServiceCategoryResponse>
+                {
+                    IsSuccess = true,
+                    Data = categoryResponse,
+                    Message = "Category created successfully."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<AddServiceCategoryResponse>
+                {
+                    IsSuccess = false,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<AddServiceCategoryResponse>
+                {
+                    IsSuccess = false,
+                    Message = $"Unexpected error: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<UpdateCategoryResponse>> UpdateCategory(UpdateCategoryRequest request)
+        {
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var response = await _httpClient.PutAsJsonAsync("api/PetServiceCategory", request);
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<UpdateCategoryResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during updating."
+                    };
+                }
+
+                var updateResponse = await response.Content.ReadFromJsonAsync<UpdateCategoryResponse>(options);
+
+                return new ResponseDto<UpdateCategoryResponse>
+                {
+                    IsSuccess = true,
+                    Data = updateResponse,
+                    Message = "Update category successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<UpdateCategoryResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<UpdateCategoryResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<DeleteServiceCategoryResponse>> DeleteServiceCategory(DeleteServiceCategoryRequest request)
+        {
+            try
+            {
+                var url = $"api/PetServiceCategory?Id={request.Id}";
+
+                var response = await _httpClient.DeleteAsync(url);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK) 
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent);
+
+                    return new ResponseDto<DeleteServiceCategoryResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during deletion."
+                    };
+                }
+
+                return new ResponseDto<DeleteServiceCategoryResponse>
+                {
+                    IsSuccess = true,
+                    Data = null,
+                    Message = "Delete service category successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<DeleteServiceCategoryResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<DeleteServiceCategoryResponse>
                 {
                     IsSuccess = false,
                     Data = null,

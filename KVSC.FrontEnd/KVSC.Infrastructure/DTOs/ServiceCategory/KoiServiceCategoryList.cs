@@ -14,14 +14,14 @@ namespace KVSC.Infrastructure.DTOs.Service
     public class DataKoiServiceCategory : IPropertyNameProvider
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string description { get; set; }
-        public string serviceType { get; set; }
-        public string applicableTo { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string ServiceType { get; set; } = string.Empty;
+        public string ApplicableTo { get; set; } = string.Empty;
 
         public List<string> GetPropertyNames()
         {
-            return new List<string> { nameof(Name), nameof(description), nameof(serviceType), nameof(applicableTo) };
+            return new List<string> { nameof(Name), nameof(Description), nameof(ServiceType), nameof(ApplicableTo) };
         }
     }
 }
