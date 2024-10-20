@@ -2,6 +2,7 @@
 using KVSC.Infrastructure.DTOs.Common.Message;
 
 using KVSC.Infrastructure.KVSC.Infrastructure.Common;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,5 +54,6 @@ namespace KVSC.Application.Common.Validator.Abstract
             RuleFor(TravelCostExpression)
                 .GreaterThanOrEqualTo(0).WithState(_ => (PetServiceErrorMessage.InvalidFieldValue("TravelCost")));
         }
+       
     }
 }

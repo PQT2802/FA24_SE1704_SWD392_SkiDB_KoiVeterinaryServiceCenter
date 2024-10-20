@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\board\detail.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
@@ -54,7 +58,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\User\Customer\" />
     <Folder Include="Pages\User\Manager\" />
     <Folder Include="Pages\User\Staff\" />
   </ItemGroup>
@@ -63,6 +66,9 @@
     <Content Update="wwwroot\img\about.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
   </ItemGroup>
 
 </Project>

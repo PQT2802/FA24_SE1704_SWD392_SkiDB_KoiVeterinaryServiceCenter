@@ -1,0 +1,230 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.ChatModel
+@{
+}
+<div class="overlay" id="overlay"></div>
+<div class="containerss  popup-open">
+    <div class="box-chat-mess">
+        <div class="row">
+            <section class="discussions">
+                <div class="discussion search">
+                    <div class="searchbar">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <input type="text" id="searchInput" placeholder="Search..."></input>
+                    </div>
+                </div>
+                <div id="conversationList" class="discussion message-active">
+                    @if (Model.Conversations.Extensions?.Data != null && Model.Conversations.Extensions.Data.Any())
+                    {
+                        foreach (var conversation in Model.Conversations.Extensions.Data)
+                        {
+                            <a href="@Url.Page("Chat", new { recipientId = conversation.RecipientId, recipientName = conversation.RecipientName })"
+                               class="conversation-item" data-name="@conversation.RecipientName">
+                                <div class="desc-contact">
+                                    <strong>@conversation.RecipientName</strong>
+                                    <p class="message">@conversation.LastMessage</p>
+                                </div>
+                                <div class="timer">@conversation.Timestamp</div>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <div class="no-conversations">
+                            Không có cuộc trò chuyện nào để hiển thị.
+                        </div>
+                    }
+                </div>
+            </section>
+            <section class="chat">
+                <div class="header-chat">
+                    <i class="icon fa fa-user-o" aria-hidden="true"></i>
+                    <p class="name">@Model.RecipientName</p>
+                    <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+                </div>
+                <div class="messages-chat" id="messagesContainer" style="display: flex; flex-direction: column-reverse;">
+                    @if (Model.Messages.Extensions?.Data != null && Model.Messages.Extensions.Data.Any())
+                    {
+                        foreach (var message in Model.Messages.Extensions.Data)
+                        {
+                            if (message.SenderId == Model.CurrentUserId)
+                            {
+                                <div class="message">
+                                    <div class="response">
+                                        <p class="text">@message.Content</p>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="message">
+                                    <div class="photo">
+                                        <div class="online"></div>
+                                    </div>
+                                    <p class="text">@message.Content</p>
+                                </div>
+                            }
+                            <p class="time">@message.Timestamp.ToString("g")</p>
+                        }
+                    }
+                    else
+                    {
+                        <div class="no-messages">
+                            There are no messages to display.
+                        </div>
+                    }
+                </div>
+                <div class="footer-chat">
+                    <form id="sendMessageForm" method="post" onsubmit="sendMessage(event)">
+                        <input type="hidden" asp-for="CreateMessageRequest.SenderId" value="@Model.CurrentUserId" />
+                        <input type="hidden" asp-for="CreateMessageRequest.RecipientId" value="@Model.CurrentRecipientId" />
+                        <div class="message-input-container">
+                            <input type="text" class="write-message" asp-for="CreateMessageRequest.Content" placeholder="Type your message..." required />
+                            <button class="icon send fa fa-paper-plane-o clickable" type="submit">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- Icon Chat -->
+<div id="chatIcon" class="chat-icon">
+    <i class="fa fa-comment"></i> <!-- Icon chat -->
+</div>
+<script>
+    //----------------------search---------------------------
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const conversationList = document.getElementById("conversationList");
+
+        searchInput.addEventListener("input", function () {
+            const filter = searchInput.value.toLowerCase();
+            const conversations = conversationList.getElementsByClassName("conversation-item");
+
+            Array.from(conversations).forEach(conversation => {
+                const name = conversation.getAttribute("data-name").toLowerCase();
+                if (name.includes(filter)) {
+                    conversation.style.display = ""; // Hiển thị nếu khớp
+                } else {
+                    conversation.style.display = "none"; // Ẩn nếu không khớp
+                }
+            });
+        });
+    });
+    //----------------------search---------------------------
+    document.addEventListener("DOMContentLoaded", function () {
+        const messagesContainer = document.getElementById('messagesContainer');
+
+        // ----------------layout--------------------------------
+        const overlay = document.getElementById('overlay'); // Lấy phần tử overlay
+        overlay.addEventListener('click', function () {
+            window.location.href = "https://localhost:7241/"; // Chuyển hướng trang
+        });
+        // ----------------layout--------------------------------
+
+        // Đảo ngược thứ tự tin nhắn trong container
+        const messages = Array.from(messagesContainer.children);
+        messagesContainer.innerHTML = ""; // Xóa nội dung hiện tại
+        messages.reverse().forEach(message => {
+            messagesContainer.appendChild(message); // Thêm lại tin nhắn theo thứ tự đảo ngược
+        });
+
+        // Cuộn xuống cuối messagesContainer khi trang được tải
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        // Tạo kết nối SignalR
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chathub")
+            .build();
+        // Khởi tạo kết nối
+        connection.start().then(() => {
+            console.log("SignalR connection established.");
+            const userId = document.getElementById('CreateMessageRequest_SenderId').value; // Lấy ID người dùng
+            connection.invoke("JoinRoom", userId).catch(err => console.error(err));
+
+            // Gán sự kiện gửi tin nhắn sau khi kết nối thành công
+            document.getElementById("sendMessageForm").onsubmit = function (event) {
+                event.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
+
+                // Tạo đối tượng FormData từ form
+                const form = document.getElementById('sendMessageForm');
+                const formData = new FormData(form);
+
+                // Gửi tin nhắn qua SignalR
+                const senderId = formData.get('CreateMessageRequest.SenderId');
+                const recipientId = formData.get('CreateMessageRequest.RecipientId');
+                const content = formData.get('CreateMessageRequest.Content');
+
+                // Tạo XMLHttpRequest
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', form.action, true);
+
+                // Xử lý khi nhận được phản hồi từ server
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        // Xử lý khi gửi thành công, ví dụ: xóa nội dung ô input
+                        document.querySelector('.write-message').value = '';
+                        // Cuộn xuống cuối messagesContainer
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    } else {
+                        console.error('Error: ', xhr.responseText);
+                    }
+                };
+
+                xhr.onerror = function () {
+                    console.error('Request failed.');
+                };
+
+                try {
+                    // Gửi tin nhắn qua SignalR
+                    connection.invoke("SendMessage", senderId, recipientId, content).catch(function (err) {
+                        console.error("SignalR Error: ", err.toString());
+                    });
+                } catch (err) {
+                    console.error("SignalR sending message failed: ", err);
+                }
+
+                // Gửi dữ liệu form qua XMLHttpRequest
+                xhr.send(formData);
+            };
+        }).catch(err => console.error("Error establishing SignalR connection: ", err));
+
+        connection.on("ReceiveMessage", (message) => {
+            console.error("nhan dc roi ");
+
+            // Tạo phần tử cho tin nhắn mới
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message");
+
+            // Kiểm tra ai là người gửi để xác định kiểu hiển thị
+            if (message.senderId === document.getElementById('CreateMessageRequest_SenderId').value) {
+                messageElement.innerHTML = `
+                    <div class="response">
+                        <p class="text">${message.content}</p>
+                    </div>
+                `;
+            } else {
+                messageElement.innerHTML = `
+                    <div class="photo">
+                        <div class="online"></div>
+                    </div>
+                    <p class="text">${message.content}</p>
+                `;
+            }
+
+            // Thêm tin nhắn mới vào đầu container
+            const messagesContainer = document.getElementById("messagesContainer");
+            messagesContainer.insertBefore(messageElement, messagesContainer.firstChild); // Thêm ở đầu
+
+            // Cuộn xuống cuối messagesContainer
+            messagesContainer.scrollTop = messagesContainer.scrollHeight; // Đảm bảo cuộn xuống cuối
+        });
+
+        // Khôi phục vị trí cuộn sau khi trang được tải
+        const savedScrollPosition = localStorage.getItem('scrollPosition');
+        if (savedScrollPosition) {
+            messagesContainer.scrollTop = savedScrollPosition;
+            localStorage.removeItem('scrollPosition'); // Xóa vị trí cuộn đã lưu
+        }
+    });
+</script>
