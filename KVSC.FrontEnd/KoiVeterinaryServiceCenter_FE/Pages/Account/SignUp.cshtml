@@ -35,6 +35,9 @@
 
     <!-- Template Stylesheet -->
     <link href="~/board/css/style.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -55,51 +58,96 @@
                             <a href="/" class="">
                                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
                             </a>
-                            <h3>Sign Up</h3>
+                            <h3>Create an Account</h3>
                         </div>
 
-
-
-                        <!-- Loop through SignUpRequest properties and generate form fields -->
-                        @{
-                            var properties = typeof(SignUpRequest).GetProperties();
-                        }
-
-                        <!-- Loop to generate form fields dynamically -->
-                        @foreach (var prop in properties)
-                        {
-                            var fieldErrors = Model.ErrorMessage
-                            .Where(e => e.Code.Contains(prop.Name, StringComparison.OrdinalIgnoreCase))
-                            .ToList();
-
+                        <form id="signUpForm" method="post" asp-page-handler="SignUp" >
+                            <!-- Username Input -->
                             <div class="form-floating mb-3">
-                                <input type="@(prop.PropertyType == typeof(IFormFile) ? "file" : (prop.PropertyType == typeof(DateTime) ? "date" : "text"))"
-                                       class="form-control @(fieldErrors.Any() ? "is-invalid" : "")"
-                                       id="floating@(prop.Name)"
-                                       name="@(prop.Name)"
-                                       placeholder="@prop.Name">
-                                <label for="floating@(prop.Name)">@prop.Name</label>
-
-                                <!-- Show validation errors under the respective field -->
-                                @if (fieldErrors.Any())
-                                {
-                                    <div class="invalid-feedback">
-                                        @foreach (var error in fieldErrors)
-                                        {
-                                            <span>@error.Description</span>
-                                        }
-                                    </div>
-                                }
+                                <input type="text" class="form-control" id="username" name="SignUpRequest.UserName" placeholder="Username" >
+                                <label for="username">Username</label>
+                                <span asp-validation-for="SignUpRequest.UserName" class="text-danger"></span>
                             </div>
-                        }
 
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
+                            <!-- Email Input -->
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" name="SignUpRequest.Email" placeholder="Email" >
+                                <label for="email">Email</label>
+                                <span asp-validation-for="SignUpRequest.Email" class="text-danger"></span>
+                            </div>
+
+                            <!-- Password Input -->
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="password" name="SignUpRequest.Password" placeholder="Password" >
+                                <label for="password">Password</label>
+                                <span asp-validation-for="SignUpRequest.Password" class="text-danger"></span>
+                            </div>
+
+                            <!-- Full Name Input -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="fullName" name="SignUpRequest.FullName" placeholder="Full Name" >
+                                <label for="fullName">Full Name</label>
+                                <span asp-validation-for="SignUpRequest.FullName" class="text-danger"></span>
+                            </div>
+
+                            <!-- Address Input -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="address" name="SignUpRequest.Address" placeholder="Address" >
+                                <label for="address">Address</label>
+                                <span asp-validation-for="SignUpRequest.Address" class="text-danger"></span>
+                            </div>
+
+                            <!-- Phone Number Input -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="phoneNumber" name="SignUpRequest.PhoneNumber" placeholder="Phone Number" >
+                                <label for="phoneNumber">Phone Number</label>
+                                <span asp-validation-for="SignUpRequest.PhoneNumber" class="text-danger"></span>
+                            </div>
+
+                            <!-- Date of Birth Input -->
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="dateOfBirth" name="SignUpRequest.DateOfBirth" >
+                                <label for="dateOfBirth">Date of Birth</label>
+                                <span asp-validation-for="SignUpRequest.DateOfBirth" class="text-danger"></span>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
+                        </form>
+
                         <p class="text-center mb-0">Already have an Account? <a href="/login">Sign In</a></p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <script>
+            $(document).ready(function () {
+                $('#signUpForm').click(function (e) {
+                    e.preventDefault(); // Ngăn chặn hành vi mặc định
+
+                    $.ajax({
+                        type: "POST",
+                        url: window.location.pathname + "?handler=SignUp", // Gửi đến đúng handler
+                        data: $(this).serialize(),
+                        success: function (response) {
+                            if (response.isSuccess) {
+                                alert('Sign Up successful! Redirecting to login page...');
+                                window.location.href = '/Account/Signin'; 
+                            } else {
+                                $('span[data-valmsg-for]').text(''); 
+                                for (const [key, value] of Object.entries(response.errors)) {
+                                    $(`span[data-valmsg-for='SignUpRequest.${key}']`).text(value);
+                                }
+                            }
+                        },
+                        error: function () {
+                            console.log('Error.');
+                        }
+                    });
+                });
+            });
+        </script>
         <!-- Sign Up End -->
     </div>
 

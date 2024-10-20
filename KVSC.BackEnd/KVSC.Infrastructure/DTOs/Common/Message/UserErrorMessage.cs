@@ -11,8 +11,10 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
     {
         public static Error FieldIsEmpty(string nameField)
             => Error.Validation("User.Empty", $"The '{nameField}' is required.");
-
-
+        public static Error BirthdayCannotBeInFuture()
+       => Error.Validation("User.BirthdayInFuture", "The 'Date of Birth' cannot be in the future.");
+        public static Error UserMustBeAtLeast18()
+        => Error.Validation("User.AgeRequirement", "The user must be at least 18 years old.");
 
         public static Error UserNotExist()
             => Error.NotFound("User.Exist", $"Invalid email or password");

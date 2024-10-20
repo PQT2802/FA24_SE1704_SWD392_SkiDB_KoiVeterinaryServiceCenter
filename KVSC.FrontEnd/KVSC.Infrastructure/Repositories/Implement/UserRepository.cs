@@ -116,7 +116,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             try
             {
                 // Send the request and get the response
-                var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-in", signUpRequest);
+                var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-up", signUpRequest); // Chỉnh sửa endpoint
 
                 var options = new JsonSerializerOptions
                 {
@@ -136,17 +136,17 @@ namespace KVSC.Infrastructure.Repositories.Implement
                         IsSuccess = false,
                         Data = null,
                         Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
-                        Message = "An error occurred during sign-in."
+                        Message = "An error occurred during sign-up."
                     };
                 }
 
                 // If successful, deserialize the login response
-                var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(options);
+                var signUpResponse = await response.Content.ReadFromJsonAsync<SignUpResponse>(options);
 
                 return new ResponseDto<SignUpResponse>
                 {
                     IsSuccess = true,
-                    Data = null,
+                    Data = signUpResponse, // Cập nhật dữ liệu trả về
                     Message = "Sign-up successful."
                 };
             }

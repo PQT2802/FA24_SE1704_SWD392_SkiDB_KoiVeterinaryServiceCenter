@@ -26,7 +26,8 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
         public async Task<bool> EmailExistsAsync(string email)
         {
             // Check if any user exists with the specified email
-            return await _context.Users.AnyAsync(x => x.Email == email);
+            var result = await _context.Users.AnyAsync(x => x.Email == email);
+            return result;
         }
         #endregion
 
