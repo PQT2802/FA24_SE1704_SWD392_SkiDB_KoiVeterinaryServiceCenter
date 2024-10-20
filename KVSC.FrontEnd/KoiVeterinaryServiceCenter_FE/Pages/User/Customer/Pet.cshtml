@@ -100,7 +100,9 @@
 
                         <!-- Last Health Check -->
                         <div class="form-floating mb-3">
-                            <input type="datetime-local" class="form-control" id="lastHealthCheck" name="AddPetRequest.LastHealthCheck" placeholder="Last Health Check">
+                            <input type="datetime-local" class="form-control" id="lastHealthCheck" name="AddPetRequest.LastHealthCheck"
+                                   placeholder="Last Health Check"
+                                   value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
                             <label for="lastHealthCheck">Last Health Check</label>
                             <span asp-validation-for="AddPetRequest.LastHealthCheck" class="text-danger"></span>
                         </div>
@@ -231,6 +233,7 @@
     $(document).ready(function () {
         // Khi nhấn nút "Edit"
         $('.edit-pet-button').click(function () {
+            // Lấy dữ liệu từ các thuộc tính data-*
             var id = $(this).data('id');
             var name = $(this).data('name');
             var age = $(this).data('age');
@@ -239,12 +242,12 @@
             var color = $(this).data('color');
             var length = $(this).data('length');
             var weight = $(this).data('weight');
+            var quantity = $(this).data('quantity');
             var lastHealthCheck = $(this).data('lasthealthcheck');
+            var note = $(this).data('note');
             var healthStatus = $(this).data('healthstatus');
-            var quantity = $(this).data('quantity'); 
-            var note = $(this).data('note');      
 
-            // Cập nhật các trường trong modal
+            // Gán các giá trị vào các trường trong modal
             $('#updatePetModal #petId').val(id);
             $('#updatePetModal #name').val(name);
             $('#updatePetModal #age').val(age);
@@ -256,7 +259,7 @@
             $('#updatePetModal #lastHealthCheck').val(lastHealthCheck);
             $('#updatePetModal #healthStatus').val(healthStatus);
             $('#updatePetModal #quantity').val(quantity);
-            $('#updatePetModal #note').val(note);       
+            $('#updatePetModal #note').val(note);
 
             // Hiển thị modal
             $('#updatePetModal').modal('show');

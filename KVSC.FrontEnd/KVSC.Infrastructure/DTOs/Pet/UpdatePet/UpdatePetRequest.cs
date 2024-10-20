@@ -19,5 +19,6 @@ namespace KVSC.Infrastructure.DTOs.Pet.UpdatePet
         public int Quantity { get; set; }
         public DateTime LastHealthCheck { get; set; }
         public string Note { get; set; }
+        public Guid OwnerId { get; set; }
     }
 }

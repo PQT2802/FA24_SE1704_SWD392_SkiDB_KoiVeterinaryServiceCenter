@@ -20,6 +20,7 @@ namespace KVSC.Infrastructure.DTOs.Pet.GetPet
         public DateTime LastHealthCheck { get; set; }
         public string? Note { get; set; }
         public int? HealthStatus { get; set; }
+        public string Owner { get; set; }
         public Guid OwnerId { get; set; }
     }
 }

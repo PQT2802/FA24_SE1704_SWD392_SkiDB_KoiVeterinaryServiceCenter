@@ -21,7 +21,9 @@ namespace KVSC.Infrastructure.DTOs.Pet
         public string Color { get; set; }
         public double Length { get; set; }
         public double Weight { get; set; }
+        public int Quantity { get; set; }
         public DateTime LastHealthCheck { get; set; }
+        public string Note { get; set; }
         public int HealthStatus { get; set; }
 
         public string Owner { get; set; } // The name of the owner

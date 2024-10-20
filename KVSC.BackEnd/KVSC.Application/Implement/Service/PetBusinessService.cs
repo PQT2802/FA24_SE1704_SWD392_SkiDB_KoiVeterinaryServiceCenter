@@ -49,6 +49,7 @@ namespace KVSC.Application.Implement.Service
                 LastHealthCheck = pet.LastHealthCheck,
                 Note = pet.Note,
                 HealthStatus = pet.HealthStatus,
+                Owner = pet.Owner?.FullName,
                 OwnerId = pet.OwnerId
             };
 
@@ -72,6 +73,7 @@ namespace KVSC.Application.Implement.Service
                 LastHealthCheck = pet.LastHealthCheck,
                 Note = pet.Note,
                 HealthStatus = pet.HealthStatus,
+                Owner = pet.Owner?.FullName,
                 OwnerId = pet.OwnerId
             }).ToList();
 
