@@ -17,18 +17,16 @@ namespace KVSC.Domain.Entities
         public string PasswordHash { get; set; }
         public string? ProfilePictureUrl { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public int role {  get; set; }//1 admin, 2 manager,3 veterinarian, 4 staff, 5 customer
+        public int role { get; set; } //1 admin, 2 manager,3 veterinarian, 4 staff, 5 customer
 
         // Relationships
-        [JsonIgnore]
-        public ICollection<Pet> Pets { get; set; }
+        [JsonIgnore] public ICollection<Pet> Pets { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Cart> Carts { get; set; }
         public Veterinarian Veterinarian { get; set; }
-        
+
 
         // Thêm quan hệ với Appointment
         public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment
     }
-
 }

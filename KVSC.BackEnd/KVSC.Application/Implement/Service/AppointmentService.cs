@@ -17,8 +17,8 @@ namespace KVSC.Application.Implement.Service
         private readonly IValidator<MakeAppointmentForComboRequest> _comboValidator;
 
         public AppointmentService(IUnitOfWork unitOfWork,
-                             IValidator<MakeAppointmentForServiceRequest> serviceValidator,
-                             IValidator<MakeAppointmentForComboRequest> comboValidator)
+            IValidator<MakeAppointmentForServiceRequest> serviceValidator,
+            IValidator<MakeAppointmentForComboRequest> comboValidator)
         {
             _unitOfWork = unitOfWork;
             _serviceValidator = serviceValidator;
@@ -27,80 +27,93 @@ namespace KVSC.Application.Implement.Service
 
         public async Task<Result> MakeAppointmentAsync(MakeAppointmentForServiceRequest request)
         {
-            // Validate the input
-            var validationResult = await _serviceValidator.ValidateAsync(request);
-            if (!validationResult.IsValid)
+            try
             {
-                var errors = validationResult.Errors
-                    .Select(e => (Error)e.CustomState)
-                    .ToList();
-                return Result.Failures(errors);
-            }
+                // Validate the input
+                var validationResult = await _serviceValidator.ValidateAsync(request);
+                if (!validationResult.IsValid)
+                {
+                    var errors = validationResult.Errors
+                        .Select(e => (Error)e.CustomState)
+                        .ToList();
+                    return Result.Failures(errors);
+                }
 
-            var pet = await _unitOfWork.PetRepository.GetByIdAsync(request.PetId);
-            if (pet == null)
-            {
-                return Result.Failure(PetErrorMessage.FieldIsEmpty("pet"));
-            }
-
-            var appointment = new Appointment
-            {
-                CustomerId = request.CustomerId,
-                PetId = request.PetId,
-                PetServiceId = request.PetServiceId,
-                Status = "Pending",
-                AppointmentDate = request.AppointmentDate,
-            };
-
-            // Step 1: Check if a veterinarian was selected by the user
-            if (request.VeterinarianIds != null && request.VeterinarianIds.Any())
-            {
-                // Step 2: Ensure selected veterinarians have no conflicting schedule
-                var selectedVetId = request.VeterinarianIds.First(); // Assuming the user can only select one vet
-                bool isVetAvailable = await _unitOfWork.AppointmentRepository.IsVeterinarianAvailableAsync(selectedVetId, appointment.AppointmentDate);
-
-                if (!isVetAvailable)
+                var pet = await _unitOfWork.PetRepository.GetByIdAsync(request.PetId);
+                if (pet == null)
                 {
                     return Result.Failure(Error.Failure("PetNotFound", "The specified pet was not found."));
                 }
 
-                // Assign the selected veterinarian
-                appointment.AppointmentVeterinarians = new List<AppointmentVeterinarian>
-        {
-            new AppointmentVeterinarian { VeterinarianId = selectedVetId }
-        };
-            }
-            else
-            {
-                // Step 3: If no veterinarian is selected, assign a random available vet
-                var availableVeterinarian = await _unitOfWork.AppointmentRepository.GetAvailableVeterinarianAsync(appointment.AppointmentDate);
-                if (availableVeterinarian == null)
+                var appointment = new Appointment
                 {
-                    return Result.Failure(Error.Failure("VetNotFound", "The specified Vet was not found."));
+                    CustomerId = request.CustomerId,
+                    PetId = request.PetId,
+                    PetServiceId = request.PetServiceId,
+                    Status = "Pending",
+                    AppointmentDate = request.AppointmentDate,
+                };
+
+                // Step 1: Check if a veterinarian was selected by the user
+                if (request.VeterinarianIds != null && request.VeterinarianIds.Any())
+                {
+                    // Step 2: Ensure selected veterinarians have no conflicting schedule
+                    var selectedVetId = request.VeterinarianIds.First(); // Assuming the user can only select one vet
+                    bool isVetAvailable =
+                        await _unitOfWork.AppointmentRepository.IsVeterinarianAvailableAsync(selectedVetId,
+                            appointment.AppointmentDate);
+
+                    if (!isVetAvailable)
+                    {
+                        return Result.Failure(Error.Failure("VetUnavailable",
+                            "The selected veterinarian is not available at the requested time."));
+                    }
+
+                    // Assign the selected veterinarian
+                    appointment.AppointmentVeterinarians = new List<AppointmentVeterinarian>
+                    {
+                        new AppointmentVeterinarian { VeterinarianId = selectedVetId }
+                    };
+                }
+                else
+                {
+                    // Step 3: If no veterinarian is selected, assign a random available vet
+                    var availableVeterinarian =
+                        await _unitOfWork.AppointmentRepository.GetAvailableVeterinarianAsync(appointment
+                            .AppointmentDate);
+                    if (availableVeterinarian == null)
+                    {
+                        return Result.Failure(Error.Failure("VetNotFound",
+                            "No veterinarians available at the requested time."));
+                    }
+
+                    // Assign the random available veterinarian
+                    appointment.AppointmentVeterinarians = new List<AppointmentVeterinarian>
+                    {
+                        new AppointmentVeterinarian { VeterinarianId = availableVeterinarian.Id }
+                    };
                 }
 
-                // Assign the random available veterinarian
-                appointment.AppointmentVeterinarians = new List<AppointmentVeterinarian>
-        {
-            new AppointmentVeterinarian { VeterinarianId = availableVeterinarian.Id }
-        };
+                // Step 4: Save the appointment
+                await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
+
+                // Step 5: Update veterinarian schedule availability
+                foreach (var veterinarian in appointment.AppointmentVeterinarians)
+                {
+                    await _unitOfWork.AppointmentRepository.UpdateScheduleAvailabilityAsync(veterinarian.VeterinarianId,
+                        appointment.AppointmentDate);
+                }
+
+                // Return success result with the appointment ID
+                var response = new CreateResponse { Id = appointment.Id };
+                return Result.SuccessWithObject(response);
             }
-
-            // Step 4: Save the appointment
-            await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
-
-            // Step 5: Update veterinarian schedule availability
-            foreach (var veterinarian in appointment.AppointmentVeterinarians)
+            catch (Exception ex)
             {
-                await _unitOfWork.AppointmentRepository.UpdateScheduleAvailabilityAsync(veterinarian.VeterinarianId, appointment.AppointmentDate);
+                return Result.Failure(Error.Failure("AppointmentError",
+                    "An error occurred while making the appointment. Please try again later."));
             }
-
-            // Return success result with the appointment ID
-            var response = new CreateResponse { Id = appointment.Id };
-            return Result.SuccessWithObject(response);
         }
-
-
 
 
         public async Task<Result> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request)
@@ -132,7 +145,8 @@ namespace KVSC.Application.Implement.Service
             // Nếu không có bác sĩ nào được chọn, tự động lấy bác sĩ dựa trên lịch trống
             if (request.VeterinarianIds == null || !request.VeterinarianIds.Any())
             {
-                var availableVeterinarian = await _unitOfWork.AppointmentRepository.GetAvailableVeterinarianAsync(appointment.AppointmentDate);
+                var availableVeterinarian =
+                    await _unitOfWork.AppointmentRepository.GetAvailableVeterinarianAsync(appointment.AppointmentDate);
                 if (availableVeterinarian != null)
                 {
                     // Chỉ gán một bác sĩ thú y cho cuộc hẹn
@@ -150,6 +164,7 @@ namespace KVSC.Application.Implement.Service
                     VeterinarianId = v
                 }).ToList();
             }
+
             // Lưu cuộc hẹn
             await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
 
@@ -165,8 +180,6 @@ namespace KVSC.Application.Implement.Service
             var response = new CreateResponse { Id = appointment.Id };
             return Result.SuccessWithObject(response);
         }
-
-
 
 
         public async Task<Result> MakeAppointmentForComboAsync(MakeAppointmentForComboRequest request)
