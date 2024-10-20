@@ -12,9 +12,11 @@ namespace KVSC.Infrastructure.Repositories.Interface
 {
     public interface IUserRepository
     {
-        Task<ResponseDto<LoginResponse>> SignIn(LoginRequest loginRequest);
+        public Task<ResponseDto<LoginResponse>> SignIn(LoginRequest loginRequest);
         public Task<ResponseDto<LoginResponse>> GoogleSignIn(GoogleSignInRequest googleSignInRequest);
-        Task<ResponseDto<SignUpResponse>> SignUp(SignUpRequest signUpRequest);
-        Task<ResponseDto<UserInfo>> GetUserInforByToken(string token);
+        public Task<ResponseDto<SignUpResponse>> SignUp(SignUpRequest signUpRequest);
+        public Task<ResponseDto<UserInfo>> GetUserInforByToken(string token);
+
+        public Task<ResponseDto<List<VeterinarianInfo>>> GetAllVeterinariansAsync();
     }
 }

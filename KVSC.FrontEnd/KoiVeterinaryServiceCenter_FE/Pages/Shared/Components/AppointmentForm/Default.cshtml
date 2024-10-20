@@ -15,19 +15,19 @@
                     <div class="row">
                         <div class="col-md-6 form-group mb-3">
                             <label for="customerName" class="text-muted">Name</label>
-                            <input type="text" class="form-control bg-light border-0 p-3" id="customerName" name="CustomerName" value="@Model.CustomerName" readonly />
+                            <input type="text" class="form-control bg-light border-0 p-3" id="customerName" name="CustomerName" value="@Model.CustomerName" readonly/>
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
                             <label for="customerPhone" class="text-muted">Phone Number</label>
-                            <input type="text" class="form-control bg-light border-0 p-3" id="customerPhone" name="CustomerPhone" value="@Model.CustomerPhone" readonly />
+                            <input type="text" class="form-control bg-light border-0 p-3" id="customerPhone" name="CustomerPhone" value="@Model.CustomerPhone" readonly/>
                         </div>
                     </div>
 
                     <!-- Customer Email (Full width) -->
                     <div class="form-group mb-3">
                         <label for="customerEmail" class="text-muted">Email Address</label>
-                        <input type="text" class="form-control bg-light border-0 p-3" id="customerEmail" name="CustomerEmail" value="@Model.CustomerEmail" readonly />
+                        <input type="text" class="form-control bg-light border-0 p-3" id="customerEmail" name="CustomerEmail" value="@Model.CustomerEmail" readonly/>
                     </div>
 
                     <!-- Pet Selection Dropdown -->
@@ -42,6 +42,26 @@
                         </select>
                         <div class="invalid-feedback">Please select a pet.</div>
                     </div>
+
+                    <div class="form-group mb-3">
+                        <label for="veterinarianId" class="text-muted">Select a Veterinarian</label>
+                        <select class="form-control bg-light border-0 p-3" id="veterinarianId" name="VeterinarianId" required>
+                            <option value="">-- Select a Veterinarian --</option>
+                            @if (Model.Veterinarians != null && Model.Veterinarians.Any())
+                            {
+                                @foreach (var vet in Model.Veterinarians)
+                                {
+                                    <option value="@vet.LicenseNumber">@vet.FullName (@vet.Specialty)</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="" disabled>No veterinarians available</option>
+                            }
+                        </select>
+                        <div class="invalid-feedback">Please select a veterinarian.</div>
+                    </div>
+
 
                     <!-- Service Selection Dropdown -->
                     <div class="form-group mb-3">
@@ -59,7 +79,7 @@
                     <!-- Appointment Date and Time -->
                     <div class="form-group mb-3">
                         <label for="appointmentDate" class="text-muted">Appointment Date & Time</label>
-                        <input type="datetime-local" class="form-control bg-light border-0 p-3" id="appointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" required />
+                        <input type="datetime-local" class="form-control bg-light border-0 p-3" id="appointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" required/>
                         <div class="invalid-feedback">Please select a valid date and time.</div>
                     </div>
 
@@ -175,7 +195,6 @@
         padding-top: 1rem;
     }
 </style>
-
 
 
 <script>

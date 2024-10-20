@@ -1,6 +1,7 @@
 ﻿using KVSC.Infrastructure.DTOs.Pet;
-using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.Service.ServiceDetail;
+using KVSC.Infrastructure.DTOs.User;
+using Data = KVSC.Infrastructure.DTOs.Service.Data;
 
 namespace KVSC.Infrastructure.DTOs
 {
@@ -12,6 +13,8 @@ namespace KVSC.Infrastructure.DTOs
         public string CustomerPhone { get; set; }  // User's phone number
         public List<PetData> Pets { get; set; } = new List<PetData>();
         public List<Data> Services { get; set; }
+        public List<VeterinarianInfo> Veterinarians { get; set; }  
+
         public DateTime AppointmentDate { get; set; }
     }
 

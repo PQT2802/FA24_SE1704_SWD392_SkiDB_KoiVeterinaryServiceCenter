@@ -12,10 +12,67 @@ namespace KVSC.Infrastructure.Repositories.Implement
     public class UserRepository : IUserRepository
     {
         private readonly HttpClient _httpClient;
+
         public UserRepository(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
+
+        public async Task<ResponseDto<List<VeterinarianInfo>>> GetAllVeterinariansAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("api/User/veterinarians");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+                    return new ResponseDto<List<VeterinarianInfo>>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred while fetching veterinarians."
+                    };
+                }
+
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponseDto<List<VeterinarianInfo>>>(options);
+
+                if (apiResponse != null && apiResponse.StatusCode == 200 && apiResponse.Extensions != null)
+                {
+                    return new ResponseDto<List<VeterinarianInfo>>
+                    {
+                        IsSuccess = true,
+                        Data = apiResponse.Extensions.Data, // Deserialize the data list
+                        Message = apiResponse.Extensions.Message
+                    };
+                }
+
+                return new ResponseDto<List<VeterinarianInfo>>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = "Unexpected null response from the API."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<List<VeterinarianInfo>>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+
 
         public async Task<ResponseDto<LoginResponse>> SignIn(LoginRequest loginRequest)
         {
@@ -42,7 +99,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     {
                         IsSuccess = false,
                         Data = null,
-                       Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
                         Message = "An error occurred during sign-in."
                     };
                 }
@@ -78,36 +135,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
-        public async Task<ResponseDto<LoginResponse>> GoogleSignIn(GoogleSignInRequest googleSignInRequest)
-        {
-            var response = await _httpClient.PostAsJsonAsync("api/Auth/google-sign-in", googleSignInRequest);
-            var responseContent = await response.Content.ReadAsStringAsync();
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
-                return new ResponseDto<LoginResponse>
-                {
-                    IsSuccess = false,
-                   Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
-                    Message = "Google sign-in failed."
-                };
-            }
-
-            var loginResponse = JsonSerializer.Deserialize<LoginResponse>(responseContent, options);
-
-            return new ResponseDto<LoginResponse>
-            {
-                IsSuccess = true,
-                Data = loginResponse,
-                Message = "Sign-in successful."
-            };
-        }
 
         public async Task<ResponseDto<SignUpResponse>> SignUp(SignUpRequest signUpRequest)
         {
@@ -232,6 +260,37 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     Message = $"An unexpected error occurred: {ex.Message}"
                 };
             }
+        }
+
+        public async Task<ResponseDto<LoginResponse>> GoogleSignIn(GoogleSignInRequest googleSignInRequest)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/Auth/google-sign-in", googleSignInRequest);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+                return new ResponseDto<LoginResponse>
+                {
+                    IsSuccess = false,
+                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                    Message = "Google sign-in failed."
+                };
+            }
+
+            var loginResponse = JsonSerializer.Deserialize<LoginResponse>(responseContent, options);
+
+            return new ResponseDto<LoginResponse>
+            {
+                IsSuccess = true,
+                Data = loginResponse,
+                Message = "Sign-in successful."
+            };
         }
     }
 }
