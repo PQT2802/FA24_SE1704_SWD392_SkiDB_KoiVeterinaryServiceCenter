@@ -1,6 +1,7 @@
 ﻿using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DB;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppointment;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -120,6 +121,85 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<bool> AppointmentExistsAsync(Guid appointmentId)
         {
             return await _context.Appointments.AnyAsync(a => a.Id == appointmentId && !a.IsDeleted);
+        }
+
+        public async Task<GetAppointmentDetail> GetAppointmentDetailAsync(Guid appointmentId)
+        {
+            // Fetch the appointment with related entities
+            var appointment = await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.PetService)
+                .Include(a => a.AppointmentVeterinarians)
+                    .ThenInclude(av => av.Veterinarian)
+                        .ThenInclude(v => v.User)
+                .Include(a => a.Pet)
+                .Include(a => a.ComboService)
+                .Include(a => a.ServiceReport)
+                    .ThenInclude(r => r.Prescription)
+                        .ThenInclude(p => p.PrescriptionDetails)
+                .FirstOrDefaultAsync(a => a.Id == appointmentId && !a.IsDeleted);
+
+            if (appointment == null)
+            {
+                return null;
+            }
+
+            // Map the appointment details to the DTOs
+            var appointmentDetail = new GetAppointmentDetail
+            {
+                AppointmentDetailService = new AppointmentDetailService
+                {
+                    ServiceName = appointment.PetService?.Name ?? "N/A",
+                    ServiceCategory = appointment.PetService?.PetServiceCategory.Name ?? "N/A",
+                    PetDescription = appointment.Pet?.Note ?? "No description",
+                    CreateDate = appointment.CreatedDate,
+                    AppointmentDate = appointment.AppointmentDate,
+                    Cost = appointment.PetService?.BasePrice ?? 0,
+                    Duration = appointment.PetService?.Duration ?? "N/A"
+                },
+                AppointmentDetailCustomer = new AppointmentDetailCustomer
+                {
+                    FullName = appointment.Customer?.FullName ?? "N/A",
+                    Email = appointment.Customer?.Email ?? "N/A",
+                    PhoneNumber = appointment.Customer?.PhoneNumber ?? "N/A",
+                    Address = appointment.Customer?.Address ?? "N/A"
+                },
+                AppointmentDetailVeterinarian = appointment.AppointmentVeterinarians
+                    .Select(av => new AppointmentDetailVeterinarian
+                    {
+                        FullName = av.Veterinarian.User?.FullName ?? "N/A",
+                        Email = av.Veterinarian.User?.Email ?? "N/A",
+                        PhoneNumber = av.Veterinarian.User?.PhoneNumber ?? "N/A",
+                        Address = av.Veterinarian.User?.Address ?? "N/A",
+                        Specialty = av.Veterinarian.Specialty ?? "N/A",
+                        LicenseNumber = av.Veterinarian.LicenseNumber ?? "N/A"
+                    })
+                    .FirstOrDefault(), // If multiple veterinarians, return the first
+                AppointmentDetailKoi = new AppointmentDetailKoi
+                {
+                    Name = appointment.Pet?.Name ?? "N/A",
+                    Age = appointment.Pet?.Age,
+                    Quantity = appointment.Pet?.Quantity ?? 0,
+                    Color = appointment.Pet?.Color ?? "N/A",
+                    Length = appointment.Pet?.Length,
+                    Weight = appointment.Pet?.Weight
+                },
+                AppointmentDetailReport = appointment.ServiceReport != null ? new AppointmentDetailReport
+                {
+                    ReportContent = appointment.ServiceReport.ReportContent,
+                    ReportDate = appointment.ServiceReport.ReportDate,
+                    Recommendations = appointment.ServiceReport.Recommendations,
+                    PrescriptionDetail = appointment.ServiceReport.Prescription?.PrescriptionDetails.Select(pd => new PrescriptionDetails
+                    {
+                        // Update to access the Medicine's Name property
+                        MedicineName = pd.Medicine?.Name ?? "N/A", // Use pd.Medicine.Name
+                        Quantity = pd.Quantity,
+                        Price = pd.Price
+                    }).ToList()
+                } : null
+            };
+
+            return appointmentDetail;
         }
     } 
 }
