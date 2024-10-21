@@ -14,9 +14,11 @@
                 @{
                     var actorName = Context.Session.GetString("ActorName");
                     var actorRole = Context.Session.GetString("ActorRole");
+                }
+                <a href="/User/Admin/AdminProfile" class="text-decoration-none text-dark">
                     <h6 class="mb-0">@actorName</h6>
                     <span>@actorRole</span>
-                }
+                </a>
             </div>
         </div>
         <div class="navbar-nav w-100">
