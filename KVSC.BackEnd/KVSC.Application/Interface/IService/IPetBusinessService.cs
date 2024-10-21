@@ -14,8 +14,9 @@ namespace KVSC.Application.Interface.IService
         Task<Result> GetPetByIdAsync(Guid id);
         Task<Result> GetAllPetAsync();
         Task<Result> CreatePetAsync(AddPetRequest addPet);
-        Task<Result> UpdatePetAsync(Guid id, UpdatePetRequest updatePet);
+        Task<Result> UpdatePetAsync(UpdatePetRequest updatePet);
         Task<Result> DeletePetAsync(Guid id);
+        Task<Result> GetAllPetByOwnerIdAsync(Guid ownerId);
 
     }
 }

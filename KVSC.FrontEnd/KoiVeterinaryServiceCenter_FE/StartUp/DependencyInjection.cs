@@ -22,18 +22,32 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
+
+            services.AddHttpClient<IPetRepository, PetRepository>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7283");
+            });
+
+            services.AddHttpClient<IMessageRepository, MessageRepository>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7283");
+            });
+
             services.AddHttpClient<IAppointmentRepository, AppointmentRepository>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
             services.AddHttpClient<IProductRepository, ProductRepository>(client =>
+
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
             services.AddHttpClient<IMessageRepository, MessageRepository>(client =>
+
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
+
 
 
             #endregion
@@ -42,12 +56,18 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             #region Services
             // Register other services here if needed.
             services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<IPetServiceSerivce, PetServiceSerivce>();
+            services.AddTransient<IPetServiceService, PetServiceService>();
+            services.AddTransient<IPetServiceService, PetServiceService>();
             services.AddTransient<IPetServiceCategoryService, PetServiceCategoryService>();
+
+
+
+
+            services.AddTransient<IPetBusinessService, PetBusinessService>();
+            services.AddScoped<IMessageService, MessageService>();
 
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IProductService, ProductService>();
-            services.AddScoped<IMessageService, MessageService>();
 
             #endregion
 

@@ -138,11 +138,11 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IPetServiceCategoryRepository, PetServiceCategoryRepository>();
             services.AddTransient<IComboServiceRepository, ComboServiceRepository>();
             services.AddTransient<IAppointmentRepository, AppointmentRepository>();
-            services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
-            services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
 
             services.AddScoped<IMessageRepository, MessageRepository>();
 
+            services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
+            services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
 
             #endregion
 

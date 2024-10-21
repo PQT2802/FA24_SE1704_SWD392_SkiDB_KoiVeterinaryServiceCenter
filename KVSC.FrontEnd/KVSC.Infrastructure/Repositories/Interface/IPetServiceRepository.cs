@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PetServiceDto = KVSC.Infrastructure.DTOs.Service.ServiceDetail.PetServiceDto;
 
 namespace KVSC.Infrastructure.Repositories.Interface
 {
@@ -17,6 +18,9 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request);
         Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request);
         Task<ResponseDto<DeleteServiceResponse>> DeletePetService(DeleteServiceRequest request);
+        
+        Task<ResponseDto<PetServiceDto>> GetPetServiceByIdAsync(Guid id);
+
     }
 }
 

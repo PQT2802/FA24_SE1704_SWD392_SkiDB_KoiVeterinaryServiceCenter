@@ -1,12 +1,10 @@
 using KVSC.Infrastructure.DB;
 
 using KVSC.WebAPI.Startup;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 

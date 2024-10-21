@@ -3,15 +3,9 @@ using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Repositories.Interface;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
@@ -31,6 +25,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-in", loginRequest);
 
                 /// must have
+                
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
@@ -55,6 +50,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
                 // If successful, deserialize the login response
                 var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(options);
+                Console.WriteLine(JsonSerializer.Serialize(loginResponse, new JsonSerializerOptions { WriteIndented = true }));
 
                 return new ResponseDto<LoginResponse>
                 {
@@ -147,6 +143,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 // If successful, deserialize the login response
                 var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(options);
 
+
                 return new ResponseDto<SignUpResponse>
                 {
                     IsSuccess = true,
@@ -210,6 +207,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
                 // If successful, deserialize the UserInfo response
                 var userInfo = await response.Content.ReadFromJsonAsync<UserInfo>(options);
+                Console.WriteLine(JsonSerializer.Serialize(userInfo, new JsonSerializerOptions { WriteIndented = true }));
 
                 return new ResponseDto<UserInfo>
                 {

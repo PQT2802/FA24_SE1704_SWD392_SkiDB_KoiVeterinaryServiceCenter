@@ -23,6 +23,29 @@
         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
     </form>
 }
+@if (Model.ListType == "pet")
+{
+    <!-- Service List Buttons -->
+    <button class="btn btn-sm btn-primary edit-pet-button"
+            data-id="@Model.Item.Id"
+            data-name="@Model.Item.Name"
+            data-age="@Model.Item.Age"
+            data-gender="@Model.Item.Gender"
+            data-imageurl="@Model.Item.ImageUrl"
+            data-color="@Model.Item.Color"
+            data-length="@Model.Item.Length"
+            data-weight="@Model.Item.Weight"
+            data-lasthealthcheck="@Model.Item.LastHealthCheck.ToString("yyyy-MM-ddTHH:mm")"
+            data-healthstatus="@Model.Item.HealthStatus"
+            data-bs-toggle="modal"
+            data-bs-target="#updatePetModal">
+        Edit
+    </button>
+    <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this pet?');">
+        <input type="hidden" name="Id" value="@Model.Item.Id" />
+        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+    </form>
+}
 else if (Model.ListType == "appointment")
 {
     <!-- Appointment List Buttons -->

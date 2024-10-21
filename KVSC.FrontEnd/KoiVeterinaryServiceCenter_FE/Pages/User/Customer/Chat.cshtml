@@ -15,25 +15,16 @@
                     </div>
                 </div>
                 <div id="conversationList" class="discussion message-active">
-                    @if (Model.Conversations.Extensions?.Data != null && Model.Conversations.Extensions.Data.Any())
+                    @foreach (var conversation in Model.Conversations.Extensions?.Data)
                     {
-                        foreach (var conversation in Model.Conversations.Extensions.Data)
-                        {
-                            <a href="@Url.Page("Chat", new { recipientId = conversation.RecipientId, recipientName = conversation.RecipientName })"
-                               class="conversation-item" data-name="@conversation.RecipientName">
-                                <div class="desc-contact">
-                                    <strong>@conversation.RecipientName</strong>
-                                    <p class="message">@conversation.LastMessage</p>
-                                </div>
-                                <div class="timer">@conversation.Timestamp</div>
-                            </a>
-                        }
-                    }
-                    else
-                    {
-                        <div class="no-conversations">
-                            Không có cuộc trò chuyện nào để hiển thị.
-                        </div>
+                        <a href="@Url.Page("Chat", new { recipientId = conversation.RecipientId , recipientName = conversation.RecipientName })"
+                           class="conversation-item" data-name="@conversation.RecipientName">
+                            <div class="desc-contact">
+                                <strong>@conversation.RecipientName</strong>
+                                <p class="message">@conversation.LastMessage</p>
+                            </div>
+                            <div class="timer">@conversation.Timestamp</div>
+                        </a>
                     }
                 </div>
             </section>
@@ -44,35 +35,26 @@
                     <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
                 </div>
                 <div class="messages-chat" id="messagesContainer" style="display: flex; flex-direction: column-reverse;">
-                    @if (Model.Messages.Extensions?.Data != null && Model.Messages.Extensions.Data.Any())
+                     @foreach (var message in Model.Messages.Extensions?.Data)
                     {
-                        foreach (var message in Model.Messages.Extensions.Data)
-                        {
-                            if (message.SenderId == Model.CurrentUserId)
-                            {
-                                <div class="message">
-                                    <div class="response">
-                                        <p class="text">@message.Content</p>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="message">
-                                    <div class="photo">
-                                        <div class="online"></div>
-                                    </div>
-                                    <p class="text">@message.Content</p>
-                                </div>
-                            }
-                            <p class="time">@message.Timestamp.ToString("g")</p>
-                        }
+                    if (message.SenderId == Model.CurrentUserId)
+                    {
+                    <div class="message">
+                    <div class="response">
+                    <p class="text">@message.Content</p>
+                    </div>
+                    </div>
                     }
                     else
                     {
-                        <div class="no-messages">
-                            There are no messages to display.
-                        </div>
+                    <div class="message">
+                    <div class="photo">
+                    <div class="online"></div>
+                    </div>
+                    <p class="text">@message.Content</p>
+                    </div>
+                    }
+                    <p class="time">@message.Timestamp.ToString("g")</p>
                     }
                 </div>
                 <div class="footer-chat">

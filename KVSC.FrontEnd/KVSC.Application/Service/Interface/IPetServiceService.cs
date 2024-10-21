@@ -6,15 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KVSC.Infrastructure.DTOs.Service.AddService;
+using PetServiceDto = KVSC.Infrastructure.DTOs.Service.ServiceDetail.PetServiceDto;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
 using KVSC.Infrastructure.DTOs.Service.DeleteService;
 
 namespace KVSC.Application.Service.Interface
 {
-    public interface IPetServiceSerivce
+    public interface IPetServiceService
     {
         Task<ResponseDto<KoiServiceList>> GetKoiServiceList();
         Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request);
+        
+        Task<ResponseDto<PetServiceDto>> GetPetServiceByIdAsync(Guid id);
+
         Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request);
         Task<ResponseDto<DeleteServiceResponse>> DeletePetService(DeleteServiceRequest request);
     }

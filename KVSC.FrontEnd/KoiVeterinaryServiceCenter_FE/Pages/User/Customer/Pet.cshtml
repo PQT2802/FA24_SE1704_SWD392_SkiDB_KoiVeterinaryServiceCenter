@@ -1,0 +1,274 @@
+﻿@page
+@using KVSC.Infrastructure.DTOs.Pet
+@using KVSC.Infrastructure.DTOs
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.PetModel
+@{
+    Layout = "_LayoutCustomer";
+}
+
+<!-- Thông báo thành công hoặc thất bại -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert @TempData["AlertClass"] alert-dismissible fade show" role="alert" id="alertMessage">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<!-- Nút thêm mới Pet -->
+<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createPetModal">Add Pet</button>
+
+<!-- Bảng hiển thị danh sách Pet -->
+@await Component.InvokeAsync("GenericTable", new { items = Model.PetList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "pet" })
+
+<!-- Modal thêm mới Pet -->
+<div class="modal fade @(Model.ShowModal ? "show" : "")" id="createPetModal" tabindex="-1" aria-labelledby="createPetModalLabel" aria-hidden="true" style="display:@(Model.ShowModal ? "block" : "none");">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createPetModalLabel">Add New Pet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">Pet Form</h6>
+
+                    <!-- Hiển thị tổng hợp lỗi -->
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <form id="createPetForm" method="post" asp-page-handler="CreatePet">
+                        <!-- Tên Pet -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="name" name="AddPetRequest.Name" placeholder="Pet Name">
+                            <label for="name">Pet Name</label>
+                            <span asp-validation-for="AddPetRequest.Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="age" name="AddPetRequest.Age" placeholder="Age" min="0">
+                            <label for="age">Age</label>
+                            <span asp-validation-for="AddPetRequest.Age" class="text-danger"></span>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="gender" name="AddPetRequest.Gender" placeholder="Gender">
+                            <label for="gender">Gender</label>
+                            <span asp-validation-for="AddPetRequest.Gender" class="text-danger"></span>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="imageUrl" name="AddPetRequest.ImageUrl" placeholder="Image URL">
+                            <label for="imageUrl">Image URL</label>
+                            <span asp-validation-for="AddPetRequest.ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <!-- Color -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="color" name="AddPetRequest.Color" placeholder="Color">
+                            <label for="color">Color</label>
+                            <span asp-validation-for="AddPetRequest.Color" class="text-danger"></span>
+                        </div>
+
+                        <!-- Length -->
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="length" name="AddPetRequest.Length" placeholder="Length" min="0">
+                            <label for="length">Length</label>
+                            <span asp-validation-for="AddPetRequest.Length" class="text-danger"></span>
+                        </div>
+
+                        <!-- Weight -->
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="weight" name="AddPetRequest.Weight" placeholder="Weight" min="0">
+                            <label for="weight">Weight</label>
+                            <span asp-validation-for="AddPetRequest.Weight" class="text-danger"></span>
+                        </div>
+
+                        <!-- Last Health Check -->
+                        <div class="form-floating mb-3">
+                            <input type="datetime-local" class="form-control" id="lastHealthCheck" name="AddPetRequest.LastHealthCheck" placeholder="Last Health Check">
+                            <label for="lastHealthCheck">Last Health Check</label>
+                            <span asp-validation-for="AddPetRequest.LastHealthCheck" class="text-danger"></span>
+                        </div>
+
+                        <!-- Health Status -->
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="healthStatus" name="AddPetRequest.HealthStatus" placeholder="Health Status" min="0">
+                            <label for="healthStatus">Health Status</label>
+                            <span asp-validation-for="AddPetRequest.HealthStatus" class="text-danger"></span>
+                        </div>
+
+                        <!-- Nút submit -->
+                        <button type="submit" class="btn btn-primary" id="submitPetForm">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal cập nhật Pet -->
+<div class="modal fade" id="updatePetModal" tabindex="-1" aria-labelledby="updatePetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatePetModalLabel">Edit Pet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updatePetForm" method="post" asp-page-handler="UpdatePet">
+                    <input type="hidden" id="petId" name="UpdatePetRequest.Id" />
+
+                    <!-- Name Input -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" name="UpdatePetRequest.Name" placeholder="Pet Name">
+                        <label for="name">Pet Name</label>
+                        <span asp-validation-for="UpdatePetRequest.Name" class="text-danger"></span>
+                    </div>
+
+                    <!-- Age -->
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="age" name="UpdatePetRequest.Age" placeholder="Age" min="0">
+                        <label for="age">Age</label>
+                        <span asp-validation-for="UpdatePetRequest.Age" class="text-danger"></span>
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="gender" name="UpdatePetRequest.Gender" placeholder="Gender">
+                        <label for="gender">Gender</label>
+                        <span asp-validation-for="UpdatePetRequest.Gender" class="text-danger"></span>
+                    </div>
+
+                    <!-- Length -->
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="length" name="UpdatePetRequest.Length" placeholder="Length" min="0">
+                        <label for="length">Length</label>
+                        <span asp-validation-for="UpdatePetRequest.Length" class="text-danger"></span>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="weight" name="UpdatePetRequest.Weight" placeholder="Weight" min="0">
+                        <label for="weight">Weight</label>
+                        <span asp-validation-for="UpdatePetRequest.Weight" class="text-danger"></span>
+                    </div>
+
+                    <!-- Nút submit -->
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script cho việc tạo Pet -->
+<script>
+    $(document).ready(function () {
+        $('#submitPetForm').click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: window.location.pathname + "?handler=CreatePet",
+                data: $('#createPetForm').serialize(),
+                success: function (response) {
+                    if (response.isSuccess) {
+                        $('#createPetModal').modal('hide');
+                        alert('Create successful');
+                        location.reload();
+                    } else {
+                        $('span[data-valmsg-for]').text('');
+                        for (const [key, value] of Object.entries(response.errors)) {
+                            $(`span[data-valmsg-for='AddPetRequest.${key}']`).text(value);
+                        }
+                    }
+                },
+                error: function () {
+                    console.log('Có lỗi xảy ra.');
+                }
+            });
+        });
+    });
+</script>
+
+<!-- Script cho việc sửa Pet -->
+<script>
+    $(document).ready(function () {
+        // Khi nhấn nút "Edit"
+        $('.edit-pet-button').click(function () {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var age = $(this).data('age');
+            var gender = $(this).data('gender');
+            var imageUrl = $(this).data('imageurl');
+            var color = $(this).data('color');
+            var length = $(this).data('length');
+            var weight = $(this).data('weight');
+            var lastHealthCheck = $(this).data('lasthealthcheck');
+            var healthStatus = $(this).data('healthstatus');
+
+            // Cập nhật các trường trong modal
+            $('#updatePetModal #petId').val(id);
+            $('#updatePetModal #name').val(name);
+            $('#updatePetModal #age').val(age);
+            $('#updatePetModal #gender').val(gender);
+            $('#updatePetModal #imageUrl').val(imageUrl);
+            $('#updatePetModal #color').val(color);
+            $('#updatePetModal #length').val(length);
+            $('#updatePetModal #weight').val(weight);
+            $('#updatePetModal #lastHealthCheck').val(lastHealthCheck);
+            $('#updatePetModal #healthStatus').val(healthStatus);
+
+            // Hiển thị modal
+            $('#updatePetModal').modal('show');
+        });
+
+        // Xử lý submit form cập nhật
+        $('#updatePetForm').submit(function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định
+
+            $.ajax({
+                type: "POST",
+                url: window.location.pathname + "?handler=UpdatePet", // Gửi đến đúng handler
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.isSuccess) {
+                        $('#updatePetModal').modal('hide');
+                        alert('Update successful');
+                        location.reload();
+                    } else {
+                        $('span[data-valmsg-for]').text('');
+                        // Hiển thị lỗi vào các input tương ứng
+                        for (const [key, value] of Object.entries(response.errors)) {
+                            $(`span[data-valmsg-for='UpdatePetRequest.${key}']`).text(value);
+                        }
+                    }
+                },
+                error: function () {
+                    console.log('Có lỗi xảy ra.');
+                }
+            });
+        });
+    });
+</script>
+
+<!-- Script cho việc xóa Pet -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alertElement = document.getElementById('alertMessage');
+        if (alertElement) {
+            setTimeout(function () {
+                alertElement.classList.add('fade');
+                alertElement.classList.remove('show');
+            }, 3000); // 3 giây
+        }
+    });
+</script>
