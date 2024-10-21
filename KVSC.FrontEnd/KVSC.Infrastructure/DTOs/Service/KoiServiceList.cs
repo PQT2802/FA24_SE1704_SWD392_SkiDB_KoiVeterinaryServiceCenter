@@ -1,19 +1,11 @@
-﻿using KVSC.Infrastructure.DTOs.User.Login;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KVSC.Infrastructure.DTOs.Service
+﻿namespace KVSC.Infrastructure.DTOs.Service
 {
     public class KoiServiceList
     {
-        public Extensions<List<Data>> Extensions { get; set; }
+        public Extensions<List<KoiServicesData>> Extensions { get; set; }
     }
 
-    public class Data : IPropertyNameProvider
+    public class KoiServicesData : IPropertyNameProvider
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

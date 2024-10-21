@@ -127,9 +127,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
                 // Kiểm tra và khởi tạo Extensions nếu cần
                 if (KoiServiceList.Extensions == null)
                 {
-                    KoiServiceList.Extensions = new Extensions<List<Data>>
+                    KoiServiceList.Extensions = new Extensions<List<KoiServicesData>>
                     {
-                        Data = new List<Data>() 
+                        Data = new List<KoiServicesData>() 
                     };
                 }
             }
@@ -137,7 +137,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             {
                 KoiServiceList = new KoiServiceList
                 {
-                    Extensions = new Extensions<List<Data>> { Data = new List<Data>() }
+                    Extensions = new Extensions<List<KoiServicesData>> { Data = new List<KoiServicesData>() }
                 };
             }
             // Gán dữ liệu vào ViewBag cho dropdown

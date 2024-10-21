@@ -1,7 +1,8 @@
 ﻿using KVSC.Infrastructure.DTOs;
-using System.Threading.Tasks;
+using KVSC.Infrastructure.DTOs.AppointmentForm;
 
 public interface IAppointmentRepository
 {
-    Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request);
+    Task<ResponseDto<MakeAppointmentForServiceResponse>> MakeAppointmentAsync(MakeAppointmentForServiceRequest request);
+
 }

@@ -16,9 +16,9 @@ namespace KVSC.WebAPI.Controllers
             _appointmentService = appointmentService;
         }
 
-        
+
         // POST: api/appointment
-        [HttpPost]
+        [HttpPost("appointment")]
         public async Task<IResult> MakeAppointment([FromBody] MakeAppointmentForServiceRequest request)
         {
             // Call the service layer to make the appointment
@@ -26,7 +26,7 @@ namespace KVSC.WebAPI.Controllers
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Appointment for service created successfully")
                 : ResultExtensions.ToProblemDetails(result);
-          
+
         }
 
         // POST: api/appointment/service
@@ -38,8 +38,8 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Appointment for service created successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
-        
-        
+
+
 
         // POST: api/appointment/combo
         [HttpPost("combo")]

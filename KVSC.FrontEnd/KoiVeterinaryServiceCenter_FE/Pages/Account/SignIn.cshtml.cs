@@ -1,9 +1,8 @@
 using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.User.Login;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using KVSC.Infrastructure.DTOs.User.Login;
-using KVSC.Infrastructure.DTOs.User;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.Account
 {
@@ -21,6 +20,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
         [BindProperty]
         public List<ErrorDetail> ErrorMessage { get; set; }
         public string ActorRole { get; set; }
+
         public async Task<IActionResult> OnPost()
         {
             // Call the authentication service

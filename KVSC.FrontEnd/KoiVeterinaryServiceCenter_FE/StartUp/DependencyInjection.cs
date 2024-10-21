@@ -27,12 +27,18 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
 
+            services.AddHttpClient<IAppointmentRepository, AppointmentRepository>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7283");
+            });
+
             #endregion
 
 
             #region Services
             // Register other services here if needed.
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPetServiceService, PetServiceService>();
             services.AddTransient<IPetServiceService, PetServiceService>();

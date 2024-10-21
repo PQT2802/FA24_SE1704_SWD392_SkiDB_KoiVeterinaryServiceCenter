@@ -1,4 +1,5 @@
 ﻿using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.AppointmentForm;
 
 public class AppointmentService : IAppointmentService
 {
@@ -9,13 +10,9 @@ public class AppointmentService : IAppointmentService
         _appointmentRepository = appointmentRepository;
     }
 
-    public async Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request)
+    public async Task<ResponseDto<MakeAppointmentForServiceResponse>> MakeAppointmentAsync(MakeAppointmentForServiceRequest request)
     {
-        // Here you can add additional business logic before calling the repository
-        var result = await _appointmentRepository.MakeAppointmentForServiceAsync(request);
-
-        // Add any additional business logic or transformations here
-
-        return result;
+        var response = await _appointmentRepository.MakeAppointmentAsync(request);
+        return response;
     }
 }

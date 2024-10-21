@@ -1,14 +1,8 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Service;
-using KVSC.Infrastructure.DTOs.Service.AddServiceCategory;
 using KVSC.Infrastructure.Repositories.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {

@@ -21,7 +21,7 @@ namespace KoiVeterinaryServiceCenter_FE.ViewComponents
             if (result.IsSuccess && result.Data != null)
             {
                 // Ensure that the data is a list or enumerable
-                var services = result.Data.Extensions?.Data.Take(6).ToList();  // Assuming result.Data.Extensions.Data is a list or enumerable
+                var services = result.Data.Extensions?.Data.Take(6).ToList();  // Assuming result.KoiServicesData.Extensions.KoiServicesData is a list or enumerable
 
                 var model = new GenericTableViewModel
                 {
