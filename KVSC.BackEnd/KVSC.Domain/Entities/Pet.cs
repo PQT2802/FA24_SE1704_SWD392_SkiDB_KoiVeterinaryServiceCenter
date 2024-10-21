@@ -8,7 +8,7 @@ namespace KVSC.Domain.Entities
 {
     public class Pet : BaseEntity
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int? Age { get; set; }
         public string? Gender { get; set; }
         public string ImageUrl { get; set; }
@@ -17,8 +17,8 @@ namespace KVSC.Domain.Entities
         public double? Weight { get; set; }
         public int Quantity { get; set; }
         public DateTime LastHealthCheck { get; set; }
-        public string Note { get; set; }
-        public int HealthStatus { get; set; }
+        public string? Note { get; set; }
+        public int? HealthStatus { get; set; }
 
         // Foreign key relationship
         public Guid OwnerId { get; set; }

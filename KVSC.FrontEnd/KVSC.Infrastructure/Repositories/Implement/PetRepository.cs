@@ -94,7 +94,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             try
             {
                 // Send the request and get the response
-                var response = await _httpClient.GetAsync("api/Pet/All-pet");
+                var response = await _httpClient.GetAsync("/api/Pet/all");
 
                 var options = new JsonSerializerOptions
                 {
@@ -155,7 +155,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             try
             {
                 // Send the request and get the response
-                var response = await _httpClient.PostAsJsonAsync("api/Pet/Create-pet", request);
+                var response = await _httpClient.PostAsJsonAsync("api/Pet", request);
 
                 var options = new JsonSerializerOptions
                 {
@@ -215,7 +215,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             try
             {
                 // Send the request and get the response
-                var response = await _httpClient.PutAsJsonAsync($"api/Pet/Update-pet?id={request.Id}", request);
+                var response = await _httpClient.PutAsJsonAsync($"/api/Pet", request);
 
                 var options = new JsonSerializerOptions
                 {
@@ -274,7 +274,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
         {
             try
             {
-                var url = $"api/Pet/Delete-pet/{request.Id}";
+                var url = $"api/Pet?Id={request.Id}";
 
                 // Call the API DELETE with the pet ID in the URL
                 var response = await _httpClient.DeleteAsync(url);

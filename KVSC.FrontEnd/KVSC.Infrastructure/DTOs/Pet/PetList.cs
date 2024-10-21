@@ -21,14 +21,16 @@ namespace KVSC.Infrastructure.DTOs.Pet
         public string Color { get; set; }
         public double Length { get; set; }
         public double Weight { get; set; }
+        public int Quantity { get; set; }
         public DateTime LastHealthCheck { get; set; }
+        public string Note { get; set; }
         public int HealthStatus { get; set; }
 
         public string Owner { get; set; } // The name of the owner
 
         public List<string> GetPropertyNames()
         {
-            return new List<string> { nameof(Name), nameof(Age), nameof(Gender), nameof(Color), nameof(Length), nameof(Weight), nameof(Owner) };
+            return new List<string> { nameof(Name), nameof(Gender), nameof(Color), nameof(Length), nameof(Weight), nameof(Quantity), nameof(Owner) };
         }
     }
 }

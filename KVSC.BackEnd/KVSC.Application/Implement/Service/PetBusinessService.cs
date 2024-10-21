@@ -4,21 +4,10 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
-using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.DTOs.Pet.GetPet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
-using KVSC.Infrastructure.DTOs.PetService.GetPetService;
-using KVSC.Infrastructure.Implement.Repositories;
 using KVSC.Infrastructure.Interface;
-using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
-using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KVSC.Application.Implement.Service
 {
@@ -53,11 +42,14 @@ namespace KVSC.Application.Implement.Service
                 Age = pet.Age ?? 0,
                 Gender = pet.Gender ?? "",
                 ImageUrl = pet.ImageUrl,
-                Color = pet.Color ?? "",
-                Length = pet.Length ?? 0,
-                Weight = pet.Weight ?? 0,
+                Color = pet.Color,
+                Length = pet.Length,
+                Weight = pet.Weight,
+                Quantity = pet.Quantity,
                 LastHealthCheck = pet.LastHealthCheck,
+                Note = pet.Note,
                 HealthStatus = pet.HealthStatus,
+                Owner = pet.Owner?.FullName,
                 OwnerId = pet.OwnerId
             };
 
@@ -70,15 +62,18 @@ namespace KVSC.Application.Implement.Service
             var petResponse = pets.Select(pet => new GetPetResponse
             {
                 Id = pet.Id,
-                Name = pet.Name ?? "",
-                Age = pet.Age ?? 0,
-                Gender = pet.Gender ?? "",
-                ImageUrl = pet.ImageUrl ?? "",
-                Color = pet.Color ?? "",
-                Length = pet.Length ?? 0,
-                Weight = pet.Weight ?? 0,
+                Name = pet.Name,
+                Age = pet.Age,
+                Gender = pet.Gender,
+                ImageUrl = pet.ImageUrl,
+                Color = pet.Color,
+                Length = pet.Length,
+                Weight = pet.Weight,
+                Quantity = pet.Quantity,
                 LastHealthCheck = pet.LastHealthCheck,
+                Note = pet.Note,
                 HealthStatus = pet.HealthStatus,
+                Owner = pet.Owner?.FullName,
                 OwnerId = pet.OwnerId
             }).ToList();
 
@@ -114,7 +109,9 @@ namespace KVSC.Application.Implement.Service
                 Color = addPet.Color,
                 Length = addPet.Length,
                 Weight = addPet.Weight,
+                Quantity = addPet.Quantity,
                 LastHealthCheck = addPet.LastHealthCheck,
+                Note = addPet.Note,
                 HealthStatus = addPet.HealthStatus,
                 OwnerId = addPet.OwnerId
             };
@@ -154,7 +151,9 @@ namespace KVSC.Application.Implement.Service
             pet.Color = updatePet.Color;
             pet.Length = updatePet.Length;
             pet.Weight = updatePet.Weight;
+            pet.Quantity = updatePet.Quantity;
             pet.LastHealthCheck = updatePet.LastHealthCheck;
+            pet.Note = updatePet.Note;
             pet.HealthStatus = updatePet.HealthStatus;
 
             var updateResult = await _unitOfWork.PetRepository.UpdatePetAsync(pet);
@@ -192,17 +191,19 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(PetErrorMessage.PetNotFound());
             }
 
-            var petResponseList = pets.Select(pet => new UpdatePetResponse 
+            var petResponseList = pets.Select(pet => new UpdatePetResponse
             {
                 Id = pet.Id,
                 Name = pet.Name,
-                Age = pet.Age ?? 0,
-                Gender = pet.Gender ?? "",
-                ImageUrl = pet.ImageUrl?? "",
-                Color = pet.Color ?? "",
-                Length = pet.Length ?? 0,
-                Weight = pet.Weight ?? 0,
+                Age = pet.Age,
+                Gender = pet.Gender,
+                ImageUrl = pet.ImageUrl,
+                Color = pet.Color,
+                Length = pet.Length,
+                Weight = pet.Weight,
+                Quantity = pet.Quantity,
                 LastHealthCheck = pet.LastHealthCheck,
+                Note = pet.Note,
                 HealthStatus = pet.HealthStatus
             }).ToList();
 
