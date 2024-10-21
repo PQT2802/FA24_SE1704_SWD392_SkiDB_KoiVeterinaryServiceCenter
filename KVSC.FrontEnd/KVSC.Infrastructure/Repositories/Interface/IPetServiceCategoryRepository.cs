@@ -10,6 +10,7 @@ using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.ServiceCategory.AddServiceCategory;
 using KVSC.Infrastructure.DTOs.ServiceCategory.UpdateServiceCategory;
 using KVSC.Infrastructure.DTOs.ServiceCategory.DeleteServiceCategory;
+using KVSC.Infrastructure.DTOs.ServiceCategory.GetServiceCategory;
 
 namespace KVSC.Infrastructure.Repositories.Interface
 {
@@ -20,5 +21,6 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<AddServiceCategoryResponse>> CreateCategoryAsync(AddServiceCategoryRequest request);
         Task<ResponseDto<UpdateCategoryResponse>> UpdateCategory(UpdateCategoryRequest request);
         Task<ResponseDto<DeleteServiceCategoryResponse>> DeleteServiceCategory(DeleteServiceCategoryRequest request);
+        Task<ResponseDto<GetPetServiceCategoryResponse>> GetPetServiceCategoryDetail(Guid id);
     }
 }

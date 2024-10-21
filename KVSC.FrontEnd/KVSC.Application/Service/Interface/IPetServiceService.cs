@@ -9,6 +9,7 @@ using KVSC.Infrastructure.DTOs.Service.AddService;
 using PetServiceDto = KVSC.Infrastructure.DTOs.Service.ServiceDetail.PetServiceDto;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
 using KVSC.Infrastructure.DTOs.Service.DeleteService;
+using KVSC.Infrastructure.DTOs.Service.GetServiceDetail;
 
 namespace KVSC.Application.Service.Interface
 {
@@ -21,5 +22,6 @@ namespace KVSC.Application.Service.Interface
 
         Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request);
         Task<ResponseDto<DeleteServiceResponse>> DeletePetService(DeleteServiceRequest request);
+        Task<ResponseDto<GetPetServiceResponse>> GetPetServiceDetail(Guid id);
     }
 }

@@ -99,7 +99,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
                 {
                     Id = u.Id,
                     FullName = u.FullName,
-                    Username = u.Username, // Chỉnh sửa tên thuộc tính thành chữ hoa
+                    UserName = u.Username, // Chỉnh sửa tên thuộc tính thành chữ hoa
                     Email = u.Email,
                     PhoneNumber = u.PhoneNumber,
                     ProfilePictureUrl = u.ProfilePictureUrl,

@@ -8,6 +8,11 @@ namespace KVSC.Infrastructure.DTOs.User.GetUser
 {
     public class GetUserResponse
     {
+        public Extensions<GetUserData> Extensions { get; set; }
+
+    }
+    public class GetUserData
+    {
         public Guid Id { get; set; }
         public string FullName { get; set; }
         public string UserName { get; set; }

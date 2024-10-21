@@ -1,6 +1,7 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
+using KVSC.Infrastructure.DTOs.User.GetUser;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
@@ -425,6 +426,56 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 return new ResponseDto<DeleteUserResponse>
                 {
                     IsSuccess = false,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<GetUserResponse>> GetUserDetail(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/User?Id={id}");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetUserResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get user info."
+                    };
+                }
+
+                var user = await response.Content.ReadFromJsonAsync<GetUserResponse>(options);
+
+                return new ResponseDto<GetUserResponse>
+                {
+                    IsSuccess = true,
+                    Data = user,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<GetUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<GetUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
                     Message = $"An unexpected error occurred: {ex.Message}"
                 };
             }

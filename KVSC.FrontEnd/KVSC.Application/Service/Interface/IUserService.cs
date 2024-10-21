@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
+using KVSC.Infrastructure.DTOs.User.GetUser;
 
 namespace KVSC.Application.Service.Interface
 {
@@ -16,6 +17,7 @@ namespace KVSC.Application.Service.Interface
         Task<ResponseDto<RoleList>> GetRoleList();
         Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request);
         Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request);
+        Task<ResponseDto<GetUserResponse>> GetUserDetail(Guid id);
 
     }
 }

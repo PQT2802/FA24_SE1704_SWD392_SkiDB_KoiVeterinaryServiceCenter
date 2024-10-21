@@ -3,6 +3,7 @@ using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.Service.AddService;
 using KVSC.Infrastructure.DTOs.Service.DeleteService;
+using KVSC.Infrastructure.DTOs.Service.GetServiceDetail;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
 using KVSC.Infrastructure.Repositories.Implement;
 using KVSC.Infrastructure.Repositories.Interface;
@@ -54,6 +55,11 @@ namespace KVSC.Application.Service.Implement
         public async Task<ResponseDto<PetServiceDto>> GetPetServiceByIdAsync(Guid id)
         {
             return await _petServiceRepository.GetPetServiceByIdAsync(id);
+        }
+        public async Task<ResponseDto<GetPetServiceResponse>> GetPetServiceDetail(Guid id)
+        {
+            var response = await _petServiceRepository.GetPetServiceDetail(id);
+            return response;
         }
     }
 }

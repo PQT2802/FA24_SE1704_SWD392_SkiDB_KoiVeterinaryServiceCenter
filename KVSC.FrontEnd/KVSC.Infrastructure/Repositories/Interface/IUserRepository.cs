@@ -1,6 +1,7 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
+using KVSC.Infrastructure.DTOs.User.GetUser;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
@@ -17,5 +18,6 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<RoleList>> GetRoleList();
         Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request);
         Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request);
+        Task<ResponseDto<GetUserResponse>> GetUserDetail(Guid id);
     }
 }

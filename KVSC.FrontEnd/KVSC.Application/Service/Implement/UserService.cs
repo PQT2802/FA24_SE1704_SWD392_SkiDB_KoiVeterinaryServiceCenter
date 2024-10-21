@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
+using KVSC.Infrastructure.DTOs.User.GetUser;
 
 namespace KVSC.Application.Service.Implement
 {
@@ -43,6 +44,11 @@ namespace KVSC.Application.Service.Implement
         public async Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request)
         {
             var response = await _userRepository.DeleteUser(request);
+            return response;
+        }
+        public async Task<ResponseDto<GetUserResponse>> GetUserDetail(Guid id)
+        {
+            var response = await _userRepository.GetUserDetail(id);
             return response;
         }
     }

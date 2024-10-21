@@ -5,6 +5,7 @@ using KVSC.Infrastructure.DTOs.Service.DeleteService;
 using KVSC.Infrastructure.DTOs.ServiceCategory;
 using KVSC.Infrastructure.DTOs.ServiceCategory.AddServiceCategory;
 using KVSC.Infrastructure.DTOs.ServiceCategory.DeleteServiceCategory;
+using KVSC.Infrastructure.DTOs.ServiceCategory.GetServiceCategory;
 using KVSC.Infrastructure.DTOs.ServiceCategory.UpdateServiceCategory;
 using KVSC.Infrastructure.Repositories.Implement;
 using KVSC.Infrastructure.Repositories.Interface;
@@ -59,6 +60,11 @@ namespace KVSC.Application.Service.Implement
         public async Task<ResponseDto<DeleteServiceCategoryResponse>> DeletePetService(DeleteServiceCategoryRequest request)
         {
             var response = await _petServiceCategoryRepository.DeleteServiceCategory(request);
+            return response;
+        }
+        public async Task<ResponseDto<GetPetServiceCategoryResponse>> GetPetServiceCategoryDetail(Guid id)
+        {
+            var response = await _petServiceCategoryRepository.GetPetServiceCategoryDetail(id);
             return response;
         }
     }

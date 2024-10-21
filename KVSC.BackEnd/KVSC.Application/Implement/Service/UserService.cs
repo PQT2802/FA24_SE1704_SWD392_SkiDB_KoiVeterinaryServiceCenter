@@ -125,10 +125,13 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             {
                 Id = user.Id,
                 FullName = user.FullName,
+                UserName = user.Username,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 ProfilePictureUrl = user.ProfilePictureUrl,
                 Address = user.Address,
+                CreatedDate = user.CreatedDate,
+                DateOfBirth = user.DateOfBirth,
                 Role = user.role
             };
             return Result.SuccessWithObject(response);

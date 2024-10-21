@@ -3,6 +3,7 @@ using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.ServiceCategory;
 using KVSC.Infrastructure.DTOs.ServiceCategory.AddServiceCategory;
 using KVSC.Infrastructure.DTOs.ServiceCategory.DeleteServiceCategory;
+using KVSC.Infrastructure.DTOs.ServiceCategory.GetServiceCategory;
 using KVSC.Infrastructure.DTOs.ServiceCategory.UpdateServiceCategory;
 using KVSC.Infrastructure.Repositories.Interface;
 using System;
@@ -287,6 +288,56 @@ namespace KVSC.Infrastructure.Repositories.Implement
             catch (Exception ex)
             {
                 return new ResponseDto<DeleteServiceCategoryResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<GetPetServiceCategoryResponse>> GetPetServiceCategoryDetail(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/PetServiceCategory?Id={id}");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetPetServiceCategoryResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get info."
+                    };
+                }
+
+                var petServiceCategory = await response.Content.ReadFromJsonAsync<GetPetServiceCategoryResponse>(options);
+
+                return new ResponseDto<GetPetServiceCategoryResponse>
+                {
+                    IsSuccess = true,
+                    Data = petServiceCategory,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<GetPetServiceCategoryResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<GetPetServiceCategoryResponse>
                 {
                     IsSuccess = false,
                     Data = null,
