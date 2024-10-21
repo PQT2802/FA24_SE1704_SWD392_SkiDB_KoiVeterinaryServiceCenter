@@ -1,6 +1,32 @@
 USE [KoiCenterDB]
 GO
-/*==========================================Category==========================*/
+
+/*=========================Veterinarians==========================*/
+-- Insert 5 users (veterinarians) into the User table
+-- Insert 5 Users
+INSERT INTO [KoiCenterDB].[dbo].[User] 
+    ([Id], [FullName], [Email], [PhoneNumber], [Address], [Username], [PasswordHash], [ProfilePictureUrl], [DateOfBirth], [role], [CreatedDate], [CreatedBy], [ModifiedDate], [ModifiedBy], [IsDeleted])
+VALUES
+    (NEWID(), 'Dr. John Smith', 'john.smith@koicenter.com', '123-456-7890', '123 Elm St', 'drjohn', 'hashedpassword1', NULL, '1980-01-01', 3, GETUTCDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Dr. Emily Johnson', 'emily.johnson@koicenter.com', '987-654-3210', '456 Oak St', 'dremily', 'hashedpassword2', NULL, '1985-05-15', 3, GETUTCDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Dr. Michael Brown', 'michael.brown@koicenter.com', '111-222-3333', '789 Pine St', 'drmichael', 'hashedpassword3', NULL, '1978-12-22', 3, GETUTCDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Dr. Sarah Wilson', 'sarah.wilson@koicenter.com', '444-555-6666', '101 Maple St', 'drsarah', 'hashedpassword4', NULL, '1990-07-30', 3, GETUTCDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), 'Dr. David Lee', 'david.lee@koicenter.com', '999-888-7777', '202 Birch St', 'drdavid', 'hashedpassword5', NULL, '1982-10-10', 3, GETUTCDATE(), NULL, NULL, NULL, 0);
+
+-- Insert 5 Veterinarians
+INSERT INTO [KoiCenterDB].[dbo].[Veterinarian] 
+    ([Id], [UserId], [LicenseNumber], [Specialty], [Qualifications], [CreatedDate], [CreatedBy], [ModifiedDate], [ModifiedBy], [IsDeleted])
+VALUES
+    (NEWID(), (SELECT [Id] FROM [KoiCenterDB].[dbo].[User] WHERE [Email] = 'john.smith@koicenter.com'), 'VET12345', 'Aquatic Surgery', 'DVM, PhD in Veterinary Science', GETUTCDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), (SELECT [Id] FROM [KoiCenterDB].[dbo].[User] WHERE [Email] = 'emily.johnson@koicenter.com'), 'VET54321', 'Fish Pathology', 'DVM, MSc in Fish Health', GETUTCDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), (SELECT [Id] FROM [KoiCenterDB].[dbo].[User] WHERE [Email] = 'michael.brown@koicenter.com'), 'VET67890', 'General Fish Care', 'DVM', GETUTCDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), (SELECT [Id] FROM [KoiCenterDB].[dbo].[User] WHERE [Email] = 'sarah.wilson@koicenter.com'), 'VET98765', 'Fish Nutrition', 'DVM, MSc in Aquaculture', GETUTCDATE(), NULL, NULL, NULL, 0),
+    (NEWID(), (SELECT [Id] FROM [KoiCenterDB].[dbo].[User] WHERE [Email] = 'david.lee@koicenter.com'), 'VET24680', 'Fish Anesthesia', 'DVM, Specialist in Anesthesia', GETUTCDATE(), NULL, NULL, NULL, 0);
+
+
+
+
+/*==========================Category==========================*/
 INSERT INTO [dbo].[PetServiceCategory]
            ([Id]
            ,[Name]
@@ -305,6 +331,13 @@ VALUES
 
 
 
+
+
+
+
+
+
+		--INSERT 5 veterinarian
 
 
 
