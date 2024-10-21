@@ -14,12 +14,12 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
         public async Task<Pet> GetPetByIdAsync(Guid id)
         {
-            return await _context.Pets.FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
+            return await _context.Pets.Include(u => u.Owner).FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
         }
 
         public async Task<List<Pet>> GetAllPetAsync()
         {
-            return await _context.Pets.Where(s => !s.IsDeleted).ToListAsync();
+            return await _context.Pets.Include(u => u.Owner).Where(s => !s.IsDeleted).ToListAsync();
         }
 
         public async Task<Pet> CreatePetAsync(Pet pet)

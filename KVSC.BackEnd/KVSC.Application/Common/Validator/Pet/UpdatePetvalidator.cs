@@ -13,11 +13,11 @@ namespace KVSC.Application.Common.Validator.Pet
     {
         public UpdatePetvalidator(UnitOfWork unitOfWork) : base(unitOfWork)
         {
-            AddPetNameRules(request => request.Name);
-            AddPetAgeRules(request => request.Age);
-            AddPetGenderRules(request => request.Gender);
-            AddPetLengthRules(request => request.Length);
-            AddPetWeightRules(request => request.Weight);
+            //AddPetNameRules(request => request.Name);
+            //AddPetAgeRules(request => request.Age.HasValue ? request.Age.Value : 0);
+            //AddPetLengthRules(request => request.Length.HasValue ? request.Length.Value : 0);
+            //AddPetWeightRules(request => request.Weight.HasValue ? request.Weight.Value : 0);
+            AddPetQuantityRules(request => request.Quantity);
         }
     }
 }
