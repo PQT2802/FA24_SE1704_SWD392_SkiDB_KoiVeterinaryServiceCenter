@@ -293,38 +293,62 @@
                     <!-- Report Information Start -->
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Report</h6>
+                            <h6 class="mb-4">Service Report</h6>
+
+                            <!-- Report Content -->
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Report content">
-                                <label for="floatingInput">Report content</label>
-                            </div>
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 150px;"></textarea>
-                                <label for="floatingTextarea">Comments</label>
+                                <textarea class="form-control" id="reportContent" placeholder="Enter report content" style="height: 100px;"></textarea>
+                                <label for="reportContent">Report Content</label>
                             </div>
 
-                            <!-- Button to add medicine -->
-                            <button class="btn btn-primary mb-3" onclick="toggleMedicineForm()">Add Medicine</button>
+                            <!-- Report Date -->
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="reportDate" placeholder="Enter report date">
+                                <label for="reportDate">Report Date</label>
+                            </div>
 
-                            <!-- Medicine form (hidden initially) -->
-                            <div id="medicineForm" style="display: none;">
-                                <h6 class="mb-3">Add Medicine</h6>
+                            <!-- Recommendations -->
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="recommendations" placeholder="Enter recommendations" style="height: 100px;"></textarea>
+                                <label for="recommendations">Recommendations</label>
+                            </div>
+
+                            <!-- Prescription Section (Visible if HasPrescription is true) -->
+                            <div id="prescriptionSection" style="display: none;">
+                                <h6 class="mb-4">Prescription Details</h6>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Medicine Name</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="prescriptionDetailsTable">
+                                        <!-- Prescription details will be dynamically populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Button to add prescription -->
+                            <button class="btn btn-primary mb-3" onclick="togglePrescriptionForm()">Add Prescription</button>
+
+                            <!-- Prescription Form (hidden initially) -->
+                            <div id="prescriptionForm" style="display: none;">
+                                <h6 class="mb-3">Add Prescription</h6>
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="medicineName" placeholder="Medicine Name">
                                     <label for="medicineName">Medicine Name</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="dosage" placeholder="Dosage">
-                                    <label for="dosage">Dosage</label>
+                                    <input type="number" class="form-control" id="quantity" placeholder="Quantity">
+                                    <label for="quantity">Quantity</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="frequency" placeholder="Frequency">
-                                    <label for="frequency">Frequency</label>
+                                    <input type="number" class="form-control" id="price" placeholder="Price">
+                                    <label for="price">Price</label>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" placeholder="Instructions" id="instructions" style="height: 100px;"></textarea>
-                                    <label for="instructions">Instructions</label>
-                                </div>
+                                <button class="btn btn-success" onclick="savePrescription()">Save Prescription</button>
                             </div>
                         </div>
                     </div>
@@ -374,14 +398,61 @@
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
         <script>
-            function toggleMedicineForm() {
-                var form = document.getElementById("medicineForm");
-                if (form.style.display === "none") {
-                    form.style.display = "block";
+            // Function to toggle prescription form visibility
+            function togglePrescriptionForm() {
+                const form = document.getElementById('prescriptionForm');
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            }
+
+            // Function to show or hide the prescription section
+            function togglePrescription(hasPrescription) {
+                const prescriptionSection = document.getElementById('prescriptionSection');
+                if (hasPrescription) {
+                    prescriptionSection.style.display = 'block';
+                    populatePrescriptionDetails(); // Populate table if has prescription
                 } else {
-                    form.style.display = "none";
+                    prescriptionSection.style.display = 'none';
                 }
             }
+
+            // Function to save the new prescription
+            function savePrescription() {
+                const medicineName = document.getElementById('medicineName').value;
+                const quantity = document.getElementById('quantity').value;
+                const price = document.getElementById('price').value;
+
+                // Append new row to prescription details table
+                const table = document.getElementById('prescriptionDetailsTable');
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${medicineName}</td><td>${quantity}</td><td>${price}</td>`;
+                table.appendChild(row);
+
+                // Hide the form after saving
+                togglePrescriptionForm();
+            }
+
+            // Function to populate prescription details dynamically
+            function populatePrescriptionDetails() {
+                const prescriptionDetails = [
+                    { medicine: 'Antibiotic', quantity: 5, price: 10 },
+                    { medicine: 'Vitamin C', quantity: 3, price: 15 }
+                ];
+
+                const table = document.getElementById('prescriptionDetailsTable');
+                table.innerHTML = ''; // Clear existing rows
+
+                prescriptionDetails.forEach(detail => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${detail.medicine}</td><td>${detail.quantity}</td><td>${detail.price}</td>`;
+                    table.appendChild(row);
+                });
+            }
+
+            // Example usage: Toggle prescription display based on whether a prescription exists
+            document.addEventListener('DOMContentLoaded', function () {
+                const hasPrescription = true; // For example purposes, this would come from your data
+                togglePrescription(hasPrescription);
+            });
         </script>
 
 </body>

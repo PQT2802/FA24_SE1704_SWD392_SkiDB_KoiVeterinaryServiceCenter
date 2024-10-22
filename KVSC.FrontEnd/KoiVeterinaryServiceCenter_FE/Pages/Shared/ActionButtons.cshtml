@@ -58,18 +58,17 @@ else if (Model.ListType == "appointment")
     {
         <form method="post">
             <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
-
             @switch (Model.Status)
             {
                 case "Pending":
-                    <button class="btn btn-sm btn-success" formaction="/Veterinarian/AcceptAppointment">Accept</button>
-                    <button class="btn btn-sm btn-warning" formaction="/Veterinarian/RejectAppointment">Reject</button>
+                    <button class="btn btn-sm btn-success" type="submit" asp-page-handler="UpdateStatus" asp-route-status="Waiting">Accept</button>
+                    <button class="btn btn-sm btn-warning" type="submit" asp-page-handler="UpdateStatus" asp-route-status="Rejected">Reject</button>
                     break;
                 case "Waiting":
-                    <button class="btn btn-sm btn-info" formaction="/Veterinarian/MarkInProgress">Mark In Progress</button>
+                    <button class="btn btn-sm btn-warning" type="submit" asp-page-handler="UpdateStatus" asp-route-status="InProgress">Execute</button>
                     break;
                 case "InProgress":
-                    <button class="btn btn-sm btn-info" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.AppointmentListId">Report</button>
+                    <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.AppointmentListId">Report</button>
                     break;
                 case "Reported":
                     <button class="btn btn-sm btn-secondary" disabled>Completed</button>
@@ -78,6 +77,7 @@ else if (Model.ListType == "appointment")
                     <button class="btn btn-sm btn-secondary" disabled>No Action</button>
                     break;
             }
+            <button class="btn btn-sm btn-info" type="submit" asp-page="/User/Veterinarian/AppointmentDetail" asp-route-appointmentId="@Model.Item.AppointmentListId">View</button>
         </form>
     }
 }

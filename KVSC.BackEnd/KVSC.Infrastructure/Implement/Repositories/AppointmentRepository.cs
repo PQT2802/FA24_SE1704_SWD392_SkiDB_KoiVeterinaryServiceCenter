@@ -121,5 +121,31 @@ namespace KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.Appointments.AnyAsync(a => a.Id == appointmentId && !a.IsDeleted);
         }
+        public async Task<Guid> UpdateAppointmentStatusAsync(Guid appointmentId, string status)
+        {
+            try
+            {
+                // Find the appointment based on the provided ID
+                var appointment = await _context.Appointments.FirstOrDefaultAsync(a => a.Id == appointmentId);
+
+                // If no appointment is found, return 0
+                if (appointment == null)
+                {
+                    return Guid.Empty;
+                }
+
+                // Update the status of the found appointment
+                appointment.Status = status;
+
+                // Save the changes to the database
+                 await _context.SaveChangesAsync();
+                return appointment.Id;
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the operation
+                throw new InvalidOperationException("Error updating appointment status.", ex);
+            }
+        }
     } 
 }
