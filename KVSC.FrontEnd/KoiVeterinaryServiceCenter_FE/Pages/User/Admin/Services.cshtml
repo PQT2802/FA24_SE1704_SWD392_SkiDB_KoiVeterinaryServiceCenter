@@ -184,11 +184,11 @@
 <script>
     $(document).ready(function () {
         $('#submitServiceForm').click(function (e) {
-            e.preventDefault(); // Ngăn chặn hành vi mặc định
+            e.preventDefault();
 
             $.ajax({
                 type: "POST",
-                url: window.location.pathname + "?handler=CreateService", // Gửi đến đúng handler
+                url: window.location.pathname + "?handler=CreateService", /
                 data: $('#createServiceForm').serialize(),
                 success: function (response) {
                     if (response.isSuccess) {
@@ -197,14 +197,13 @@
                         location.reload();
                     } else {
                         $('span[data-valmsg-for]').text('');
-                        // Hiển thị lỗi vào các input tương ứng
                         for (const [key, value] of Object.entries(response.errors)) {
                             $(`span[data-valmsg-for='AddServiceRequest.${key}']`).text(value);
                         }
                     }
                 },
                 error: function () {
-                    console.log('Có lỗi xảy ra.');
+                    console.log('Error.');
                 }
             });
         });

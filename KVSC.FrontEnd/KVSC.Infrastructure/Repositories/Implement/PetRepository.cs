@@ -1,27 +1,95 @@
-﻿using KVSC.Infrastructure.DTOs.Pet.AddPet;
+﻿using System.Net.Http.Headers;
+using KVSC.Infrastructure.DTOs.Pet.AddPet;
 using KVSC.Infrastructure.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using KVSC.Infrastructure.Repositories.Interface;
 using KVSC.Infrastructure.DTOs.Pet;
 using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using KVSC.Infrastructure.DTOs.Pet.GetPet;
+using KVSC.Infrastructure.DTOs.User;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
     public class PetRepository : IPetRepository
     {
         private readonly HttpClient _httpClient;
+
         public PetRepository(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
+
+        
+        
+
+        public async Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string token)
+        {
+            try
+            {
+                // Set the request with authorization token in headers
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                // Send the request and get the response
+                var response = await _httpClient.GetAsync("api/Pet/owner-pet");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<PetList>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get infor."
+                    };
+                }
+
+                // If successful, deserialize the UserInfo response
+                var petlist = await response.Content.ReadFromJsonAsync<PetList>(options);
+
+                return new ResponseDto<PetList>
+                {
+                    IsSuccess = true,
+                    Data = petlist,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<PetList>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<PetList>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+
+
         public async Task<ResponseDto<PetList>> GetPetList()
         {
             try
@@ -142,6 +210,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+
         public async Task<ResponseDto<UpdatePetResponse>> UpdatePetAsync(UpdatePetRequest request)
         {
             try

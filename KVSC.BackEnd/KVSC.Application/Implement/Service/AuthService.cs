@@ -96,7 +96,6 @@ namespace KVSC.Application.Implement.Service
             };
 
             return Result.SuccessWithObject(loginResponse);
-
         }
 
         public async Task<Result> SignUp(RegisterRequest registerRequest)
@@ -109,13 +108,19 @@ namespace KVSC.Application.Implement.Service
                     .ToList();
                 return Result.Failures(errors);
             }
+
+            var passwordHash = HashPassword(registerRequest.Password);
             User newUser = new User
             {
                 Id = Guid.NewGuid(),
+                FullName = registerRequest.FullName,
                 Email = registerRequest.Email,
-                PasswordHash = registerRequest.Password,
-                Username = registerRequest.UserName
-
+                PasswordHash = passwordHash,
+                Username = registerRequest.UserName,
+                PhoneNumber = registerRequest.PhoneNumber,
+                Address = registerRequest.Address,
+                DateOfBirth = registerRequest.DateOfBirth,
+                role = 5
             };
             var createUsre = await _unitOfWork.UserRepository.CreateAsync(newUser);
             if (createUsre == 0)
@@ -123,6 +128,10 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(UserErrorMessage.UserNoCreated());
             }
             return Result.SuccessWithObject(newUser);
+        }
+        private string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
         public  string GenerateJwtToken(string email, int Role, double expirationMinutes)//them tham so role de phan quyen
         {

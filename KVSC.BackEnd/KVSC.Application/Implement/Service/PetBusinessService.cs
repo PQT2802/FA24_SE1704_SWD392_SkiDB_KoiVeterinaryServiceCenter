@@ -39,8 +39,8 @@ namespace KVSC.Application.Implement.Service
             {
                 Id = pet.Id,
                 Name = pet.Name,
-                Age = pet.Age,
-                Gender = pet.Gender,
+                Age = pet.Age ?? 0,
+                Gender = pet.Gender ?? "",
                 ImageUrl = pet.ImageUrl,
                 Color = pet.Color,
                 Length = pet.Length,

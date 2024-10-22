@@ -133,13 +133,13 @@ namespace KVSC.Application.Implement.Service
 
         public async Task<Result> GetAppointmentListAsync()
         {
-            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsAsync();
+            var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentListAsync();
             return Result.SuccessWithObject(appointments);
         }
 
-        public async Task<Result> GetAppointmentListByVetIdAsync(Guid veterinarianId)
+        public async Task<Result> GetAppointmentListByUserIdAsync(Guid userId)
         {
-            var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentListByVetIdAsync(veterinarianId);
+            var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentListByUserIdAsync(userId);
 
             if (appointments == null || !appointments.Any())
             {

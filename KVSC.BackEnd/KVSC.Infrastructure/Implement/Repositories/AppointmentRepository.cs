@@ -34,39 +34,51 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListAsync()
         {
             return await _context.Appointments
-        .Where(a => !a.IsDeleted)
-        .Select(a => new GetAllAppointment
-        {
-            AppointmentListId = a.Id, // Assuming Id is the primary key in Appointment
-            CustomerId = a.CustomerId,
-            PetServiceId = a.PetServiceId ?? Guid.Empty, // Handle nullable with a default value if needed
-            VeterinarianId = a.AppointmentVeterinarians.Select(av => av.VeterinarianId).FirstOrDefault(), // Assuming you want the first veterinarian ID
-            CustomerName = a.Customer.FullName, // Ensure Customer entity has Name property
-            VeterinarianName = a.AppointmentVeterinarians.Select(av => av.Veterinarian.User.FullName).FirstOrDefault(), // Assuming AppointmentVeterinarian has a navigation property for Veterinarian
-            ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Assuming PetService entity has Name property, handle nulls appropriately
-            Status = a.Status,
-            AppointmentDate = a.AppointmentDate
-        })
-        .ToListAsync();
+                .Where(a => !a.IsDeleted)
+                .Select(a => new GetAllAppointment
+                {
+                    AppointmentListId = a.Id,
+                    CustomerId = a.CustomerId,
+                    PetServiceId = a.PetServiceId ?? Guid.Empty, // Handle null PetServiceId with default value
+                    VeterinarianId = a.AppointmentVeterinarians
+                                        .Select(av => av.VeterinarianId)
+                                        .FirstOrDefault(), // Return the first VeterinarianId or default
+                    CustomerName = a.Customer != null ? a.Customer.FullName : "Unknown", // Handle null Customer
+                    VeterinarianName = a.AppointmentVeterinarians
+                                        .Select(av => av.Veterinarian != null ? av.Veterinarian.User.FullName : "Unknown")
+                                        .FirstOrDefault(), // Handle null Veterinarian or User
+                    ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService
+                    Status = a.Status,
+                    AppointmentDate = a.AppointmentDate
+                })
+                .ToListAsync();
         }
-        public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByVetIdAsync(Guid veterinarianId)
+        public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByUserIdAsync(Guid userId)
         {
             return await _context.Appointments
-        .Where(a => !a.IsDeleted && a.AppointmentVeterinarians.Any(av => av.VeterinarianId == veterinarianId)) // Filter by veterinarian ID
-        .Select(a => new GetAllAppointment
-        {
-            AppointmentListId = a.Id, // Assuming Id is the primary key in Appointment
-            CustomerId = a.CustomerId,
-            PetServiceId = a.PetServiceId ?? Guid.Empty, // Handle nullable with a default value if needed
-            VeterinarianId = a.AppointmentVeterinarians.Select(av => av.VeterinarianId).FirstOrDefault(), // Assuming you want the first veterinarian ID
-            CustomerName = a.Customer.FullName, // Ensure Customer entity has Name property
-            VeterinarianName = a.AppointmentVeterinarians.Select(av => av.Veterinarian.User.FullName).FirstOrDefault(), // Assuming AppointmentVeterinarian has a navigation property for Veterinarian
-            ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Assuming PetService entity has Name property, handle nulls appropriately
-            Status = a.Status,
-            AppointmentDate = a.AppointmentDate
-        })
-        .ToListAsync();
+                .Where(a => !a.IsDeleted && a.AppointmentVeterinarians
+                    .Any(av => av.Veterinarian.UserId == userId)) // Filter by veterinarian's UserId
+                .Select(a => new GetAllAppointment
+                {
+                    AppointmentListId = a.Id,
+                    CustomerId = a.CustomerId,
+                    PetServiceId = a.PetServiceId ?? Guid.Empty, // Handle nullable PetServiceId with Guid.Empty
+                    VeterinarianId = a.AppointmentVeterinarians
+                                        .Where(av => av.Veterinarian.UserId == userId) // Filter by the provided UserId
+                                        .Select(av => av.VeterinarianId)
+                                        .FirstOrDefault(), // Return the first matching VeterinarianId
+                    CustomerName = a.Customer != null ? a.Customer.FullName : "Unknown", // Handle null Customer safely
+                    VeterinarianName = a.AppointmentVeterinarians
+                                        .Where(av => av.Veterinarian.UserId == userId) // Filter for the correct veterinarian
+                                        .Select(av => av.Veterinarian != null ? av.Veterinarian.User.FullName : "Unknown")
+                                        .FirstOrDefault(), // Handle null Veterinarian or User
+                    ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService safely
+                    Status = a.Status,
+                    AppointmentDate = a.AppointmentDate
+                })
+                .ToListAsync();
         }
+
 
 
         public async Task<Veterinarian> GetAvailableVeterinarianAsync(DateTime appointmentDate)
@@ -104,6 +116,10 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 _context.VeterinarianSchedules.Update(schedule);
                 await _context.SaveChangesAsync(); 
             }
+        }
+        public async Task<bool> AppointmentExistsAsync(Guid appointmentId)
+        {
+            return await _context.Appointments.AnyAsync(a => a.Id == appointmentId && !a.IsDeleted);
         }
     } 
 }

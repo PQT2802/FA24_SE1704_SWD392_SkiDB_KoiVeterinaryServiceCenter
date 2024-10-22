@@ -7,7 +7,12 @@ using System.Xml.Linq;
 
 namespace KVSC.Infrastructure.DTOs.Appointment
 {
-    public class AppointmentList : IPropertyNameProvider
+    public class AppointmentList 
+    {
+        public Extensions<List<AppointmentListData>> Extensions { get; set; }
+        
+    }
+    public class AppointmentListData : IPropertyNameProvider
     {
         public Guid AppointmentListId { get; set; }
         public Guid CustomerId { get; set; }

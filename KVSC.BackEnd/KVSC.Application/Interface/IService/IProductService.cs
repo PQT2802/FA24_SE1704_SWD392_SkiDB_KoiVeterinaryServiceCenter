@@ -3,6 +3,7 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using System.Threading.Tasks;
 using KVSC.Infrastructure.DTOs.Product.UpdateProduct;
 using KVSC.Infrastructure.DTOs.Product.SearchProduct;
+using KVSC.Infrastructure.DTOs.Product.GetProduct;
 
 namespace KVSC.Application.Interface.IService
 {
@@ -13,6 +14,7 @@ namespace KVSC.Application.Interface.IService
         Task<Result> DeleteProductAsync(Guid productId);
         Task<Result> GetProductByIdAsync(Guid id);
         Task<Result> GetProductsAsync(SearchProductRequest request);
+        Task<Result> GetMedicinesAsync();
     }
 }
 

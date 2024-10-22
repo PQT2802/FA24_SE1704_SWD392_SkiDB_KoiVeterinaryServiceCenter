@@ -30,6 +30,11 @@ namespace KVSC.Application.KVSC.Application.Common.Validator.Abstract
                     .WithState(_ => UserErrorMessage.UserNameIsExist());
             }
         }
+        protected void AddFullNameRules(Expression<Func<T, string>> fullNameExpression)
+        {
+            RuleFor(fullNameExpression)
+                .NotEmpty().WithState(_ => (UserErrorMessage.FieldIsEmpty("fullName")));                
+        }
 
         // Validation for Email (with option to check existence)
         protected void AddEmailRules(Expression<Func<T, string>> emailExpression, bool checkExists = false)
@@ -56,6 +61,34 @@ namespace KVSC.Application.KVSC.Application.Common.Validator.Abstract
                 .MinimumLength(8).WithState(_ => UserErrorMessage.PasswordInValidLength())
                 .Matches(@"^[A-Z].*").WithState(_ => UserErrorMessage.PasswordInValidUppercase())
                 .Matches(@"[!@#$%^&*(),.?""{}|<>]").WithState(_ => UserErrorMessage.PasswordInValidSpecialChar());
+        }
+        protected void AddPhoneNumberRules(Expression<Func<T, string>> phoneNumberSelector)
+        {
+            RuleFor(phoneNumberSelector)
+                .Matches(@"^\d{10,11}$").WithState(_ => UserErrorMessage.PhoneInvalidFormat());
+        }
+        protected void AddAddressRules(Expression<Func<T, string>> addressExpression)
+        {
+            RuleFor(addressExpression)
+                .NotEmpty().WithState(_ => (UserErrorMessage.FieldIsEmpty("address")));
+        }
+        protected void AddBirthdayRules(Expression<Func<T, DateTime>> birthdaySelector)
+        {
+            RuleFor(birthdaySelector)
+                .NotEmpty().WithState(_ => UserErrorMessage.FieldIsEmpty("Date of Birth"))
+                .Must(BeAtLeast18YearsOld).WithState(_ => UserErrorMessage.UserMustBeAtLeast18())
+                .Must(NotBeInFuture).WithState(_ => UserErrorMessage.BirthdayCannotBeInFuture());
+        }
+        private bool BeAtLeast18YearsOld(DateTime dateOfBirth)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - dateOfBirth.Year;
+            if (dateOfBirth.Date > today.AddYears(-age)) age--;
+            return age >= 18;
+        }
+        private bool NotBeInFuture(DateTime dateOfBirth)
+        {
+            return dateOfBirth.Date <= DateTime.Today;
         }
     }
 }

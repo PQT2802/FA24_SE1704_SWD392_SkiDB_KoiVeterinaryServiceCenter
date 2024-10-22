@@ -62,12 +62,6 @@
                             <label for="gender">Gender</label>
                             <span asp-validation-for="AddPetRequest.Gender" class="text-danger"></span>
                         </div>
-                        <!-- Color -->
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="color" name="AddPetRequest.Color" placeholder="Color">
-                            <label for="Color">Color</label>
-                            <span asp-validation-for="AddPetRequest.Color" class="text-danger"></span>
-                        </div>
 
                         <!-- Image URL -->
                         <div class="form-floating mb-3">
@@ -92,7 +86,7 @@
 
                         <!-- Weight -->
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="weight" name="AddPetRequest.Weight" placeholder="Weight" min="0" step="0.1">
+                            <input type="number" class="form-control" id="weight" name="AddPetRequest.Weight" placeholder="Weight" min="0">
                             <label for="weight">Weight</label>
                             <span asp-validation-for="AddPetRequest.Weight" class="text-danger"></span>
                         </div>
@@ -104,12 +98,6 @@
                             <span asp-validation-for="AddPetRequest.Quantity" class="text-danger"></span>
                         </div>
 
-                        <!-- healthStatus -->
-                        <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="HealthStatus" name="AddPetRequest.HealthStatus" placeholder="HealthStatus" min="0">
-                            <label for="HealthStatus">HealthStatus</label>
-                            <span asp-validation-for="AddPetRequest.HealthStatus" class="text-danger"></span>
-                        </div>
                         <!-- Last Health Check -->
                         <div class="form-floating mb-3">
                             <input type="datetime-local" class="form-control" id="lastHealthCheck" name="AddPetRequest.LastHealthCheck"
@@ -174,12 +162,14 @@
                         <label for="gender">Gender</label>
                         <span asp-validation-for="UpdatePetRequest.Gender" class="text-danger"></span>
                     </div>
+
                     <!-- Color -->
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="color" name="UpdatePetRequest.Color" placeholder="Color">
                         <label for="color">Color</label>
                         <span asp-validation-for="UpdatePetRequest.Color" class="text-danger"></span>
                     </div>
+
                     <!-- Length -->
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="length" name="UpdatePetRequest.Length" placeholder="Length" min="0">
@@ -189,7 +179,7 @@
 
                     <!-- Weight -->
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="weight" name="UpdatePetRequest.Weight" placeholder="Weight" min="0" step="0.1">
+                        <input type="number" class="form-control" id="weight" name="UpdatePetRequest.Weight" placeholder="Weight" min="0">
                         <label for="weight">Weight</label>
                         <span asp-validation-for="UpdatePetRequest.Weight" class="text-danger"></span>
                     </div>
@@ -200,6 +190,7 @@
                         <label for="quantity">Quantity</label>
                         <span asp-validation-for="UpdatePetRequest.Quantity" class="text-danger"></span>
                     </div>
+
                     <!-- healthstatus -->
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="healthStatus" name="UpdatePetRequest.HealthStatus" placeholder="HealthStatus" min="0">

@@ -36,6 +36,8 @@ namespace KVSC.Infrastructure.DB
         public DbSet<Prescription> Prescriptions { get; set; }
         public DbSet<PrescriptionDetail> PrescriptionDetails { get; set; }
         public DbSet<AppointmentVeterinarian> AppointmentVeterinarians { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Role> Roles { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,6 +61,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.ApplyConfiguration(new PrescriptionConfiguration());
             modelBuilder.ApplyConfiguration(new PrescriptionDetailConfiguration());
             modelBuilder.ApplyConfiguration(new PetHabitatConfiguration());
+            modelBuilder.ApplyConfiguration(new MessageConfiguration());
 
             #endregion
 
@@ -80,11 +83,13 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<Veterinarian>().ToTable("Veterinarian");
             modelBuilder.Entity<VeterinarianSchedule>().ToTable("VeterinarianSchedule");
             modelBuilder.Entity<PetType>().ToTable("PetType");
+            modelBuilder.Entity<Message>().ToTable("Message");
             modelBuilder.Entity<PetHabitat>().ToTable("PetHabitat");
             modelBuilder.Entity<ServiceReport>().ToTable("ServiceReport");
             modelBuilder.Entity<Prescription>().ToTable("Prescription");
             modelBuilder.Entity<PrescriptionDetail>().ToTable("PrescriptionDetail");
             modelBuilder.Entity<AppointmentVeterinarian>().ToTable("AppointmentVeterinarian");
+            modelBuilder.Entity<Message>().ToTable("Message");
             #endregion
 
             #region Relationships and Additional Configuration

@@ -1,0 +1,170 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.CustomerProfileModel
+@{
+}
+
+@{
+    ViewData["Title"] = "Profile";
+    var isEditMode = ViewData["IsEditMode"] as bool? ?? false;
+}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<div class="container mt-5">
+    <form method="post" id="profileForm">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="card-title text-center">Profile Details</h2>
+            </div>
+            <div class="card-body">
+                @if (Model.UserProfile != null)
+                {
+                    <div class="row">
+                        <div class="col-md-6 d-flex justify-content-center">
+                            <img src="@Model.UserProfile.Extensions.Data.ProfilePictureUrl"
+                                 alt="Profile Picture"
+                                 class="img-fluid rounded-circle"
+                                 style="max-height: 200px; object-fit: cover;" />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="container mt-3">
+                                @if (TempData["SuccessMessage"] != null)
+                                {
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        @TempData["SuccessMessage"]
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                }
+
+                                @if (TempData["ErrorMessage"] != null)
+                                {
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        @TempData["ErrorMessage"]
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                }
+                            </div>
+                            @if (isEditMode)
+                            {
+                                <label class="form-label"><strong>FullName:</strong></label>
+                                <input type="text" class="form-control"
+                                       name="FullName"
+                                       value="@Model.UserProfile.Extensions.Data.FullName" readonly />
+                            }
+                            else
+                            {
+                                <h3 class="display-4 text-primary mb-4">@Model.UserProfile.Extensions.Data.FullName</h3>
+                            }
+                            <!-- Username -->
+                            <div class="mb-4">
+                                <label class="form-label"><strong>Username:</strong></label>
+                                @if (isEditMode)
+                                {
+                                    <input type="text" class="form-control"
+                                           name="UserName"
+                                           value="@Model.UserProfile.Extensions.Data.UserName" />
+                                }
+                                else
+                                {
+                                    <p class="bg-light border rounded p-3">@Model.UserProfile.Extensions.Data.UserName</p>
+                                }
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-4">
+                                <label class="form-label"><strong>Email:</strong></label>
+                                @if (isEditMode)
+                                {
+                                    <input type="email" class="form-control"
+                                           name="Email"
+                                           value="@Model.UserProfile.Extensions.Data.Email" readonly />
+                                }
+                                else
+                                {
+                                    <p class="bg-light border rounded p-3">@Model.UserProfile.Extensions.Data.Email</p>
+                                }
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="mb-4">
+                                <label class="form-label"><strong>Phone Number:</strong></label>
+                                @if (isEditMode)
+                                {
+                                    <input type="text" class="form-control"
+                                           name="PhoneNumber"
+                                           value="@Model.UserProfile.Extensions.Data.PhoneNumber" />
+                                }
+                                else
+                                {
+                                    <p class="bg-light border rounded p-3">@Model.UserProfile.Extensions.Data.PhoneNumber</p>
+                                }
+                            </div>
+
+                            <!-- Address -->
+                            <div class="mb-4">
+                                <label class="form-label"><strong>Address:</strong></label>
+                                @if (isEditMode)
+                                {
+                                    <input type="text" class="form-control"
+                                           name="Address"
+                                           value="@Model.UserProfile.Extensions.Data.Address" />
+                                }
+                                else
+                                {
+                                    <p class="bg-light border rounded p-3">@Model.UserProfile.Extensions.Data.Address</p>
+                                }
+                            </div>
+
+                            <!-- Date of Birth -->
+                            <div class="mb-4">
+                                <label class="form-label"><strong>Date of Birth:</strong></label>
+                                @if (isEditMode)
+                                {
+                                    <input type="date" class="form-control"
+                                           name="DateOfBirth"
+                                           value="@Model.UserProfile.Extensions.Data.DateOfBirth.ToString("yyyy-MM-dd")" />
+                                }
+                                else
+                                {
+                                    <p class="bg-light border rounded p-3">@Model.UserProfile.Extensions.Data.DateOfBirth.ToString("dd/MM/yyyy")</p>
+                                }
+                            </div>
+
+                            <!-- Joined On (Read-only) -->
+                            <div class="mb-4">
+                                <p class="mb-1"><strong>Joined on:</strong></p>
+                                <p class="bg-light border rounded p-3">
+                                    @Model.UserProfile.Extensions.Data.CreatedDate.ToString("dd/MM/yyyy")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        Profile not found.
+                    </div>
+                }
+            </div>
+            <div class="card-footer text-end">
+                @if (isEditMode)
+                {
+                    <button type="submit" class="btn btn-success">Save</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary" id="editCustomButton">Edit</button>
+                }
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#editCustomButton').click(function () {
+            const url = new URL(window.location.href);
+            url.searchParams.set('editCustom', 'true');
+            window.location.href = url.toString();
+        });
+    });
+</script>

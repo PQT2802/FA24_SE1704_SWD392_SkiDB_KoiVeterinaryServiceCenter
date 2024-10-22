@@ -4,18 +4,13 @@ using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.Repositories.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KVSC.Application.Service.Implement
 {
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
-        public AuthService(IUserRepository userRepository) 
+        public AuthService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -31,9 +26,15 @@ namespace KVSC.Application.Service.Implement
             return response;
         }
 
-        public async Task<ResponseDto<SignUpResponse>> SignUp(SignUpRequest signUpRequest)
+        public async Task<ResponseDto<SignUpResponse>> SignUp(SignUpRequest request)
         {
-            var response = await _userRepository.SignUp(signUpRequest);
+            request.FullName = string.IsNullOrWhiteSpace(request.FullName) ? string.Empty : request.FullName;
+            request.UserName = string.IsNullOrWhiteSpace(request.UserName) ? string.Empty : request.UserName;
+            request.Password = string.IsNullOrWhiteSpace(request.Password) ? string.Empty : request.Password;
+            request.Address = string.IsNullOrWhiteSpace(request.Address) ? string.Empty : request.Address;
+            request.PhoneNumber = string.IsNullOrWhiteSpace(request.PhoneNumber) ? string.Empty : request.PhoneNumber;
+            request.Email = string.IsNullOrWhiteSpace(request.Email) ? string.Empty : request.Email;
+            var response = await _userRepository.SignUp(request);
             return response;
         }
 
