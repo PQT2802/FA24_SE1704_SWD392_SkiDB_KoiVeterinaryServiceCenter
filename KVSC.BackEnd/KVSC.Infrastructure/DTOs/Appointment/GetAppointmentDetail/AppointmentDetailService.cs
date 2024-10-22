@@ -22,6 +22,5 @@ namespace KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail
 
         public string Duration { get; set; }
 
-
     }
 }

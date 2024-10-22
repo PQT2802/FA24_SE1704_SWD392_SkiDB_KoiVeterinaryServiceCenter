@@ -137,6 +137,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .Include(a => a.ServiceReport)
                     .ThenInclude(r => r.Prescription)
                         .ThenInclude(p => p.PrescriptionDetails)
+                            .ThenInclude(pd => pd.Medicine)
                 .FirstOrDefaultAsync(a => a.Id == appointmentId && !a.IsDeleted);
 
             if (appointment == null)
@@ -145,59 +146,118 @@ namespace KVSC.Infrastructure.Implement.Repositories
             }
 
             // Map the appointment details to the DTOs
-            var appointmentDetail = new GetAppointmentDetail
+            // Initialize the GetAppointmentDetail object
+            var appointmentDetail = new GetAppointmentDetail();
+
+            // Debugging AppointmentDetailService
+            if (appointment.PetService == null)
             {
-                AppointmentDetailService = new AppointmentDetailService
+                Console.WriteLine("appointment.PetService is null");
+            }
+            else
+            {
+                var serviceCategory = appointment.PetService.PetServiceCategory?.Name ?? "N/A";
+                if (appointment.PetService.PetServiceCategory == null)
+                    Console.WriteLine("appointment.PetService.PetServiceCategory is null");
+
+                appointmentDetail.AppointmentDetailService = new AppointmentDetailService
                 {
-                    ServiceName = appointment.PetService?.Name ?? "N/A",
-                    ServiceCategory = appointment.PetService?.PetServiceCategory.Name ?? "N/A",
+                    ServiceName = appointment.PetService.Name ?? "N/A",
+                    ServiceCategory = serviceCategory,
                     PetDescription = appointment.Pet?.Note ?? "No description",
                     CreateDate = appointment.CreatedDate,
                     AppointmentDate = appointment.AppointmentDate,
-                    Cost = appointment.PetService?.BasePrice ?? 0,
-                    Duration = appointment.PetService?.Duration ?? "N/A"
-                },
-                AppointmentDetailCustomer = new AppointmentDetailCustomer
+                    Cost = appointment.PetService.BasePrice,
+                    Duration = appointment.PetService.Duration ?? "N/A"
+                };
+            }
+
+            // Debugging AppointmentDetailCustomer
+            if (appointment.Customer == null)
+            {
+                Console.WriteLine("appointment.Customer is null");
+            }
+            else
+            {
+                appointmentDetail.AppointmentDetailCustomer = new AppointmentDetailCustomer
                 {
-                    FullName = appointment.Customer?.FullName ?? "N/A",
-                    Email = appointment.Customer?.Email ?? "N/A",
-                    PhoneNumber = appointment.Customer?.PhoneNumber ?? "N/A",
-                    Address = appointment.Customer?.Address ?? "N/A"
-                },
-                AppointmentDetailVeterinarian = appointment.AppointmentVeterinarians
-                    .Select(av => new AppointmentDetailVeterinarian
+                    FullName = appointment.Customer.FullName ?? "N/A",
+                    Email = appointment.Customer.Email ?? "N/A",
+                    PhoneNumber = appointment.Customer.PhoneNumber ?? "N/A",
+                    Address = appointment.Customer.Address ?? "N/A"
+                };
+            }
+
+            // Debugging AppointmentDetailVeterinarian
+            if (appointment.AppointmentVeterinarians == null || !appointment.AppointmentVeterinarians.Any())
+            {
+                Console.WriteLine("appointment.AppointmentVeterinarians is null or empty");
+            }
+            else
+            {
+                var firstVeterinarian = appointment.AppointmentVeterinarians.FirstOrDefault();
+                if (firstVeterinarian != null && firstVeterinarian.Veterinarian?.User == null)
+                {
+                    Console.WriteLine("firstVeterinarian.Veterinarian.User is null");
+                }
+                else
+                {
+                    appointmentDetail.AppointmentDetailVeterinarian = new AppointmentDetailVeterinarian
                     {
-                        FullName = av.Veterinarian.User?.FullName ?? "N/A",
-                        Email = av.Veterinarian.User?.Email ?? "N/A",
-                        PhoneNumber = av.Veterinarian.User?.PhoneNumber ?? "N/A",
-                        Address = av.Veterinarian.User?.Address ?? "N/A",
-                        Specialty = av.Veterinarian.Specialty ?? "N/A",
-                        LicenseNumber = av.Veterinarian.LicenseNumber ?? "N/A"
-                    })
-                    .FirstOrDefault(), // If multiple veterinarians, return the first
-                AppointmentDetailKoi = new AppointmentDetailKoi
+                        FullName = firstVeterinarian?.Veterinarian?.User?.FullName ?? "N/A",
+                        Email = firstVeterinarian?.Veterinarian?.User?.Email ?? "N/A",
+                        PhoneNumber = firstVeterinarian?.Veterinarian?.User?.PhoneNumber ?? "N/A",
+                        Address = firstVeterinarian?.Veterinarian?.User?.Address ?? "N/A",
+                        Specialty = firstVeterinarian?.Veterinarian?.Specialty ?? "N/A",
+                        LicenseNumber = firstVeterinarian?.Veterinarian?.LicenseNumber ?? "N/A"
+                    };
+                }
+            }
+
+            // Debugging AppointmentDetailKoi
+            if (appointment.Pet == null)
+            {
+                Console.WriteLine("appointment.Pet is null");
+            }
+            else
+            {
+                appointmentDetail.AppointmentDetailKoi = new AppointmentDetailKoi
                 {
-                    Name = appointment.Pet?.Name ?? "N/A",
-                    Age = appointment.Pet?.Age,
-                    Quantity = appointment.Pet?.Quantity ?? 0,
-                    Color = appointment.Pet?.Color ?? "N/A",
-                    Length = appointment.Pet?.Length,
-                    Weight = appointment.Pet?.Weight
-                },
-                AppointmentDetailReport = appointment.ServiceReport != null ? new AppointmentDetailReport
+                    Name = appointment.Pet.Name ?? "N/A",
+                    Age = appointment.Pet.Age,
+                    Quantity = appointment.Pet.Quantity,
+                    Color = appointment.Pet.Color ?? "N/A",
+                    Length = appointment.Pet.Length,
+                    Weight = appointment.Pet.Weight
+                };
+            }
+
+            // Debugging AppointmentDetailReport
+            if (appointment.ServiceReport == null)
+            {
+                Console.WriteLine("appointment.ServiceReport is null");
+            }
+            else
+            {
+                var prescriptionDetails = appointment.ServiceReport.Prescription?.PrescriptionDetails?.Select(pd => new PrescriptionDetails
+                {
+                    MedicineName = pd.Medicine?.Name ?? "N/A",
+                    Quantity = pd.Quantity,
+                    Price = pd.Price
+                }).ToList();
+
+                if (appointment.ServiceReport.Prescription == null)
+                    Console.WriteLine("appointment.ServiceReport.Prescription is null");
+
+                appointmentDetail.AppointmentDetailReport = new AppointmentDetailReport
                 {
                     ReportContent = appointment.ServiceReport.ReportContent,
                     ReportDate = appointment.ServiceReport.ReportDate,
                     Recommendations = appointment.ServiceReport.Recommendations,
-                    PrescriptionDetail = appointment.ServiceReport.Prescription?.PrescriptionDetails.Select(pd => new PrescriptionDetails
-                    {
-                        // Update to access the Medicine's Name property
-                        MedicineName = pd.Medicine?.Name ?? "N/A", // Use pd.Medicine.Name
-                        Quantity = pd.Quantity,
-                        Price = pd.Price
-                    }).ToList()
-                } : null
-            };
+                    PrescriptionDetail = prescriptionDetails
+                };
+            }
+
 
             return appointmentDetail;
         }

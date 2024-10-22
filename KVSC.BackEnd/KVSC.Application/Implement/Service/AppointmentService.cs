@@ -152,7 +152,7 @@ namespace KVSC.Application.Implement.Service
 
         public async Task<Result> GetAppointmentDetailByIdAsync(Guid appointmentId)
         {
-            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentDetailByIdAsync(appointmentId);
+            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentDetailAsync(appointmentId);
             if (appointment == null)
             {
                 return Result.Failure(Error.NotFound("AppointmentNotFound", "Appointment not found."));
