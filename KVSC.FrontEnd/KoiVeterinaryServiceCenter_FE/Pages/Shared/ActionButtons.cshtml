@@ -45,8 +45,14 @@
     </button>
     <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this pet?');">
         <input type="hidden" name="Id" value="@Model.Item.Id" />
-        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
     </form>
+    <!-- Detail Button -->
+    <a class="btn btn-sm btn-info"
+       asp-page="/User/Customer/PetDetail"
+       asp-route-id="@Model.Item.Id">
+        Detail
+    </a>
 }
 else if (Model.ListType == "appointment")
 {

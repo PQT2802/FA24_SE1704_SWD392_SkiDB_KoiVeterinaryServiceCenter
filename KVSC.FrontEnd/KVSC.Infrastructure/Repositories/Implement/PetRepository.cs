@@ -11,6 +11,7 @@ using KVSC.Infrastructure.Repositories.Interface;
 using KVSC.Infrastructure.DTOs.Pet;
 using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
+using KVSC.Infrastructure.DTOs.Pet.GetPet;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
@@ -246,6 +247,57 @@ namespace KVSC.Infrastructure.Repositories.Implement
             catch (Exception ex)
             {
                 return new ResponseDto<DeletePetResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDto<GetPetResponse>> GetPetDetail(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/Pet?Id={id}");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetPetResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get pet information."
+                    };
+                }
+
+                var pet = await response.Content.ReadFromJsonAsync<GetPetResponse>(options);
+
+                return new ResponseDto<GetPetResponse>
+                {
+                    IsSuccess = true,
+                    Data = pet,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<GetPetResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<GetPetResponse>
                 {
                     IsSuccess = false,
                     Data = null,

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.DTOs.Pet
+namespace KVSC.Infrastructure.DTOs.Pet.GetPet
 {
-    public class PetList
+    public class GetPetResponse
     {
-        public Extensions<List<PetData>> Extensions { get; set; }
-    }
+        public Extensions<GetPetData> Extensions { get; set; }
 
-    public class PetData : IPropertyNameProvider
+    }
+    public class GetPetData
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -25,12 +25,6 @@ namespace KVSC.Infrastructure.DTOs.Pet
         public DateTime LastHealthCheck { get; set; }
         public string Note { get; set; }
         public int HealthStatus { get; set; }
-
-        public string Owner { get; set; } // The name of the owner
-
-        public List<string> GetPropertyNames()
-        {
-            return new List<string> { nameof(Name), nameof(Gender), nameof(Color), nameof(Length), nameof(Weight), nameof(Quantity), nameof(Owner) };
-        }
+        public string Owner { get; set; }
     }
 }

@@ -1,0 +1,78 @@
+﻿@page "{id:guid}"
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.PetDetailModel
+@{
+    Layout = "_LayoutBoard";
+}
+@{
+    ViewData["Title"] = "Pet Details";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="card-title text-center">Pet Details</h2>
+        </div>
+        <div class="card-body">
+            @if (Model.PetDetail != null)
+            {
+                <div class="row">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <img src="@Model.PetDetail.Extensions.Data.ImageUrl" alt="Pet Image" class="img-fluid rounded" style="max-height: 300px; object-fit: cover;" />
+                    </div>
+                    <div class="col-md-6">
+                        <h3>@Model.PetDetail.Extensions.Data.Name</h3>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Age:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.Age</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Gender:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.Gender</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Color:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.Color</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Length:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.Length</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Weight:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.Weight</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Quantity:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.Quantity</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Last Health Check:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.LastHealthCheck.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Note:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.Note</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Health Status:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.HealthStatus</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Owner:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.PetDetail.Extensions.Data.Owner</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    Pet not found.
+                </div>
+            }
+        </div>
+        <div class="card-footer text-end">
+            <a href="User/Customer/Pet" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>
