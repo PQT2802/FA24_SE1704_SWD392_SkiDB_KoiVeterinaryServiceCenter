@@ -200,7 +200,7 @@
         // Nhận cập nhật trạng thái từ SignalR
         connection.on("UpdateUserStatus", (userId, isOnline) => {
             updateUserStatus(userId, isOnline);
-        });
+        }); 
         // Hàm cập nhật trạng thái người dùng
         function updateUserStatus(userId, isOnline) {
             const recipientId = document.querySelector(".header-chat").getAttribute("data-recipient-id");
