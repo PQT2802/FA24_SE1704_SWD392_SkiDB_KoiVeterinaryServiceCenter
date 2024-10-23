@@ -51,6 +51,9 @@ using KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport;
 using KVSC.Infrastructure.DTOs.ServiceReport.UpdateServiceReport;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.DTOs.User.AddUser;
+using KVSC.Infrastructure.DTOs.Rating.AddRating;
+using KVSC.Application.Common.Validator.Rating;
+using KVSC.Infrastructure.DTOs.Rating.UpdateRating;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -125,6 +128,9 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<UpdateUserRequest>, UpdateUserValidator>();
             services.AddTransient<IValidator<AddUserRequest>, AddUserValidator>();
 
+            services.AddTransient<IValidator<AddRatingRequest>, AddRatingValidator>();
+            services.AddTransient<IValidator<UpdateRatingRequest>, UpdateRatingValidator>();
+
             //Validator
 
             #endregion
@@ -148,6 +154,8 @@ namespace KVSC.WebAPI.Startup
 
             services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
             services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
+
+            services.AddTransient<IRatingRepository, RatingRepository>();
 
 
             #endregion
@@ -187,6 +195,7 @@ namespace KVSC.WebAPI.Startup
 
             services.AddTransient<IUserService, UserService>();
 
+            services.AddTransient<IRatingService, RatingService>();
 
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();

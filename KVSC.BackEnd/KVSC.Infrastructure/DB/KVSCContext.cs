@@ -38,6 +38,8 @@ namespace KVSC.Infrastructure.DB
         public DbSet<AppointmentVeterinarian> AppointmentVeterinarians { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -83,13 +85,13 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<Veterinarian>().ToTable("Veterinarian");
             modelBuilder.Entity<VeterinarianSchedule>().ToTable("VeterinarianSchedule");
             modelBuilder.Entity<PetType>().ToTable("PetType");
-            modelBuilder.Entity<Message>().ToTable("Message");
             modelBuilder.Entity<PetHabitat>().ToTable("PetHabitat");
             modelBuilder.Entity<ServiceReport>().ToTable("ServiceReport");
             modelBuilder.Entity<Prescription>().ToTable("Prescription");
             modelBuilder.Entity<PrescriptionDetail>().ToTable("PrescriptionDetail");
             modelBuilder.Entity<AppointmentVeterinarian>().ToTable("AppointmentVeterinarian");
             modelBuilder.Entity<Message>().ToTable("Message");
+            modelBuilder.Entity<Rating>().ToTable("Rating");
             #endregion
 
             #region Relationships and Additional Configuration
@@ -224,6 +226,18 @@ namespace KVSC.Infrastructure.DB
                 .HasForeignKey(sr => sr.AppointmentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Ratings)
+                .WithOne(r => r.Customer)
+                .HasForeignKey(r => r.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Cấu hình quan hệ giữa PetService và Rating
+            modelBuilder.Entity<PetService>()
+                .HasMany(s => s.Ratings)
+                .WithOne(r => r.Service)
+                .HasForeignKey(r => r.ServiceId)
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
         }
     }
