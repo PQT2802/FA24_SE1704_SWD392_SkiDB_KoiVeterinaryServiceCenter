@@ -1,5 +1,6 @@
 ﻿using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppointment;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,8 @@ namespace KVSC.Application.Interface.IService
         public Task<Result> GetAppointmentListByUserIdAsync(Guid userId);
         public Task<Result> GetAppointmentListAsync();
         public Task<Result> UpdateAppointmentStatusAsync(Guid appointmentId, string status);
+
+        public Task<Result> GetAppointmentDetailByIdAsync(Guid appointmentId);
+
     }
 }

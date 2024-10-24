@@ -9,180 +9,188 @@
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <!-- Koi Information Start -->
-        <div class="col-sm-12 col-xl-6 text-center">
-            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 200px; height: 200px;">
-            <div class="bg-light rounded p-4 mt-3">
-                <h2 class="mb-4 p-2 mb-2 bg-primary text-white">Koi Information</h2>
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <div class="d-flex">
-                                <h3 style=" font-size: 18px;">Name:</h3>
-                                <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">Golden</h3>
-                            </div>
-                            <div class="d-flex">
-                                <h3 style="font-size: 18px;">Birth:</h3>
-                                <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">20/11/2021</h3>
-                            </div>
-                            <div class="d-flex">
-                                <h3 style="font-size: 18px;">Name:</h3>
-                                <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">Golden</h3>
+        @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailKoi != null)
+        {
+            <div class="col-sm-12 col-xl-6 text-center">
+                <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 200px; height: 200px;">
+                <div class="bg-light rounded p-4 mt-3">
+                    <h2 class="mb-4 p-2 mb-2 bg-primary text-white">Koi Information</h2>
+                    <div class="row g-4">
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-light text-center rounded p-4">
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Name:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Name</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Age:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Age</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Color:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Color</h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4">
-                            <div class="d-flex">
-                                <h3 style=" font-size: 18px;">Quantity:</h3>
-                                <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">50</h3>
-                            </div>
-                            <div class="d-flex">
-                                <h3 style="font-size: 18px;">Color:</h3>
-                                <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;"></h3>
-                            </div>
-                            <div class="d-flex">
-                                <h3 style="font-size: 18px;">Lenght:</h3>
-                                <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;"></h3>
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-light text-center rounded p-4">
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Quantity:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Quantity</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Weight:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Weight</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Length:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Length</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
         <!-- Koi Information End -->
-        <div class="col-sm-12 col-xl-6">
-            <!-- Service Information Start -->
-            <div class="bg-light rounded p-4 mt-4">
-                <h4 class="mb-4 text-center text-primary">Appointment Information</h4>
-                <!-- Service Name -->
-                <div class="row mb-3">
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Service Name:</h6>
-                        <p class="text-primary mb-0">Veterinary Checkup</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Service Category:</h6>
-                        <p class="text-primary mb-0">Health & Wellness</p>
-                    </div>
-                </div>
-                <!-- Service Description -->
-                <div class="row mb-3">
-                    <div class="col-sm-12">
-                        <h6 class="mb-1">Description:</h6>
-                        <p class="text-muted mb-0">
-                            A comprehensive health check for your Koi to ensure they are free from diseases, infections, and any abnormalities. This service includes a detailed examination of your Koi's physical condition, water quality testing, and personalized care recommendations.
-                        </p>
+        @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailService != null)
+        {
+            <div class="col-sm-12 col-xl-6">
+                <!-- Service Information Start -->
+                <div class="bg-light rounded p-4 mt-4">
+                    <h4 class="mb-4 text-center text-primary">Appointment Information</h4>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Service Name:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.ServiceName</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Service Category:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.ServiceCategory</p>
+                        </div>
                     </div>
                 </div>
-                <!-- Service Cost -->
-                <div class="row mb-3">
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Customer:</h6>
-                        <p class="text-primary mb-0">Alan</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Email:</h6>
-                        <p class="text-primary mb-0">alandibo@gmail.com</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Phone:</h6>
-                        <p class="text-primary mb-0">123456789</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Cost:</h6>
-                        <p class="text-primary mb-0">$50</p>
-                    </div>
-
-                </div>
-                <!-- Service Additional Info -->
-                <div class="row mb-3">
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Duration:</h6>
-                        <p class="text-primary mb-0">45 minutes</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Location:</h6>
-                        <p class="text-primary mb-0">Veterinary Clinic, Pond Lane</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Create Date:</h6>
-                        <p class="text-primary mb-0">2/11/2024</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <h6 class="mb-1">Appoiment Date:</h6>
-                        <p class="text-primary mb-0">2/11/2024</p>
-                    </div>
-                </div>
+                <!-- Service Information End -->
             </div>
-            <!-- Service Information End -->
-        </div>
+        }
     </div>
 
-    <div style="height: 20px ;width: 100%;"></div>
-
-    <div class="row g-4 ">
+    <div class="row g-4">
         <!-- Report Information Start -->
-        <div class="col-sm-12 col-xl-6">
-            <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Report</h6>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Report content">
-                    <label for="floatingInput">Report content</label>
-                </div>
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 150px;"></textarea>
-                    <label for="floatingTextarea">Comments</label>
-                </div>
+        @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport != null)
+        {
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">Service Report</h6>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="reportContent" placeholder="Enter Report Content" style="height: 100px;">
+                            @(Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport?.ReportContent ?? "")
+                            </textarea>
+                        <label for="reportContent">Report Content</label>
+                    </div>
 
-                <!-- Button to add medicine -->
-                <button class="btn btn-primary mb-3" onclick="toggleMedicineForm()">Add Medicine</button>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="reportDate" value="@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport?.ReportDate.ToString("yyyy-MM-dd")">
+                        <label for="reportDate">Report Date</label>
+                    </div>
 
-                <!-- Medicine form (hidden initially) -->
-                <div id="medicineForm" style="display: none;">
-                    <h6 class="mb-3">Add Medicine</h6>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="medicineName" placeholder="Medicine Name">
-                        <label for="medicineName">Medicine Name</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="dosage" placeholder="Dosage">
-                        <label for="dosage">Dosage</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="frequency" placeholder="Frequency">
-                        <label for="frequency">Frequency</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" placeholder="Instructions" id="instructions" style="height: 100px;"></textarea>
-                        <label for="instructions">Instructions</label>
+                        <textarea class="form-control" id="recommendations" placeholder="Enter Recommendations" style="height: 100px;">
+                            @(Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport?.Recommendations ?? "")
+                            </textarea>
+                        <label for="recommendations">Recommendations</label>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Report Information End -->
-        <!-- Vet Information Start -->
-        <div class="col-sm-12 col-xl-6">
-            <div class="row g-4">
-                <!-- Left Column: Information -->
-                <div class="col-sm-12 col-xl-6">
-                    <div class="bg-light rounded p-4">
-                        <h6 class="mb-3">User Information</h6>
-                        <p><strong>Name:</strong> John Doe</p>
-                        <p><strong>Email:</strong> john.doe@example.com</p>
-                        <p><strong>Phone:</strong> (123) 456-7890</p>
-                        <p><strong>Address:</strong> 123 Main Street, Cityville</p>
-                    </div>
-                </div>
+        }
 
-                <!-- Right Column: Image -->
-                <div class="col-sm-12 col-xl-6 d-flex justify-content-center align-items-center">
-                    <div>
-                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 250px; height: 300px;">
-                    </div>
+        <!-- Prescription Section (Visible if PrescriptionDetail is not null) -->
+        @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport?.PrescriptionDetail != null)
+        {
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">Prescription Details</h6>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Medicine Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var prescription in Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.PrescriptionDetail)
+                            {
+                                <tr>
+                                    <td>@prescription.MedicineName</td>
+                                    <td>@prescription.Quantity</td>
+                                    <td>@prescription.Price</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-        <!-- Vet Information End -->
+        }
     </div>
 </div>
 <!-- Appointment Information End -->
+
+
+<script>
+    // Function to toggle prescription form visibility
+    function togglePrescriptionForm() {
+        const form = document.getElementById('prescriptionForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Function to show or hide the prescription section
+    function togglePrescription(hasPrescription) {
+        const prescriptionSection = document.getElementById('prescriptionSection');
+        if (hasPrescription) {
+            prescriptionSection.style.display = 'block';
+            populatePrescriptionDetails(); // Populate table if has prescription
+        } else {
+            prescriptionSection.style.display = 'none';
+        }
+    }
+
+    // Function to save the new prescription
+    function savePrescription() {
+        const medicineName = document.getElementById('medicineName').value;
+        const quantity = document.getElementById('quantity').value;
+        const price = document.getElementById('price').value;
+
+        // Append new row to prescription details table
+        const table = document.getElementById('prescriptionDetailsTable');
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${medicineName}</td><td>${quantity}</td><td>${price}</td>`;
+        table.appendChild(row);
+
+        // Hide the form after saving
+        togglePrescriptionForm();
+    }
+
+    // Function to populate prescription details dynamically
+    function populatePrescriptionDetails() {
+        const prescriptionDetails = [
+            { medicine: 'Antibiotic', quantity: 5, price: 10 },
+            { medicine: 'Vitamin C', quantity: 3, price: 15 }
+        ];
+
+        const table = document.getElementById('prescriptionDetailsTable');
+        table.innerHTML = ''; // Clear existing rows
+
+        prescriptionDetails.forEach(detail => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${detail.medicine}</td><td>${detail.quantity}</td><td>${detail.price}</td>`;
+            table.appendChild(row);
+        });
+    }
+
+    // Example usage: Toggle prescription display based on whether a prescription exists
+    document.addEventListener('DOMContentLoaded', function () {
+        const hasPrescription = true; // For example purposes, this would come from your data
+        togglePrescription(hasPrescription);
+    });
+</script>

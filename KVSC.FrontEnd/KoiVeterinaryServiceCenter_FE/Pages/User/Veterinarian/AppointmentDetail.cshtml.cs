@@ -15,7 +15,8 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
         }
 
         // Property to hold the appointment details
-        public GetAppointmentDetailResponse GetAppointmentDetailResponse { get; set; }
+        [BindProperty]
+        public GetAppointmentDetailResponse GetAppointmentDetailResponse { get; set; } = new GetAppointmentDetailResponse();
 
         public async Task<IActionResult> OnGetAsync(Guid appointmentId)
         {

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail
+namespace KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail
 {
-    public class AppointmentDetailVet : AppointmentDetailCustomer
+    public class AppointmentDetailVeterinarian : AppointmentDetailCustomer
     {
         public string Specialty { get; set; }
+
         public string LicenseNumber { get; set; }
     }
 }

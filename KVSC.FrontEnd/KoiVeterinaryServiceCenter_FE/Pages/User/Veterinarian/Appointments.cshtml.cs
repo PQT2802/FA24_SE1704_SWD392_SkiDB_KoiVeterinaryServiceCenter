@@ -60,15 +60,5 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
         }
 
 
-
-
-        //public async Task<IActionResult> OnPostSubmitReportAsync()
-        //{
-        //    // Submit report for the appointment
-        //    await _appointmentsService.SubmitReportAsync(AddServiceReport);
-
-        //    // Redirect after submission
-        //    return RedirectToPage();
-        //}
     }
 }

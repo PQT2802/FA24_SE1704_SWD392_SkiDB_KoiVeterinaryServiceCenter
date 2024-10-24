@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail
+namespace KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail
 {
     public class AppointmentDetailService
     {
@@ -16,10 +16,11 @@ namespace KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail
 
         public DateTime CreateDate { get; set; }
 
-        public DateTime AppointmentDate { get; set; }
+        public DateTime AppointmentDate { get; set; } 
 
         public decimal Cost { get; set; }
 
         public string Duration { get; set; }
+
     }
 }
