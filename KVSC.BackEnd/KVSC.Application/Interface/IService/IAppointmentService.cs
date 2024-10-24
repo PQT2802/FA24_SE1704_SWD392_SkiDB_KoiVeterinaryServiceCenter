@@ -1,5 +1,6 @@
 ﻿using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppointment;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace KVSC.Application.Interface.IService
         public Task<Result> MakeAppointmentForComboAsync(MakeAppointmentForComboRequest request);
         public Task<Result> GetAppointmentListByUserIdAsync(Guid userId);
         public Task<Result> GetAppointmentListAsync();
+        public Task<Result> GetAppointmentDetailByIdAsync(Guid appointmentId);
     }
 }

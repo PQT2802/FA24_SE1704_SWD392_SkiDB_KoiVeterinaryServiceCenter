@@ -64,6 +64,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.ApplyConfiguration(new PrescriptionDetailConfiguration());
             modelBuilder.ApplyConfiguration(new PetHabitatConfiguration());
             modelBuilder.ApplyConfiguration(new MessageConfiguration());
+            modelBuilder.ApplyConfiguration(new RatingConfiguration());
 
             #endregion
 
@@ -225,6 +226,12 @@ namespace KVSC.Infrastructure.DB
                 .WithMany()
                 .HasForeignKey(sr => sr.AppointmentId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.ServiceReport)
+                .WithOne(sr => sr.Appointment)
+                .HasForeignKey<ServiceReport>(sr => sr.AppointmentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Ratings)

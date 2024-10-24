@@ -58,6 +58,15 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Fetched appointment list for the specified vet successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        // GET: api/appointment/detail/{id}
+        [HttpGet("detail/{appointmentId}")]
+        public async Task<IResult> GetAppointmentDetailByIdAsync(Guid appointmentId)
+        {
+            Result result = await _appointmentService.GetAppointmentDetailByIdAsync(appointmentId);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Fetched appointment detail successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
 
     }
 }

@@ -149,5 +149,15 @@ namespace KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(appointments);
         }
+
+        public async Task<Result> GetAppointmentDetailByIdAsync(Guid appointmentId)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentDetailAsync(appointmentId);
+            if (appointment == null)
+            {
+                return Result.Failure(Error.NotFound("AppointmentNotFound", "Appointment not found."));
+            }
+            return Result.SuccessWithObject(appointment);
+        }
     }
 }

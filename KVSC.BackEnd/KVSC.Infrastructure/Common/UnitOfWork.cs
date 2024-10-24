@@ -23,10 +23,11 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IAppointmentRepository AppointmentRepository { get; private set; }
         public IPetTypeRepository PetTypeRepository { get; private set; }
         public IPetHabitatRepository PetHabitatRepository { get; private set; }
-
         public IMessageRepository MessageRepository { get; private set; }
         public IServiceReportRepository ServiceReportRepository { get; private set; }
         public IPrescriptionRepository PrescriptionRepository { get; private set; }
+
+        public IVeterinarianScheduleRepository VeterinarianScheduleRepository {  get; private set; }
         public IRatingRepository RatingRepository {  get; private set; }
         public UnitOfWork(KVSCContext context, StorageClient storageClient)
         {
@@ -45,6 +46,8 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
             MessageRepository = new MessageRepository(_context);
             ServiceReportRepository = new ServiceReportRepository(_context);
             PrescriptionRepository = new PrescriptionRepository(_context);
+            VeterinarianScheduleRepository = new VeterinarianScheduleRepository(_context);
+
             RatingRepository = new RatingRepository(_context);
         }
 
