@@ -11,7 +11,6 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
     {
         public static Error FieldIsEmpty(string nameField)  
             => Error.Validation("PetService.Empty", $"The '{nameField}' field is required.");
-
         public static Error InvalidFieldValue(string fieldName)
             => Error.Validation("PetService.InvalidValue", $"The '{fieldName}' field has an invalid value.");
         public static Error InvalidDateTimeCheck(string dateFrom, string dateTo)
@@ -24,6 +23,8 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
 
         public static Error PetServiceUpdateFailed()
             => Error.Validation("PetService.UpdateFailed", "Failed to update PetService.");
+        public static Error PetServiceUpdateImgFailed()
+            => Error.Validation("PetService.UpdateImgFailed", "Failed to update Image PetService.");
 
         public static Error PetServiceDeleteFailed()
            => Error.Validation("PetService.DeleteFailed", "Failed to delete PetService.");

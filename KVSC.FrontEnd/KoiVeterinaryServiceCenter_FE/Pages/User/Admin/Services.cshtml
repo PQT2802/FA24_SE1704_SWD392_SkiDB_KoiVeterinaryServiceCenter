@@ -71,10 +71,16 @@
                             <span asp-validation-for="AddServiceRequest.Duration" class="text-danger"></span>
                         </div>
 
-                        <!-- Image URL -->
+                        @* <!-- Image URL -->
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="imageUrl" name="AddServiceRequest.ImageUrl" placeholder="Image URL">
                             <label for="imageUrl">Image URL</label>
+                            <span asp-validation-for="AddServiceRequest.ImageUrl" class="text-danger"></span>
+                        </div> *@
+                        <!-- Image Upload -->
+                        <div class="form-floating mb-3">
+                            <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
+                            <label for="imageFile">Upload Image</label>
                             <span asp-validation-for="AddServiceRequest.ImageUrl" class="text-danger"></span>
                         </div>
 
@@ -146,11 +152,24 @@
                         <span asp-validation-for="UpdateServiceRequest.Duration" class="text-danger"></span>
                     </div>
 
-                    <!-- Image URL -->
+                    @* <!-- Image URL -->
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="imageUrl" name="UpdateServiceRequest.ImageUrl" placeholder="Image URL" >
                         <label for="imageUrl">Image URL</label>
                         <span asp-validation-for="UpdateServiceRequest.ImageUrl" class="text-danger"></span>
+                    </div>
+ *@
+                   <!-- Image File -->
+                    <div class="mb-3">
+                        <label for="serviceImageFile" class="form-label">Choose Image</label>
+                        <input type="file" class="form-control" id="serviceImageFile" name="imageFile" accept="image/*" />
+                        <span asp-validation-for="UpdateServiceRequest.ImageUrl" class="text-danger"></span>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="mb-3">
+                        <label for="serviceImagePreview" class="form-label">Image Preview</label>
+                        <img id="serviceImagePreview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
                     </div>
 
                     <!-- Available From -->
@@ -181,7 +200,7 @@
     </div>
 </div>
 @*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
-<script>
+@* <script>
     $(document).ready(function () {
         $('#submitServiceForm').click(function (e) {
             e.preventDefault();
@@ -208,6 +227,47 @@
             });
         });
     });
+</script> *@
+<script>
+$(document).ready(function () {
+    $('#submitServiceForm').click(function (e) {
+        e.preventDefault();
+
+        // Kiểm tra trường file ảnh
+        var imageFile = $('#imageFile').get(0).files.length;
+
+        if (imageFile === 0) {
+            alert('Please select a photo before creating a service.');
+            return; // Ngừng thực hiện nếu không có ảnh
+        }
+
+        // Tạo một FormData để gửi dữ liệu
+        var formData = new FormData($('#createServiceForm')[0]);
+
+        $.ajax({
+            type: "POST",
+            url: window.location.pathname + "?handler=CreateService",
+            data: formData,
+            contentType: false, // Không gửi Content-Type
+            processData: false, // Không xử lý dữ liệu
+            success: function (response) {
+                if (response.isSuccess) {
+                    $('#createServiceModal').modal('hide');
+                    alert('Create successful');
+                    location.reload();
+                } else {
+                    $('span[data-valmsg-for]').text('');
+                    for (const [key, value] of Object.entries(response.errors)) {
+                        $(`span[data-valmsg-for='AddServiceRequest.${key}']`).text(value);
+                    }
+                }
+            },
+            error: function () {
+                console.log('Error.');
+            }
+        });
+    });
+});
 </script>
 @*-------------------------------------------------------------- Update ------------------------------------------------------------------*@
 <script>
@@ -237,37 +297,89 @@
             $('#updateServiceModal #availableTo').val(availableTo);
             $('#updateServiceModal #travelCost').val(travelCost);
 
+             $('#updateServiceModal #serviceImagePreview').attr('src', imageUrl).show();
+
             // Hiển thị modal
             $('#updateServiceModal').modal('show');
         });
 
+        // // Xử lý submit form cập nhật
+        // $('#updateServiceForm').submit(function (e) {
+        //     e.preventDefault(); // Ngăn chặn hành vi mặc định
+
+        //     $.ajax({
+        //         type: "POST",
+        //         url: window.location.pathname + "?handler=UpdateService", // Gửi đến đúng handler
+        //         data: $(this).serialize(),
+        //         success: function (response) {
+        //             if (response.isSuccess) {
+        //                 $('#updateServiceModal').modal('hide');
+        //                 alert('Update successful');
+        //                 location.reload();
+        //             } else {
+        //                 $('span[data-valmsg-for]').text('');
+        //                 // Hiển thị lỗi vào các input tương ứng
+        //                 for (const [key, value] of Object.entries(response.errors)) {
+        //                     $(`span[data-valmsg-for='UpdateServiceRequest.${key}']`).text(value);
+        //                 }
+        //             }
+        //         },
+        //         error: function () {
+        //             console.log('Có lỗi xảy ra.');
+        //         }
+        //     });
+        // });
         // Xử lý submit form cập nhật
+        // Khi chọn file ảnh
+        $('#serviceImageFile').change(function (e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    // Cập nhật ảnh xem trước
+                    $('#serviceImagePreview').attr('src', event.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
         $('#updateServiceForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
+            var imageFile = $('#serviceImageFile').get(0).files.length;
 
-            $.ajax({
-                type: "POST",
-                url: window.location.pathname + "?handler=UpdateService", // Gửi đến đúng handler
-                data: $(this).serialize(),
-                success: function (response) {
-                    if (response.isSuccess) {
-                        $('#updateServiceModal').modal('hide');
-                        alert('Update successful');
-                        location.reload();
-                    } else {
-                        $('span[data-valmsg-for]').text('');
-                        // Hiển thị lỗi vào các input tương ứng
-                        for (const [key, value] of Object.entries(response.errors)) {
-                            $(`span[data-valmsg-for='UpdateServiceRequest.${key}']`).text(value);
+            if (imageFile === 0) {
+                alert('Please select a photo before updating a service.');
+                return; // Ngừng thực hiện nếu không có ảnh
+            }
+
+            // Tạo FormData
+            var formData = new FormData(this);
+        
+            // Gọi Ajax
+                $.ajax({
+                    type: "POST",
+                    url: window.location.pathname + "?handler=UpdateService", // Gửi đến đúng handler
+                    data: formData,
+                    processData: false, // Ngăn jQuery xử lý dữ liệu
+                    contentType: false, // Ngăn jQuery thiết lập Content-Type
+                    success: function (response) {
+                        if (response.isSuccess) {
+                            $('#updateServiceModal').modal('hide');
+                            alert('Update successful');
+                            location.reload();
+                        } else {
+                            $('span[data-valmsg-for]').text('');
+                            // Hiển thị lỗi vào các input tương ứng
+                            for (const [key, value] of Object.entries(response.errors)) {
+                                $(`span[data-valmsg-for='UpdateServiceRequest.${key}']`).text(value);
+                            }
                         }
+                    },
+                    error: function () {
+                        console.log('Có lỗi xảy ra.');
                     }
-                },
-                error: function () {
-                    console.log('Có lỗi xảy ra.');
-                }
+                });
             });
         });
-    });
 </script>
  @*-------------------------------------------------------------- delete ------------------------------------------------------------------*@
 <script>

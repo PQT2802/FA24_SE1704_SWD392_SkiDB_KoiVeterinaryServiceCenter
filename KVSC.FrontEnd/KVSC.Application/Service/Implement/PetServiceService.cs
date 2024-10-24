@@ -7,6 +7,7 @@ using KVSC.Infrastructure.DTOs.Service.GetServiceDetail;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
 using KVSC.Infrastructure.Repositories.Implement;
 using KVSC.Infrastructure.Repositories.Interface;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,20 +25,20 @@ namespace KVSC.Application.Service.Implement
             _petServiceRepository = petServiceRepository;
         }
 
-        public async Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request)
+        public async Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request, IFormFile imageFile)
         {
             request.Name = string.IsNullOrWhiteSpace(request.Name) ? string.Empty : request.Name;
             request.Duration = string.IsNullOrWhiteSpace(request.Duration) ? string.Empty : request.Duration;
             request.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? string.Empty : request.ImageUrl;
-            var response = await _petServiceRepository.AddPetService(request);
+            var response = await _petServiceRepository.AddPetService(request, imageFile);
             return response;
         }
-        public async Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request)
+        public async Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request, IFormFile imageFile)
         {
             request.Name = string.IsNullOrWhiteSpace(request.Name) ? string.Empty : request.Name;
             request.Duration = string.IsNullOrWhiteSpace(request.Duration) ? string.Empty : request.Duration;
             request.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? string.Empty : request.ImageUrl;
-            var response = await _petServiceRepository.UpdatePetService(request);
+            var response = await _petServiceRepository.UpdatePetService(request, imageFile);
             return response;
         }
         public async Task<ResponseDto<DeleteServiceResponse>> DeletePetService(DeleteServiceRequest request)
