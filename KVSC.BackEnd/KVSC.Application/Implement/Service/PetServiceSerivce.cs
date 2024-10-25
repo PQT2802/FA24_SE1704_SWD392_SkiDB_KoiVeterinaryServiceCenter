@@ -5,6 +5,7 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Firebase.AddImage;
+using KVSC.Infrastructure.DTOs.Firebase.GetImage;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.DTOs.PetService;
 using KVSC.Infrastructure.DTOs.PetService.GetPetService;
@@ -126,19 +127,27 @@ namespace KVSC.Application.Implement.Service
         public async Task<Result> GetAllPetServicesAsync()
         {
             var petServices = await _unitOfWork.PetServiceRepository.GetAllServicesAsync();
-            var petServiceRespone = petServices.Select(service => new GetPetServiceResponse
+            var petServiceRespone = new List<GetPetServiceResponse>();
+            foreach (var service in petServices)
             {
-                Id = service.Id,
-                Name = service.Name,
-                BasePrice = service.BasePrice,
-                Duration = service.Duration,
-                ImageUrl = service.ImageUrl,
-                AvailableFrom = service.AvailableFrom,
-                AvailableTo = service.AvailableTo,
-                TravelCost = service.TravelCost,
-                ServiceCategory = service.PetServiceCategory?.Name  ?? string.Empty,
-                PetServiceCategoryId = service.PetServiceCategoryId
-            }).ToList();
+                var getImgRequest = new GetImageRequest(service.ImageUrl);
+                var petServiceImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getImgRequest);
+
+                var serviceResponse = new GetPetServiceResponse
+                {
+                    Id = service.Id,
+                    Name = service.Name,
+                    BasePrice = service.BasePrice,
+                    Duration = service.Duration,
+                    ImageUrl = petServiceImg?.ImageUrl ?? string.Empty, 
+                    AvailableFrom = service.AvailableFrom,
+                    AvailableTo = service.AvailableTo,
+                    TravelCost = service.TravelCost,
+                    ServiceCategory = service.PetServiceCategory?.Name ?? string.Empty,
+                    PetServiceCategoryId = service.PetServiceCategoryId
+                };
+                petServiceRespone.Add(serviceResponse);
+            }
             return Result.SuccessWithObject(petServiceRespone);
         }
 
@@ -149,13 +158,17 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
             }
+            /*============================================lay anh==========================================================*/
+            var getimg = new GetImageRequest(petService.ImageUrl);
+            var petServicesImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getimg);
+            /*============================================lay anh==========================================================*/
             var petServiceRespone = new GetPetServiceResponse 
             { 
                 Id = petService.Id,
                 Name = petService.Name,
                 BasePrice = petService.BasePrice,
                 Duration = petService.Duration,
-                ImageUrl = petService.ImageUrl,
+                ImageUrl = petServicesImg.ImageUrl ?? string.Empty,
                 AvailableFrom = petService.AvailableFrom,
                 AvailableTo = petService.AvailableTo,
                 TravelCost = petService.TravelCost,
