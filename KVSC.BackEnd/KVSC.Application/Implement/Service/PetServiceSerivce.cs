@@ -102,7 +102,7 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(uploadImageResult.Error);
             }
-            var result =  await UpdatePetServiceImageUrl(request.PetServiceId, uploadImageResult.FilePath);
+            var result =  await UpdatePetServiceImageUrl(request.Id, uploadImageResult.FilePath);
             return Result.SuccessWithObject(result);
         }
         public async Task<Result> UpdatePetServiceImageUrl(Guid petServiceId, string imageUrl)
@@ -200,22 +200,7 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetServiceErrorMessage.InvalidFieldValue("PetServiceCategory"));
             }
-            //if (updatePetServiceRequest.ImageFile != null)
-            //{
-            //    // Create a new AddImageRequest for the image file
-            //    var imageRequest = new AddImageRequest(updatePetServiceRequest.ImageFile, "PetServices");
-
-            //    // Upload the image and get the result
-            //    var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest);
-
-            //    if (!uploadImageResult.Success)
-            //    {
-            //        return Result.Failure(uploadImageResult.Error); // Return the error from image upload
-            //    }
-
-            //    // Update the ImageUrl with the new uploaded image path
-            //    existingPetService.ImageUrl = uploadImageResult.FilePath;
-            //}
+            
             // Update the properties
             existingPetService.Name = updatePetServiceRequest.Name; // Update Name
             existingPetService.PetServiceCategoryId = updatePetServiceRequest.PetServiceCategoryId;
@@ -225,7 +210,6 @@ namespace KVSC.Application.Implement.Service
             existingPetService.AvailableTo = updatePetServiceRequest.AvailableTo;
             existingPetService.TravelCost = updatePetServiceRequest.TravelCost;
             existingPetService.ModifiedDate = DateTime.UtcNow;
-            existingPetService.ImageUrl = updatePetServiceRequest.ImageUrl;
             // Update the service
             var updateResult = await _unitOfWork.PetServiceRepository.UpdateAsync(existingPetService);
 

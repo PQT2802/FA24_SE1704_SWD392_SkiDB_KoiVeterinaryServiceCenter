@@ -10,7 +10,7 @@ namespace KVSC.Infrastructure.DTOs.PetService
     public class UploadImageRequest
     {
         public IFormFile ImageFile { get; set; }
-        public Guid PetServiceId {  get; set; }
+        public Guid Id {  get; set; }
 
     }
 }

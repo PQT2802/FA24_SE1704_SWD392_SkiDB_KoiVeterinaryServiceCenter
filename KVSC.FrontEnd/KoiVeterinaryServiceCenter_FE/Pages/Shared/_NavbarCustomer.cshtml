@@ -26,6 +26,57 @@
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
+
+                    @{
+                        var actorRole = Context.Session.GetString("ActorRole");
+                        if (actorRole != null)
+                        {
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    @{
+                                        var actorAvatar = Context.Session.GetString("ActorAvatar");
+                                        if (!string.IsNullOrEmpty(actorAvatar))
+                                        {
+                                            <img class="rounded-circle" src="@actorAvatar" alt="User Avatar" style="width: 40px; height: 40px;">
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle" src="~/img/user.jpg" alt="Default Avatar" style="width: 40px; height: 40px;">
+                                        }
+                                    }
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0 shadow">
+                                    @* Tiêu đề cho menu *@
+                                    <h6 class="dropdown-header">User Menu</h6>
+                                    @if (actorRole == "Admin")
+                                    {
+                                        <a href="/User/Admin/AdminProfile" class="dropdown-item">
+                                            <i class="fa fa-user-shield me-2"></i>My Profile
+                                        </a>
+                                        <a href="/User/Admin/DashBoard" class="dropdown-item">
+                                            <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+                                        </a>
+                                    }
+                                    else if (actorRole == "Customer")
+                                    {
+                                        <a href="/User/Customer/CustomerProfile" class="dropdown-item">
+                                            <i class="fa fa-user me-2"></i>My Profile
+                                        </a>
+                                        <a href="/User/Customer/Pet" class="dropdown-item">
+                                            <i class="fas fa-fish me-2"></i>My Koi
+                                        </a>
+                                    }
+
+                                    <div class="dropdown-divider"></div> <!-- Phân cách giữa các mục -->
+                                    <a href="/Account/Logout" class="dropdown-item text-danger">
+                                        <i class="fa fa-sign-out-alt me-2"></i>Log Out
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                   
                 </div>
             </div>
         </nav>

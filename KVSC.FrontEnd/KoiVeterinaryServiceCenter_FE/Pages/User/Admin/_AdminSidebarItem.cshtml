@@ -1,6 +1,18 @@
-﻿<a asp-page="/User/Admin/DashBoard" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-<a asp-page="/User/Admin/Services" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Services</a>
-<a asp-page="/User/Admin/ServiceCategory" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>ServiceCategories</a>
-<a asp-page="/User/Admin/UserInfo" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>UserInfo</a>
-<a asp-page="/User/Admin/Staff" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Staff</a>
-<a asp-page="/User/Admin/Veterinarian" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Veterinarian</a>
+﻿<a asp-page="/User/Admin/DashBoard" class="nav-item nav-link @((Context.Request.Path == "/User/Admin/DashBoard") ? "active" : "")">
+    <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+</a>
+<a asp-page="/User/Admin/AdminProfile" class="nav-item nav-link @((Context.Request.Path == "/User/Admin/AdminProfile") ? "active" : "")">
+    <i class="fa fa-user me-2"></i>Profile
+</a>
+<a asp-page="/User/Admin/UserInfo" class="nav-item nav-link @((Context.Request.Path == "/User/Admin/UserInfo") ? "active" : "")">
+    <i class="fa fa-users me-2"></i>User Info
+</a>
+<a asp-page="/User/Admin/Services" class="nav-item nav-link @((Context.Request.Path == "/User/Admin/Services") ? "active" : "")">
+    <i class="fas fa-fish me-2"></i>Koi Services
+</a>
+<a asp-page="/User/Admin/ServiceCategory" class="nav-item nav-link @((Context.Request.Path == "/User/Admin/ServiceCategory") ? "active" : "")">
+    <i class="fas fa-tags me-2"></i>Service Categories
+</a>
+<a asp-page="/Account/Logout" class="nav-item nav-link">
+    <i class="fa fa-sign-out-alt me-2"></i>Logout
+</a>

@@ -12,6 +12,7 @@ using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
 using KVSC.Infrastructure.DTOs.User.GetUser;
+using Microsoft.AspNetCore.Http;
 
 namespace KVSC.Application.Service.Implement
 {
@@ -30,15 +31,16 @@ namespace KVSC.Application.Service.Implement
         {
             return await _userRepository.GetRoleList();
         }
-        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request)
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request, IFormFile imageFile)
         {
             request.FullName = string.IsNullOrWhiteSpace(request.FullName) ? string.Empty : request.FullName;
             request.UserName = string.IsNullOrWhiteSpace(request.UserName) ? string.Empty : request.UserName;
             request.Email = string.IsNullOrWhiteSpace(request.Email) ? string.Empty : request.Email;
             request.Address = string.IsNullOrWhiteSpace(request.Address) ? string.Empty : request.Address;
+            request.PhoneNumber = string.IsNullOrWhiteSpace(request.PhoneNumber) ? string.Empty : request.PhoneNumber;
             request.ProfilePictureUrl = string.IsNullOrWhiteSpace(request.ProfilePictureUrl) ? string.Empty : request.ProfilePictureUrl;
 
-            var response = await _userRepository.UpdateUser(request);
+            var response = await _userRepository.UpdateUser(request, imageFile);
             return response;
         }
         public async Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request)

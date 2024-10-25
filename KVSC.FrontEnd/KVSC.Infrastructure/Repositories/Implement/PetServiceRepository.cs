@@ -115,7 +115,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
                 // Thêm file vào form data
                 formContent.Add(fileContent, "ImageFile", imageFile.FileName);
-                formContent.Add(new StringContent(addingResponse.Extensions.Data.Id.ToString()), "PetServiceId");
+                formContent.Add(new StringContent(addingResponse.Extensions.Data.Id.ToString()), "Id");
 
                 // Gọi API cập nhật ảnh
                 var uploadResponse = await _httpClient.PostAsync("api/PetService/upload/img", formContent);
@@ -196,31 +196,33 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 var updateResponse = await response.Content.ReadFromJsonAsync<UpdateServiceResponse>(options);
 
                 //==================================phan them anh==========================================
-
-                // Tạo form data để gửi
-                var formContent = new MultipartFormDataContent();
-                var fileContent = new StreamContent(imageFile.OpenReadStream());
-                fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
-
-                // Thêm file vào form data
-                formContent.Add(fileContent, "ImageFile", imageFile.FileName);
-                formContent.Add(new StringContent(updateResponse.Extensions.Data.Id.ToString()), "PetServiceId");
-
-                // Gọi API cập nhật ảnh
-                var uploadResponse = await _httpClient.PostAsync("api/PetService/upload/img", formContent);
-
-                if (uploadResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                if(imageFile != null)
                 {
-                    var uploadResponseContent = await uploadResponse.Content.ReadAsStringAsync();
-                    var uploadErrorResponse = JsonSerializer.Deserialize<ErrorResponse>(uploadResponseContent, options);
+                    // Tạo form data để gửi
+                    var formContent = new MultipartFormDataContent();
+                    var fileContent = new StreamContent(imageFile.OpenReadStream());
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
 
-                    return new ResponseDto<UpdateServiceResponse>
+                    // Thêm file vào form data
+                    formContent.Add(fileContent, "ImageFile", imageFile.FileName);
+                    formContent.Add(new StringContent(updateResponse.Extensions.Data.Id.ToString()), "Id");
+
+                    // Gọi API cập nhật ảnh
+                    var uploadResponse = await _httpClient.PostAsync("api/PetService/upload/img", formContent);
+
+                    if (uploadResponse.StatusCode != System.Net.HttpStatusCode.OK)
                     {
-                        IsSuccess = false,
-                        Data = null,
-                        Errors = uploadErrorResponse?.Errors ?? new List<ErrorDetail>(),
-                        Message = "An error occurred while uploading the image."
-                    };
+                        var uploadResponseContent = await uploadResponse.Content.ReadAsStringAsync();
+                        var uploadErrorResponse = JsonSerializer.Deserialize<ErrorResponse>(uploadResponseContent, options);
+
+                        return new ResponseDto<UpdateServiceResponse>
+                        {
+                            IsSuccess = false,
+                            Data = null,
+                            Errors = uploadErrorResponse?.Errors ?? new List<ErrorDetail>(),
+                            Message = "An error occurred while uploading the image."
+                        };
+                    }
                 }
                 //==================================ket thuc them anh==========================================
 

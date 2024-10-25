@@ -75,9 +75,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
                 UserList = new UserList();
             }
         }
-        public async Task<IActionResult> OnPostUpdateUserAsync()
+        public async Task<IActionResult> OnPostUpdateUserAsync(IFormFile imageFile)
         {
-            var result = await _userService.UpdateUser(UpdateUserRequest);
+            var result = await _userService.UpdateUser(UpdateUserRequest, imageFile);
 
             if (result.IsSuccess)
             {

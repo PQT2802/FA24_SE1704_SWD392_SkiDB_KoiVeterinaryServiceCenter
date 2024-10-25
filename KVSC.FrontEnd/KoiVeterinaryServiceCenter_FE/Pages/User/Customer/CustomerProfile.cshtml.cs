@@ -47,7 +47,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile imageFile)
         {
             var token = HttpContext.Session.GetString("Token");
             if (string.IsNullOrEmpty(token))
@@ -64,7 +64,8 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 return Page();
             }
             UpdateUserRequest.Id = userId;
-            var result = await _userService.UpdateUser(UpdateUserRequest);
+            UpdateUserRequest.Role = 5;
+            var result = await _userService.UpdateUser(UpdateUserRequest, imageFile);
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Profile updated successfully.";

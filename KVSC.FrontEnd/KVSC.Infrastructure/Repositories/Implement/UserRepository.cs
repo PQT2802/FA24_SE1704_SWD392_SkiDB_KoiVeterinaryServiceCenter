@@ -1,4 +1,5 @@
 ﻿using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.Service.AddService;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
 using KVSC.Infrastructure.DTOs.User.GetUser;
@@ -6,6 +7,7 @@ using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.Repositories.Interface;
+using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -343,7 +345,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
-        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request)
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request, IFormFile imageFile)
         {
             try
             {
@@ -366,6 +368,35 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 }
 
                 var updateResponse = await response.Content.ReadFromJsonAsync<UpdateUserResponse>(options);
+                //==================================phan them anh==========================================
+                if(imageFile != null) { 
+                    // Tạo form data để gửi
+                    var formContent = new MultipartFormDataContent();
+                    var fileContent = new StreamContent(imageFile.OpenReadStream());
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+
+                    // Thêm file vào form data
+                    formContent.Add(fileContent, "ImageFile", imageFile.FileName);
+                    formContent.Add(new StringContent(updateResponse.Extensions.Data.Id.ToString()), "Id");
+
+                    // Gọi API cập nhật ảnh
+                    var uploadResponse = await _httpClient.PostAsync("api/User/upload/img", formContent);
+
+                    if (uploadResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                    {
+                        var uploadResponseContent = await uploadResponse.Content.ReadAsStringAsync();
+                        var uploadErrorResponse = JsonSerializer.Deserialize<ErrorResponse>(uploadResponseContent, options);
+
+                        return new ResponseDto<UpdateUserResponse>
+                        {
+                            IsSuccess = false,
+                            Data = null,
+                            Errors = uploadErrorResponse?.Errors ?? new List<ErrorDetail>(),
+                            Message = "An error occurred while uploading the image."
+                        };
+                    }
+                }
+                //==================================ket thuc them anh==========================================
                 return new ResponseDto<UpdateUserResponse>
                 {
                     IsSuccess = true,

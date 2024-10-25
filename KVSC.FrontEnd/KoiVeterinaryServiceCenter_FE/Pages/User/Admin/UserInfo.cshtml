@@ -94,11 +94,21 @@
                         <span asp-validation-for="UpdateUserRequest.Address" class="text-danger"></span>
                     </div>
 
-                    <!-- Profile Picture URL -->
+                    @* <!-- Profile Picture URL -->
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="profilePictureUrl" name="UpdateUserRequest.ProfilePictureUrl" placeholder="Profile Picture URL">
                         <label for="profilePictureUrl">Profile Picture URL</label>
                         <span asp-validation-for="UpdateUserRequest.ProfilePictureUrl" class="text-danger"></span>
+                    </div> *@
+                    <!-- Profile Picture Upload -->
+                    <div class="form-floating mb-3">
+                        <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
+                        <label for="imageFile">Upload Profile Picture</label>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="mb-3">
+                        <img id="profileImagePreview" src="#" alt="Profile Image" class="img-thumbnail" style="display: none; max-width: 100%; height: auto;">
                     </div>
 
                     <!-- Date of Birth -->
@@ -175,20 +185,39 @@
             $('#updateUserModal #email').val(email);
             $('#updateUserModal #phoneNumber').val(phoneNumber);
             $('#updateUserModal #address').val(address);
-            $('#updateUserModal #profilePictureUrl').val(profilePictureUrl);
+
+            $('#updateUserModal #profileImagePreview').attr('src', profilePictureUrl).show();;
+
             $('#updateUserModal #dateOfBirth').val(dateOfBirth);
             $('#updateUserModal #role').val(role);
 
             $('#updateUserModal').modal('show');
         });
 
+        $('#imageFile').change(function (e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#profileImagePreview').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $('#profileImagePreview').hide();
+            }
+        });
+
         $('#updateUserForm').submit(function (e) {
             e.preventDefault(); 
+          
+            var formData = new FormData(this);
 
             $.ajax({
                 type: "POST",
                 url: window.location.pathname + "?handler=UpdateUser",
-                data: $(this).serialize(),
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     if (response.isSuccess) {
                         $('#updateUserModal').modal('hide');

@@ -165,8 +165,7 @@
 
                     <!-- Image Preview -->
                     <div class="mb-3">
-                        <label for="serviceImagePreview" class="form-label">Image Preview</label>
-                        <img id="serviceImagePreview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
+                        <img id="serviceImagePreview" src="" alt="Image Preview" style="display: none;  max-width: 300px;" />
                     </div>
 
                     <!-- Available From -->
@@ -301,12 +300,6 @@ $(document).ready(function () {
         });
         $('#updateServiceForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
-            var imageFile = $('#serviceImageFile').get(0).files.length;
-
-            if (imageFile === 0) {
-                alert('Please select a photo before updating a service.');
-                return; // Ngừng thực hiện nếu không có ảnh
-            }
 
             // Tạo FormData
             var formData = new FormData(this);
