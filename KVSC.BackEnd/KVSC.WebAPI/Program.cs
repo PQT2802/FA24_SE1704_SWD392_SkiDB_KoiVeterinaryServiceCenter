@@ -129,7 +129,7 @@ logger.LogInformation("App is starting...");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-//app.MigrateDatabases();
+app.MigrateDatabases();
 app.MapControllers();
 
 app.Run();
