@@ -21,8 +21,4 @@
     <ProjectReference Include="..\KVSC.Application\KVSC.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Keys\" />
-  </ItemGroup>
-
 </Project>
