@@ -25,8 +25,6 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
         [BindProperty]
         public AppointmentList AppointmentList { get; set; } = default!;
         [BindProperty]
-        public GetMedicine GetMedicine { get; set; } = default!;
-        [BindProperty]
         public AddServiceReportRequest AddServiceReport { get; set; } = new AddServiceReportRequest();
         [BindProperty]
         public List<ErrorDetail> ErrorMessage { get; set; } = new List<ErrorDetail>();
@@ -37,8 +35,6 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             if (result.IsSuccess)
             {
                 AppointmentList = result.Data;
-                var medicine = await _productService.GetMedicines();
-                GetMedicine = medicine.Data;
             }
         }
         public async Task<IActionResult> OnPostUpdateStatusAsync(Guid appointmentId, string status)

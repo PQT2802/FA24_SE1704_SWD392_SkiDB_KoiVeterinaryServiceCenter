@@ -12,7 +12,7 @@
         @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailKoi != null)
         {
             <div class="col-sm-12 col-xl-6 text-center">
-                <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 200px; height: 200px;">
+                <img class="rounded-circle" src="~/img/fish.jpg" alt="" style="width: 200px; height: 200px;">
                 <div class="bg-light rounded p-4 mt-3">
                     <h2 class="mb-4 p-2 mb-2 bg-primary text-white">Koi Information</h2>
                     <div class="row g-4">
@@ -59,6 +59,7 @@
                 <!-- Service Information Start -->
                 <div class="bg-light rounded p-4 mt-4">
                     <h4 class="mb-4 text-center text-primary">Appointment Information</h4>
+                    <!-- Service Name -->
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <h6 class="mb-1">Service Name:</h6>
@@ -69,12 +70,60 @@
                             <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.ServiceCategory</p>
                         </div>
                     </div>
+                    <!-- Service Description -->
+                    <div class="row mb-3">
+                        <div class="col-sm-12">
+                            <h6 class="mb-1">Description:</h6>
+                            <p class="text-muted mb-0">
+                                @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.PetDescription
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Service Cost -->
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Customer:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.FullName</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Email:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.FullName</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Phone:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.PhoneNumber</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Cost:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.Cost</p>
+                        </div>
+
+                    </div>
+                    <!-- Service Additional Info -->
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Duration:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.Duration</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Location:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.Address</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Create Date:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.CreateDate</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Appoiment Date:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.AppointmentDate</p>
+                        </div>
+                    </div>
                 </div>
                 <!-- Service Information End -->
             </div>
         }
     </div>
-
+    <div style="height: 20px ;width: 100%;"></div>
     <div class="row g-4">
         <!-- Report Information Start -->
         @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport != null)
@@ -132,6 +181,31 @@
                 </div>
             </div>
         }
+        <!-- Vet Information Start -->
+        <div class="col-sm-12 col-xl-6">
+            <div class="row g-4">
+                <!-- Left Column: Information -->
+                <div class="col-sm-12 col-xl-6">
+                    <div class="bg-light rounded p-4">
+                        <h6 class="mb-3">Vet Information</h6>
+                        <p><strong>Name:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.FullName </p>
+                        <p><strong>Email:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.Email</p>
+                        <p><strong>Phone:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.PhoneNumber</p>
+                        <p><strong>Address:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.Address</p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Image -->
+                <div class="col-sm-12 col-xl-6 d-flex justify-content-center align-items-center">
+                    <div>
+                        <img class="rounded-circle" src="~/img/team-1.jpg" alt="" style="width: 250px; height: 300px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Vet Information End -->
+    </div>
+</div>
     </div>
 </div>
 <!-- Appointment Information End -->
