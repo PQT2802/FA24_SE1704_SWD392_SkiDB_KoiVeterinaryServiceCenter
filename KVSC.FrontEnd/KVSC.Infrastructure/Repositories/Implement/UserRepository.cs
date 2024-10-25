@@ -28,6 +28,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-in", loginRequest);
 
                 /// must have
+                
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
@@ -52,6 +53,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
                 // If successful, deserialize the login response
                 var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(options);
+                Console.WriteLine(JsonSerializer.Serialize(loginResponse, new JsonSerializerOptions { WriteIndented = true }));
 
                 return new ResponseDto<LoginResponse>
                 {
@@ -144,6 +146,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 // If successful, deserialize the login response
                 var signUpResponse = await response.Content.ReadFromJsonAsync<SignUpResponse>(options);
 
+
                 return new ResponseDto<SignUpResponse>
                 {
                     IsSuccess = true,
@@ -207,6 +210,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
                 // If successful, deserialize the UserInfo response
                 var userInfo = await response.Content.ReadFromJsonAsync<UserInfo>(options);
+                Console.WriteLine(JsonSerializer.Serialize(userInfo, new JsonSerializerOptions { WriteIndented = true }));
 
                 return new ResponseDto<UserInfo>
                 {

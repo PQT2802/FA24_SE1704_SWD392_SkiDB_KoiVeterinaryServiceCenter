@@ -25,7 +25,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Quantity = 5, // Multiple Koi of the same kind
                     LastHealthCheck = new DateTime(2024, 10, 1),
                     Note = "Healthy with vibrant colors.",
-                    HealthStatus = 1, // Healthy
+                    HealthStatus = 1, // Healthy 
                     OwnerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"), // Customer_1
                     PetTypeId = new Guid("e1111111-1111-1111-1111-111111111111") // Koi PetType
                 },

@@ -223,6 +223,12 @@ namespace KVSC.Infrastructure.DB
                 .WithMany()
                 .HasForeignKey(sr => sr.AppointmentId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.ServiceReport)
+                .WithOne(sr => sr.Appointment)
+                .HasForeignKey<ServiceReport>(sr => sr.AppointmentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             #endregion
         }

@@ -1,5 +1,6 @@
 ﻿using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppointment;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,10 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         public Task<Veterinarian> GetAvailableVeterinarianAsync(DateTime appointmentDate);
         public Task UpdateScheduleAvailabilityAsync(Guid veterinarianId, DateTime appointmentDate);
         public Task<bool> AppointmentExistsAsync(Guid appointmentId);
+        public Task<Guid> UpdateAppointmentStatusAsync(Guid appointmentId, string status);
+
+        Task<GetAppointmentDetail> GetAppointmentDetailAsync(Guid appointmentId);
+
+
     }
 }
