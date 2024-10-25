@@ -1,6 +1,7 @@
 ﻿using KVSC.Application.Common;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
+using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using KVSC.Infrastructure.DTOs.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -56,6 +57,15 @@ namespace KVSC.WebAPI.Controllers
             Result result = await _appointmentService.GetAppointmentListByUserIdAsync(c.UserId);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Fetched appointment list for the specified vet successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpPut("update")]
+        public async Task<IResult> UpdateAppointmentStatusAsync(UpdateStatusRequest updateStatus)
+        {
+            Result result = await _appointmentService.UpdateAppointmentStatusAsync(updateStatus.AppointmentId, updateStatus.Status);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Update status successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
         // GET: api/appointment/detail/{id}

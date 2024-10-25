@@ -16,6 +16,9 @@ namespace KVSC.Application.Interface.IService
         public Task<Result> MakeAppointmentForComboAsync(MakeAppointmentForComboRequest request);
         public Task<Result> GetAppointmentListByUserIdAsync(Guid userId);
         public Task<Result> GetAppointmentListAsync();
+        public Task<Result> UpdateAppointmentStatusAsync(Guid appointmentId, string status);
+
         public Task<Result> GetAppointmentDetailByIdAsync(Guid appointmentId);
+
     }
 }

@@ -80,8 +80,15 @@
     </button>
     <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this pet?');">
         <input type="hidden" name="Id" value="@Model.Item.Id" />
-        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
     </form>
+    <!-- Detail Button -->
+    <a class="btn btn-sm btn-info"
+       asp-page="/User/Customer/PetDetail"
+       asp-route-id="@Model.Item.Id">
+        Detail
+    </a>
+}
     </div>
 }
 @if (Model.ListType == "user")
@@ -128,18 +135,17 @@ else if (Model.ListType == "appointment")
     {
         <form method="post">
             <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
-
             @switch (Model.Status)
             {
                 case "Pending":
-                    <button class="btn btn-sm btn-success" formaction="/Veterinarian/AcceptAppointment">Accept</button>
-                    <button class="btn btn-sm btn-warning" formaction="/Veterinarian/RejectAppointment">Reject</button>
+                    <button class="btn btn-sm btn-success" type="submit" asp-page-handler="UpdateStatus" asp-route-status="Waiting">Accept</button>
+                    <button class="btn btn-sm btn-warning" type="submit" asp-page-handler="UpdateStatus" asp-route-status="Rejected">Reject</button>
                     break;
                 case "Waiting":
-                    <button class="btn btn-sm btn-info" formaction="/Veterinarian/MarkInProgress">Mark In Progress</button>
+                    <button class="btn btn-sm btn-warning" type="submit" asp-page-handler="UpdateStatus" asp-route-status="InProgress">Execute</button>
                     break;
                 case "InProgress":
-                    <button class="btn btn-sm btn-info" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.AppointmentListId">Report</button>
+                    <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.AppointmentListId">Report</button>
                     break;
                 case "Reported":
                     <button class="btn btn-sm btn-secondary" disabled>Completed</button>
@@ -149,5 +155,8 @@ else if (Model.ListType == "appointment")
                     break;
             }
         </form>
-    }
+
+        <!-- View button for navigation -->
+        <a class="btn btn-sm btn-info" asp-page="/User/Veterinarian/AppointmentDetail" asp-route-appointmentId="@Model.Item.AppointmentListId">View</a>
+}
 }

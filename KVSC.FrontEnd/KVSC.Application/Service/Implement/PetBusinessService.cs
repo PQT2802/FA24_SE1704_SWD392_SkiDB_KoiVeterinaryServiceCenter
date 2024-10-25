@@ -5,6 +5,7 @@ using KVSC.Infrastructure.DTOs.Pet.AddPet;
 using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using KVSC.Infrastructure.DTOs.Pet;
+using KVSC.Infrastructure.DTOs.Pet.GetPet;
 
 namespace KVSC.Application.Service.Implement
 {
@@ -31,17 +32,14 @@ namespace KVSC.Application.Service.Implement
 
         public async Task<ResponseDto<AddPetResponse>> AddPetAsync(AddPetRequest request)
         {
+            request.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? string.Empty : request.ImageUrl;
             var response = await _petRepository.AddPetAsync(request);
             return response;
         }
 
         public async Task<ResponseDto<UpdatePetResponse>> UpdatePetAsync(UpdatePetRequest request)
         {
-            request.Name = string.IsNullOrWhiteSpace(request.Name) ? string.Empty : request.Name;
-            request.Color = string.IsNullOrWhiteSpace(request.Color) ? string.Empty : request.Color;
-            request.Gender = string.IsNullOrWhiteSpace(request.Gender) ? string.Empty : request.Gender;
             request.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? string.Empty : request.ImageUrl;
-            request.Note = string.IsNullOrWhiteSpace(request.Note) ? string.Empty : request.Note;
             var response = await _petRepository.UpdatePetAsync(request);
             return response;
         }
@@ -51,5 +49,11 @@ namespace KVSC.Application.Service.Implement
             var response = await _petRepository.DeletePetAsync(request);
             return response;
         }
+        public async Task<ResponseDto<GetPetResponse>> GetPetDetail(Guid id)
+        {
+            var response = await _petRepository.GetPetDetail(id);
+            return response;
+        }
+
     }
 }

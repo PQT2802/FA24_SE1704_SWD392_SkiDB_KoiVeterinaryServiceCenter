@@ -274,7 +274,7 @@
 .chat .messages-chat {
     padding: 2px 5px;
     overflow-y: auto;
-    height: 500px;
+    height: 450px;
     flex-direction: column-reverse;
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: transparent transparent; /* Firefox */

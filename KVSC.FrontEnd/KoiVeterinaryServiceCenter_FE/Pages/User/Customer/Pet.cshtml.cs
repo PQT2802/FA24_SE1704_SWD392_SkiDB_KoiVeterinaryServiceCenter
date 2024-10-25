@@ -137,41 +137,13 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                     switch (error.Code)
                     {
                         //case "Pet.Empty":
-                        //    if (error.Description.Contains("Name",
-                        //     System.StringComparison.OrdinalIgnoreCase))
-                        //        errorDictionary["Name"] = error.Description;
-                        //    else if (error.Description.Contains("Gender", System.StringComparison.OrdinalIgnoreCase))
-                        //        errorDictionary["Gender"] = error.Description;
-                        //    else if (error.Description.Contains("ImageUrl", System.StringComparison.OrdinalIgnoreCase))
-                        //        errorDictionary["ImageUrl"] = error.Description;
-                        //    else if (error.Description.Contains("Color",
-                        //     System.StringComparison.OrdinalIgnoreCase))
-                        //        errorDictionary["Color"] = error.Description;
-                        //    else if (error.Description.Contains("Note",
-                        //     System.StringComparison.OrdinalIgnoreCase))
-                        //        errorDictionary["Note"] = error.Description;
                         //    break;
 
                         case "Pet.Positive":
-                            //if (error.Description.Contains("Age", System.StringComparison.OrdinalIgnoreCase))
-                            //    errorDictionary["Age"] = error.Description;
-                            //else if (error.Description.Contains("Length", System.StringComparison.OrdinalIgnoreCase))
-                            //    errorDictionary["Length"] = error.Description;
-                            //else if (error.Description.Contains("Weight", System.StringComparison.OrdinalIgnoreCase))
-                            //    errorDictionary["Weight"] = error.Description;
-                            //else if (error.Description.Contains("HealthStatus", System.StringComparison.OrdinalIgnoreCase))
-                            //    errorDictionary["HealthStatus"] = error.Description;
-                            //else 
                             if (error.Description.Contains("Quantity", System.StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["Quantity"] = error.Description;
                             break;
                         //case "Pet.Length":
-                        //    if (error.Description.Contains("Name", System.StringComparison.OrdinalIgnoreCase))
-                        //        errorDictionary["Name"] = error.Description;
-                        //    break;
-                        //case "Pet.InvalidDate":
-                        //    if (error.Description.Contains("LastHealthCheck", System.StringComparison.OrdinalIgnoreCase))
-                        //        errorDictionary["LastHealthCheck"] = error.Description;
                         //    break;
 
                         default:
@@ -180,7 +152,6 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                     }
                 }
             }
-
             return errorDictionary;
         }
     }
