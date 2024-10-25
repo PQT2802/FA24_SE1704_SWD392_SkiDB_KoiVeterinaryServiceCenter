@@ -38,7 +38,7 @@ namespace KVSC.Application.Implement.Service
 
             // Register the available schedule
             await _unitOfWork.VeterinarianScheduleRepository.RegisterAvailableTime(veterinarianId, request.Date, request.StartTime, request.EndTime);
-            return Result.Success();
+            return Result.SuccessWithObject(new {Message = "RegisterAvailableTime" });
         }
 
         // Get weekly schedule for a veterinarian
@@ -59,13 +59,13 @@ namespace KVSC.Application.Implement.Service
             // Đóng gói kết quả theo từng ngày (CN, T2, ..., T7)
             var result = new Dictionary<string, List<ScheduleDto>>
             {
-                { "CN", new List<ScheduleDto>() },
-                { "T2", new List<ScheduleDto>() },
-                { "T3", new List<ScheduleDto>() },
-                { "T4", new List<ScheduleDto>() },
-                { "T5", new List<ScheduleDto>() },
-                { "T6", new List<ScheduleDto>() },
-                { "T7", new List<ScheduleDto>() }
+                { "Sunday", new List<ScheduleDto>() },
+                { "Monday", new List<ScheduleDto>() },
+                { "Tuesday", new List<ScheduleDto>() },
+                { "Wednesday", new List<ScheduleDto>() },
+                { "Thursday", new List<ScheduleDto>() },
+                { "Friday", new List<ScheduleDto>() },
+                { "Saturday", new List<ScheduleDto>() }
             };
 
             foreach (var schedule in schedules)
@@ -83,25 +83,25 @@ namespace KVSC.Application.Implement.Service
                 switch (schedule.Date.DayOfWeek)
                 {
                     case DayOfWeek.Sunday:
-                        result["CN"].Add(scheduleDto);
+                        result["Sunday"].Add(scheduleDto);
                         break;
                     case DayOfWeek.Monday:
-                        result["T2"].Add(scheduleDto);
+                        result["Monday"].Add(scheduleDto);
                         break;
                     case DayOfWeek.Tuesday:
-                        result["T3"].Add(scheduleDto);
+                        result["Tuesday"].Add(scheduleDto);
                         break;
                     case DayOfWeek.Wednesday:
-                        result["T4"].Add(scheduleDto);
+                        result["Wednesday"].Add(scheduleDto);
                         break;
                     case DayOfWeek.Thursday:
-                        result["T5"].Add(scheduleDto);
+                        result["Thursday"].Add(scheduleDto);
                         break;
                     case DayOfWeek.Friday:
                         result["T6"].Add(scheduleDto);
                         break;
                     case DayOfWeek.Saturday:
-                        result["T7"].Add(scheduleDto);
+                        result["Saturday"].Add(scheduleDto);
                         break;
                 }
             }
@@ -147,7 +147,7 @@ namespace KVSC.Application.Implement.Service
         public async Task<Result> UpdateScheduleAvailabilityAsync(Guid veterinarianId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)
         {
             await _unitOfWork.VeterinarianScheduleRepository.UpdateScheduleAvailability(veterinarianId, appointmentDate, startTime, endTime);
-            return Result.Success();
+            return Result.SuccessWithObject(new { Message = "UpdateScheduleAvailability" });
         }
     }
 }
