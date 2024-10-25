@@ -59,5 +59,67 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Schedule availability updated successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        // POST: api/veterinarian-schedule/register
+        [HttpPost("registerTest")]
+        public async Task<IResult> RegisterAvailableTimeTest([FromBody] RegisterScheduleRequest request, [FromQuery] Guid? veterinarianId = null)
+        {
+            // Allow passing veterinarianId manually if provided, otherwise use TokenHelper
+            var vetId = veterinarianId ?? (await TokenHelper.Instance.GetThisUserInfo(HttpContext)).UserId;
+
+            Result result = await _veterinarianScheduleService.RegisterAvailableTimeAsync(vetId, request);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Schedule registered successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        // GET: api/veterinarian-schedule/weekly
+        [HttpGet("weeklyTest")]
+        public async Task<IResult> GetWeeklyScheduleTest([FromQuery] DateTime currentDay, [FromQuery] Guid? veterinarianId = null)
+        {
+            // Allow passing veterinarianId manually if provided, otherwise use TokenHelper
+            var vetId = veterinarianId ?? (await TokenHelper.Instance.GetThisUserInfo(HttpContext)).UserId;
+
+            Result result = await _veterinarianScheduleService.GetWeeklyScheduleAsync(vetId, currentDay);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Fetched weekly schedule successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        // PUT: api/veterinarian-schedule/update
+        [HttpPut("updateTest")]
+        public async Task<IResult> UpdateScheduleAvailabilityTest([FromQuery] DateTime appointmentDate, [FromQuery] TimeSpan startTime, [FromQuery] TimeSpan endTime, [FromQuery] Guid? veterinarianId = null)
+        {
+            // Allow passing veterinarianId manually if provided, otherwise use TokenHelper
+            var vetId = veterinarianId ?? (await TokenHelper.Instance.GetThisUserInfo(HttpContext)).UserId;
+
+            Result result = await _veterinarianScheduleService.UpdateScheduleAvailabilityAsync(vetId, appointmentDate, startTime, endTime);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Schedule availability updated successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        // GET: api/veterinarian-schedule/schedule
+        [HttpGet("schedule")]
+        public async Task<IResult> GetScheduleTest([FromQuery] Guid? veterinarianId = null)
+        {
+            // Allow passing veterinarianId manually if provided, otherwise use TokenHelper
+            var vetId = veterinarianId ?? (await TokenHelper.Instance.GetThisUserInfo(HttpContext)).UserId;
+
+            Result result = await _veterinarianScheduleService.GetWeeklyScheduleAsync(vetId, DateTime.Now);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Fetched schedule successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        // GET: api/veterinarian-schedule/all-weekly
+        [HttpGet("all-weekly")]
+        public async Task<IResult> GetAllVeterinariansWeeklySchedule([FromQuery] DateTime currentDay)
+        {
+            Result result = await _veterinarianScheduleService.GetAllVeterinariansWeeklyScheduleAsync(currentDay);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Fetched all veterinarians' weekly schedule successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
     }
 }

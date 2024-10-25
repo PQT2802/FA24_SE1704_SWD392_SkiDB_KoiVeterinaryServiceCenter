@@ -72,6 +72,8 @@ namespace KVSC.Application.Implement.Service
             {
                 var scheduleDto = new ScheduleDto
                 {
+                    VeterinarianId = schedule.VeterinarianId,
+                    VeterinarianName = schedule.Veterinarian?.User?.FullName ?? "N/A",
                     Date = schedule.Date,
                     StartTime = schedule.StartTime,
                     EndTime = schedule.EndTime,
@@ -106,6 +108,40 @@ namespace KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(result);
         }
+
+        public async Task<Result> GetAllVeterinariansWeeklyScheduleAsync(DateTime currentDay)
+        {
+            // Calculate the start and end of the week
+            var dayOfWeek = currentDay.DayOfWeek;
+            DateTime startOfWeek = currentDay.AddDays(-((int)dayOfWeek)); // Sunday (CN)
+            DateTime endOfWeek = startOfWeek.AddDays(6); // Saturday (T7)
+
+            // Retrieve schedules for all veterinarians from Sunday to Saturday
+            var schedules = await _unitOfWork.VeterinarianScheduleRepository.GetAllVeterinariansWeeklySchedule(startOfWeek);
+            if (schedules == null || !schedules.Any())
+            {
+                return Result.Failure(Error.NotFound("ScheduleNotFound", "No schedule found for the specified week."));
+            }
+
+            // Group schedules by day and veterinarian, include the veterinarian's name
+            var result = schedules
+                .GroupBy(s => s.Date.DayOfWeek)
+                .ToDictionary(
+                    g => g.Key.ToString(),
+                    g => g.Select(schedule => new ScheduleDto
+                    {
+                        VeterinarianId = schedule.VeterinarianId,
+                        VeterinarianName = schedule.Veterinarian.User.FullName, // Adding the veterinarian's name
+                        Date = schedule.Date,
+                        StartTime = schedule.StartTime,
+                        EndTime = schedule.EndTime,
+                        IsAvailable = schedule.IsAvailable
+                    }).ToList()
+                );
+
+            return Result.SuccessWithObject(result);
+        }
+
 
         // Update the availability after an appointment
         public async Task<Result> UpdateScheduleAvailabilityAsync(Guid veterinarianId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)

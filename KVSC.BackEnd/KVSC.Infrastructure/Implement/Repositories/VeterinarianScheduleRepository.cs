@@ -51,11 +51,28 @@ namespace KVSC.Infrastructure.Implement.Repositories
             var endOfWeek = startOfWeek.AddDays(7);
 
             return await _context.VeterinarianSchedules
+                .Include(s => s.Veterinarian) // Include Veterinarian
+                .ThenInclude(v => v.User) // Include the related User entity for veterinarian's name
                 .Where(s => s.VeterinarianId == veterinarianId && s.Date >= startOfWeek && s.Date <= endOfWeek)
                 .OrderBy(s => s.Date)
                 .ThenBy(s => s.StartTime)
                 .ToListAsync();
         }
+
+        // Get the weekly schedule for all veterinarians
+        public async Task<List<VeterinarianSchedule>> GetAllVeterinariansWeeklySchedule(DateTime startOfWeek)
+        {
+            var endOfWeek = startOfWeek.AddDays(6);
+
+            return await _context.VeterinarianSchedules
+                .Include(s => s.Veterinarian) // Include the Veterinarian entity
+                .ThenInclude(v => v.User) // Include the related User entity to access the name
+                .Where(s => s.Date >= startOfWeek && s.Date <= endOfWeek)
+                .OrderBy(s => s.Date)
+                .ThenBy(s => s.StartTime)
+                .ToListAsync();
+        }
+
 
         // Update the schedule's availability after an appointment is assigned
         public async Task UpdateScheduleAvailability(Guid veterinarianId, DateTime date, TimeSpan startTime, TimeSpan endTime)
