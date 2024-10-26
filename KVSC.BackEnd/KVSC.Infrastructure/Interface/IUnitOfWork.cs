@@ -29,6 +29,7 @@ namespace KVSC.Infrastructure.Interface
         IPrescriptionRepository PrescriptionRepository { get; }
 
         IVeterinarianScheduleRepository VeterinarianScheduleRepository { get; }
+        IPaymentRepository PaymentRepository { get; }
         int Complete();
     }
 }

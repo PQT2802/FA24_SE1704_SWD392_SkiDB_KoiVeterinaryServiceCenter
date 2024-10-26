@@ -48,15 +48,20 @@ namespace KVSC.Application.Implement.Service
         }
 
         // Get weekly schedule for a veterinarian
-        public async Task<Result> GetWeeklyScheduleAsync(Guid veterinarianId, DateTime currentDay)
+        public async Task<Result> GetWeeklyScheduleAsync(Guid userId, DateTime currentDay)
         {
             // Xác định ngày CN đầu tuần và T7 cuối tuần
             var dayOfWeek = currentDay.DayOfWeek;
             DateTime startOfWeek = currentDay.AddDays(-((int)dayOfWeek)); // Chủ Nhật (CN)
             DateTime endOfWeek = startOfWeek.AddDays(6); // Thứ Bảy (T7)
+            var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(userId);
+            if (veterinarian == null)
+            {
+                return Result.Failure(Error.NotFound("VeterinarianNotFound", "Veterinarian not found for the provided user."));
+            }
 
             // Lấy lịch làm việc từ CN đến T7
-            var schedules = await _unitOfWork.VeterinarianScheduleRepository.GetWeeklySchedule(veterinarianId, startOfWeek);
+            var schedules = await _unitOfWork.VeterinarianScheduleRepository.GetWeeklySchedule(veterinarian.Id, startOfWeek);
             if (schedules == null || !schedules.Any())
             {
                 return Result.Failure(Error.NotFound("ScheduleNotFound", "No schedule found for the specified veterinarian."));
@@ -150,9 +155,14 @@ namespace KVSC.Application.Implement.Service
 
 
         // Update the availability after an appointment
-        public async Task<Result> UpdateScheduleAvailabilityAsync(Guid veterinarianId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)
+        public async Task<Result> UpdateScheduleAvailabilityAsync(Guid userId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)
         {
-            await _unitOfWork.VeterinarianScheduleRepository.UpdateScheduleAvailability(veterinarianId, appointmentDate, startTime, endTime);
+            var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(userId);
+            if (veterinarian == null)
+            {
+                return Result.Failure(Error.NotFound("VeterinarianNotFound", "Veterinarian not found for the provided user."));
+            }
+            await _unitOfWork.VeterinarianScheduleRepository.UpdateScheduleAvailability(veterinarian.Id, appointmentDate, startTime, endTime);
             return Result.SuccessWithObject(new { Message = "UpdateScheduleAvailability" });
         }
     }
