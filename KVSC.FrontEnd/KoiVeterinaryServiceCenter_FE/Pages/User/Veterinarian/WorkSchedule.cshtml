@@ -8,7 +8,6 @@
     var shifts = new[] { "Morning (8 AM - 12 PM)", "Afternoon (1 PM - 5 PM)", "Evening (6 PM - 9 PM)" };
 }
 <div class="container mt-5">
-    <!-- Tiêu đề và chọn tuần -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <button class="btn btn-outline-primary" id="previousWeekBtn">
             <i class="fa fa-chevron-left"></i> Previous
@@ -39,10 +38,8 @@
                         <td class="bg-light text-uppercase fw-bold">@shift</td>
                         @foreach (var day in Model.DaysInWeek)
                         {
-                            // Lấy giờ bắt đầu và kết thúc dựa trên ca làm việc
                             string startTime = shift == "Morning" ? "08:00" : shift == "Afternoon" ? "13:00" : "17:00";
                             string endTime = shift == "Morning" ? "12:00" : shift == "Afternoon" ? "17:00" : "21:00";
-
                             <td>
                                 <button class="btn btn-sm btn-success w-100 mb-2 assign-btn"
                                         data-date="@day.ToString("yyyy-MM-dd")"
@@ -106,7 +103,7 @@
     attachAssignBtnListeners();
 
     $('#assignShiftForm').submit(function (event) {
-        event.preventDefault(); // Ngăn form gửi đi theo cách truyền thống.
+        event.preventDefault();
 
         const form = $(this);
 
@@ -146,30 +143,24 @@
     async function changeWeek(days) {
         console.log("chay changeweek");
 
-        // Lấy nội dung hiện tại của tuần làm việc
         const currentWeekText = document.getElementById('currentWeek').innerText;
-        console.log("Current week text:", currentWeekText); // In ra để kiểm tra định dạng
+        console.log("Current week text:", currentWeekText);
 
-        // Giả sử định dạng currentWeekText là "21 OCT - 27 OCT 2024"
         const dateParts = currentWeekText.split(' ');
 
-        // Kiểm tra xem chuỗi có đúng định dạng mong muốn không
         if (dateParts.length < 2) {
             console.error("Invalid currentWeekText format:", currentWeekText);
             return;
         }
 
-        const day = parseInt(dateParts[0]); // Lấy ngày từ chuỗi
-        let monthShort = dateParts[1]; // Lấy tháng viết tắt từ chuỗi
+        const day = parseInt(dateParts[0]); 
+        let monthShort = dateParts[1]; 
 
-        // Chuyển đổi tháng viết tắt thành chữ thường
         monthShort = monthShort.charAt(0).toUpperCase() + monthShort.slice(1).toLowerCase();
 
-        // Chuyển đổi tháng viết tắt sang số tháng
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const monthIndex = monthNames.indexOf(monthShort);
 
-        // Kiểm tra xem tháng có hợp lệ không
         if (monthIndex === -1) {
             console.error("Invalid Month:", monthShort);
             return;
@@ -177,7 +168,6 @@
 
         const year = new Date().getFullYear();
 
-        // Tạo chuỗi ngày tháng theo định dạng YYYY-MM-DD
         const startDateString = `${year}-${(monthIndex + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
         const currentDate = new Date(startDateString);
@@ -188,24 +178,19 @@
             return;
         }
 
-        // Tính ngày mới dựa trên số ngày cần thay đổi
         const newDate = new Date(currentDate.setDate(currentDate.getDate() + days));
 
         console.log("New date:", newDate.toISOString());
 
-        // Tạo URL để gửi request
         const url = `/user/veterinarian/workschedule?handler=WeeklySchedule&currentDay=${newDate.toISOString()}`;
 
-        // Gửi yêu cầu tới server
         const response = await fetch(url);
         if (response.ok) {
-            // Lấy nội dung HTML từ phản hồi của server
-            const resultHtml = await response.text();  // Lấy HTML từ phản hồi
+            const resultHtml = await response.text();  
 
             const parser = new DOMParser();
             const doc = parser.parseFromString(resultHtml, 'text/html');
 
-            // Cập nhật tuần hiện tại
             const newWeek = doc.querySelector('#currentWeek')?.innerText;
             if (newWeek) {
                 document.getElementById('currentWeek').innerText = newWeek;
@@ -213,7 +198,6 @@
                 console.error("Không tìm thấy phần tử #currentWeek trong phản hồi.");
             }
 
-            // Cập nhật bảng lịch làm việc
             const newSchedule = doc.querySelector('#scheduleTable')?.innerHTML;
             if (newSchedule) {
                 document.getElementById('scheduleTable').innerHTML = newSchedule;
