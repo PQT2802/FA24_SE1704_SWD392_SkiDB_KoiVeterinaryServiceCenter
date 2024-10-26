@@ -1,0 +1,223 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.WorkScheduleModel
+@{
+    Layout = "_layoutBoard";
+}
+@{
+    var daysOfWeek = new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+    var shifts = new[] { "Morning (8 AM - 12 PM)", "Afternoon (1 PM - 5 PM)", "Evening (6 PM - 9 PM)" };
+}
+<div class="container mt-5">
+    <!-- Tiêu đề và chọn tuần -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <button class="btn btn-outline-primary" id="previousWeekBtn">
+            <i class="fa fa-chevron-left"></i> Previous
+        </button>
+        <h4 class="text-center text-uppercase">
+            Work Schedule for Week: <span id="currentWeek">@Model.CurrentWeek</span>
+        </h4>
+        <button class="btn btn-outline-primary" id="nextWeekBtn">
+            Next <i class="fa fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered text-center" id="scheduleTable">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th class="text-uppercase">Shift / Day</th>
+                    @foreach (var day in Model.DaysInWeek)
+                    {
+                        <th>@day.ToString("dd/MM/yyyy")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var shift in Model.Shifts)
+                {
+                    <tr>
+                        <td class="bg-light text-uppercase fw-bold">@shift</td>
+                        @foreach (var day in Model.DaysInWeek)
+                        {
+                            // Lấy giờ bắt đầu và kết thúc dựa trên ca làm việc
+                            string startTime = shift == "Morning" ? "08:00" : shift == "Afternoon" ? "13:00" : "17:00";
+                            string endTime = shift == "Morning" ? "12:00" : shift == "Afternoon" ? "17:00" : "21:00";
+
+                            <td>
+                                <button class="btn btn-sm btn-success w-100 mb-2 assign-btn"
+                                        data-date="@day.ToString("yyyy-MM-dd")"
+                                        data-start="@startTime"
+                                        data-end="@endTime">
+                                    Assign to Me
+                                </button>
+                                <span class="badge bg-info text-white d-block">Available</span>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap Modal for Confirmation -->
+    <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignModalLabel">Confirm Shift Assignment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to assign this shift to yourself?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="assignShiftForm" method="post" asp-page-handler="Register">
+                        <input type="hidden" name="date" id="shiftDate">
+                        <input type="hidden" name="startTime" id="shiftStartTime">
+                        <input type="hidden" name="endTime" id="shiftEndTime">
+                        <button type="submit" class="btn btn-primary" id="confirmAssignBtn">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*  ===========================assign to me =======================================*@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.querySelectorAll('.assign-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const date = btn.getAttribute('data-date');
+            const startTime = btn.getAttribute('data-start');
+            const endTime = btn.getAttribute('data-end');
+
+            document.getElementById('shiftDate').value = date;
+            document.getElementById('shiftStartTime').value = startTime;
+            document.getElementById('shiftEndTime').value = endTime;
+
+            let assignModal = new bootstrap.Modal(document.getElementById('assignModal'));
+            assignModal.show();
+        });
+    });
+
+    $('#assignShiftForm').submit(function (event) {
+        event.preventDefault(); // Ngăn form gửi đi theo cách truyền thống.
+
+        const form = $(this);
+
+        $.ajax({
+            type: "POST",
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function (result) {
+                if (result.isSuccess) {
+                    alert("Shift assigned successfully!");
+                    let assignModal = bootstrap.Modal.getInstance(document.getElementById('assignModal'));
+                    assignModal.hide();
+                } else {
+                    if (Array.isArray(result.errors) && result.errors.length > 0) {
+                        alert("Error assigning shift: " + result.errors.join(", "));
+                    } else {
+                        alert("Error assigning shift: An unknown error occurred.");
+                    }
+                }
+            },
+            error: function (xhr) {
+                console.error("Error response:", xhr.responseText);
+                alert("An error occurred while assigning the shift.");
+            }
+        });
+    });
+    //==========================================================================
+
+    document.getElementById('previousWeekBtn').addEventListener('click', async () => {
+        await changeWeek(-7);
+    });
+
+    document.getElementById('nextWeekBtn').addEventListener('click', async () => {
+        await changeWeek(7);
+    });
+
+    async function changeWeek(days) {
+        console.log("chay changeweek");
+
+        // Lấy nội dung hiện tại của tuần làm việc
+        const currentWeekText = document.getElementById('currentWeek').innerText;
+        console.log("Current week text:", currentWeekText); // In ra để kiểm tra định dạng
+
+        // Giả sử định dạng currentWeekText là "21 OCT - 27 OCT 2024"
+        const dateParts = currentWeekText.split(' ');
+
+        // Kiểm tra xem chuỗi có đúng định dạng mong muốn không
+        if (dateParts.length < 2) {
+            console.error("Invalid currentWeekText format:", currentWeekText);
+            return;
+        }
+
+        const day = parseInt(dateParts[0]); // Lấy ngày từ chuỗi
+        let monthShort = dateParts[1]; // Lấy tháng viết tắt từ chuỗi
+
+        // Chuyển đổi tháng viết tắt thành chữ thường
+        monthShort = monthShort.charAt(0).toUpperCase() + monthShort.slice(1).toLowerCase();
+
+        // Chuyển đổi tháng viết tắt sang số tháng
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthIndex = monthNames.indexOf(monthShort);
+
+        // Kiểm tra xem tháng có hợp lệ không
+        if (monthIndex === -1) {
+            console.error("Invalid Month:", monthShort);
+            return;
+        }
+
+        const year = new Date().getFullYear();
+
+        // Tạo chuỗi ngày tháng theo định dạng YYYY-MM-DD
+        const startDateString = `${year}-${(monthIndex + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+        const currentDate = new Date(startDateString);
+        console.log("Current date:", currentDate);
+
+        if (isNaN(currentDate)) {
+            console.error("Invalid Date:", startDateString);
+            return;
+        }
+
+        // Tính ngày mới dựa trên số ngày cần thay đổi
+        const newDate = new Date(currentDate.setDate(currentDate.getDate() + days));
+
+        console.log("New date:", newDate.toISOString());
+
+        // Tạo URL để gửi request
+        const url = `/user/veterinarian/workschedule?handler=WeeklySchedule&currentDay=${newDate.toISOString()}`;
+
+        // Gửi yêu cầu tới server
+        const response = await fetch(url);
+        if (response.ok) {
+            // Lấy nội dung HTML từ phản hồi của server
+            const resultHtml = await response.text();  // Lấy HTML từ phản hồi
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(resultHtml, 'text/html');
+
+            // Cập nhật tuần hiện tại
+            const newWeek = doc.querySelector('#currentWeek')?.innerText;
+            if (newWeek) {
+                document.getElementById('currentWeek').innerText = newWeek;
+            } else {
+                console.error("Không tìm thấy phần tử #currentWeek trong phản hồi.");
+            }
+
+            // Cập nhật bảng lịch làm việc
+            const newSchedule = doc.querySelector('#scheduleTable')?.innerHTML;
+            if (newSchedule) {
+                document.getElementById('scheduleTable').innerHTML = newSchedule;
+            } else {
+                console.error("Không tìm thấy phần tử #scheduleTable trong phản hồi.");
+            }
+        } else {
+            alert("Failed to load the new schedule.");
+        }
+    }
+</script>

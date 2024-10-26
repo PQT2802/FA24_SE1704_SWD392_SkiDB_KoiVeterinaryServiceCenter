@@ -4,7 +4,7 @@ using KoiVeterinaryServiceCenter_FE.StartUp;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddSignalR();
 builder.Services.RegisterServices(builder.Configuration);
 
@@ -52,6 +52,7 @@ app.UseSession(); // Enable session middleware
 // Use Cookie Policy middleware
 app.UseCookiePolicy();
 app.UseCors("AllowAllOrigins");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
