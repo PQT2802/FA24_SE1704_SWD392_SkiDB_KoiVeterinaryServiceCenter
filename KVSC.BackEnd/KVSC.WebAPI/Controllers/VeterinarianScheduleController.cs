@@ -27,6 +27,7 @@ namespace KVSC.WebAPI.Controllers
         public async Task<IResult> RegisterAvailableTime([FromBody] RegisterScheduleRequest request)
         {
             CurrentUserObject currentUser = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
+
             Result result = await _veterinarianScheduleService.RegisterAvailableTimeAsync(currentUser.UserId, request);
 
             return result.IsSuccess

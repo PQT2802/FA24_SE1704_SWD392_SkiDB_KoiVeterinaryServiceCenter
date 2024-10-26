@@ -14,6 +14,8 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         Task UpdateScheduleAvailability(Guid veterinarianId, DateTime date, TimeSpan startTime, TimeSpan endTime);
 
         Task<List<VeterinarianSchedule>> GetAllVeterinariansWeeklySchedule(DateTime startOfWeek);
+
+        Task<Veterinarian> GetVeterinarianByUserIdAsync(Guid userId);
     }
 }
 
