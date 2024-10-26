@@ -86,5 +86,11 @@ namespace KVSC.Infrastructure.Implement.Repositories
             _context.VeterinarianSchedules.Update(schedule);
             await _context.SaveChangesAsync();
         }
+        public async Task<Veterinarian> GetVeterinarianByUserIdAsync(Guid userId)
+        {
+            return await _context.Veterinarians
+                .Include(v => v.User) // Include User to fetch User details if needed
+                .FirstOrDefaultAsync(v => v.UserId == userId);
+        }
     }
 }
