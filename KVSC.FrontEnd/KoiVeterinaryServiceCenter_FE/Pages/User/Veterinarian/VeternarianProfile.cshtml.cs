@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
+namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
 {
-    public class CustomerProfileModel : PageModel
+    public class VeternarianProfileModel : PageModel
     {
         private readonly IUserService _userService;
 
@@ -17,7 +17,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
         [BindProperty]
         public UpdateUserRequest UpdateUserRequest { get; set; } = default!;
 
-        public CustomerProfileModel(IUserService userService)
+        public VeternarianProfileModel(IUserService userService)
         {
             _userService = userService;
         }
@@ -64,20 +64,20 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 return Page();
             }
             UpdateUserRequest.Id = userId;
-            UpdateUserRequest.Role = 5;
+            UpdateUserRequest.Role = 3;
             var result = await _userService.UpdateUser(UpdateUserRequest, imageFile);
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Profile updated successfully.";
-                return Redirect("/User/Customer/CustomerProfile");
+                return Redirect("/User/Veterinarian/VeternarianProfile");
             }
             else
             {
                 TempData["ErrorMessage"] = string.Join(", ", result.Errors.Select(e => e.Description));
-                return Redirect("/User/Customer/CustomerProfile");
+                return Redirect("/User/Veterinarian/VeternarianProfile");
             }
             ViewData["IsEditMode"] = true;
-            return Redirect("/User/Customer/CustomerProfile");
+            return Redirect("/User/Veterinarian/VeternarianProfile");
         }
     }
 }

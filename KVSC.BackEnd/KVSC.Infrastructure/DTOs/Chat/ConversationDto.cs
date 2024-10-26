@@ -8,6 +8,7 @@ namespace KVSC.Infrastructure.DTOs.Chat
 {
     public class ConversationDto
     {
+        public string AvatarUrl { get; set; }
         public Guid RecipientId { get; set; }
         public string RecipientName { get; set; }
         public string LastMessage { get; set; }
