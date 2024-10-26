@@ -136,15 +136,33 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 {
                     switch (error.Code)
                     {
-                        //case "Pet.Empty":
-                        //    break;
-
-                        case "Pet.Positive":
-                            if (error.Description.Contains("Quantity", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["Quantity"] = error.Description;
+                        case "Pet.Empty":
+                            if (error.Description.Contains("Name", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Name"] = error.Description;
+                            else if (error.Description.Contains("Gender", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Gender"] = error.Description;
+                            else if (error.Description.Contains("ImageUrl", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["ImageUrl"] = error.Description;
+                            else if (error.Description.Contains("Color", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Color"] = error.Description;
+                            else if (error.Description.Contains("Note", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Note"] = error.Description;
+                            //else if (error.Description.Contains("LastHealthCheck", StringComparison.OrdinalIgnoreCase))
+                            //    errorDictionary["LastHealthCheck"] = error.Description;
                             break;
-                        //case "Pet.Length":
-                        //    break;
+
+                        case "Pet.InvalidValue":
+                            if (error.Description.Contains("Age", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Age"] = error.Description;
+                            else if (error.Description.Contains("Length", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Length"] = error.Description;
+                            else if(error.Description.Contains("Weight", System.StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Weight"] = error.Description;
+                            else if (error.Description.Contains("Quantity", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Quantity"] = error.Description;
+                            else if (error.Description.Contains("HealthStatus", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["HealthStatus"] = error.Description;
+                            break;
 
                         default:
                             errorDictionary[string.Empty] = error.Description;

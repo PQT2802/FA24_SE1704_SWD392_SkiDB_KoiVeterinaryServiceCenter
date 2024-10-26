@@ -22,32 +22,69 @@ namespace KVSC.Application.Common.Validator.Abstract
         protected void AddPetNameRules(Expression<Func<T, string>> petNameExpression)
         {
             RuleFor(petNameExpression)
-                .Length(1, 50).WithState(_ => PetErrorMessage.FieldLength("Pet name", 1, 50));
+                .NotEmpty().WithState(_ => (PetErrorMessage.FieldIsEmpty("Name")));
         }
 
-        protected void AddPetAgeRules(Expression<Func<T, int>> petAgeExpression)
+        protected void AddPetAgeRules(Expression<Func<T, decimal>> petAgeExpression)
         {
             RuleFor(petAgeExpression)
-                .GreaterThan(0).WithState(_ => PetErrorMessage.FieldMustBePositive("Pet age"));
+                .GreaterThan(0).WithState(_ => (PetErrorMessage.InvalidFieldValue("Age")));
+        }
+
+        protected void AddPetGenderRules(Expression<Func<T, string>> petGenderExpression)
+        {
+            RuleFor(petGenderExpression)
+                .NotEmpty().WithState(_ => (PetErrorMessage.FieldIsEmpty("Gender")));
+        }
+
+        protected void AddPetColorRules(Expression<Func<T, string>> petColorExpression)
+        {
+            RuleFor(petColorExpression)
+                .NotEmpty().WithState(_ => (PetErrorMessage.FieldIsEmpty("Color")));
+        }
+
+        protected void AddPetImageUrlRules(Expression<Func<T, string>> petImageUrlExpression)
+        {
+            RuleFor(petImageUrlExpression)
+                .NotEmpty().WithState(_ => (PetErrorMessage.FieldIsEmpty("ImageUrl")));
         }
 
         protected void AddPetLengthRules(Expression<Func<T, double>> petLengthExpression)
         {
             RuleFor(petLengthExpression)
-                .GreaterThan(0).WithState(_ => PetErrorMessage.FieldMustBePositive("Pet length"));
+                .GreaterThan(0).WithState(_ => (PetErrorMessage.InvalidFieldValue("Length")));
         }
 
         protected void AddPetWeightRules(Expression<Func<T, double>> petWeightExpression)
         {
             RuleFor(petWeightExpression)
-                .GreaterThan(0).WithState(_ => PetErrorMessage.FieldMustBePositive("Pet weight"));
+                .GreaterThan(0).WithState(_ => (PetErrorMessage.InvalidFieldValue("Weight")));
         }
 
         protected void AddPetQuantityRules(Expression<Func<T, int>> petQuantityExpression)
         {
             RuleFor(petQuantityExpression)
-                .NotNull().WithState(_ => PetErrorMessage.FieldIsEmpty("Quantity"))
-                .GreaterThan(0).WithState(_ => PetErrorMessage.FieldMustBePositive("Quantity"));
+                .NotEmpty().WithState(_ => PetErrorMessage.FieldIsEmpty("Quantity"))
+                .GreaterThan(0).WithState(_ => (PetErrorMessage.InvalidFieldValue("Quantity")));
+        }
+
+        protected void AddPetLastHealthCheckRules(Expression<Func<T, DateTime>> petLastHealthCheckExpression)
+        {
+            RuleFor(petLastHealthCheckExpression)
+                .LessThanOrEqualTo(DateTime.Now)
+                .WithState(_ => (PetErrorMessage.InvalidFieldValue("LastHealthCheck")));
+        }
+
+        protected void AddPetNoteRules(Expression<Func<T, string>> petNoteExpression)
+        {
+            RuleFor(petNoteExpression)
+                .NotEmpty().WithState(_ => (PetErrorMessage.FieldIsEmpty("Note")));
+        }
+
+        protected void AddPetHealthStatusRules(Expression<Func<T, int>> petHealthStatusExpression)
+        {
+            RuleFor(petHealthStatusExpression)
+                .GreaterThan(0).WithState(_ => (PetErrorMessage.InvalidFieldValue("HealthStatus")));
         }
 
         //Pet type
