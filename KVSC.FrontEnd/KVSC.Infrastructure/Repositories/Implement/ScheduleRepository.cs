@@ -68,9 +68,8 @@ namespace KVSC.Infrastructure.Repositories.Implement
         {
             try
             {
-                // Thiết lập Authorization header
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var url = $"https://localhost:7283/api/VeterinarianSchedule/weekly?currentDay={currentDay:MM/dd}";
+                var url = $"https://localhost:7283/api/VeterinarianSchedule/all-weekly?currentDay={currentDay}";
                 var response = await _httpClient.GetAsync(url);
 
                 var options = new JsonSerializerOptions
@@ -93,11 +92,52 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     };
                 }
                 // If successful, deserialize the login response
-                var scheduleList = await response.Content.ReadFromJsonAsync<ScheduleDto>(options);
+                // Deserialize tạm thời với TemporaryScheduleDto
+                var tempScheduleData = await response.Content.ReadFromJsonAsync<TemporaryScheduleDto>(options);
+
+                // Chuyển đổi TemporaryScheduleDto thành ScheduleDto
+                var convertedData = new ScheduleDto
+                {
+                    Extensions = new Extensions<List<ScheduleDtoData>>
+                    {
+                        Data = new List<ScheduleDtoData>()
+                    }
+                };
+                var shifts = new List<Shift>
+                {
+                    new Shift { ShiftName = "Morning", StartTime = new TimeSpan(8, 0, 0), EndTime = new TimeSpan(12, 0, 0) },
+                    new Shift { ShiftName = "Afternoon", StartTime = new TimeSpan(13, 0, 0), EndTime = new TimeSpan(17, 0, 0) },
+                    new Shift { ShiftName = "Evening", StartTime = new TimeSpan(17, 0, 0), EndTime = new TimeSpan(21, 0, 0) }
+                };
+
+                foreach (var kvp in tempScheduleData.Extensions.Data)
+                {
+                    foreach (var v in kvp.Value)
+                    {
+                        var shiftName = shifts.FirstOrDefault(shift =>
+                            TimeSpan.Parse(v.StartTime) == shift.StartTime &&
+                            TimeSpan.Parse(v.EndTime) == shift.EndTime);
+
+                        if (shiftName != null)
+                        {
+                            convertedData.Extensions.Data.Add(new ScheduleDtoData
+                            {
+                                Date = v.Date,
+                                StartTime = v.StartTime,
+                                EndTime = v.EndTime,
+                                IsAvailable = v.IsAvailable,
+                                VeterinarianName = v.VeterinarianName,
+                                VeterinarianId = v.VeterinarianId,
+                                Shift = shiftName.ShiftName // Thêm ca làm việc
+                            });
+                        }
+                    }
+                }
+
                 return new ResponseDto<ScheduleDto>
                 {
                     IsSuccess = true,
-                    Data = scheduleList,
+                    Data = convertedData,
                     Message = "Schedule loaded successfully."
                 };
             }

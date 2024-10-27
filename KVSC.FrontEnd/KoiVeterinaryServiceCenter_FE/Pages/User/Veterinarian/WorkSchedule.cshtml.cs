@@ -17,6 +17,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
         }
 
         public ScheduleDto WeeklySchedule { get; set; } = new();
+        public string CurrentVeterinarianName { get; set; } = string.Empty;
         public string CurrentWeek { get; set; } = DateTime.Now.ToString("dd MMM - dd MMM yyyy");
 
         public List<DateTime> DaysInWeek { get; set; }
@@ -61,6 +62,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             {
                 return RedirectToPage("/Account/SignIn");
             }
+            CurrentVeterinarianName = HttpContext.Session.GetString("ActorName") ?? string.Empty;
             var result = await _scheduleService.GetWeeklyScheduleAsync(currentDay, token);
 
             if (result.IsSuccess)
@@ -79,6 +81,13 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             DaysInWeek = Enumerable.Range(0, 7)
                 .Select(offset => startOfWeek.AddDays(offset))
                 .ToList();
+            //23/10/2024
+            //24 / 10 / 2024
+            //25 / 10 / 2024
+            //26 / 10 / 2024
+            //27 / 10 / 2024
+            //28 / 10 / 2024
+            //29 / 10 / 2024
         }
         private string GetWeekRange(DateTime date)
         {
