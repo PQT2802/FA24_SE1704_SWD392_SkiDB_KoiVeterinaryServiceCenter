@@ -35,11 +35,30 @@
                 @foreach (var shift in Model.Shifts)
                 {
                     <tr>
-                        <td class="bg-light text-uppercase fw-bold">@shift</td>
+                        <td class="bg-light text-uppercase fw-bold text-center">
+                            <div>@shift</div>
+                            <small class="text-muted d-block">
+                                @(shift == "Morning" ? "08:00 - 12:00" :
+                                    shift == "Afternoon" ? "13:00 - 17:00" :
+                                    "17:00 - 21:00")
+                            </small>
+                        </td>
                         @foreach (var day in Model.DaysInWeek)
                         {
                             string startTime = shift == "Morning" ? "08:00" : shift == "Afternoon" ? "13:00" : "17:00";
                             string endTime = shift == "Morning" ? "12:00" : shift == "Afternoon" ? "17:00" : "21:00";
+                            // Kiểm tra dữ liệu lịch trình cho ngày hiện tại
+                            if (Model.WeeklySchedule != null &&
+                            Model.WeeklySchedule.Extensions != null &&
+                            Model.WeeklySchedule.Extensions.Data != null &&
+                            Model.WeeklySchedule.Extensions.Data.Any())
+                            {
+                                var scheduleData = Model.WeeklySchedule.Extensions.Data.FirstOrDefault(sd =>
+                                sd.Date.Date == day.Date &&
+                                sd.StartTime == startTime &&
+                                sd.EndTime == endTime);
+                                bool isAvailable = scheduleData != null && scheduleData.IsAvailable;
+                            }
                             <td>
                                 <button class="btn btn-sm btn-success w-100 mb-2 assign-btn"
                                         data-date="@day.ToString("yyyy-MM-dd")"

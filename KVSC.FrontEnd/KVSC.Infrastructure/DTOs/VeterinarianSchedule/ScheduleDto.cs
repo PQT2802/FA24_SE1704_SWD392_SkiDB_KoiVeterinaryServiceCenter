@@ -8,7 +8,7 @@ namespace KVSC.Infrastructure.DTOs.VeterinarianSchedule
 {
     public class ScheduleDto
     {
-        public Extensions<ScheduleDtoData> Extensions { get; set; }
+        public Extensions<List<ScheduleDtoData>> Extensions { get; set; }
     }
     public class ScheduleDtoData
     {

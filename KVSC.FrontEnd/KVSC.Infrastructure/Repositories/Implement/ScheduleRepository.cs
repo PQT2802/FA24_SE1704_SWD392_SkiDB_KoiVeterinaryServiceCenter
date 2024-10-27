@@ -25,9 +25,16 @@ namespace KVSC.Infrastructure.Repositories.Implement
         {
             try
             {
+                TimeSpan startTime = TimeSpan.Parse(request.StartTime);
+                TimeSpan endTime = TimeSpan.Parse(request.EndTime);
+                var registerScheduleRequest = new RegisterScheduleRequest
+                {
+                    Date = request.Date,
+                    StartTime = startTime,
+                    EndTime = endTime
+                };
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var content = JsonContent.Create(request);
-                var response = await _httpClient.PostAsync("https://localhost:7283/api/VeterinarianSchedule/register", content);
+                var response = await _httpClient.PostAsJsonAsync("api/VeterinarianSchedule/register", registerScheduleRequest);
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)

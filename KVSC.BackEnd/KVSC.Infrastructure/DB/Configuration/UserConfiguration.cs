@@ -26,7 +26,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Admin",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
-                    role = 1
+                    role = 1,
+                    ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
                 },
                 //2
                 new User
@@ -52,7 +53,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Veterinarian_1",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
-                    role = 3
+                    role = 3,
+                    ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
                 },
                 //4
                 new User
@@ -65,7 +67,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Veterinarian_2",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
-                    role = 3
+                    role = 3,
+                    ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
                 },
                 //5
                 new User
@@ -104,7 +107,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_1",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
-                    role = 5
+                    role = 5,
+                    ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
                 },
                 new User
                 {

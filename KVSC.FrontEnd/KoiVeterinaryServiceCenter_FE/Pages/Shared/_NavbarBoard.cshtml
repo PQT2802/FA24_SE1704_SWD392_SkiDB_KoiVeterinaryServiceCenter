@@ -11,11 +11,32 @@
         <i class="fa fa-bars"></i>
     </a>
     <div class="navbar-nav align-items-center ms-auto">
+        @{
+            var actorRole = Context.Session.GetString("ActorRole");
+            var actorAvatar = Context.Session.GetString("ActorAvatar");
+            @if (actorRole == "Veterinarian")
+            {
+                <a asp-page="/User/Veterinarian/Chat"
+                   class="nav-item nav-link d-flex align-items-center text-decoration-none
+                      @((Context.Request.Path == "/User/Veterinarian/Chat") ? "active" : "")
+                      hover-effect">
+                    <i class="fa fa-comments me-2 fa-lg"></i>
+                    Koi Care Chat
+                </a>
+            }else if(actorRole == "Customer")
+            {
+                <a asp-page="/User/Customer/Chat"
+                   class="nav-item nav-link d-flex align-items-center text-decoration-none
+                          @((Context.Request.Path == "/User/Customer/Chat") ? "active" : "")
+                      hover-effect">
+                    <i class="fa fa-comments me-2 fa-lg"></i>
+                    Koi Consultation
+                </a>
+            }
+        }
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 @{
-                    var actorRole = Context.Session.GetString("ActorRole");
-                    var actorAvatar = Context.Session.GetString("ActorAvatar");
                     if (!string.IsNullOrEmpty(actorAvatar))
                     {
                         <img class="rounded-circle" src="@actorAvatar" alt="" style="width: 40px; height: 40px;">
