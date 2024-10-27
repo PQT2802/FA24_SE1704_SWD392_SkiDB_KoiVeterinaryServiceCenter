@@ -17,7 +17,13 @@ namespace KVSC.Application.Service.Implement
         {
             _petRepository = petRepository;
         }
-        
+
+        public async Task<ResponseDto<PetList>> GetPetsByOwnerAsync(Guid id)
+        {
+            var response = await _petRepository.GetPetsByOwnerAsync(id);
+            return response;
+        }
+
         public async Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string token)
         {
             var response = await _petRepository.GetPetsByOwnerIdAsync(token);

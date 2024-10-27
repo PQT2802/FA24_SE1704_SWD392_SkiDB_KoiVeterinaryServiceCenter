@@ -30,7 +30,7 @@ namespace KVSC.Infrastructure.DTOs.Pet
 
         public List<string> GetPropertyNames()
         {
-            return new List<string> { nameof(Name), nameof(Gender), nameof(Color), nameof(Length), nameof(Weight), nameof(Quantity), nameof(Owner) };
+            return new List<string> { nameof(Name), nameof(Gender), nameof(Color), nameof(Length), nameof(Weight), nameof(Quantity), nameof(Note) };
         }
     }
 }

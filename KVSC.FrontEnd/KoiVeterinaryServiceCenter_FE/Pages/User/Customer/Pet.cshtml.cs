@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using System.IdentityModel.Tokens.Jwt;
+using KVSC.Infrastructure.DTOs.User;
+using Newtonsoft.Json.Linq;
+using KVSC.Application.Service.Implement;
+using KVSC.Infrastructure.DTOs.Appointment;
+using KVSC.Infrastructure.DTOs.Product;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 {
@@ -24,35 +29,46 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
         public UpdatePetRequest UpdatePetRequest { get; set; } = default!;
 
         public bool ShowModal { get; set; } = false;
-
+        public Guid UserId { get; set; }
         public PetModel(IPetBusinessService petService)
         {
             _petService = petService;
         }
-        public async Task OnGetAsync()
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            
-            var result = await _petService.GetPetList();
+            var token = HttpContext.Session.GetString("Token");
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToPage("/Account/SignIn");
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+
+            if (!Guid.TryParse(userIdClaimString, out Guid userId))
+            {
+                ModelState.AddModelError(string.Empty, "Unable to decode userId from token..");
+                return Page();
+            }
+
+            var result = await _petService.GetPetsByOwnerAsync(userId);
+
             if (result.IsSuccess)
             {
-                PetList = result.Data;
-
-                if (PetList.Extensions == null)
-                {
-                    PetList.Extensions = new Extensions<List<PetData>>
-                    {
-                        Data = new List<PetData>()
-                    };
-                }
+                PetList = result.Data ?? new PetList();
             }
             else
             {
-                PetList = new PetList
-                {
-                    Extensions = new Extensions<List<PetData>> { Data = new List<PetData>() }
-                };
+                ModelState.AddModelError(string.Empty, "Error fetching pet data");
             }
+
+            UserId = userId;
+            return Page();
         }
+
         public async Task<IActionResult> OnPostCreatePetAsync()
         {
             var token = HttpContext.Session.GetString("Token");
@@ -62,8 +78,8 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             }
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(token);
-            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type =="userId")?.Value;
-            if(!Guid.TryParse(userIdClaimString, out var userId))
+            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+            if (!Guid.TryParse(userIdClaimString, out var userId))
             {
                 ModelState.AddModelError(string.Empty, "Unable to decode user id");
                 return Page();
@@ -97,7 +113,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 ModelState.AddModelError(string.Empty, "Unable to decode user id");
                 return Page();
             }
-            
+
             UpdatePetRequest.OwnerId = userId;
             var result = await _petService.UpdatePetAsync(UpdatePetRequest);
 
@@ -156,7 +172,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                                 errorDictionary["Age"] = error.Description;
                             else if (error.Description.Contains("Length", StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["Length"] = error.Description;
-                            else if(error.Description.Contains("Weight", System.StringComparison.OrdinalIgnoreCase))
+                            else if (error.Description.Contains("Weight", System.StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["Weight"] = error.Description;
                             else if (error.Description.Contains("Quantity", StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["Quantity"] = error.Description;

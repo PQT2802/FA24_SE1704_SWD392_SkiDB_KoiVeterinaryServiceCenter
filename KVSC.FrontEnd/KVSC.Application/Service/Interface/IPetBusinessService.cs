@@ -16,5 +16,6 @@ namespace KVSC.Application.Service.Interface
         Task<ResponseDto<GetPetResponse>> GetPetDetail(Guid id);
 
         Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string token);
+        Task<ResponseDto<PetList>> GetPetsByOwnerAsync(Guid id);
     }
 }

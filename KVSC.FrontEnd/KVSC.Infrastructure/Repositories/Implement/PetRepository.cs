@@ -21,8 +21,68 @@ namespace KVSC.Infrastructure.Repositories.Implement
             _httpClient = httpClient;
         }
 
-        
-        
+        public async Task<ResponseDto<PetList>> GetPetsByOwnerAsync(Guid id)
+        {
+            try
+            {
+
+                // Send the request and get the response
+                var response = await _httpClient.GetAsync($"api/Pet/owner/{id}");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<PetList>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get infor."
+                    };
+                }
+
+                // If successful, deserialize the UserInfo response
+                var petlist = await response.Content.ReadFromJsonAsync<PetList>(options);
+
+                return new ResponseDto<PetList>
+                {
+                    IsSuccess = true,
+                    Data = petlist,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<PetList>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<PetList>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
 
         public async Task<ResponseDto<PetList>> GetPetsByOwnerIdAsync(string token)
         {

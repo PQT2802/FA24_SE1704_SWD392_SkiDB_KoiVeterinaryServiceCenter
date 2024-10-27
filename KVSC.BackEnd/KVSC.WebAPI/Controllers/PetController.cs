@@ -1,4 +1,5 @@
-﻿using KVSC.Application.Interface.IService;
+﻿using KVSC.Application.Implement.Service;
+using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
@@ -67,6 +68,15 @@ namespace KVSC.WebAPI.Controllers
             Result result = await _petBusinessService.DeletePetAsync(request.Id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Delete pet successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpGet("owner/{id}")]
+        public async Task<IResult> GetAllPetByOwner(Guid id)
+        {
+            Result result = await _petBusinessService.GetAllPetByOwnerIdAsync(id);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "View all pet by ownerId successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
