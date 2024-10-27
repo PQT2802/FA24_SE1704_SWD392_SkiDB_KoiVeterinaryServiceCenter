@@ -1,5 +1,6 @@
 ﻿using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Pet.ImagePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,6 @@ namespace KVSC.Application.Interface.IService
         Task<Result> UpdatePetAsync(UpdatePetRequest updatePet);
         Task<Result> DeletePetAsync(Guid id);
         Task<Result> GetAllPetByOwnerIdAsync(Guid ownerId);
-
+        Task<Result> UploadImageAsync(UploadImageRequest request);
     }
-}
+} 

@@ -3,11 +3,17 @@ using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
+using KVSC.Infrastructure.DTOs.Firebase.AddImage;
+using KVSC.Infrastructure.DTOs.Firebase.GetImage;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
+using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.DTOs.Pet.GetPet;
+using KVSC.Infrastructure.DTOs.Pet.ImagePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
+using KVSC.Infrastructure.DTOs.PetService.GetPetService;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
+using System.Net;
 
 namespace KVSC.Application.Implement.Service
 {
@@ -34,14 +40,16 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetErrorMessage.PetNotFound());
             }
+            var getImgRequest = new GetImageRequest(pet.ImageUrl);
+            var petImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getImgRequest);
 
             var petResponse = new GetPetResponse
             {
                 Id = pet.Id,
                 Name = pet.Name,
-                Age = pet.Age ?? 0,
-                Gender = pet.Gender ?? "",
-                ImageUrl = pet.ImageUrl,
+                Age = pet.Age,
+                Gender = pet.Gender,
+                ImageUrl = petImg?.ImageUrl ?? string.Empty,
                 Color = pet.Color,
                 Length = pet.Length,
                 Weight = pet.Weight,
@@ -56,28 +64,60 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(petResponse);
         }
 
+        //public async Task<Result> GetAllPetAsync()
+        //{
+        //    var pets = await _unitOfWork.PetRepository.GetAllPetAsync();
+        //    var petResponse = pets.Select(pet => new GetPetResponse
+        //    {
+        //        Id = pet.Id,
+        //        Name = pet.Name,
+        //        Age = pet.Age,
+        //        Gender = pet.Gender,
+        //        ImageUrl = pet.ImageUrl,
+        //        Color = pet.Color,
+        //        Length = pet.Length,
+        //        Weight = pet.Weight,
+        //        Quantity = pet.Quantity,
+        //        LastHealthCheck = pet.LastHealthCheck,
+        //        Note = pet.Note,
+        //        HealthStatus = pet.HealthStatus,
+        //        Owner = pet.Owner?.FullName,
+        //        OwnerId = pet.OwnerId
+        //    }).ToList();
+
+        //    return Result.SuccessWithObject(petResponse);
+        //}
+
+
         public async Task<Result> GetAllPetAsync()
         {
             var pets = await _unitOfWork.PetRepository.GetAllPetAsync();
-            var petResponse = pets.Select(pet => new GetPetResponse
+            var petsRespone = new List<GetPetResponse>();
+            foreach (var pet in pets)
             {
-                Id = pet.Id,
-                Name = pet.Name,
-                Age = pet.Age,
-                Gender = pet.Gender,
-                ImageUrl = pet.ImageUrl,
-                Color = pet.Color,
-                Length = pet.Length,
-                Weight = pet.Weight,
-                Quantity = pet.Quantity,
-                LastHealthCheck = pet.LastHealthCheck,
-                Note = pet.Note,
-                HealthStatus = pet.HealthStatus,
-                Owner = pet.Owner?.FullName,
-                OwnerId = pet.OwnerId
-            }).ToList();
+                var getImgRequest = new GetImageRequest(pet.ImageUrl);
+                var petImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getImgRequest);
 
-            return Result.SuccessWithObject(petResponse);
+                var petResponse = new GetPetResponse
+                {
+                    Id = pet.Id,
+                    Name = pet.Name,
+                    Age = pet.Age,
+                    Gender = pet.Gender,
+                    ImageUrl = petImg?.ImageUrl ?? string.Empty,
+                    Color = pet.Color,
+                    Length = pet.Length,
+                    Weight = pet.Weight,
+                    Quantity = pet.Quantity,
+                    LastHealthCheck = pet.LastHealthCheck,
+                    Note = pet.Note,
+                    HealthStatus = pet.HealthStatus,
+                    Owner = pet.Owner?.FullName,
+                    OwnerId = pet.OwnerId
+                };
+                petsRespone.Add(petResponse);
+            }
+            return Result.SuccessWithObject(petsRespone);
         }
 
         public async Task<Result> CreatePetAsync(AddPetRequest addPet)
@@ -208,6 +248,41 @@ namespace KVSC.Application.Implement.Service
             }).ToList();
 
             return Result.SuccessWithObject(petResponseList);
+        }
+
+        public async Task<Result> UploadImageAsync(UploadImageRequest request)
+        {
+            // Validate request
+            if (request.ImageFile == null || request.ImageFile.Length == 0)
+            {
+                return Result.Failure(PetErrorMessage.FieldIsEmpty("Img"));
+            }
+            // Upload image logic
+            var imageRequest = new AddImageRequest(request.ImageFile, "Pets");
+            var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest);
+            if (!uploadImageResult.Success)
+            {
+                return Result.Failure(uploadImageResult.Error);
+            }
+            var result = await UpdatePetImageUrl(request.PetId, uploadImageResult.FilePath);
+            return Result.SuccessWithObject(result);
+        }
+
+        public async Task<Result> UpdatePetImageUrl(Guid petId, string imageUrl)
+        {
+            var pet = await _unitOfWork.PetRepository.GetByIdAsync(petId);
+            if (pet == null)
+            {
+                return Result.Failure(PetErrorMessage.PetNotFound());
+            }
+            pet.ImageUrl = imageUrl;
+            var result = await _unitOfWork.PetRepository.UpdateAsync(pet);
+            if (result == 0)
+            {
+                return Result.Failure(PetErrorMessage.PetUpdateImgFailed());
+            }
+            var response = new CreateResponse { Id = petId };
+            return Result.SuccessWithObject(response);
         }
     }
 }

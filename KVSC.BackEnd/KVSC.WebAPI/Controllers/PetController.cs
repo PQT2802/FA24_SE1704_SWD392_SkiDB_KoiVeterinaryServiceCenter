@@ -4,6 +4,7 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Pet.AddPet;
 using KVSC.Infrastructure.DTOs.Pet.GetPet;
+using KVSC.Infrastructure.DTOs.Pet.ImagePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -86,6 +87,15 @@ namespace KVSC.WebAPI.Controllers
             Result result = await _petBusinessService.GetAllPetByOwnerIdAsync(request.Id);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "View all pet by ownerId successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpPost("upload/img")]
+        public async Task<IResult> UploadImage([FromForm] UploadImageRequest request)
+        {
+            Result result = await _petBusinessService.UploadImageAsync(request);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Image uploaded successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
     }
