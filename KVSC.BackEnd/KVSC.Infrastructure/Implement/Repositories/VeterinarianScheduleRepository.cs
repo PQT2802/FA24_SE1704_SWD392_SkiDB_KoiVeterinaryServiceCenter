@@ -29,19 +29,20 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
             if (overlappingSchedule != null)
             {
-                throw new InvalidOperationException("Schedule overlaps with an existing one.");
+                overlappingSchedule.IsAvailable = true;//edit hung => co the assign lai neu bi xoa
             }
-
-            var schedule = new VeterinarianSchedule
+            else
             {
-                VeterinarianId = veterinarianId,
-                Date = date,
-                StartTime = startTime,
-                EndTime = endTime,
-                IsAvailable = true
-            };
-
-            _context.VeterinarianSchedules.Add(schedule);
+                var schedule = new VeterinarianSchedule
+                {
+                    VeterinarianId = veterinarianId,
+                    Date = date,
+                    StartTime = startTime,
+                    EndTime = endTime,
+                    IsAvailable = true
+                };
+                _context.VeterinarianSchedules.Add(schedule);
+            }
             await _context.SaveChangesAsync();
         }
 

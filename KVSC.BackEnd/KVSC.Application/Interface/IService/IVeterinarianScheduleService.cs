@@ -9,6 +9,7 @@ namespace KVSC.Application.Interface.IService
     public interface IVeterinarianScheduleService
     {
         Task<Result> RegisterAvailableTimeAsync(Guid veterinarianId, RegisterScheduleRequest request);
+        Task<Result> RegisterAvailableTimeAsync(ManagementRegisterScheduleRequest request);
         Task<Result> GetWeeklyScheduleAsync(Guid veterinarianId, DateTime startOfWeek);
         Task<Result> UpdateScheduleAvailabilityAsync(Guid veterinarianId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime);
 

@@ -56,6 +56,7 @@ using KVSC.Application.Common.Validator.VeterinarianSchedule;
 using KVSC.Infrastructure.DTOs.Rating.AddRating;
 using KVSC.Infrastructure.DTOs.Rating.UpdateRating;
 using KVSC.Application.Common.Validator.Rating;
+using KVSC.Application.Common.Validator.Schedule;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -137,6 +138,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<UpdateRatingRequest>, UpdateRatingValidator>();
 
             services.AddTransient<IValidator<RegisterScheduleRequest>, RegisterScheduleValidator>();
+            services.AddTransient<IValidator<ManagementRegisterScheduleRequest>, ManagementRegisterScheduleValidator>();
 
 
             //Validator

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Azure.Core;
+using FluentValidation;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
@@ -16,11 +17,13 @@ namespace KVSC.Application.Implement.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<RegisterScheduleRequest> _scheduleValidator;
+        private readonly IValidator<ManagementRegisterScheduleRequest> _managementScheduleValidator;
 
-        public VeterinarianScheduleService(IUnitOfWork unitOfWork, IValidator<RegisterScheduleRequest> scheduleValidator)
+        public VeterinarianScheduleService(IUnitOfWork unitOfWork, IValidator<RegisterScheduleRequest> scheduleValidator, IValidator<ManagementRegisterScheduleRequest> managementScheduleValidator)
         {
             _unitOfWork = unitOfWork;
             _scheduleValidator = scheduleValidator;
+            _managementScheduleValidator = managementScheduleValidator;
         }
 
         public async Task<Result> RegisterAvailableTimeAsync(Guid userId, RegisterScheduleRequest request)
@@ -45,6 +48,27 @@ namespace KVSC.Application.Implement.Service
             // Register the available schedule using the VeterinarianId
             await _unitOfWork.VeterinarianScheduleRepository.RegisterAvailableTime(veterinarian.Id, request.Date, request.StartTime, request.EndTime);
             return Result.SuccessWithObject(new { Message = "RegisterAvailableTime" });
+        }
+        public async Task<Result> RegisterAvailableTimeAsync(ManagementRegisterScheduleRequest request)
+        {
+            var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(request.Id);
+            if (veterinarian == null)
+            {
+                return Result.Failure(Error.NotFound("VeterinarianNotFound", "Veterinarian not found for the provided user."));
+            }
+            // Validate the input
+            var validationResult = await _managementScheduleValidator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors
+                    .Select(e => (Error)e.CustomState)
+                    .ToList();
+                return Result.Failures(errors);
+            }
+
+            // Register the available schedule using the provided VeterinarianId
+            await _unitOfWork.VeterinarianScheduleRepository.RegisterAvailableTime(veterinarian.Id, request.Date, request.StartTime, request.EndTime);
+            return Result.SuccessWithObject(new { Message = "Schedule registered successfully for Veterinarian "});
         }
 
         // Get weekly schedule for a veterinarian
@@ -182,9 +206,14 @@ namespace KVSC.Application.Implement.Service
         }
 
         // Update the availability after an appointment
-        public async Task<Result> UpdateScheduleAvailabilityAsync(Guid veterinarianId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)
+        public async Task<Result> UpdateScheduleAvailabilityAsync(Guid UserId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)
         {
-            await _unitOfWork.VeterinarianScheduleRepository.UpdateScheduleAvailability(veterinarianId, appointmentDate, startTime, endTime);
+            var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(UserId);
+            if (veterinarian == null)
+            {
+                return Result.Failure(Error.NotFound("VeterinarianNotFound", "Veterinarian not found for the provided user."));
+            }
+            await _unitOfWork.VeterinarianScheduleRepository.UpdateScheduleAvailability(veterinarian.Id, appointmentDate, startTime, endTime);
             return Result.SuccessWithObject(new { Message = "UpdateScheduleAvailability" });
         }
     }

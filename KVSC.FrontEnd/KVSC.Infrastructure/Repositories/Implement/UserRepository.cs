@@ -287,6 +287,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+        
         public async Task<ResponseDto<RoleList>> GetRoleList()
         {
             try

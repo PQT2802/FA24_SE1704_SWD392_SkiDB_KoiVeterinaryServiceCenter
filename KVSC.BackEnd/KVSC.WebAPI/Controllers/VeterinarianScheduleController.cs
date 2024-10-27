@@ -34,6 +34,18 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Schedule registered successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        [HttpPost("management/register")]
+        public async Task<IResult> RegisterAvailableTime([FromBody] ManagementRegisterScheduleRequest request)
+        {
+            // Validate that the manager can perform this action
+            // You might want to add role checking here if needed
+
+            Result result = await _veterinarianScheduleService.RegisterAvailableTimeAsync(request);
+
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Schedule registered successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
 
         // GET: api/veterinarian-schedule/weekly
         [HttpGet("weekly")]
@@ -50,11 +62,9 @@ namespace KVSC.WebAPI.Controllers
 
         // PUT: api/veterinarian-schedule/update
         [HttpPut("update")]
-        [Authorize]
-        public async Task<IResult> UpdateScheduleAvailability([FromQuery] DateTime appointmentDate, [FromQuery] TimeSpan startTime, [FromQuery] TimeSpan endTime)
+        public async Task<IResult> UpdateScheduleAvailability([FromQuery] Guid UserId, [FromQuery] DateTime appointmentDate, [FromQuery] TimeSpan startTime, [FromQuery] TimeSpan endTime) // hung chinh sua cho manager
         {
-            CurrentUserObject currentUser = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
-            Result result = await _veterinarianScheduleService.UpdateScheduleAvailabilityAsync(currentUser.UserId, appointmentDate, startTime, endTime);
+            Result result = await _veterinarianScheduleService.UpdateScheduleAvailabilityAsync(UserId, appointmentDate, startTime, endTime);
 
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Schedule availability updated successfully.")

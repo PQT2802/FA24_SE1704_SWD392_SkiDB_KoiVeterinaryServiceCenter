@@ -27,6 +27,7 @@ namespace KVSC.Application.Service.Implement
         {
             return await _userRepository.GetUserList(fullName, email, phoneNumber, address, role, pageNumber, pageSize);
         }
+      
         public async Task<ResponseDto<RoleList>> GetRoleList()
         {
             return await _userRepository.GetRoleList();
