@@ -25,7 +25,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
             // Ensure no overlapping schedules
             var overlappingSchedule = await _context.VeterinarianSchedules
                 .FirstOrDefaultAsync(s => s.VeterinarianId == veterinarianId && s.Date == date &&
-                                          (s.StartTime <= endTime && s.EndTime >= startTime));
+                                          (s.StartTime == endTime && s.EndTime == startTime));
 
             if (overlappingSchedule != null)
             {

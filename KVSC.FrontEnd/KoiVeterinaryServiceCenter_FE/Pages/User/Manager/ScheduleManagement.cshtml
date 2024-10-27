@@ -167,46 +167,48 @@
  </div>
 
 <script>
-    $(document).ready(function () {
-        $('.edit-btn, .assign-btn').on('click', function () {
-            const date = $(this).data('date');
-            const shift = $(this).data('shift');
-            const startTime = $(this).data('start') || (shift === 'Morning' ? '08:00' : shift === 'Afternoon' ? '13:00' : '17:00');
-            const endTime = $(this).data('end') || (shift === 'Morning' ? '12:00' : shift === 'Afternoon' ? '17:00' : '21:00');
-            const userId = $(this).data('user') || '';
+    function attachAssignBtnListeners() {
+        $(document).ready(function () {
+            $('.edit-btn, .assign-btn').on('click', function () {
+                const date = $(this).data('date');
+                const shift = $(this).data('shift');
+                const startTime = $(this).data('start') || (shift === 'Morning' ? '08:00' : shift === 'Afternoon' ? '13:00' : '17:00');
+                const endTime = $(this).data('end') || (shift === 'Morning' ? '12:00' : shift === 'Afternoon' ? '17:00' : '21:00');
+                const userId = $(this).data('user') || '';
 
-            $('#scheduleDate').val(date);
-            $('#shift').val(shift);
-            $('#startTime').val(startTime);
-            $('#endTime').val(endTime);
-            $('#veterinarianSelect').val(userId);
+                $('#scheduleDate').val(date);
+                $('#shift').val(shift);
+                $('#startTime').val(startTime);
+                $('#endTime').val(endTime);
+                $('#veterinarianSelect').val(userId);
 
-             $('#deleteAssignment').prop('checked', false);
+                $('#deleteAssignment').prop('checked', false);
 
-            $('#editScheduleModal').modal('show');
+                $('#editScheduleModal').modal('show');
+            });
+
+            $('#confirmEditBtn').on('click', function () {
+                $('#scheduleForm').submit();
+            });
         });
+        $(document).ready(function () {
+            // Ẩn thông báo thành công sau 2 giây
+            var successAlert = $('#successAlert');
+            if (successAlert.length) {
+                setTimeout(function () {
+                    successAlert.fadeOut('slow');
+                }, 2000);
+            }
 
-        $('#confirmEditBtn').on('click', function () {
-            $('#scheduleForm').submit();
+            // Ẩn thông báo lỗi sau 2 giây
+            var errorAlert = $('#errorAlert');
+            if (errorAlert.length) {
+                setTimeout(function () {
+                    errorAlert.fadeOut('slow');
+                }, 1000);
+            }
         });
-    });
-    $(document).ready(function () {
-        // Ẩn thông báo thành công sau 2 giây
-        var successAlert = $('#successAlert');
-        if (successAlert.length) {
-            setTimeout(function () {
-                successAlert.fadeOut('slow');
-            }, 2000);
-        }
-
-        // Ẩn thông báo lỗi sau 2 giây
-        var errorAlert = $('#errorAlert');
-        if (errorAlert.length) {
-            setTimeout(function () {
-                errorAlert.fadeOut('slow');
-            }, 1000);
-        }
-    });
+    } attachAssignBtnListeners();
     //========================================================================================
 
     document.getElementById('previousWeekBtn').addEventListener('click', async () => {
