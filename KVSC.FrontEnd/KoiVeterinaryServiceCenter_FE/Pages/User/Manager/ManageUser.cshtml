@@ -1,0 +1,250 @@
+﻿@page
+@using KVSC.Infrastructure.DTOs
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Manager.ManageUserModel
+@{
+    Layout = "_LayoutBoard";
+}
+@if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
+{
+    <div id="alertMessage" class="alert @(TempData["AlertClass"] ?? "alert-info") show">
+        @TempData["SuccessMessage"] @TempData["ErrorMessage"]
+    </div>
+}
+<form method="get" class="d-flex align-items-center p-3 border rounded shadow-sm">
+    <h4 class="mb-0 me-3"></h4>
+
+    <div class="mb-3 me-2">
+        <label asp-for="FullName" class="visually-hidden">Full name</label>
+        <input type="text" asp-for="FullName" class="form-control" placeholder="FullName" />
+    </div>
+
+    <div class="mb-3 me-2">
+        <label asp-for="Email" class="visually-hidden">Email</label>
+        <input type="text" asp-for="Email" class="form-control" placeholder="Email" />
+    </div>
+
+    <div class="mb-3 me-2">
+        <label asp-for="PhoneNumber" class="visually-hidden">PhoneNumber</label>
+        <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="PhoneNumber" />
+    </div>
+
+    <div class="mb-3 me-2">
+        <label asp-for="Address" class="visually-hidden">Address</label>
+        <input type="text" asp-for="Address" class="form-control" placeholder="Address" />
+    </div>
+
+    <div class="mb-3 me-2 flex-grow-1">
+        <select asp-for="Role" class="form-select" asp-items="ViewBag.Roles">
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-25 align-self-stretch">Search</button>
+</form>
+
+<!-- Table for displaying services -->
+@await Component.InvokeAsync("GenericTable", new { items = Model.UserList.Extensions.Data.Data.Cast<IPropertyNameProvider>(), listType = "user" })
+
+@* /*========================================================Update========================================================*/ *@
+
+<div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateUserModalLabel">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateUserForm" method="post" asp-page-handler="UpdateUser">
+                    <input type="hidden" id="userId" name="UpdateUserRequest.Id" />
+
+                    <!-- Full Name -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="fullName" name="UpdateUserRequest.FullName" placeholder="Full Name">
+                        <label for="fullName">Full Name</label>
+                        <span asp-validation-for="UpdateUserRequest.FullName" class="text-danger"></span>
+                    </div>
+
+                    <!-- User Name -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="userName" name="UpdateUserRequest.UserName" placeholder="User Name">
+                        <label for="userName">User Name</label>
+                        <span asp-validation-for="UpdateUserRequest.UserName" class="text-danger"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" name="UpdateUserRequest.Email" placeholder="Email">
+                        <label for="email">Email</label>
+                        <span asp-validation-for="UpdateUserRequest.Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="phoneNumber" name="UpdateUserRequest.PhoneNumber" placeholder="Phone Number">
+                        <label for="phoneNumber">Phone Number</label>
+                        <span asp-validation-for="UpdateUserRequest.PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="address" name="UpdateUserRequest.Address" placeholder="Address">
+                        <label for="address">Address</label>
+                        <span asp-validation-for="UpdateUserRequest.Address" class="text-danger"></span>
+                    </div>
+
+                    @* <!-- Profile Picture URL -->
+                    <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="profilePictureUrl" name="UpdateUserRequest.ProfilePictureUrl" placeholder="Profile Picture URL">
+                    <label for="profilePictureUrl">Profile Picture URL</label>
+                    <span asp-validation-for="UpdateUserRequest.ProfilePictureUrl" class="text-danger"></span>
+                    </div> *@
+                    <!-- Profile Picture Upload -->
+                    <div class="form-floating mb-3">
+                        <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
+                        <label for="imageFile">Upload Profile Picture</label>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="mb-3">
+                        <img id="profileImagePreview" src="#" alt="Profile Image" class="img-thumbnail" style="display: none; max-width: 100%; height: auto;">
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="dateOfBirth" name="UpdateUserRequest.DateOfBirth">
+                        <label for="dateOfBirth">Date of Birth</label>
+                        <span asp-validation-for="UpdateUserRequest.DateOfBirth" class="text-danger"></span>
+                    </div>
+
+                    <!-- Role -->
+                    <div class="form-floating mb-3">
+                        <select asp-for="UpdateUserRequest.Role" class="form-select" asp-items="ViewBag.Roles" id="role">
+                        </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pagination mt-4 d-flex justify-content-center">
+    @if (Model.UserList.Extensions.Data.TotalCount > 0)
+    {
+        var totalPages = (int)Math.Ceiling((double)Model.UserList.Extensions.Data.TotalCount / Model.UserList.Extensions.Data.PageSize);
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                @if (Model.UserList.Extensions.Data.PageNumber > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pageNumber=@(Model.UserList.Extensions.Data.PageNumber - 1)&FullName=@Model.FullName&Email=@Model.Email&PhoneNumber=@Model.PhoneNumber&Address=@Model.Address&Role=@Model.Role" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(Model.UserList.Extensions.Data.PageNumber == i ? "active" : "")">
+                        <a class="page-link" href="?pageNumber=@i&FullName=@Model.FullName&Email=@Model.Email&PhoneNumber=@Model.PhoneNumber&Address=@Model.Address&Role=@Model.Role">@i</a>
+                    </li>
+                }
+
+                @if (Model.UserList.Extensions.Data.PageNumber < totalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pageNumber=@(Model.UserList.Extensions.Data.PageNumber + 1)&FullName=@Model.FullName&Email=@Model.Email&PhoneNumber=@Model.PhoneNumber&Address=@Model.Address&Role=@Model.Role" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        $('.edit-user-button').click(function () {
+            var id = $(this).data('id');
+            var fullName = $(this).data('fullname');
+            var userName = $(this).data('username');
+            var email = $(this).data('email');
+            var phoneNumber = $(this).data('phonenumber');
+            var address = $(this).data('address');
+            var profilePictureUrl = $(this).data('profilepictureurl');
+            var dateOfBirth = $(this).data('dateofbirth');
+            var role = $(this).data('role');
+
+            $('#updateUserModal #userId').val(id);
+            $('#updateUserModal #fullName').val(fullName);
+            $('#updateUserModal #userName').val(userName);
+            $('#updateUserModal #email').val(email);
+            $('#updateUserModal #phoneNumber').val(phoneNumber);
+            $('#updateUserModal #address').val(address);
+
+            $('#updateUserModal #profileImagePreview').attr('src', profilePictureUrl).show();;
+
+            $('#updateUserModal #dateOfBirth').val(dateOfBirth);
+            $('#updateUserModal #role').val(role);
+
+            $('#updateUserModal').modal('show');
+        });
+
+        $('#imageFile').change(function (e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#profileImagePreview').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $('#profileImagePreview').hide();
+            }
+        });
+
+        $('#updateUserForm').submit(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: "POST",
+                url: window.location.pathname + "?handler=UpdateUser",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.isSuccess) {
+                        $('#updateUserModal').modal('hide');
+                        alert('Update successful');
+                        location.reload();
+                    } else {
+                        $('span[data-valmsg-for]').text('');
+                        for (const [key, value] of Object.entries(response.errors)) {
+                            $(`span[data-valmsg-for='UpdateUserRequest.${key}']`).text(value);
+                        }
+                    }
+                },
+                error: function () {
+                    console.log('An error occurred.');
+                }
+            });
+        });
+    });
+</script>
+@* ====================================delete=================================================== *@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alertElement = document.getElementById('alertMessage');
+        if (alertElement) {
+            setTimeout(function () {
+                alertElement.classList.add('fade');
+                alertElement.classList.remove('show');
+            }, 3000);
+        }
+    });
+</script>
+

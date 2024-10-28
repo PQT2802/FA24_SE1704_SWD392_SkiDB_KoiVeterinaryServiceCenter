@@ -13,3 +13,9 @@
 <a asp-page="/User/Manager/ScheduleManagement" class="nav-item nav-link @((Context.Request.Path == "/User/Manager/ScheduleManagement") ? "active" : "")">
     <i class="fa fa-calendar me-2"></i>Schedule
 </a>
+<a asp-page="/User/Manager/ManageUser" class="nav-item nav-link @((Context.Request.Path == "/User/Manager/ManageUser") ? "active" : "")">
+    <i class="fa fa-user me-2"></i>Manage User
+</a>
+<a asp-page="/Account/Logout" class="nav-item nav-link">
+    <i class="fa fa-sign-out-alt me-2"></i>Logout
+</a>

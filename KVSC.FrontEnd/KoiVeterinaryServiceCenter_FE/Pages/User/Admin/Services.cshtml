@@ -5,6 +5,11 @@
 @{
     Layout = "_LayoutBoard";
 }
+@{
+    var actorRole = HttpContext.Session.GetString("ActorRole");
+}
+@if (actorRole == "Admin")
+{
 @*-------------------------------- thongbao -----------------------------------------------*@
 @if (TempData["SuccessMessage"] != null)
 {
@@ -195,6 +200,12 @@
         </div>
     </div>
 </div>
+}
+
+else
+{
+    <div class="alert alert-warning">Bạn không có quyền truy cập vào phần này.</div>
+}
 @*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
 
 <script>

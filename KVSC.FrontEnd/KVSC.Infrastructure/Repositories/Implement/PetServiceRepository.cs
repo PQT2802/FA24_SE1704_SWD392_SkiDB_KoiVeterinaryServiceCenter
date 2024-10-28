@@ -28,7 +28,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/PetService/{id}");
+                var response = await _httpClient.GetAsync($"api/PetService?Id={id}");
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
                 var responseContent = await response.Content.ReadAsStringAsync();
@@ -364,7 +364,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
-        public async Task<ResponseDto<GetPetServiceResponse>> GetPetServiceDetail(Guid id)
+        public async Task<ResponseDto<GetPetServiceResponse>> GetPetServiceDetail(Guid id)//dung
         {
             try
             {
