@@ -64,6 +64,7 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
 
 
             services.AddTransient<IPetBusinessService, PetBusinessService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddScoped<IMessageService, MessageService>();
 
             services.AddTransient<IAppointmentService, AppointmentService>();

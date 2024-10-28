@@ -1,0 +1,60 @@
+﻿@page "{id:guid}"
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Admin.UserDetailModel
+@{
+    Layout = "_LayoutBoard";
+}
+@{
+    ViewData["Title"] = "User Details";
+}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="card-title text-center">User Details</h2>
+        </div>
+        <div class="card-body">
+            @if (Model.UserDetail != null)
+            {
+                <div class="row">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <img src="@Model.UserDetail.Extensions.Data.ProfilePictureUrl" alt="Profile Picture" class="img-fluid rounded-circle" style="max-height: 200px; object-fit: cover;" />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-around align-items-center mb-4">
+                            <h3 class="display-4 text-primary">@Model.UserDetail.Extensions.Data.FullName</h3>
+                            <p class="mb-0"><strong>Joined on:</strong> @Model.UserDetail.Extensions.Data.CreatedDate.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Username:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.UserDetail.Extensions.Data.UserName</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Email:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.UserDetail.Extensions.Data.Email</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Phone Number:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.UserDetail.Extensions.Data.PhoneNumber</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Address:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.UserDetail.Extensions.Data.Address</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Date of Birth:</strong></p>
+                            <p class="bg-light border rounded p-3">@Model.UserDetail.Extensions.Data.DateOfBirth.ToString("dd/MM/yyyy")</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    User not found.
+                </div>
+            }
+        </div>
+        <div class="card-footer text-end">
+            <a href="/User/Admin/UserInfo" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>

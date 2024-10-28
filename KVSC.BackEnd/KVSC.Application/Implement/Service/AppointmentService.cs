@@ -150,6 +150,17 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(appointments);
         }
 
+        public async Task<Result> UpdateAppointmentStatusAsync(Guid appointmentId, string status)
+        {
+            var result = await _unitOfWork.AppointmentRepository.UpdateAppointmentStatusAsync(appointmentId, status);
+            if (result == Guid.Empty)
+            {
+                var error = Error.NotFound("AppointmentNotFound", "No appointments found for the specified veterinarian.");
+                return Result.Failure(error);
+            }
+            return Result.SuccessWithObject(new { id = result });
+
+        }
         public async Task<Result> GetAppointmentDetailByIdAsync(Guid appointmentId)
         {
             var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentDetailAsync(appointmentId);

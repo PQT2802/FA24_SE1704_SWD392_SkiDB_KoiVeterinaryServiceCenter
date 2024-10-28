@@ -17,6 +17,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                 {
                     Id = new Guid("11111111-1111-1111-1111-111111111111"),
                     CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    PetId = new Guid("f1111111-1111-1111-1111-111111111111"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
                     AppointmentDate = new DateTime(2024, 11, 1, 10, 0, 0), // Friday
                     Status = "Pending",
@@ -27,6 +28,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                 {
                     Id = new Guid("22222222-2222-2222-2222-222222222222"),
                     CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    PetId = new Guid("f1111111-1111-1111-1111-111111111111"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
                     AppointmentDate = new DateTime(2024, 11, 1, 10, 0, 0), // Friday
                     Status = "Waiting",
@@ -37,6 +39,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                 {
                     Id = new Guid("33333333-3333-3333-3333-333333333333"),
                     CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
+                    PetId = new Guid("f3333333-3333-3333-3333-333333333333"),
                     PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
                     AppointmentDate = new DateTime(2024, 11, 2, 9, 0, 0), // Saturday
                     Status = "Pending",

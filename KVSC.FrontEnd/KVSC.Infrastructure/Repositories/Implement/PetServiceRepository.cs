@@ -1,10 +1,14 @@
 ﻿using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
 using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.Service.AddService;
 using KVSC.Infrastructure.DTOs.Service.DeleteService;
+using KVSC.Infrastructure.DTOs.Service.GetServiceDetail;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
 
 using KVSC.Infrastructure.Repositories.Interface;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using PetServiceDto = KVSC.Infrastructure.DTOs.Service.ServiceDetail.PetServiceDto;
@@ -21,15 +25,28 @@ namespace KVSC.Infrastructure.Repositories.Implement
         }
 
 
+
+
+
         public async Task<ResponseDto<PetServiceDto>> GetPetServiceByIdAsync(Guid id)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/PetService/{id}");
+                var response = await _httpClient.GetAsync($"api/PetService?Id={id}");
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
                 var responseContent = await response.Content.ReadAsStringAsync();
                 Console.WriteLine($"API Response: {responseContent}");  // Log raw API response for debugging
+
+                if (string.IsNullOrWhiteSpace(responseContent))
+                {
+                    return new ResponseDto<PetServiceDto>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Message = "The response content is empty."
+                    };
+                }
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -38,7 +55,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     {
                         IsSuccess = false,
                         Data = null,
-                        Message = errorResponse.Extensions.Message
+                        Message = errorResponse?.Extensions?.Message ?? "An error occurred while processing the request."
                     };
                 }
 
@@ -47,8 +64,8 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 return new ResponseDto<PetServiceDto>
                 {
                     IsSuccess = true,
-                    Data = apiResponse.Extensions.Data,
-                    Message = apiResponse.Extensions.Message
+                    Data = apiResponse?.Extensions?.Data,
+                    Message = apiResponse?.Extensions?.Message
                 };
             }
             catch (HttpRequestException httpEx)
@@ -58,6 +75,15 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     IsSuccess = false,
                     Data = null,
                     Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (JsonException jsonEx)
+            {
+                return new ResponseDto<PetServiceDto>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Error parsing JSON response: {jsonEx.Message}"
                 };
             }
             catch (Exception ex)
@@ -74,7 +100,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
 
 
-        public async Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request)
+        public async Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request, IFormFile imageFile)
         {
             try
             {
@@ -102,6 +128,35 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 }
                 // If successful, deserialize the login response
                 var addingResponse = await response.Content.ReadFromJsonAsync<AddServiceResponse>(options);
+
+                //==================================phan them anh==========================================
+
+                // Tạo form data để gửi
+                var formContent = new MultipartFormDataContent();
+                var fileContent = new StreamContent(imageFile.OpenReadStream());
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+
+                // Thêm file vào form data
+                formContent.Add(fileContent, "ImageFile", imageFile.FileName);
+                formContent.Add(new StringContent(addingResponse.Extensions.Data.Id.ToString()), "PetServiceId");
+
+                // Gọi API cập nhật ảnh
+                var uploadResponse = await _httpClient.PostAsync("api/PetService/upload/img", formContent);
+
+                if (uploadResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var uploadResponseContent = await uploadResponse.Content.ReadAsStringAsync();
+                    var uploadErrorResponse = JsonSerializer.Deserialize<ErrorResponse>(uploadResponseContent, options);
+
+                    return new ResponseDto<AddServiceResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = uploadErrorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred while uploading the image."
+                    };
+                }
+                //==================================ket thuc them anh==========================================
 
                 return new ResponseDto<AddServiceResponse>
                 {
@@ -131,7 +186,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
-        public async Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request)
+        public async Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request, IFormFile imageFile)
         {
             try
             {
@@ -162,6 +217,35 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
                 // Nếu thành công, lấy dữ liệu phản hồi
                 var updateResponse = await response.Content.ReadFromJsonAsync<UpdateServiceResponse>(options);
+
+                //==================================phan them anh==========================================
+
+                // Tạo form data để gửi
+                var formContent = new MultipartFormDataContent();
+                var fileContent = new StreamContent(imageFile.OpenReadStream());
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+
+                // Thêm file vào form data
+                formContent.Add(fileContent, "ImageFile", imageFile.FileName);
+                formContent.Add(new StringContent(updateResponse.Extensions.Data.Id.ToString()), "PetServiceId");
+
+                // Gọi API cập nhật ảnh
+                var uploadResponse = await _httpClient.PostAsync("api/PetService/upload/img", formContent);
+
+                if (uploadResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var uploadResponseContent = await uploadResponse.Content.ReadAsStringAsync();
+                    var uploadErrorResponse = JsonSerializer.Deserialize<ErrorResponse>(uploadResponseContent, options);
+
+                    return new ResponseDto<UpdateServiceResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = uploadErrorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred while uploading the image."
+                    };
+                }
+                //==================================ket thuc them anh==========================================
 
                 return new ResponseDto<UpdateServiceResponse>
                 {
@@ -301,5 +385,56 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+        public async Task<ResponseDto<GetPetServiceResponse>> GetPetServiceDetail(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/PetService?Id={id}");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetPetServiceResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get infor."
+                    };
+                }
+
+                var petService = await response.Content.ReadFromJsonAsync<GetPetServiceResponse>(options);
+
+                return new ResponseDto<GetPetServiceResponse>
+                {
+                    IsSuccess = true,
+                    Data = petService,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<GetPetServiceResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<GetPetServiceResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
     }
 }

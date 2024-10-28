@@ -11,8 +11,10 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
     {
         public static Error FieldIsEmpty(string nameField)
             => Error.Validation("User.Empty", $"The '{nameField}' is required.");
-
-
+        public static Error BirthdayCannotBeInFuture()
+       => Error.Validation("User.BirthdayInFuture", "The 'Date of Birth' cannot be in the future.");
+        public static Error UserMustBeAtLeast18()
+        => Error.Validation("User.AgeRequirement", "The user must be at least 18 years old.");
 
         public static Error UserNotExist()
             => Error.NotFound("User.Exist", $"Invalid email or password");
@@ -32,7 +34,8 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
             => Error.Validation("User.Email.Format", $"The email is invalid.");
         public static Error EmailIsExist()
             => Error.Validation("User.Email.Exist", $"The email is exist.");
-
+        public static Error PhoneInvalidFormat()
+            => Error.Validation("User.Phone.Format", $" number must be 10-11 digits.");
 
         public static Error PasswordInValidLength()
             => Error.Validation("User.Password.Length", $"The password must be at least 3 characters.");
@@ -40,6 +43,10 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
             => Error.Validation("User.Password.Uppercase", $"Password must start with a strong character (uppercase letter).");
         public static Error PasswordInValidSpecialChar()
             => Error.Validation("User.Password.SpecialChar", $"Password must contain at least one special character.");
+        public static Error UserDeleteFailed()
+        => Error.Validation("User.DeleteFailed", "Failed to delete user.");
+        public static Error UserUpdateFailed()
+        => Error.Validation("User.UpdateFailed", "Failed to update user.");
 
     }
 }

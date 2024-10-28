@@ -27,8 +27,10 @@ namespace KVSC.Infrastructure.Interface
 
         IServiceReportRepository ServiceReportRepository { get; }
         IPrescriptionRepository PrescriptionRepository { get; }
-
+        IRatingRepository RatingRepository { get; }
         IVeterinarianScheduleRepository VeterinarianScheduleRepository { get; }
+
+        
         IPaymentRepository PaymentRepository { get; }
         int Complete();
     }

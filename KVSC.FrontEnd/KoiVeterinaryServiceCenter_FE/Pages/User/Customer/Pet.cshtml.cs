@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using KVSC.Infrastructure.DTOs.Pet.DeletePet;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 {
@@ -30,11 +31,12 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
         }
         public async Task OnGetAsync()
         {
+            
             var result = await _petService.GetPetList();
             if (result.IsSuccess)
             {
                 PetList = result.Data;
-                
+
                 if (PetList.Extensions == null)
                 {
                     PetList.Extensions = new Extensions<List<PetData>>
@@ -53,6 +55,20 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
         }
         public async Task<IActionResult> OnPostCreatePetAsync()
         {
+            var token = HttpContext.Session.GetString("Token");
+            if (string.IsNullOrEmpty(token))
+            {
+                return Redirect("/Account/SignIn");
+            }
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type =="userId")?.Value;
+            if(!Guid.TryParse(userIdClaimString, out var userId))
+            {
+                ModelState.AddModelError(string.Empty, "Unable to decode user id");
+                return Page();
+            }
+            AddPetRequest.OwnerId = userId;
             var result = await _petService.AddPetAsync(AddPetRequest);
 
             if (result.IsSuccess)
@@ -66,6 +82,23 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 
         public async Task<IActionResult> OnPostUpdatePetAsync()
         {
+            var token = HttpContext.Session.GetString("Token");
+            if (string.IsNullOrEmpty(token))
+            {
+                return Redirect("/Account/SignIn");
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+
+            if (!Guid.TryParse(userIdClaimString, out var userId))
+            {
+                ModelState.AddModelError(string.Empty, "Unable to decode user id");
+                return Page();
+            }
+            
+            UpdatePetRequest.OwnerId = userId;
             var result = await _petService.UpdatePetAsync(UpdatePetRequest);
 
             if (result.IsSuccess)
@@ -103,32 +136,15 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 {
                     switch (error.Code)
                     {
-                        case "Pet.Empty":
-                            if (error.Description.Contains("Name", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["Name"] = error.Description;
-                            else if (error.Description.Contains("Gender", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["Gender"] = error.Description;
-                            else if (error.Description.Contains("ImageUrl", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["ImageUrl"] = error.Description;
-                            else if (error.Description.Contains("Color", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["Color"] = error.Description;
-                            break;
+                        //case "Pet.Empty":
+                        //    break;
 
-                        case "Pet.InvalidValue":
-                            if (error.Description.Contains("Age", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["Age"] = error.Description;
-                            else if (error.Description.Contains("Length", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["Length"] = error.Description;
-                            else if (error.Description.Contains("Weight", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["Weight"] = error.Description;
-                            else if (error.Description.Contains("HealthStatus", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["HealthStatus"] = error.Description;
+                        case "Pet.Positive":
+                            if (error.Description.Contains("Quantity", System.StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Quantity"] = error.Description;
                             break;
-
-                        case "Pet.InvalidDate":
-                            if (error.Description.Contains("LastHealthCheck", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["LastHealthCheck"] = error.Description;
-                            break;
+                        //case "Pet.Length":
+                        //    break;
 
                         default:
                             errorDictionary[string.Empty] = error.Description;
@@ -136,7 +152,6 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                     }
                 }
             }
-
             return errorDictionary;
         }
     }

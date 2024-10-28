@@ -1,7 +1,10 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.User;
+using KVSC.Infrastructure.DTOs.User.DeleteUser;
+using KVSC.Infrastructure.DTOs.User.GetUser;
 using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
+using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.Repositories.Interface;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -116,7 +119,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             try
             {
                 // Send the request and get the response
-                var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-in", signUpRequest);
+                var response = await _httpClient.PostAsJsonAsync("api/Auth/sign-up", signUpRequest); // Chỉnh sửa endpoint
 
                 var options = new JsonSerializerOptions
                 {
@@ -136,18 +139,18 @@ namespace KVSC.Infrastructure.Repositories.Implement
                         IsSuccess = false,
                         Data = null,
                         Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
-                        Message = "An error occurred during sign-in."
+                        Message = "An error occurred during sign-up."
                     };
                 }
 
                 // If successful, deserialize the login response
-                var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>(options);
+                var signUpResponse = await response.Content.ReadFromJsonAsync<SignUpResponse>(options);
 
 
                 return new ResponseDto<SignUpResponse>
                 {
                     IsSuccess = true,
-                    Data = null,
+                    Data = signUpResponse, // Cập nhật dữ liệu trả về
                     Message = "Sign-up successful."
                 };
             }
@@ -230,6 +233,250 @@ namespace KVSC.Infrastructure.Repositories.Implement
             {
                 // Handling any other exceptions
                 return new ResponseDto<UserInfo>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDto<UserList>> GetUserList(string fullName, string email, string phoneNumber, string address, int role, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/User/users/search?fullName={fullName}&email={email}&phoneNumber={phoneNumber}&address={address}&role={role}&pageNumber={pageNumber}&pageSize={pageSize}");
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var errorResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>(options);
+                    return new ResponseDto<UserList>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during fetching user data."
+                    };
+                }
+
+                var userList = await response.Content.ReadFromJsonAsync<UserList>(options);
+                return new ResponseDto<UserList>
+                {
+                    IsSuccess = true,
+                    Data = userList,
+                    Message = "User data fetched successfully."
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseDto<UserList>
+                {
+                    IsSuccess = false,
+                    Message = $"Request error: {ex.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<UserList>
+                {
+                    IsSuccess = false,
+                    Message = $"Unexpected error: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<RoleList>> GetRoleList()
+        {
+            try
+            {
+                // Gửi yêu cầu GET đến API để lấy danh sách vai trò
+                var response = await _httpClient.GetAsync("api/User/roleList");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Kiểm tra xem phản hồi có thành công hay không
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<RoleList>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get role list."
+                    };
+                }
+
+                // Nếu thành công, deserialize phản hồi để lấy danh sách vai trò
+                var roleList = await response.Content.ReadFromJsonAsync<RoleList>(options);
+
+                return new ResponseDto<RoleList>
+                {
+                    IsSuccess = true,
+                    Data = roleList,
+                    Message = "Get role list successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Xử lý lỗi yêu cầu HTTP
+                return new ResponseDto<RoleList>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Xử lý các lỗi khác
+                return new ResponseDto<RoleList>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request)
+        {
+            try
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var response = await _httpClient.PutAsJsonAsync("api/User", request);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<UpdateUserResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during updating."
+                    };
+                }
+
+                var updateResponse = await response.Content.ReadFromJsonAsync<UpdateUserResponse>(options);
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = true,
+                    Data = updateResponse,
+                    Message = "Update user successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/User?Id={request.Id}");
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent);
+
+                    return new ResponseDto<DeleteUserResponse>
+                    {
+                        IsSuccess = false,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "Failed to delete user."
+                    };
+                }
+
+                return new ResponseDto<DeleteUserResponse>
+                {
+                    IsSuccess = true,
+                    Message = "User deleted successfully."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<DeleteUserResponse>
+                {
+                    IsSuccess = false,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<DeleteUserResponse>
+                {
+                    IsSuccess = false,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<GetUserResponse>> GetUserDetail(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/User?Id={id}");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetUserResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get user info."
+                    };
+                }
+
+                var user = await response.Content.ReadFromJsonAsync<GetUserResponse>(options);
+
+                return new ResponseDto<GetUserResponse>
+                {
+                    IsSuccess = true,
+                    Data = user,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<GetUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<GetUserResponse>
                 {
                     IsSuccess = false,
                     Data = null,

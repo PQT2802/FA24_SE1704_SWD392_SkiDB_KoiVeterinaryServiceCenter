@@ -7,6 +7,7 @@ using KVSC.Infrastructure.Repositories.Interface;
 using KVSC.Infrastructure.DTOs.Pet;
 using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
+using KVSC.Infrastructure.DTOs.Pet.GetPet;
 using KVSC.Infrastructure.DTOs.User;
 
 namespace KVSC.Infrastructure.Repositories.Implement
@@ -94,7 +95,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             try
             {
                 // Send the request and get the response
-                var response = await _httpClient.GetAsync("api/Pet/All-pet");
+                var response = await _httpClient.GetAsync("/api/Pet/all");
 
                 var options = new JsonSerializerOptions
                 {
@@ -155,7 +156,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             try
             {
                 // Send the request and get the response
-                var response = await _httpClient.PostAsJsonAsync("api/Pet/Create-pet", request);
+                var response = await _httpClient.PostAsJsonAsync("api/Pet", request);
 
                 var options = new JsonSerializerOptions
                 {
@@ -215,7 +216,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             try
             {
                 // Send the request and get the response
-                var response = await _httpClient.PutAsJsonAsync($"api/Pet/Update-pet?id={request.Id}", request);
+                var response = await _httpClient.PutAsJsonAsync($"/api/Pet", request);
 
                 var options = new JsonSerializerOptions
                 {
@@ -274,7 +275,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
         {
             try
             {
-                var url = $"api/Pet/Delete-pet/{request.Id}";
+                var url = $"api/Pet?Id={request.Id}";
 
                 // Call the API DELETE with the pet ID in the URL
                 var response = await _httpClient.DeleteAsync(url);
@@ -315,6 +316,57 @@ namespace KVSC.Infrastructure.Repositories.Implement
             catch (Exception ex)
             {
                 return new ResponseDto<DeletePetResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDto<GetPetResponse>> GetPetDetail(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/Pet?Id={id}");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetPetResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get pet information."
+                    };
+                }
+
+                var pet = await response.Content.ReadFromJsonAsync<GetPetResponse>(options);
+
+                return new ResponseDto<GetPetResponse>
+                {
+                    IsSuccess = true,
+                    Data = pet,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<GetPetResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<GetPetResponse>
                 {
                     IsSuccess = false,
                     Data = null,

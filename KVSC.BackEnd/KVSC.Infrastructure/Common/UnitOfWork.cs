@@ -29,6 +29,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IPaymentRepository PaymentRepository { get; private set; }
 
         public IVeterinarianScheduleRepository VeterinarianScheduleRepository {  get; private set; }
+        public IRatingRepository RatingRepository {  get; private set; }
         public UnitOfWork(KVSCContext context, StorageClient storageClient)
         {
             _context = context;
@@ -49,6 +50,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
             VeterinarianScheduleRepository = new VeterinarianScheduleRepository(_context);
             PaymentRepository = new PaymentRepository(_context);
 
+            RatingRepository = new RatingRepository(_context);
         }
 
         public int Complete()

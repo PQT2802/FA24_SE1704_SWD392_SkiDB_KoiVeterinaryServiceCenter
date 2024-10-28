@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using FluentValidation;
+using KVSC.Application.Common.Validator.PetServiceCategory;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
@@ -24,10 +25,11 @@ namespace KVSC.Application.Implement.Service
         private readonly IValidator<AddPetServiceCategoryRequest> _petServiceCategoryValidator;
         private readonly IValidator<UpdatePetServiceCategoryRequest> _updatePetServiceCategoryValidator;
 
-        public PetServiceCategoryService(IUnitOfWork unitOfWork, IValidator<AddPetServiceCategoryRequest> petServiceCategoryValidator)
+        public PetServiceCategoryService(IUnitOfWork unitOfWork, IValidator<AddPetServiceCategoryRequest> petServiceCategoryValidator, IValidator<UpdatePetServiceCategoryRequest> updatePetServiceCategoryValidator)
         {
             _unitOfWork = unitOfWork;
             _petServiceCategoryValidator = petServiceCategoryValidator;
+            _updatePetServiceCategoryValidator = updatePetServiceCategoryValidator;
         }
 
         public async Task<Result> CreatePetServiceCategoryAsync(AddPetServiceCategoryRequest addPetServiceCategory)

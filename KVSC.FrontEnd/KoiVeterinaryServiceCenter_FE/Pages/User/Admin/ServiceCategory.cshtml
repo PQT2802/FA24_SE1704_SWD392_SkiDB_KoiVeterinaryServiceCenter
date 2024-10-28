@@ -1,0 +1,216 @@
+﻿@page
+@using KVSC.Infrastructure.DTOs
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Admin.ServiceCategoryModel
+@{
+    Layout = "_LayoutBoard";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert @TempData["AlertClass"] alert-dismissible fade show" role="alert" id="alertMessage">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+<!-- Trigger Button for Modal -->
+<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Add Category</button>
+
+<!-- Table for displaying services -->
+@await Component.InvokeAsync("GenericTable", new { items = Model.KoiServiceCategoryList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "serviceCategory" })
+  
+@*  ===================Create ServiceCategory ===========================*@
+<div class="modal fade @(Model.ShowModal ? "show" : "")" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel" aria-hidden="true" style="display:@(Model.ShowModal ? "block" : "none");">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCategoryModalLabel">Add New Pet Service Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">Pet Service Category Form</h6>
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <form id="createCategoryForm" method="post" asp-page-handler="CreateCategory">
+                        <!-- Name -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="name" name="AddServiceCategoryRequest.Name" placeholder="Category Name" required>
+                            <label for="name">Category Name</label>
+                            <span asp-validation-for="AddServiceCategoryRequest.Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="description" name="AddServiceCategoryRequest.Description" placeholder="Description" style="height: 100px;"></textarea>
+                            <label for="description">Description</label>
+                            <span asp-validation-for="AddServiceCategoryRequest.Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Service Type -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="serviceType" name="AddServiceCategoryRequest.ServiceType" placeholder="Service Type" required>
+                            <label for="serviceType">Service Type</label>
+                            <span asp-validation-for="AddServiceCategoryRequest.ServiceType" class="text-danger"></span>
+                        </div>
+
+                        <!-- Applicable To -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="applicableTo" name="AddServiceCategoryRequest.ApplicableTo" placeholder="Applicable To">
+                            <label for="applicableTo">Applicable To</label>
+                            <span asp-validation-for="AddServiceCategoryRequest.ApplicableTo" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="submitCategoryForm">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#submitCategoryForm').click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: window.location.pathname + "?handler=CreateCategory",
+                data: $('#createCategoryForm').serialize(),
+                success: function (response) {
+                    if (response.isSuccess) {
+                        $('#createCategoryModal').modal('hide');
+                        alert('Create successful');
+                        location.reload();
+                    } else {
+                        $('span[data-valmsg-for]').text('');
+                        for (const [key, value] of Object.entries(response.errors)) {
+                            $(`span[data-valmsg-for='AddServiceCategoryRequest.${key}']`).text(value);
+                        }
+                    }
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+        });
+    });
+</script>
+
+@*  ===================Update ServiceCategory ===========================*@
+<div class="modal fade" id="updateCategoryModal" tabindex="-1" aria-labelledby="updateCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateCategoryModalLabel">Edit Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateCategoryForm" method="post" asp-page-handler="UpdateCategory">
+                    <input type="hidden" id="categoryId" name="UpdateCategoryRequest.Id" />
+
+                    <!-- Name -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" name="UpdateCategoryRequest.Name" placeholder="Category Name" />
+                        <label for="name">Category Name</label>
+                        <span asp-validation-for="UpdateCategoryRequest.Name" class="text-danger"></span>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="description" name="UpdateCategoryRequest.Description" placeholder="Description"></textarea>
+                        <label for="description">Description</label>
+                        <span asp-validation-for="UpdateCategoryRequest.Description" class="text-danger"></span>
+                    </div>
+
+                    <!-- Service Type -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="serviceType" name="UpdateCategoryRequest.ServiceType" placeholder="Service Type" />
+                        <label for="serviceType">Service Type</label>
+                        <span asp-validation-for="UpdateCategoryRequest.ServiceType" class="text-danger"></span>
+                    </div>
+
+                    <!-- Applicable To -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="applicableTo" name="UpdateCategoryRequest.ApplicableTo" placeholder="Applicable To" />
+                        <label for="applicableTo">Applicable To</label>
+                        <span asp-validation-for="UpdateCategoryRequest.ApplicableTo" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.edit-category-button').click(function () {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var description = $(this).data('description');
+            var serviceType = $(this).data('servicetype');
+            var applicableTo = $(this).data('applicableto');
+
+            console.log({
+                id: id,
+                name: name,
+                description: description,
+                serviceType: serviceType,
+                applicableTo: applicableTo
+            });
+
+            $('#updateCategoryModal #categoryId').val(id);
+            $('#updateCategoryModal #name').val(name);
+            $('#updateCategoryModal #description').val(description);
+            $('#updateCategoryModal #serviceType').val(serviceType);
+            $('#updateCategoryModal #applicableTo').val(applicableTo);
+
+            $('#updateCategoryModal').modal('show');
+        });
+
+        // Xử lý submit form
+        $('#updateCategoryForm').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: window.location.pathname + "?handler=UpdateCategory",
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.isSuccess) {
+                        $('#updateCategoryModal').modal('hide');
+                        alert('Update successful');
+                        location.reload();
+                    } else {
+                        $('span[data-valmsg-for]').text('');
+                        for (const [key, value] of Object.entries(response.errors)) {
+                            $(`span[data-valmsg-for='UpdateCategoryRequest.${key}']`).text(value);
+                        }
+                    }
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+        });
+    });
+</script>
+@*  ===================Delete ServiceCategory ===========================*@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alertElement = document.getElementById('alertMessage');
+        if (alertElement) {
+            setTimeout(function () {
+                alertElement.classList.add('fade');
+                alertElement.classList.remove('show');
+            }, 3000); // 3 giây
+        }
+    });
+</script>
+

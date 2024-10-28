@@ -4,6 +4,7 @@ using KVSC.Infrastructure.KVSC.Infrastructure.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,10 @@ namespace KVSC.Application.Common.Validator.User
             AddEmailRules(request => request.Email, checkExists: true);
             AddUserNameRules(request => request.UserName, checkExists: true);
             AddPasswordRules(request => request.Password);
+            AddFullNameRules(request => request.FullName);
+            AddPhoneNumberRules(request => request.PhoneNumber);
+            AddAddressRules(request => request.Address);
+            AddBirthdayRules(x => x.DateOfBirth);
         }
     }
 }
