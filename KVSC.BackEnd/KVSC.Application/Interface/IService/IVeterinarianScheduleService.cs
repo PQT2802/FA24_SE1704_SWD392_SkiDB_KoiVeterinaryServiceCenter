@@ -13,6 +13,9 @@ namespace KVSC.Application.Interface.IService
         Task<Result> UpdateScheduleAvailabilityAsync(Guid veterinarianId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime);
 
         Task<Result> GetAllVeterinariansWeeklyScheduleAsync(DateTime currentDay);
+
+        Task<Result> GetAvailableVeterinariansForDateAsync(DateTime appointmentDate);
+
     }
 }
 

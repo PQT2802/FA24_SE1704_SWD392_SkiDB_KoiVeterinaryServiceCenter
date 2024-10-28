@@ -286,5 +286,43 @@ namespace KVSC.Infrastructure.Implement.Repositories
             }
             return appointmentDetail;
         }
-    } 
+        public async Task<Appointment> GetAppointmentByIdAsync(Guid appointmentId)
+        {
+            return await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.PetService)
+                .Include(a => a.AppointmentVeterinarians)
+                    .ThenInclude(av => av.Veterinarian)
+                .Include(a => a.Pet)
+                .Include(a => a.ComboService)
+                .Include(a => a.ServiceReport)
+                .FirstOrDefaultAsync(a => a.Id == appointmentId && !a.IsDeleted);
+        }
+        public async Task AssignVeterinarianToAppointment(Guid appointmentId, Guid veterinarianId)
+        {
+            var appointment = await _context.Appointments
+                .Include(a => a.AppointmentVeterinarians) // Include current veterinarians
+                .FirstOrDefaultAsync(a => a.Id == appointmentId && !a.IsDeleted);
+
+            if (appointment == null)
+            {
+                throw new InvalidOperationException("Appointment not found.");
+            }
+
+            // Ensure the veterinarian is not already assigned
+            if (!appointment.AppointmentVeterinarians.Any(av => av.VeterinarianId == veterinarianId))
+            {
+                var appointmentVeterinarian = new AppointmentVeterinarian
+                {
+                    AppointmentId = appointmentId,
+                    VeterinarianId = veterinarianId
+                };
+
+                appointment.AppointmentVeterinarians.Add(appointmentVeterinarian);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+
+    }
 }

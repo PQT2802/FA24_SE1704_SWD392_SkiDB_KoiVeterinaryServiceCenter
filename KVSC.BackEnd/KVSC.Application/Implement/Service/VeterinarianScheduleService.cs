@@ -165,5 +165,16 @@ namespace KVSC.Application.Implement.Service
             await _unitOfWork.VeterinarianScheduleRepository.UpdateScheduleAvailability(veterinarian.Id, appointmentDate, startTime, endTime);
             return Result.SuccessWithObject(new { Message = "UpdateScheduleAvailability" });
         }
+        public async Task<Result> GetAvailableVeterinariansForDateAsync(DateTime appointmentDate)
+        {
+            var availableVeterinarians = await _unitOfWork.VeterinarianScheduleRepository.GetAvailableVeterinariansForDateAsync(appointmentDate);
+            if (!availableVeterinarians.Any())
+            {
+                return Result.Failure(Error.NotFound("NoAvailableVeterinarians", "No veterinarians available on the specified date."));
+            }
+
+            return Result.SuccessWithObject(availableVeterinarians);
+        }
+
     }
 }

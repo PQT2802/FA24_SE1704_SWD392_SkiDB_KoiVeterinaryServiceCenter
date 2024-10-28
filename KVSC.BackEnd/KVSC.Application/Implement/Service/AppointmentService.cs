@@ -170,5 +170,43 @@ namespace KVSC.Application.Implement.Service
             }
             return Result.SuccessWithObject(appointment);
         }
+        public async Task<Result> GetUnassignedAppointmentsAsync()
+        {
+            var unassignedAppointments = await _unitOfWork.AppointmentRepository
+                .GetAllAppointmentsAsync(); // Adjust this line based on your data access implementation.
+
+            var filteredAppointments = unassignedAppointments
+                .Where(a => !a.AppointmentVeterinarians.Any())
+                .ToList();
+
+            return Result.SuccessWithObject(filteredAppointments);
+        }
+        public async Task<Result> GetAppointmentByIdAsync(Guid appointmentId)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentByIdAsync(appointmentId); // Or similar method in the repository
+
+            if (appointment == null)
+            {
+                return Result.Failure(Error.NotFound("AppointmentNotFound", "Appointment not found."));
+            }
+
+            return Result.SuccessWithObject(appointment);
+        }
+
+        public async Task<Result> AssignVeterinarianAsync(Guid appointmentId, Guid veterinarianId)
+        {
+            try
+            {
+                await _unitOfWork.AppointmentRepository.AssignVeterinarianToAppointment(appointmentId, veterinarianId);
+                return Result.Success();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Result.Failure(Error.NotFound("AssignmentError", ex.Message));
+            }
+        }
+
+
+
     }
 }
