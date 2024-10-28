@@ -36,9 +36,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             _petServiceCategoryService = petServiceCategoryService;
         }
 
-        public async Task<IActionResult> OnPostCreateServiceAsync()
+        public async Task<IActionResult> OnPostCreateServiceAsync(IFormFile imageFile)
         {
-            var result = await _petServiceSerivce.AddPetService(AddServiceRequest);
+            var result = await _petServiceSerivce.AddPetService(AddServiceRequest, imageFile);
 
             if (result.IsSuccess)
             {
@@ -50,9 +50,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             return new JsonResult(new { isSuccess = false, errors });
         }
 
-        public async Task<IActionResult> OnPostUpdateServiceAsync()
+        public async Task<IActionResult> OnPostUpdateServiceAsync(IFormFile imageFile)
         {
-            var result = await _petServiceSerivce.UpdatePetService(UpdateServiceRequest);
+            var result = await _petServiceSerivce.UpdatePetService(UpdateServiceRequest, imageFile);
 
             if (result.IsSuccess)
             {

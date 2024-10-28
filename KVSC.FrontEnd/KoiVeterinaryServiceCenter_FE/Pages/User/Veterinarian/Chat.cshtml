@@ -1,6 +1,7 @@
 ﻿@page
 @model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.ChatModel
 @{
+    Layout = "_LayoutBoard";
 }
 <div class="overlay" id="overlay"></div>
 <div class="containerss  popup-open">
@@ -37,9 +38,10 @@
                 </div>
             </section>
             <section class="chat">
-                <div class="header-chat">
+                <div class="header-chat" data-recipient-id="@Model.CurrentRecipientId">
                     <i class="icon fa fa-user-o" aria-hidden="true"></i>
                     <p class="name">@Model.RecipientName</p>
+                    <div class="online" style="display: none;"><span class="online-status">online</span></div>
                     <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
                 </div>
                 <div class="messages-chat" id="messagesContainer" style="display: flex; flex-direction: column-reverse;">
@@ -59,7 +61,7 @@
                             {
                                 <div class="message">
                                     <div class="photo">
-                                        <div class="online"></div>
+                                       
                                     </div>
                                     <p class="text">@message.Content</p>
                                 </div>
@@ -189,6 +191,26 @@
             };
         }).catch(err => console.error("Error establishing SignalR connection: ", err));
 
+
+        // Nhận danh sách người dùng đang online và cập nhật giao diện
+        connection.on("ReceiveOnlineUsers", (onlineUsers) => {
+            onlineUsers.forEach(userId => updateUserStatus(userId, true));
+        });
+
+        // Nhận cập nhật trạng thái từ SignalR
+        connection.on("UpdateUserStatus", (userId, isOnline) => {
+            updateUserStatus(userId, isOnline);
+        }); 
+        // Hàm cập nhật trạng thái người dùng
+        function updateUserStatus(userId, isOnline) {
+            const recipientId = document.querySelector(".header-chat").getAttribute("data-recipient-id");
+
+            if (userId === recipientId) {
+                const statusElement = document.querySelector(".online");
+                statusElement.style.display = isOnline ? "block" : "none";
+            }
+        }
+
         connection.on("ReceiveMessage", (message) => {
             console.error("nhan dc roi ");
 
@@ -206,7 +228,6 @@
             } else {
                 messageElement.innerHTML = `
                     <div class="photo">
-                        <div class="online"></div>
                     </div>
                     <p class="text">${message.content}</p>
                 `;

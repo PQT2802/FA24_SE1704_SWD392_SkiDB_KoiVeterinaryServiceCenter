@@ -6,6 +6,7 @@ using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Firebase.AddImage;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.PetService;
 using KVSC.Infrastructure.DTOs.PetService.GetPetService;
 using KVSC.Infrastructure.DTOs.PetService.UpdatePetService;
 using KVSC.Infrastructure.Interface;
@@ -82,6 +83,43 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(PetServiceErrorMessage.PetServiceNotCreated());
             }
             var response = new CreateResponse { Id = petService.Id };
+            return Result.SuccessWithObject(response);
+        }
+        public async Task<Result> UploadImageAsync(UploadImageRequest request)
+        {
+            // Validate request
+            if (request.ImageFile == null || request.ImageFile.Length == 0)
+            {
+                return Result.Failure(PetServiceErrorMessage.FieldIsEmpty("Img"));
+            }
+
+            // Upload image logic
+            var imageRequest = new AddImageRequest(request.ImageFile, "PetServices");
+            var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest);
+
+            if (!uploadImageResult.Success)
+            {
+                return Result.Failure(uploadImageResult.Error);
+            }
+            var result =  await UpdatePetServiceImageUrl(request.PetServiceId, uploadImageResult.FilePath);
+            return Result.SuccessWithObject(result);
+        }
+        public async Task<Result> UpdatePetServiceImageUrl(Guid petServiceId, string imageUrl)
+        {
+            var petService = await _unitOfWork.PetServiceRepository.GetByIdAsync(petServiceId);
+            if (petService == null)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
+            }
+
+            petService.ImageUrl = imageUrl;
+            var result =  await _unitOfWork.PetServiceRepository.UpdateAsync(petService);
+            if (result == 0)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceUpdateImgFailed());
+            }
+
+            var response = new CreateResponse { Id = petServiceId };
             return Result.SuccessWithObject(response);
         }
 

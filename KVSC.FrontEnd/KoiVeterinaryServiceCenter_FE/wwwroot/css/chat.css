@@ -186,13 +186,12 @@
     }
         
 .online {
-    position: relative;
-    top: 30px;
-    left: 35px;
-    width: 13px;
-    height: 13px;
+    margin-left: 30px;
+    margin-right: 30px;
+    height: 30px;
+    width: 70px;
     background-color: #8BC34A;
-    border-radius: 50%;
+    border-radius: 15%;
     border: 3px solid #FAFAFA;
 }
 .desc-contact {
@@ -275,7 +274,7 @@
 .chat .messages-chat {
     padding: 2px 5px;
     overflow-y: auto;
-    height: 500px;
+    height: 450px;
     flex-direction: column-reverse;
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: transparent transparent; /* Firefox */
@@ -353,7 +352,7 @@
 }
 
 .chat .footer-chat .send {
-    color: #fff;
+    color: #515151;
     background-color: #a8e6cf;
     position: absolute;
     right: 50px;
@@ -381,3 +380,13 @@
     cursor: pointer;
 }
 
+.online-status {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: green;
+}
+
+    .online-status.online {
+        color: green;
+    }

@@ -4,6 +4,7 @@ using KVSC.Infrastructure.DTOs.Service.AddService;
 using KVSC.Infrastructure.DTOs.Service.DeleteService;
 using KVSC.Infrastructure.DTOs.Service.GetServiceDetail;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ namespace KVSC.Infrastructure.Repositories.Interface
     public interface IPetServiceRepository
     {
         Task<ResponseDto<KoiServiceList>> GetKoiServiceList();
-        Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request);
-        Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request);
+        Task<ResponseDto<AddServiceResponse>> AddPetService(AddServiceRequest request, IFormFile imageFile);
+        Task<ResponseDto<UpdateServiceResponse>> UpdatePetService(UpdateServiceRequest request, IFormFile imageFile);
         Task<ResponseDto<DeleteServiceResponse>> DeletePetService(DeleteServiceRequest request);
         
         Task<ResponseDto<PetServiceDto>> GetPetServiceByIdAsync(Guid id);
