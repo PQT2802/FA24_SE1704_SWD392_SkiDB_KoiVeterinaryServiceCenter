@@ -36,7 +36,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Errors");
+    app.UseStatusCodePagesWithReExecute("/Errors/{0}");
     app.UseHsts(); // Enable HSTS for production
 }
 

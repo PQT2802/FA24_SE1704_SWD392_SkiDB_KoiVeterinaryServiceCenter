@@ -123,15 +123,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             if (result.IsSuccess)
             {
             
-                KoiServiceList = result.Data;
-                // Kiểm tra và khởi tạo Extensions nếu cần
-                if (KoiServiceList.Extensions == null)
-                {
-                    KoiServiceList.Extensions = new Extensions<List<Data>>
-                    {
-                        Data = new List<Data>() 
-                    };
-                }
+                KoiServiceList = result.Data ?? new KoiServiceList();
             }
             else
             {
@@ -142,9 +134,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             }
             // Gán dữ liệu vào ViewBag cho dropdown
             var categoryResult = await _petServiceCategoryService.GetKoiServiceCategoryList();
-            var category = categoryResult.Data.Extensions.Data;
             if (categoryResult.IsSuccess)
             {
+                var category = categoryResult?.Data?.Extensions?.Data;
                 ViewData["Categories"] = new SelectList(category, "Id", "Name");  // Gán danh sách categories vào ViewData
             }
             else

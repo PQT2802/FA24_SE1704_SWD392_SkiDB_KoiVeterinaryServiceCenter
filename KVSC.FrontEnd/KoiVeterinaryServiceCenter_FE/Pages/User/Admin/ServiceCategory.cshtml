@@ -5,7 +5,7 @@
     Layout = "_LayoutBoard";
 }
 
-@if (TempData["SuccessMessage"] != null)
+@if (TempData["SuccessMessage"] != null && Model.KoiServiceCategoryList != null)
 {
     <div class="alert @TempData["AlertClass"] alert-dismissible fade show" role="alert" id="alertMessage">
         @TempData["SuccessMessage"]
@@ -13,7 +13,7 @@
     </div>
 }
 
-@if (TempData["ErrorMessage"] != null)
+@if (TempData["ErrorMessage"] != null && Model.KoiServiceCategoryList != null)
 {
     <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 }
