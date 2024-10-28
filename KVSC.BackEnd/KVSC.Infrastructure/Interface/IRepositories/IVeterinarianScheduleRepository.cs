@@ -18,7 +18,7 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         Task<Veterinarian> GetVeterinarianByUserIdAsync(Guid userId);
 
         Task<List<VeterinarianSchedule>> GetAvailableVeterinariansForDateAsync(DateTime appointmentDate);
-
+        Task<List<VeterinarianSchedule>> GetAvailableVeterinariansForDateTimeAsync(DateTime selectedDate, TimeSpan startTime, TimeSpan endTime);
     }
 }
 

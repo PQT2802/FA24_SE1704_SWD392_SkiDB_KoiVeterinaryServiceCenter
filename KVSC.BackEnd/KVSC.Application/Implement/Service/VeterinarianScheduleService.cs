@@ -175,6 +175,17 @@ namespace KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(availableVeterinarians);
         }
+        public async Task<Result> GetAvailableVeterinariansForDateTimeAsync(DateTime selectedDate, TimeSpan startTime, TimeSpan endTime)
+        {
+            var availableVeterinarians = await _unitOfWork.VeterinarianScheduleRepository.GetAvailableVeterinariansForDateTimeAsync(selectedDate, startTime, endTime);
+
+            if (!availableVeterinarians.Any())
+            {
+                return Result.Failure(Error.NotFound("NoAvailableVeterinarians", "No veterinarians available on the specified date and time."));
+            }
+
+            return Result.SuccessWithObject(availableVeterinarians);
+        }
 
     }
 }
