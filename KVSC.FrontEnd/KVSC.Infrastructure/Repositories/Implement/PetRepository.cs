@@ -9,6 +9,8 @@ using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using KVSC.Infrastructure.DTOs.Pet.GetPet;
 using KVSC.Infrastructure.DTOs.User;
+using Microsoft.AspNetCore.Http;
+using KVSC.Infrastructure.DTOs.Service.AddService;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
@@ -211,7 +213,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             }
         }
 
-        public async Task<ResponseDto<AddPetResponse>> AddPetAsync(AddPetRequest request)
+        public async Task<ResponseDto<AddPetResponse>> AddPetAsync(AddPetRequest request, IFormFile imageFile)
         {
             try
             {
@@ -242,6 +244,31 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 // If successful, deserialize the response
                 var addingResponse = await response.Content.ReadFromJsonAsync<AddPetResponse>(options);
 
+                //==================================phan them anh==========================================
+                // Tạo form data để gửi
+
+                var formContent = new MultipartFormDataContent();
+                var fileContent = new StreamContent(imageFile.OpenReadStream());
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+                // Thêm file vào form data
+                formContent.Add(fileContent, "ImageFile", imageFile.FileName);
+                formContent.Add(new StringContent(addingResponse.Extensions.Data.Id.ToString()), "PetId");
+                // Gọi API cập nhật ảnh
+                var uploadResponse = await _httpClient.PostAsync("api/Pet/upload/img", formContent);
+                if (uploadResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var uploadResponseContent = await uploadResponse.Content.ReadAsStringAsync();
+                    var uploadErrorResponse = JsonSerializer.Deserialize<ErrorResponse>(uploadResponseContent, options);
+                    return new ResponseDto<AddPetResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = uploadErrorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred while uploading the image."
+                    };
+                }
+                //==================================ket thuc them anh==========================================
+
                 return new ResponseDto<AddPetResponse>
                 {
                     IsSuccess = true,
@@ -271,7 +298,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
             }
         }
 
-        public async Task<ResponseDto<UpdatePetResponse>> UpdatePetAsync(UpdatePetRequest request)
+        public async Task<ResponseDto<UpdatePetResponse>> UpdatePetAsync(UpdatePetRequest request, IFormFile imageFile)
         {
             try
             {
@@ -301,6 +328,31 @@ namespace KVSC.Infrastructure.Repositories.Implement
 
                 // If successful, deserialize the response
                 var updateResponse = await response.Content.ReadFromJsonAsync<UpdatePetResponse>(options);
+
+                //==================================phan them anh==========================================
+                // Tạo form data để gửi
+
+                var formContent = new MultipartFormDataContent();
+                var fileContent = new StreamContent(imageFile.OpenReadStream());
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+                // Thêm file vào form data
+                formContent.Add(fileContent, "ImageFile", imageFile.FileName);
+                formContent.Add(new StringContent(updateResponse.Extensions.Data.Id.ToString()), "PetId");
+                // Gọi API cập nhật ảnh
+                var uploadResponse = await _httpClient.PostAsync("api/Pet/upload/img", formContent);
+                if (uploadResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var uploadResponseContent = await uploadResponse.Content.ReadAsStringAsync();
+                    var uploadErrorResponse = JsonSerializer.Deserialize<ErrorResponse>(uploadResponseContent, options);
+                    return new ResponseDto<UpdatePetResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = uploadErrorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred while uploading the image."
+                    };
+                }
+                //==================================ket thuc them anh==========================================
 
                 return new ResponseDto<UpdatePetResponse>
                 {

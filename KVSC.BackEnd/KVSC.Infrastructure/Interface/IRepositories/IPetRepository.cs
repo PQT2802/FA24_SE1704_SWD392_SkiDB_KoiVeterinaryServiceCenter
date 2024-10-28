@@ -14,7 +14,6 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         Task<Pet> CreatePetAsync(Pet pet);
         Task<int> UpdatePetAsync(Pet pet);
         Task<int> DeletePetAsync(Guid id);
-        Task<int> SoftDeletePetAsync(Guid id);
         Task<List<Pet>> GetAllPetsByOwnerIdAsync(Guid ownerId);
     }
 }

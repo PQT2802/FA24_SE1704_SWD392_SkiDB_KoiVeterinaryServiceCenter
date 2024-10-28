@@ -6,6 +6,7 @@ using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using KVSC.Infrastructure.DTOs.Pet;
 using KVSC.Infrastructure.DTOs.Pet.GetPet;
+using Microsoft.AspNetCore.Http;
 
 namespace KVSC.Application.Service.Implement
 {
@@ -36,17 +37,17 @@ namespace KVSC.Application.Service.Implement
             return response;
         }
 
-        public async Task<ResponseDto<AddPetResponse>> AddPetAsync(AddPetRequest request)
+        public async Task<ResponseDto<AddPetResponse>> AddPetAsync(AddPetRequest request, IFormFile imageFile)
         {
-            request.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? string.Empty : request.ImageUrl;
-            var response = await _petRepository.AddPetAsync(request);
+            request.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? "string.Empty" : request.ImageUrl;
+            var response = await _petRepository.AddPetAsync(request, imageFile);
             return response;
         }
 
-        public async Task<ResponseDto<UpdatePetResponse>> UpdatePetAsync(UpdatePetRequest request)
+        public async Task<ResponseDto<UpdatePetResponse>> UpdatePetAsync(UpdatePetRequest request, IFormFile imageFile)
         {
-            request.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? string.Empty : request.ImageUrl;
-            var response = await _petRepository.UpdatePetAsync(request);
+            request.ImageUrl = string.IsNullOrWhiteSpace(request.ImageUrl) ? "string.Empty" : request.ImageUrl;
+            var response = await _petRepository.UpdatePetAsync(request, imageFile);
             return response;
         }
 

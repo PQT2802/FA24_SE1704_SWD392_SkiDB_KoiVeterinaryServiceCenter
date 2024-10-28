@@ -69,7 +69,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             return Page();
         }
 
-        public async Task<IActionResult> OnPostCreatePetAsync()
+        public async Task<IActionResult> OnPostCreatePetAsync(IFormFile imageFile)
         {
             var token = HttpContext.Session.GetString("Token");
             if (string.IsNullOrEmpty(token))
@@ -85,7 +85,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 return Page();
             }
             AddPetRequest.OwnerId = userId;
-            var result = await _petService.AddPetAsync(AddPetRequest);
+            var result = await _petService.AddPetAsync(AddPetRequest, imageFile);
 
             if (result.IsSuccess)
             {
@@ -96,7 +96,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             return new JsonResult(new { isSuccess = false, errors });
         }
 
-        public async Task<IActionResult> OnPostUpdatePetAsync()
+        public async Task<IActionResult> OnPostUpdatePetAsync(IFormFile imageFile)
         {
             var token = HttpContext.Session.GetString("Token");
             if (string.IsNullOrEmpty(token))
@@ -115,7 +115,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             }
 
             UpdatePetRequest.OwnerId = userId;
-            var result = await _petService.UpdatePetAsync(UpdatePetRequest);
+            var result = await _petService.UpdatePetAsync(UpdatePetRequest, imageFile);
 
             if (result.IsSuccess)
             {
