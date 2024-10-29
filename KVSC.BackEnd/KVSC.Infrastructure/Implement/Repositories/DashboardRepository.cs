@@ -22,6 +22,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<List<Veterinarian>> GetTopVeterinariansByAppointmentsAsync(int topCount)
         {
             return await _context.Veterinarians
+                .Include(v => v.User)
+                .Include(v => v.AppointmentVeterinarians)
                 .OrderByDescending(v => v.AppointmentVeterinarians.Count)
                 .Take(topCount)
                 .ToListAsync();
@@ -30,6 +32,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<List<PetService>> GetBestServicesByRatingAsync(int topCount)
         {
             return await _context.PetServices
+                .Include(s => s.Ratings)
                 .OrderByDescending(s => s.Ratings.Average(r => r.Score))
                 .Take(topCount)
                 .ToListAsync();
@@ -38,6 +41,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<List<Product>> GetTopSellingProductsAsync(int topCount)
         {
             return await _context.Products
+                .Include(p => p.OrderItems)
                 .OrderByDescending(p => p.OrderItems.Count)
                 .Take(topCount)
                 .ToListAsync();

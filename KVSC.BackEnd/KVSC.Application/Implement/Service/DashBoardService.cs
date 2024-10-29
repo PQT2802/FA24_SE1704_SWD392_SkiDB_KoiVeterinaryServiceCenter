@@ -18,79 +18,74 @@ namespace KVSC.Application.Implement.Service
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<Result> GetDashboardDataAsync(int topCount = 5)
+        {
+            // Retrieve top veterinarians
+            var topVeterinariansResult = await GetTopVeterinariansAsync(topCount);
+            if (!topVeterinariansResult.IsSuccess) return topVeterinariansResult;
+
+            // Retrieve best services
+            var bestServicesResult = await GetBestServicesAsync(topCount);
+            if (!bestServicesResult.IsSuccess) return bestServicesResult;
+
+            // Retrieve top-selling products
+            var topProductsResult = await GetTopSellingProductsAsync(topCount);
+            if (!topProductsResult.IsSuccess) return topProductsResult;
+
+            // Aggregate results into a DTO
+            var dashboardData = new DashboardData
+            {
+                TopVeterinarians = topVeterinariansResult.Object as List<TopVeterinarian>,
+                BestServices = bestServicesResult.Object as List<TopService>,
+                TopSellingProducts = topProductsResult.Object as List<TopProduct>
+            };
+
+            return Result.SuccessWithObject(dashboardData);
+        }
+
         public async Task<Result> GetTopVeterinariansAsync(int topCount)
         {
-
-            // Validate input if necessary (e.g., check if topCount is positive)
-            if (topCount <= 0)
-            {
-                //return Result.Failure();
-            }
-
-            // Fetch top veterinarians
             var veterinarians = await _unitOfWork.DashboardRepository.GetTopVeterinariansByAppointmentsAsync(topCount);
-            if (veterinarians == null || !veterinarians.Any())
-            {
-                //return Result.Failure();
-            }
 
-            // Map results if needed and return
-            var veterinarianResults = veterinarians.Select(v => new TopVeterinarian
-            {
-                Id = v.Id,
-                Name = v.User?.FullName ?? "Unknown",
-                AppointmentCount = v.AppointmentVeterinarians.Count
-            }).ToList();
+            var veterinarianDtos = veterinarians
+                //.Where(v => v != null) 
+                .Select(v => new TopVeterinarian
+                {
+                    Id = v.UserId,
+                    Name = v.User?.FullName,
+                    AppointmentCount = v.AppointmentVeterinarians?.Count ?? 0
+                })
+                .ToList();
 
-            return Result.SuccessWithObject(veterinarianResults);
+            return Result.SuccessWithObject(veterinarianDtos);
         }
+
 
         public async Task<Result> GetBestServicesAsync(int topCount)
         {
-            if (topCount <= 0)
-            {
-                //return Result.Failure();
-            }
-
-            // Fetch best services
             var services = await _unitOfWork.DashboardRepository.GetBestServicesByRatingAsync(topCount);
-            if (services == null || !services.Any())
-            {
-                //return Result.Failure();
-            }
-
-            var serviceResults = services.Select(s => new TopService
+            var serviceDtos = services.Select(s => new TopService
             {
                 Id = s.Id,
                 Name = s.Name,
                 AverageRating = s.Ratings.Any() ? (decimal)s.Ratings.Average(r => r.Score) : 0m
             }).ToList();
-
-            return Result.SuccessWithObject(serviceResults);
+            return Result.SuccessWithObject(serviceDtos);
         }
 
         public async Task<Result> GetTopSellingProductsAsync(int topCount)
         {
-            if (topCount <= 0)
-            {
-                //return Result.Failure();
-            }
-
-            // Fetch top-selling products
             var products = await _unitOfWork.DashboardRepository.GetTopSellingProductsAsync(topCount);
-            if (products == null || !products.Any())
-            {
-                //return Result.Failure();
-            }
 
-            var productResults = products.Select(p => new TopProduct
+            var productDtos = products.Select(p => new TopProduct
             {
                 Id = p.Id,
                 Name = p.Name,
-                SoldQuantity = p.OrderItems.Count
+                SoldQuantity = p.OrderItems?.Count ?? 0 // Check if OrderItems is null
             }).ToList();
 
-            return Result.SuccessWithObject(productResults);
+            return Result.SuccessWithObject(productDtos);
         }
+
     }
 }

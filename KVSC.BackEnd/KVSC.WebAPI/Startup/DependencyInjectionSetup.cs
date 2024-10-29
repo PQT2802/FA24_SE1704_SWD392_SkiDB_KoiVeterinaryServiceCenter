@@ -66,7 +66,7 @@ namespace KVSC.WebAPI.Startup
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), "Keys",
-                "koiveterinaryservicecent-925db-firebase-adminsdk-vus2r-0a84673789.json");
+                "koiveterinaryservicecent-925db-firebase-adminsdk-vus2r-7e9eaf02d5.json");
 
             try
             {
@@ -168,6 +168,7 @@ namespace KVSC.WebAPI.Startup
 
             
             services.AddTransient<IRatingRepository, RatingRepository>();
+            services.AddTransient<IDashboardRepository, DashboardRepository>();
 
 
             #endregion
@@ -211,6 +212,7 @@ namespace KVSC.WebAPI.Startup
 
             services.AddTransient<IRatingService, RatingService>();
 
+            services.AddTransient<IDashBoardService, DashBoardService>();
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             #endregion

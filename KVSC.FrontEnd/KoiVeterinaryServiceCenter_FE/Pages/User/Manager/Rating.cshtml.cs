@@ -11,15 +11,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Manager
 
         [BindProperty]
         public RatingList RatingList { get; set; } = default!;
-
         public bool ShowModal { get; set; } = false;
-
-        [BindProperty(SupportsGet = true)]
-        public int PageNumber { get; set; } = 1;
-
-        [BindProperty(SupportsGet = true)]
-        public int PageSize { get; set; } = 10;
-
         // Filter criteria
         [BindProperty(SupportsGet = true)]
         public string CustomerName { get; set; } = string.Empty;
@@ -29,6 +21,12 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Manager
 
         [BindProperty(SupportsGet = true)]
         public int Score { get; set; } = -1; // Assuming -1 means no filter
+
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; } = 1;
+
+        [BindProperty(SupportsGet = true)]
+        public int PageSize { get; set; } = 10;
 
         public RatingModel(IRatingService ratingService)
         {

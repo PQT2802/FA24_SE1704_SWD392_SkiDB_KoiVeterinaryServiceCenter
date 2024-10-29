@@ -1,5 +1,6 @@
 ﻿@page
 @using KVSC.Infrastructure.DTOs
+@using KVSC.Infrastructure.DTOs.Rating
 @model KoiVeterinaryServiceCenter_FE.Pages.User.Manager.RatingModel
 @{
     Layout = "_LayoutBoard"; 
@@ -12,11 +13,11 @@
     </div>
 }
 <form method="get" class="d-flex align-items-center p-3 border rounded shadow-sm">
-    <h4 class="mb-0 me-3">Search Ratings</h4>
+    <h4 class="mb-0 me-3"></h4>
 
     <div class="mb-3 me-2">
         <label asp-for="CustomerName" class="visually-hidden">Customer Name</label>
-        <input type="text" asp-for="CustomerName" class="form-control" placeholder="Customer Name" />
+        <input type="text" asp-for="CustomerName" class="form-control" placeholder="CustomerName" />
     </div>
 
     <div class="mb-3 me-2">
