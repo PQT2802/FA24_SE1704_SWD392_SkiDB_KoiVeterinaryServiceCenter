@@ -5,11 +5,6 @@ using KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Implement.Repositories
 {
@@ -84,14 +79,14 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
         public async Task<Veterinarian> GetAvailableVeterinarianAsync(DateTime appointmentDate)
         {
-            var appointmentDay = appointmentDate.Date;   
-            var appointmentTime = appointmentDate.TimeOfDay; 
+            var appointmentDay = appointmentDate.Date;
+            var appointmentTime = appointmentDate.TimeOfDay;
 
             var availableVeterinarian = await _context.Veterinarians
             .Include(v => v.VeterinarianSchedules)
             .Where(v => v.VeterinarianSchedules.Any(s =>
-                s.Date == appointmentDay &&       
-                s.StartTime <= appointmentTime && 
+                s.Date == appointmentDay &&
+                s.StartTime <= appointmentTime &&
                 s.EndTime >= appointmentTime &&
                 s.IsAvailable
             ))
@@ -113,9 +108,9 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
             if (schedule != null)
             {
-                schedule.IsAvailable = false; 
+                schedule.IsAvailable = false;
                 _context.VeterinarianSchedules.Update(schedule);
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
             }
         }
         public async Task<bool> AppointmentExistsAsync(Guid appointmentId)
@@ -286,5 +281,5 @@ namespace KVSC.Infrastructure.Implement.Repositories
             }
             return appointmentDetail;
         }
-    } 
+    }
 }
