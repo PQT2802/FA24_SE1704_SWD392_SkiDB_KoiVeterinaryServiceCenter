@@ -131,6 +131,24 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Fetched all veterinarians' weekly schedule successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        // GET: api/veterinarian-schedule/available-vets
+        [HttpGet("available-vets")]
+        public async Task<IResult> GetAvailableVeterinariansByDateTime(
+            [FromQuery] DateTime selectedDate,
+            [FromQuery] TimeSpan? startTime = null,
+            [FromQuery] TimeSpan? endTime = null)
+        {
+            // Set default values for startTime and endTime if null
+            TimeSpan actualStartTime = startTime ?? TimeSpan.Zero; // Default to 00:00
+            TimeSpan actualEndTime = endTime ?? new TimeSpan(23, 59, 59); // Default to 23:59
+
+            Result result = await _veterinarianScheduleService.GetAvailableVeterinariansForDateTimeAsync(selectedDate, actualStartTime, actualEndTime);
+
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Fetched available veterinarians successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
 using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.Service.AddService;
 using KVSC.Infrastructure.DTOs.Service.DeleteService;
@@ -24,15 +25,28 @@ namespace KVSC.Infrastructure.Repositories.Implement
         }
 
 
+
+
+
         public async Task<ResponseDto<PetServiceDto>> GetPetServiceByIdAsync(Guid id)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/PetService/{id}");
+                var response = await _httpClient.GetAsync($"api/PetService?Id={id}");
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
                 var responseContent = await response.Content.ReadAsStringAsync();
                 Console.WriteLine($"API Response: {responseContent}");  // Log raw API response for debugging
+
+                if (string.IsNullOrWhiteSpace(responseContent))
+                {
+                    return new ResponseDto<PetServiceDto>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Message = "The response content is empty."
+                    };
+                }
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -41,7 +55,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     {
                         IsSuccess = false,
                         Data = null,
-                        Message = errorResponse.Extensions.Message
+                        Message = errorResponse?.Extensions?.Message ?? "An error occurred while processing the request."
                     };
                 }
 
@@ -50,8 +64,8 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 return new ResponseDto<PetServiceDto>
                 {
                     IsSuccess = true,
-                    Data = apiResponse.Extensions.Data,
-                    Message = apiResponse.Extensions.Message
+                    Data = apiResponse?.Extensions?.Data,
+                    Message = apiResponse?.Extensions?.Message
                 };
             }
             catch (HttpRequestException httpEx)
@@ -61,6 +75,15 @@ namespace KVSC.Infrastructure.Repositories.Implement
                     IsSuccess = false,
                     Data = null,
                     Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (JsonException jsonEx)
+            {
+                return new ResponseDto<PetServiceDto>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Error parsing JSON response: {jsonEx.Message}"
                 };
             }
             catch (Exception ex)

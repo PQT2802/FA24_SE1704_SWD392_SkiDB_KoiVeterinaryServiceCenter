@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/appointment"
 @model KoiVeterinaryServiceCenter_FE.Pages.Appointment.AppointmentModel
 @{
 }
@@ -13,17 +13,17 @@
                     <!-- Customer Information (Read-Only) -->
                     <div class="form-group mb-3">
                         <label for="customerName">Name</label>
-                        <input type="text" class="form-control" id="customerName" name="CustomerName" value="@Model.CustomerName" readonly />
+                        <input type="text" class="form-control" id="customerName" name="CustomerName" value="@Model.UserInfo.Extensions.Data.UserName" readonly />
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="customerEmail">Email Address</label>
-                        <input type="text" class="form-control" id="customerEmail" name="CustomerEmail" value="@Model.CustomerEmail" readonly />
+                        <input type="text" class="form-control" id="customerEmail" name="CustomerEmail" value="@Model.UserInfo.Extensions.Data.Email" readonly />
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="customerPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="customerPhone" name="CustomerPhone" value="@Model.CustomerPhone" readonly />
+                        <input type="text" class="form-control" id="customerPhone" name="CustomerPhone" value="@Model.UserInfo.Extensions.Data.PhoneNumber" readonly />
                     </div>
 
                     <!-- Pet Selection Dropdown -->
@@ -55,15 +55,22 @@
                     <!-- Appointment Date and Time -->
                     <div class="form-group mb-3">
                         <label for="appointmentDate">Appointment Date & Time</label>
-                        <input type="datetime-local" class="form-control" id="appointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" required />
+                        <input type="datetime-local" class="form-control" id="appointmentDate" name="AppointmentDate" value="@Model.MakeAppointmentRequest?.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" required />
                         <div class="invalid-feedback">Please select a valid date and time.</div>
                     </div>
 
-                    <!-- Notes (Optional) -->
-                    <div class="form-group mb-3">
-                        <label for="notes">Notes (Optional)</label>
-                        <textarea class="form-control" id="notes" name="Notes" rows="3"></textarea>
-                    </div>
+@*                     <!-- Veterinarian Selection Dropdown (Initially Hidden) -->
+                    <div class="form-group mb-3" id="vetSelectionContainer" style="display: none;">
+                        <label for="vetId">Select a Veterinarian</label>
+                        <select class="form-control" id="vetId" name="VetId">
+                            <option value="">-- Select a Veterinarian --</option>
+                            @foreach (var vet in Model.Veterinarians)
+                            {
+                                <option value="@vet.Id">@vet.Name</option>
+                            }
+                        </select>
+                        <div class="invalid-feedback">Please select a veterinarian.</div>
+                    </div> *@
 
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary btn-block" id="submitAppointment">Book Appointment</button>
@@ -75,3 +82,59 @@
         </div>
     </div>
 </div>
+
+<!-- Sign In/Sign Up Modal -->
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authModalLabel">Please Sign In or Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>To book an appointment, please sign in or sign up.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="/Account/Login" class="btn btn-primary">Sign In</a>
+                <a href="/Account/Register" class="btn btn-secondary">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const appointmentDateInput = document.getElementById("appointmentDate");
+            const vetSelectionContainer = document.getElementById("vetSelectionContainer");
+
+            // Show or hide the vet selection based on appointment date
+            appointmentDateInput.addEventListener("change", function () {
+                if (appointmentDateInput.value) {
+                    vetSelectionContainer.style.display = "block";
+                    document.getElementById("vetId").setAttribute("required", "required");
+                } else {
+                    vetSelectionContainer.style.display = "none";
+                    document.getElementById("vetId").removeAttribute("required");
+                }
+            });
+        });
+    </script>
+}
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var isAuthenticated = @Model.IsAuthenticated.ToString().ToLower();
+            if (!isAuthenticated) {
+                $('#authModal').modal('show');
+            }
+        });
+    </script>
+}

@@ -5,6 +5,7 @@ using KVSC.Infrastructure.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
+using System.Net;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
 {
@@ -22,15 +23,23 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
             _userService = userService;
         }
         [BindProperty]
-        UserInfo UserInfo { get; set; }
-        MakeAppointmentRequest MakeAppointmentRequest { get; set; }
+        public UserInfo UserInfo { get; set; } = new UserInfo();
+        public List<KVSC.Infrastructure.DTOs.Service.Data> Services { get; set; } = new List<KVSC.Infrastructure.DTOs.Service.Data>();
+        public List<PetData> Pets { get; private set; } = new List<PetData>();
+        public List<GetVetIdData> Veterinarians { get; private set; } = new List<GetVetIdData>();
+
+        public MakeAppointmentRequest MakeAppointmentRequest { get; set; }
+        public bool IsAuthenticated { get; private set; }
 
         public async void OnGetAsync()
         {
             var accessToken = HttpContext.Session.GetString("Token");
-            if (accessToken == null) 
-            {
+            IsAuthenticated = accessToken != null;
 
+            if (!IsAuthenticated)
+            {
+                // If the user is not authenticated, return early without fetching data
+                return;
             }
             var getResult = await _authService.GetUserInforByToken(accessToken);
             if (getResult.IsSuccess)
@@ -40,19 +49,20 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
                 // Fetch pets by owner ID
                 var petResponse = await _petBusinessService.GetPetsByOwnerIdAsync(accessToken);
 
-                var pets = petResponse.IsSuccess
+                Pets = petResponse.IsSuccess
                     ? petResponse.Data?.Extensions?.Data ?? new List<PetData>()
                     : new List<PetData>();
 
                 // Fetch Koi Service List
                 var serviceResponse = await _petServiceService.GetKoiServiceList();
-                var services = serviceResponse.IsSuccess
+                Services = serviceResponse.IsSuccess
                     ? serviceResponse.Data.Extensions.Data
                     : new List<KVSC.Infrastructure.DTOs.Service.Data>();
             }
             if(MakeAppointmentRequest.AppointmentDate != null)
             {
                 var vets = await _userService.GetVetForAppoinment();
+                Veterinarians = vets.IsSuccess ? vets.Data.Extensions.Data : new List<GetVetIdData>();
             }
         }
 
