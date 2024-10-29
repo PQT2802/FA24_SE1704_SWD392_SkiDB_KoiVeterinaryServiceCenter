@@ -64,31 +64,6 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(petResponse);
         }
 
-        //public async Task<Result> GetAllPetAsync()
-        //{
-        //    var pets = await _unitOfWork.PetRepository.GetAllPetAsync();
-        //    var petResponse = pets.Select(pet => new GetPetResponse
-        //    {
-        //        Id = pet.Id,
-        //        Name = pet.Name,
-        //        Age = pet.Age,
-        //        Gender = pet.Gender,
-        //        ImageUrl = pet.ImageUrl,
-        //        Color = pet.Color,
-        //        Length = pet.Length,
-        //        Weight = pet.Weight,
-        //        Quantity = pet.Quantity,
-        //        LastHealthCheck = pet.LastHealthCheck,
-        //        Note = pet.Note,
-        //        HealthStatus = pet.HealthStatus,
-        //        Owner = pet.Owner?.FullName,
-        //        OwnerId = pet.OwnerId
-        //    }).ToList();
-
-        //    return Result.SuccessWithObject(petResponse);
-        //}
-
-
         public async Task<Result> GetAllPetAsync()
         {
             var pets = await _unitOfWork.PetRepository.GetAllPetAsync();

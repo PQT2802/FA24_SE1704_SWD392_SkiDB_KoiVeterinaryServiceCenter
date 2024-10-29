@@ -62,7 +62,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Error fetching pet data");
+                ModelState.AddModelError(string.Empty, "Error fetching koi fish data");
             }
 
             UserId = userId;
@@ -133,12 +133,12 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 
             if (result.IsSuccess)
             {
-                TempData["SuccessMessage"] = "Pet deleted successfully.";
+                TempData["SuccessMessage"] = "Koi fish deleted successfully.";
                 TempData["AlertClass"] = "alert-success";
                 return RedirectToPage("/User/Customer/Pet");
             }
 
-            TempData["ErrorMessage"] = "Failed to delete pet: " + string.Join(", ", result.Errors.Select(e => e.Description));
+            TempData["ErrorMessage"] = "Failed to delete koi fish: " + string.Join(", ", result.Errors.Select(e => e.Description));
             return RedirectToPage("/User/Customer/Pet");
         }
 
