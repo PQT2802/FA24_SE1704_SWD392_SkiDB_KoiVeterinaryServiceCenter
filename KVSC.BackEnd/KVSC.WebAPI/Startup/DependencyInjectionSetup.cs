@@ -5,9 +5,7 @@ using Google.Cloud.Storage.V1;
 using KVSC.Application.Common.Validator.Pet;
 using KVSC.Application.Common.Validator.Product;
 using KVSC.Application.Common.Validator.ProductCategory;
-using FluentValidation;
 using KVSC.Application.Common.Validator.Appointment;
-using KVSC.Application.Common.Validator.Pet;
 using KVSC.Application.Common.Validator.PetService;
 using KVSC.Application.Common.Validator.User;
 using KVSC.Application.Implement.Service;
@@ -49,8 +47,16 @@ using KVSC.Infrastructure.DTOs.ComboService.UpdateComboService;
 using KVSC.Application.Common.Validator.ServiceReport;
 using KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport;
 using KVSC.Infrastructure.DTOs.ServiceReport.UpdateServiceReport;
+
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.DTOs.User.AddUser;
+
+using KVSC.Infrastructure.DTOs.Schedule;
+using KVSC.Application.Common.Validator.VeterinarianSchedule;
+using KVSC.Infrastructure.DTOs.Rating.AddRating;
+using KVSC.Infrastructure.DTOs.Rating.UpdateRating;
+using KVSC.Application.Common.Validator.Rating;
+using KVSC.Application.Common.Validator.Schedule;
 
 namespace KVSC.WebAPI.Startup
 {
@@ -122,8 +128,18 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<AddServiceReportRequest>, AddServiceReportValidator>();
             services.AddTransient<IValidator<UpdateServiceReportRequest>, UpdateServiceReportValidator>();
 
+            services.AddTransient<IValidator<RegisterScheduleRequest>, RegisterScheduleValidator>();
+
+
             services.AddTransient<IValidator<UpdateUserRequest>, UpdateUserValidator>();
             services.AddTransient<IValidator<AddUserRequest>, AddUserValidator>();
+
+            services.AddTransient<IValidator<AddRatingRequest>, AddRatingValidator>();
+            services.AddTransient<IValidator<UpdateRatingRequest>, UpdateRatingValidator>();
+
+            services.AddTransient<IValidator<RegisterScheduleRequest>, RegisterScheduleValidator>();
+            services.AddTransient<IValidator<ManagementRegisterScheduleRequest>, ManagementRegisterScheduleValidator>();
+
 
             //Validator
 
@@ -148,6 +164,10 @@ namespace KVSC.WebAPI.Startup
 
             services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
             services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
+            services.AddTransient<IVeterinarianScheduleRepository, VeterinarianScheduleRepository>();
+
+            
+            services.AddTransient<IRatingRepository, RatingRepository>();
 
 
             #endregion
@@ -158,6 +178,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
             services.AddTransient<IGenericRepository<Product>, GenericRepository<Product>>();
             services.AddTransient<IGenericRepository<PrescriptionRepository>, GenericRepository<PrescriptionRepository>>();
+            services.AddTransient<IGenericRepository<VeterinarianScheduleRepository>, GenericRepository<VeterinarianScheduleRepository>>();
             services
                 .AddTransient<IGenericRepository<ProductCategoryRepository>,
                     GenericRepository<ProductCategoryRepository>>();
@@ -182,11 +203,13 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IServiceReportService, ServiceReportService>();
+            services.AddTransient<IVeterinarianScheduleService, VeterinarianScheduleService>();
 
             services.AddScoped<IMessageService, MessageService>();
 
             services.AddTransient<IUserService, UserService>();
 
+            services.AddTransient<IRatingService, RatingService>();
 
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();

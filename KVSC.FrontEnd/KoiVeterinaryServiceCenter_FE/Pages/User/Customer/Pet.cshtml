@@ -63,13 +63,6 @@
                             <span asp-validation-for="AddPetRequest.Gender" class="text-danger"></span>
                         </div>
 
-                        @* <!-- Image URL -->
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="imageUrl" name="AddPetRequest.ImageUrl" placeholder="Image URL">
-                            <label for="imageUrl">Image URL</label>
-                            <span asp-validation-for="AddPetRequest.ImageUrl" class="text-danger"></span>
-                        </div> *@
-
                         <!-- Image Upload -->
                         <div class="form-floating mb-3">
                             <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
@@ -175,13 +168,6 @@
                         <span asp-validation-for="UpdatePetRequest.Gender" class="text-danger"></span>
                     </div>
 
-                    @* <!-- Image URL -->
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="imageUrl" name="UpdatePetRequest.ImageUrl" placeholder="Image URL">
-                        <label for="imageUrl">Image URL</label>
-                        <span asp-validation-for="UpdatePetRequest.ImageUrl" class="text-danger"></span>
-                    </div> *@
-
                    <div class="mb-3">
                         <label for="petImageFile" class="form-label">Choose Image</label>
                         <input type="file" class="form-control" id="petImageFile" name="imageFile" accept="image/*" />
@@ -190,8 +176,7 @@
 
                     <!-- Image Preview -->
                     <div class="mb-3">
-                        <label for="imagePreview" class="form-label">Image Preview</label>
-                        <img id="imagePreview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
+                        <img id="petImagePreview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
                     </div>
 
                     <!-- Color -->
@@ -358,12 +343,7 @@
 
         $('#updatePetForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
-        //     var imageInput = $('#petImageFile').get(0); // Lấy phần tử
-        // if (!imageInput || imageInput.files.length === 0) {
-        // alert('Please select a photo before updating a pet.');
-        //         alert('Please select a photo before updating a pet.');
-        //         return; // Ngừng thực hiện nếu không có ảnh
-        //     }
+
             // Tạo FormData
             var formData = new FormData(this);
             console.log("update");
@@ -394,104 +374,6 @@
         });
     });
 </script>
-
-
-@* <!-- Script cho việc tạo Pet -->
-<script>
-    $(document).ready(function () {
-        $('#submitPetForm').click(function (e) {
-            e.preventDefault();
-
-            $.ajax({
-                type: "POST",
-                url: window.location.pathname + "?handler=CreatePet",
-                data: $('#createPetForm').serialize(),
-                success: function (response) {
-                    if (response.isSuccess) {
-                        $('#createPetModal').modal('hide');
-                        alert('Create successful');
-                        location.reload();
-                    } else {
-                        $('span[data-valmsg-for]').text('');
-                        for (const [key, value] of Object.entries(response.errors)) {
-                            $(`span[data-valmsg-for='AddPetRequest.${key}']`).text(value);
-                        }
-                    }
-                },
-                error: function () {
-                    console.log('Có lỗi xảy ra.');
-                }
-            });
-        });
-    });
-</script> *@
-
-@* <!-- Script cho việc sửa Pet -->
-<script>
-    $(document).ready(function () {
-        // Khi nhấn nút "Edit"
-        $('.edit-pet-button').click(function () {
-            // Lấy dữ liệu từ các thuộc tính data-*
-            var id = $(this).data('id');
-            var name = $(this).data('name');
-            var age = $(this).data('age');
-            var gender = $(this).data('gender');
-            var imageUrl = $(this).data('imageurl');
-            var color = $(this).data('color');
-            var length = $(this).data('length');
-            var weight = $(this).data('weight');
-            var quantity = $(this).data('quantity');
-            var lastHealthCheck = $(this).data('lasthealthcheck');
-            var note = $(this).data('note');
-            var healthStatus = $(this).data('healthstatus');
-
-            // Gán các giá trị vào các trường trong modal
-            $('#updatePetModal #petId').val(id);
-            $('#updatePetModal #name').val(name);
-            $('#updatePetModal #age').val(age);
-            $('#updatePetModal #gender').val(gender);
-            $('#updatePetModal #imageUrl').val(imageUrl);
-            $('#updatePetModal #color').val(color);
-            $('#updatePetModal #length').val(length);
-            $('#updatePetModal #weight').val(weight);
-            $('#updatePetModal #lastHealthCheck').val(lastHealthCheck);
-            $('#updatePetModal #healthStatus').val(healthStatus);
-            $('#updatePetModal #quantity').val(quantity);
-            $('#updatePetModal #note').val(note);
-
-            // Hiển thị modal
-            $('#updatePetModal').modal('show');
-        });
-
-        // Xử lý submit form cập nhật
-        $('#updatePetForm').submit(function (e) {
-            e.preventDefault(); // Ngăn chặn hành vi mặc định
-
-            $.ajax({
-                type: "POST",
-                url: window.location.pathname + "?handler=UpdatePet", // Gửi đến đúng handler
-                data: $(this).serialize(),
-                success: function (response) {
-                    if (response.isSuccess) {
-                        $('#updatePetModal').modal('hide');
-                        alert('Update successful');
-                        location.reload();
-                    } else {
-                        $('span[data-valmsg-for]').text('');
-                        // Hiển thị lỗi vào các input tương ứng
-                        for (const [key, value] of Object.entries(response.errors)) {
-                            $(`span[data-valmsg-for='UpdatePetRequest.${key}']`).text(value);
-                        }
-                    }
-                },
-                error: function () {
-                    console.log('Có lỗi xảy ra.');
-                }
-            });
-        });
-    });
-</script> *@
-
 
 <!-- Script cho việc xóa Pet -->
 <script>

@@ -22,9 +22,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             _userService = userService;
         }
 
-        public async Task<IActionResult> OnGetAsync(bool? editCustom = null)
+        public async Task<IActionResult> OnGetAsync(bool? edit = null)
         {
-            ViewData["IsEditMode"] = editCustom ?? false;
+            ViewData["IsEditMode"] = edit ?? false;
 
             var token = HttpContext.Session.GetString("Token");
             if (string.IsNullOrEmpty(token))
@@ -47,7 +47,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile imageFile)
         {
             var token = HttpContext.Session.GetString("Token");
             if (string.IsNullOrEmpty(token))
@@ -64,19 +64,20 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 return Page();
             }
             UpdateUserRequest.Id = userId;
-            var result = await _userService.UpdateUser(UpdateUserRequest);
+            UpdateUserRequest.Role = 5;
+            var result = await _userService.UpdateUser(UpdateUserRequest, imageFile);
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Profile updated successfully.";
-                return Redirect("/User/Admin/AdminProfile");
+                return Redirect("/User/Customer/CustomerProfile");
             }
             else
             {
                 TempData["ErrorMessage"] = string.Join(", ", result.Errors.Select(e => e.Description));
-                return Redirect("/User/Admin/AdminProfile");
+                return Redirect("/User/Customer/CustomerProfile");
             }
             ViewData["IsEditMode"] = true;
-            return Redirect("/User/Admin/AdminProfile");
+            return Redirect("/User/Customer/CustomerProfile");
         }
     }
 }

@@ -1,4 +1,15 @@
-
-﻿<a asp-page="/User/Veterinarian/DashBoard" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-<a asp-page="/User/Veterinarian/Appointments" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Appointments</a>
-<a asp-page="/User/Veterinarian/Chat" class="nav-item nav-link active"><i class="fa fa-fish me-2"></i>Koi Care Chat</a>
+<a asp-page="/User/Veterinarian/DashBoard" class="nav-item nav-link @((Context.Request.Path == "/User/Veterinarian/DashBoard") ? "active" : "")">
+    <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+</a>
+<a asp-page="/User/Veterinarian/VeternarianProfile" class="nav-item nav-link @((Context.Request.Path == "/User/Veterinarian/VeternarianProfile") ? "active" : "")">
+    <i class="fa fa-user me-2"></i>Profile
+</a>
+<a asp-page="/User/Veterinarian/Appointments" class="nav-item nav-link @((Context.Request.Path == "/User/Veterinarian/Appointments") ? "active" : "")">
+    <i class="fa fa-calendar-check me-2"></i>Appointments
+</a>
+@* <a asp-page="/User/Veterinarian/Chat" class="nav-item nav-link @((Context.Request.Path == "/User/Veterinarian/Chat") ? "active" : "")">
+    <i class="fa fa-comments me-2"></i>Koi Care Chat
+</a> *@
+<a asp-page="/User/Veterinarian/WorkSchedule" class="nav-item nav-link @((Context.Request.Path == "/User/Veterinarian/WorkSchedule") ? "active" : "")">
+    <i class="fa fa-calendar me-2"></i>Schedule
+</a>

@@ -36,9 +36,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             _petServiceCategoryService = petServiceCategoryService;
         }
 
-        public async Task<IActionResult> OnPostCreateServiceAsync()
+        public async Task<IActionResult> OnPostCreateServiceAsync(IFormFile imageFile)
         {
-            var result = await _petServiceSerivce.AddPetService(AddServiceRequest);
+            var result = await _petServiceSerivce.AddPetService(AddServiceRequest, imageFile);
 
             if (result.IsSuccess)
             {
@@ -50,9 +50,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             return new JsonResult(new { isSuccess = false, errors });
         }
 
-        public async Task<IActionResult> OnPostUpdateServiceAsync()
+        public async Task<IActionResult> OnPostUpdateServiceAsync(IFormFile imageFile)
         {
-            var result = await _petServiceSerivce.UpdatePetService(UpdateServiceRequest);
+            var result = await _petServiceSerivce.UpdatePetService(UpdateServiceRequest, imageFile);
 
             if (result.IsSuccess)
             {
@@ -119,39 +119,40 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
         public async Task OnGetAsync()
         {
-            var result = await _petServiceSerivce.GetKoiServiceList();
-            if (result.IsSuccess)
+            try
             {
-            
-                KoiServiceList = result.Data;
-                // Kiểm tra và khởi tạo Extensions nếu cần
-                if (KoiServiceList.Extensions == null)
+                // Fetch the Koi service list
+                var result = await _petServiceSerivce.GetKoiServiceList();
+                if (result.IsSuccess)
                 {
-                    KoiServiceList.Extensions = new Extensions<List<Data>>
+                    KoiServiceList = result.Data ?? new KoiServiceList();
+                }
+                else
+                {
+                    // Handle the case where the result is not successful
+                    KoiServiceList = new KoiServiceList
                     {
-                        Data = new List<Data>() 
+                        Extensions = new Extensions<List<Data>> { Data = new List<Data>() }
                     };
                 }
-            }
-            else
-            {
-                KoiServiceList = new KoiServiceList
-                {
-                    Extensions = new Extensions<List<Data>> { Data = new List<Data>() }
-                };
-            }
-            // Gán dữ liệu vào ViewBag cho dropdown
-            var categoryResult = await _petServiceCategoryService.GetKoiServiceCategoryList();
-            var category = categoryResult.Data.Extensions.Data;
-            if (categoryResult.IsSuccess)
-            {
-                ViewData["Categories"] = new SelectList(category, "Id", "Name");  // Gán danh sách categories vào ViewData
-            }
-            else
-            {
-                ViewData["Categories"] = new List<KoiServiceCategory>(); // Nếu có lỗi, gán danh sách rỗng
-            }
 
+                // Fetch the Koi service category list for dropdown
+                var categoryResult = await _petServiceCategoryService.GetKoiServiceCategoryList();
+                if (categoryResult.IsSuccess && categoryResult.Data?.Extensions?.Data != null)
+                {
+                    var category = categoryResult.Data.Extensions.Data;
+                    ViewData["Categories"] = new SelectList(category, "Id", "Name");  // Assign categories to ViewData
+                }
+                else
+                {
+                    // If there was an error or no categories, assign an empty list
+                    ViewData["Categories"] = new List<KoiServiceCategory>();
+                }
+            }
+            catch (Exception ex)
+            {
+                RedirectToPage("/Errors/404");
+            }
         }
     }
 }

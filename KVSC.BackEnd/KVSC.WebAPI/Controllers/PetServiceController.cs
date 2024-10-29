@@ -3,6 +3,7 @@ using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.PetService;
 using KVSC.Infrastructure.DTOs.PetService.GetPetService;
 using KVSC.Infrastructure.DTOs.PetService.UpdatePetService;
 using KVSC.Infrastructure.DTOs.PetServiceCategory.GetPetServiceCategory;
@@ -28,6 +29,15 @@ namespace KVSC.WebAPI.Controllers
             Result result = await _petServiceService.CreatePetServiceAsync(addPetService);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Pet service created successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpPost("upload/img")]
+        public async Task<IResult> UploadImage([FromForm] UploadImageRequest request)
+        {
+            var result = await _petServiceService.UploadImageAsync(request);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Image uploaded successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
 

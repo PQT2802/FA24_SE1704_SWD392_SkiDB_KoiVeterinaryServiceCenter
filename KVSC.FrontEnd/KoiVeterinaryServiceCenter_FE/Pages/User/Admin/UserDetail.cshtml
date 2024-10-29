@@ -1,4 +1,4 @@
-﻿@page "User/Admin/UserDetail/{id:guid}"
+﻿@page "{id:guid}"
 @model KoiVeterinaryServiceCenter_FE.Pages.User.Admin.UserDetailModel
 @{
     Layout = "_LayoutBoard";
@@ -15,8 +15,11 @@
             @if (Model.UserDetail != null)
             {
                 <div class="row">
-                    <div class="col-md-6 d-flex justify-content-center">
-                        <img src="@Model.UserDetail.Extensions.Data.ProfilePictureUrl" alt="Profile Picture" class="img-fluid rounded-circle" style="max-height: 200px; object-fit: cover;" />
+                    <div class="col-md-6 d-flex justify-content-center" style="min-height: 600px; max-height: 1000px;">
+                        <img src="@Model.UserDetail.Extensions.Data.ProfilePictureUrl"
+                             alt="Service Image"
+                             class="img-fluid rounded shadow"
+                             style="max-height: 100%; max-width: 100%; object-fit: contain;" />
                     </div>
                     <div class="col-md-6">
                         <div class="d-flex justify-content-around align-items-center mb-4">

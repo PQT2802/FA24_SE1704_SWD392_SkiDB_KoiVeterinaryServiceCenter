@@ -5,6 +5,7 @@ using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 {
@@ -48,7 +49,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile imageFile)
         {
             var token = HttpContext.Session.GetString("Token");
             if (string.IsNullOrEmpty(token))
@@ -65,7 +66,12 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
                 return Page();
             }
             UpdateUserRequest.Id = userId;
-            var result = await _userService.UpdateUser(UpdateUserRequest);
+            UpdateUserRequest.Role = 1;
+            if (imageFile == null || imageFile.Length == 0)
+            {
+                UpdateUserRequest.ProfilePictureUrl = Request.Form["ExistingProfilePictureUrl"];
+            }
+            var result = await _userService.UpdateUser(UpdateUserRequest, imageFile);
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Profile updated successfully.";

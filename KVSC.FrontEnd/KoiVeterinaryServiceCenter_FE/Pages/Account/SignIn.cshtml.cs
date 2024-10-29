@@ -38,6 +38,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
                     // Store User Info in Session
                     HttpContext.Session.SetString("ActorRole", userInfor.Extensions.Data.RoleName);
                     HttpContext.Session.SetString("ActorName", userInfor.Extensions.Data.UserName);
+                    HttpContext.Session.SetString("ActorAvatar", userInfor.Extensions.Data.Avatar ?? string.Empty);
                     HttpContext.Session.SetString("Token", accessToken);
 
                     // Check if the Id is available and store it in the session as a string

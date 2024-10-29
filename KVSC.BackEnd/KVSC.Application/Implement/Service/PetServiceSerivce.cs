@@ -5,7 +5,9 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Firebase.AddImage;
+using KVSC.Infrastructure.DTOs.Firebase.GetImage;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
+using KVSC.Infrastructure.DTOs.PetService;
 using KVSC.Infrastructure.DTOs.PetService.GetPetService;
 using KVSC.Infrastructure.DTOs.PetService.UpdatePetService;
 using KVSC.Infrastructure.Interface;
@@ -84,23 +86,68 @@ namespace KVSC.Application.Implement.Service
             var response = new CreateResponse { Id = petService.Id };
             return Result.SuccessWithObject(response);
         }
+        public async Task<Result> UploadImageAsync(UploadImageRequest request)
+        {
+            // Validate request
+            if (request.ImageFile == null || request.ImageFile.Length == 0)
+            {
+                return Result.Failure(PetServiceErrorMessage.FieldIsEmpty("Img"));
+            }
+
+            // Upload image logic
+            var imageRequest = new AddImageRequest(request.ImageFile, "PetServices");
+            var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest);
+
+            if (!uploadImageResult.Success)
+            {
+                return Result.Failure(uploadImageResult.Error);
+            }
+            var result =  await UpdatePetServiceImageUrl(request.Id, uploadImageResult.FilePath);
+            return Result.SuccessWithObject(result);
+        }
+        public async Task<Result> UpdatePetServiceImageUrl(Guid petServiceId, string imageUrl)
+        {
+            var petService = await _unitOfWork.PetServiceRepository.GetByIdAsync(petServiceId);
+            if (petService == null)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
+            }
+
+            petService.ImageUrl = imageUrl;
+            var result =  await _unitOfWork.PetServiceRepository.UpdateAsync(petService);
+            if (result == 0)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceUpdateImgFailed());
+            }
+
+            var response = new CreateResponse { Id = petServiceId };
+            return Result.SuccessWithObject(response);
+        }
 
         public async Task<Result> GetAllPetServicesAsync()
         {
             var petServices = await _unitOfWork.PetServiceRepository.GetAllServicesAsync();
-            var petServiceRespone = petServices.Select(service => new GetPetServiceResponse
+            var petServiceRespone = new List<GetPetServiceResponse>();
+            foreach (var service in petServices)
             {
-                Id = service.Id,
-                Name = service.Name,
-                BasePrice = service.BasePrice,
-                Duration = service.Duration,
-                ImageUrl = service.ImageUrl,
-                AvailableFrom = service.AvailableFrom,
-                AvailableTo = service.AvailableTo,
-                TravelCost = service.TravelCost,
-                ServiceCategory = service.PetServiceCategory?.Name  ?? string.Empty,
-                PetServiceCategoryId = service.PetServiceCategoryId
-            }).ToList();
+                var getImgRequest = new GetImageRequest(service.ImageUrl);
+                var petServiceImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getImgRequest);
+
+                var serviceResponse = new GetPetServiceResponse
+                {
+                    Id = service.Id,
+                    Name = service.Name,
+                    BasePrice = service.BasePrice,
+                    Duration = service.Duration,
+                    ImageUrl = petServiceImg?.ImageUrl ?? string.Empty, 
+                    AvailableFrom = service.AvailableFrom,
+                    AvailableTo = service.AvailableTo,
+                    TravelCost = service.TravelCost,
+                    ServiceCategory = service.PetServiceCategory?.Name ?? string.Empty,
+                    PetServiceCategoryId = service.PetServiceCategoryId
+                };
+                petServiceRespone.Add(serviceResponse);
+            }
             return Result.SuccessWithObject(petServiceRespone);
         }
 
@@ -111,13 +158,17 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
             }
+            /*============================================lay anh==========================================================*/
+            var getimg = new GetImageRequest(petService.ImageUrl);
+            var petServicesImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getimg);
+            /*============================================lay anh==========================================================*/
             var petServiceRespone = new GetPetServiceResponse 
             { 
                 Id = petService.Id,
                 Name = petService.Name,
                 BasePrice = petService.BasePrice,
                 Duration = petService.Duration,
-                ImageUrl = petService.ImageUrl,
+                ImageUrl = petServicesImg.ImageUrl ?? string.Empty,
                 AvailableFrom = petService.AvailableFrom,
                 AvailableTo = petService.AvailableTo,
                 TravelCost = petService.TravelCost,
@@ -149,22 +200,7 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetServiceErrorMessage.InvalidFieldValue("PetServiceCategory"));
             }
-            //if (updatePetServiceRequest.ImageFile != null)
-            //{
-            //    // Create a new AddImageRequest for the image file
-            //    var imageRequest = new AddImageRequest(updatePetServiceRequest.ImageFile, "PetServices");
-
-            //    // Upload the image and get the result
-            //    var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest);
-
-            //    if (!uploadImageResult.Success)
-            //    {
-            //        return Result.Failure(uploadImageResult.Error); // Return the error from image upload
-            //    }
-
-            //    // Update the ImageUrl with the new uploaded image path
-            //    existingPetService.ImageUrl = uploadImageResult.FilePath;
-            //}
+            
             // Update the properties
             existingPetService.Name = updatePetServiceRequest.Name; // Update Name
             existingPetService.PetServiceCategoryId = updatePetServiceRequest.PetServiceCategoryId;
@@ -174,7 +210,6 @@ namespace KVSC.Application.Implement.Service
             existingPetService.AvailableTo = updatePetServiceRequest.AvailableTo;
             existingPetService.TravelCost = updatePetServiceRequest.TravelCost;
             existingPetService.ModifiedDate = DateTime.UtcNow;
-            existingPetService.ImageUrl = updatePetServiceRequest.ImageUrl;
             // Update the service
             var updateResult = await _unitOfWork.PetServiceRepository.UpdateAsync(existingPetService);
 

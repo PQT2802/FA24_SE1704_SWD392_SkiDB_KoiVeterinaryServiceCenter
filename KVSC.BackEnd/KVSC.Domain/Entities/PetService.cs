@@ -17,5 +17,6 @@ public class PetService : BaseEntity
 
     // New relationship: ComboServiceItems (for many-to-many relation with ComboService)
     public ICollection<ComboServiceItem> ComboServiceItems { get; set; }
+    public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 
 }

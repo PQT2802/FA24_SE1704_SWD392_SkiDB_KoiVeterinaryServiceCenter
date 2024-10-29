@@ -8,6 +8,7 @@ namespace KVSC.Infrastructure.DTOs.Chat.AddMessage
 {
     public class CreateMessageResponse
     {
+        public string AvatarUrl { get; set; }
         public Guid SenderId { get; set; } 
         public string SenderName { get; set; }
         public Guid RecipientId { get; set; } 

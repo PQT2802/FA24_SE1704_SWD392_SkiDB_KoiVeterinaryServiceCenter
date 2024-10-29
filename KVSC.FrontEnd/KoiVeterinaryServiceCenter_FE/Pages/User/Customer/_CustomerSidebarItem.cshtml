@@ -1,25 +1,15 @@
-﻿@* <a asp-page="/User/Customer/Dashboard" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Dashboard</a>
-<a asp-page="/User/Customer/Services" class="nav-item nav-link"><i class="fa fa-concierge-bell me-2"></i>Services</a>
-<a asp-page="/User/Customer/Appointments" class="nav-item nav-link"><i class="fa fa-calendar me-2"></i>Appointments</a>
-<a asp-page="/User/Customer/ChatHub" class="nav-item nav-link"><i class="fa fa-comments me-2"></i>Online Consultation</a>
-<a asp-page="/User/Customer/Profile" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Profile</a>
-<a asp-page="/User/Customer/Logout" class="nav-item nav-link"><i class="fa fa-sign-out-alt me-2"></i>Logout</a> *@
-<a asp-page="/User/Customer/Pet" class="nav-item nav-link"><i class="fa fa-paw me-2"></i>Pet</a>
-﻿<a asp-page="/User/Customer/Dashboard" class="nav-item nav-link active">
-    <i class="fa fa-home me-2"></i>Dashboard
-</a>
-<a asp-page="/User/Customer/Services" class="nav-item nav-link">
-    <i class="fa fa-concierge-bell me-2"></i>Services
-</a>
-<a asp-page="/User/Customer/Appointments" class="nav-item nav-link">
-    <i class="fa fa-calendar me-2"></i>Appointments
-</a>
-<a asp-page="/User/Customer/ChatHub" class="nav-item nav-link">
-    <i class="fa fa-comments me-2"></i>Online Consultation
-</a>
-<a asp-page="/User/Customer/Profile" class="nav-item nav-link">
+﻿<a asp-page="/User/Customer/CustomerProfile" class="nav-item nav-link @((Context.Request.Path == "/User/Customer/CustomerProfile") ? "active" : "")">
     <i class="fa fa-user me-2"></i>Profile
 </a>
-<a asp-page="/User/Customer/Logout" class="nav-item nav-link">
+ <a asp-page="/User/Customer/Pet" class="nav-item nav-link @((Context.Request.Path == "/User/Customer/Pet") ? "active" : "")">
+    <i class="fa fa-fish me-2"></i>Koi
+</a>
+<a asp-page="/User/Customer/Appointments" class="nav-item nav-link @((Context.Request.Path == "/User/Customer/Appointments") ? "active" : "")">
+    <i class="fa fa-calendar me-2"></i>Appointments
+</a>
+@* <a asp-page="/User/Customer/Chat" class="nav-item nav-link @((Context.Request.Path == "/User/Customer/Chat") ? "active" : "")">
+    <i class="fa fa-comments me-2"></i>Consultation
+</a> *@
+<a asp-page="/Account/Logout" class="nav-item nav-link">
     <i class="fa fa-sign-out-alt me-2"></i>Logout
 </a>
