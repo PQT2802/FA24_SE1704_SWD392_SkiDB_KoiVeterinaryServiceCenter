@@ -54,5 +54,10 @@ namespace KVSC.Application.Service.Implement
             var response = await _userRepository.GetUserDetail(id);
             return response;
         }
+
+        public Task<ResponseDto<GetVetId>> GetVetForAppoinment()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

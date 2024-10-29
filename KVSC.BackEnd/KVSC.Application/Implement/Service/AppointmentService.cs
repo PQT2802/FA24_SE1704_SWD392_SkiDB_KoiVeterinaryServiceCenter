@@ -170,5 +170,45 @@ namespace KVSC.Application.Implement.Service
             }
             return Result.SuccessWithObject(appointment);
         }
+
+        public async Task<Result> MakeAppointmentForServiceAsyncNotAuto(MakeAppointmentForServiceRequest request)
+        {
+            var pet = await _unitOfWork.PetRepository.GetByIdAsync(request.PetId);
+            if (pet == null)
+            {
+                return Result.Failure(PetErrorMessage.FieldIsEmpty("pet"));
+            }
+
+            var appointment = new Appointment
+            {
+                CustomerId = request.CustomerId,
+                PetId = request.PetId,
+                PetServiceId = request.PetServiceId,
+                Status = "Pending",
+                AppointmentDate = request.AppointmentDate,
+            };
+                // Nếu có bác sĩ được chọn, thêm vào cuộc hẹn
+                appointment.AppointmentVeterinarians = request.VeterinarianIds.Select(v => new AppointmentVeterinarian
+                {
+                    VeterinarianId = v
+                }).ToList();
+            
+            // Lưu cuộc hẹn
+            await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
+
+            // Cập nhật trạng thái IsAvailable của lịch bác sĩ qua repository
+            foreach (var veterinarian in appointment.AppointmentVeterinarians)
+            {
+                await _unitOfWork.AppointmentRepository.UpdateScheduleAvailabilityAsync(
+                    veterinarian.VeterinarianId,
+                    appointment.AppointmentDate
+                );
+            }
+                var response = new CreateResponse { Id = appointment.Id };
+                return Result.SuccessWithObject(response);
+            
+
+
+        }
     }
 }

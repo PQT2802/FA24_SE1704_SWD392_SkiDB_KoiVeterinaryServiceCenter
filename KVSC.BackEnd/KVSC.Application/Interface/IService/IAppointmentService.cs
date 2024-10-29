@@ -13,6 +13,7 @@ namespace KVSC.Application.Interface.IService
     public interface IAppointmentService
     {
         public Task<Result> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request);
+        public Task<Result> MakeAppointmentForServiceAsyncNotAuto(MakeAppointmentForServiceRequest request);
         public Task<Result> MakeAppointmentForComboAsync(MakeAppointmentForComboRequest request);
         public Task<Result> GetAppointmentListByUserIdAsync(Guid userId);
         public Task<Result> GetAppointmentListAsync();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.DTOs.Appointment.MakeAppointment
 {
-    public class MakeAppointmentForServiceRequest
+    public class MakeAppointmentRequest
     {
         public Guid CustomerId { get; set; }
         public Guid PetId { get; set; }

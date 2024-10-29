@@ -21,10 +21,19 @@ namespace KVSC.WebAPI.Controllers
         }
 
         // POST: api/appointment/service
+        //[HttpPost("service")]
+        //public async Task<IResult> MakeAppointmentForService([FromBody] MakeAppointmentForServiceRequest request)
+        //{
+        //    Result result = await _appointmentService.MakeAppointmentForServiceAsync(request);
+        //    return result.IsSuccess
+        //        ? ResultExtensions.ToSuccessDetails(result, "Appointment for service created successfully")
+        //        : ResultExtensions.ToProblemDetails(result);
+        //}
+        // POST: api/appointment/service
         [HttpPost("service")]
         public async Task<IResult> MakeAppointmentForService([FromBody] MakeAppointmentForServiceRequest request)
         {
-            Result result = await _appointmentService.MakeAppointmentForServiceAsync(request);
+            Result result = await _appointmentService.MakeAppointmentForServiceAsyncNotAuto(request);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Appointment for service created successfully")
                 : ResultExtensions.ToProblemDetails(result);
