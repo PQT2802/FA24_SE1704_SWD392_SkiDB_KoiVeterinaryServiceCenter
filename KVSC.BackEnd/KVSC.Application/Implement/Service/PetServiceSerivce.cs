@@ -52,15 +52,6 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(PetServiceErrorMessage.InvalidFieldValue("PetServiceCategory"));
             }
 
-            //// Upload the image if provided
-            //    var imageRequest = new AddImageRequest(addPetService.ImageFile, "PetServices");
-            //    var uploadImageResult = await _unitOfWork.FirebaseRepository.UploadImageAsync(imageRequest);
-
-            //    if (!uploadImageResult.Success)
-            //    {
-            //        return Result.Failure(uploadImageResult.Error);
-            //    }
-
             // Create the PetService entity
             var petService = new PetService
             {
@@ -128,26 +119,34 @@ namespace KVSC.Application.Implement.Service
         {
             var petServices = await _unitOfWork.PetServiceRepository.GetAllServicesAsync();
             var petServiceRespone = new List<GetPetServiceResponse>();
-            foreach (var service in petServices)
+          
+            var imageTasks = petServices.Select(service =>
             {
                 var getImgRequest = new GetImageRequest(service.ImageUrl);
-                var petServiceImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getImgRequest);
+                return _unitOfWork.FirebaseRepository.GetImageAsync(getImgRequest);
+            }).ToList();
+            // Chạy đồng thời tất cả các task
+            var imageResults = await Task.WhenAll(imageTasks);
 
-                var serviceResponse = new GetPetServiceResponse
+            // Tạo danh sách phản hồi với dữ liệu ảnh
+            petServiceRespone = petServices.Select((service, index) =>
+            {
+                var petServiceImg = imageResults[index];
+                return new GetPetServiceResponse
                 {
                     Id = service.Id,
                     Name = service.Name,
                     BasePrice = service.BasePrice,
                     Duration = service.Duration,
-                    ImageUrl = petServiceImg?.ImageUrl ?? string.Empty, 
+                    ImageUrl = petServiceImg?.ImageUrl ?? string.Empty,
                     AvailableFrom = service.AvailableFrom,
                     AvailableTo = service.AvailableTo,
                     TravelCost = service.TravelCost,
                     ServiceCategory = service.PetServiceCategory?.Name ?? string.Empty,
                     PetServiceCategoryId = service.PetServiceCategoryId
                 };
-                petServiceRespone.Add(serviceResponse);
-            }
+            }).ToList();
+
             return Result.SuccessWithObject(petServiceRespone);
         }
 

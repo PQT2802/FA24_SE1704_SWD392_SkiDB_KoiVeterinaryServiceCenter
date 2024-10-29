@@ -172,15 +172,15 @@ namespace KVSC.Application.Implement.Service
         //    return Result.SuccessWithObject(result);
         //}
 
-        public async Task<Result> GetAllVeterinariansWeeklyScheduleAsync(DateTime currentDay) // lay dc 3 tuan  Edit : hung
+        public async Task<Result> GetAllVeterinariansWeeklyScheduleAsync(DateTime currentDay) // lay dc 1 thang  Edit : hung
         {
-            // Calculate the start of the previous week (Sunday) and the end of the next week (Saturday)
-            var dayOfWeek = currentDay.DayOfWeek;
-            DateTime startOfWeek = currentDay.AddDays(-((int)dayOfWeek + 7)); 
-            DateTime endOfWeek = startOfWeek.AddDays(20); 
+            DateTime startOfPeriod = currentDay.AddMonths(-1).Date;
 
-            // Retrieve schedules for all veterinarians from Sunday of last week to Saturday of next week
-            var schedules = await _unitOfWork.VeterinarianScheduleRepository.GetAllVeterinariansWeeklySchedule(startOfWeek);
+            // Tính ngày kết thúc là ngày cuối cùng của tháng tiếp theo
+            DateTime endOfPeriod = currentDay.AddMonths(1).Date.AddDays(DateTime.DaysInMonth(currentDay.AddMonths(1).Year, currentDay.AddMonths(1).Month) - 1);
+
+            // Lấy lịch cho tất cả các bác sĩ từ đầu tháng trước đến cuối tháng sau
+            var schedules = await _unitOfWork.VeterinarianScheduleRepository.GetAllVeterinariansScheduleAsync(startOfPeriod, endOfPeriod);
             if (schedules == null || !schedules.Any())
             {
                 return Result.Failure(Error.NotFound("ScheduleNotFound", "No schedule found for the specified period."));
