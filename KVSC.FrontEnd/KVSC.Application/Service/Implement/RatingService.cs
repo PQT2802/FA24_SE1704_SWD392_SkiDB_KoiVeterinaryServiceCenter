@@ -21,5 +21,9 @@ namespace KVSC.Application.Service.Implement
         {
             return await _ratingRepository.GetAllRatingsByServiceId(serviceId, score, createdDate, pageNumber, pageSize);
         }
+        public async Task<ResponseDto<RatingList>> GetManagerRatingList(string customerName, string feedback, int score, int pageNumber, int pageSize)
+        {
+            return await _ratingRepository.GetManagerRatingList(customerName, feedback, score, pageNumber, pageSize);
+        }
     }
 }
