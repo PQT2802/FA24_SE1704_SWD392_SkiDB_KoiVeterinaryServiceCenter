@@ -44,7 +44,8 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
             var getResult = await _authService.GetUserInforByToken(accessToken);
             if (getResult.IsSuccess)
             {
-                 UserInfo = getResult.Data;
+                UserInfo = getResult.Data;
+                UserInfo.Extensions ??= new ExtensionsData();
 
                 // Fetch pets by owner ID
                 var petResponse = await _petBusinessService.GetPetsByOwnerIdAsync(accessToken);
