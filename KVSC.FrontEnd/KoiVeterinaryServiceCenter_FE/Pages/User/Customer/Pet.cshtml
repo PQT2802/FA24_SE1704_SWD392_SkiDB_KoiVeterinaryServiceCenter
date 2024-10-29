@@ -182,11 +182,10 @@
                         <span asp-validation-for="UpdatePetRequest.ImageUrl" class="text-danger"></span>
                     </div> *@
 
-                    <!-- Image File -->
-                    <div class="mb-3">
-                        <label for="imageFile" class="form-label">Choose Image</label>
-                        <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*" />
-                        <span asp-validation-for="UpdatePetRequest.ImageUrl" class="text-danger"></span>
+                   <div class="mb-3">
+                        <label for="petImageFile" class="form-label">Choose Image</label>
+                        <input type="file" class="form-control" id="petImageFile" name="imageFile" accept="image/*" />
+                        <span data-valmsg-for="UpdatePetRequest.ImageUrl" class="text-danger"></span>
                     </div>
 
                     <!-- Image Preview -->
@@ -315,7 +314,7 @@
             var id = $(this).data('id');
             var name = $(this).data('name');
             var age = $(this).data('age');
-            var breed = $(this).data('breed');
+            var gender = $(this).data('gender');
             var imageUrl = $(this).data('imageurl');
             var color = $(this).data('color');
             var length = $(this).data('length');
@@ -323,18 +322,20 @@
             var lastHealthCheck = $(this).data('lasthealthcheck');
             var healthStatus = $(this).data('healthstatus');
             var quantity = $(this).data('quantity');
+            var note = $(this).data('note');
 
             // Cập nhật các trường trong modal
             $('#updatePetModal #petId').val(id);
             $('#updatePetModal #name').val(name);
             $('#updatePetModal #age').val(age);
-            $('#updatePetModal #breed').val(breed);
+            $('#updatePetModal #gender').val(gender);
             $('#updatePetModal #color').val(color);
             $('#updatePetModal #length').val(length);
             $('#updatePetModal #weight').val(weight);
             $('#updatePetModal #lastHealthCheck').val(lastHealthCheck);
             $('#updatePetModal #healthStatus').val(healthStatus);
             $('#updatePetModal #quantity').val(quantity);
+            $('#updatePetModal #note').val(note);
             $('#updatePetModal #imageUrl').val(imageUrl);
             $('#updatePetModal #petImagePreview').attr('src', imageUrl).show();
 
@@ -357,14 +358,15 @@
 
         $('#updatePetForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
-            var imageFile = $('#petImageFile').get(0).files.length;
-            if (imageFile === 0) {
-                alert('Please select a photo before updating a pet.');
-                return; // Ngừng thực hiện nếu không có ảnh
-            }
+        //     var imageInput = $('#petImageFile').get(0); // Lấy phần tử
+        // if (!imageInput || imageInput.files.length === 0) {
+        // alert('Please select a photo before updating a pet.');
+        //         alert('Please select a photo before updating a pet.');
+        //         return; // Ngừng thực hiện nếu không có ảnh
+        //     }
             // Tạo FormData
             var formData = new FormData(this);
-
+            console.log("update");
             // Gọi Ajax
             $.ajax({
                 type: "POST",
