@@ -41,6 +41,8 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             {
                 return Result.Failure(UserErrorMessage.UserNotExist());
             }
+            var wallet = await _unitOfWork.WalletRepository.GetWalletByUserIdAsync(user.Id);
+
             var userInfor = new UserInfor
             {
                 UserName = user.Username,
@@ -54,7 +56,10 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                     4 => "Staff",
                     5 => "Customer",
                     _ => throw new InvalidOperationException("Unknown role.")
-                }
+                },
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address,
+                Amount = wallet?.Amount ?? 0
             };
             
             return Result.SuccessWithObject(userInfor);

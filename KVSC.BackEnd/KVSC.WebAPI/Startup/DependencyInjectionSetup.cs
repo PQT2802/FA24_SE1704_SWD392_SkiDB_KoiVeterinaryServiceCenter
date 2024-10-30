@@ -167,7 +167,7 @@ namespace KVSC.WebAPI.Startup
 
             
             services.AddTransient<IRatingRepository, RatingRepository>();
-
+            services.AddTransient<IWalletRepository, WalletRepository>();
 
 
             #endregion
@@ -214,6 +214,7 @@ namespace KVSC.WebAPI.Startup
 
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IWalletService, WalletService>();
             #endregion
 
 

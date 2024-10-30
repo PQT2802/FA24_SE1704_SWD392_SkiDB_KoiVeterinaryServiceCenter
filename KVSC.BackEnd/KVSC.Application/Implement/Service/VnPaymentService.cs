@@ -15,11 +15,13 @@ namespace KVSC.Application.Implement.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _config;
+        private readonly IWalletService _walletService;
 
-        public VnPaymentService(IUnitOfWork unitOfWork, IConfiguration configuration)
+        public VnPaymentService(IUnitOfWork unitOfWork, IConfiguration configuration, IWalletService walletService)
         {
             _unitOfWork = unitOfWork;
             _config = configuration;
+            _walletService = walletService;
         }
 
         public async Task<Result> CreatePaymentUrl(HttpContext context, double depositMoney, Guid userId)
@@ -72,18 +74,25 @@ namespace KVSC.Application.Implement.Service
             if (vnp_ResponseCode == "00")  // "00" indicates a successful transaction
             {
                 // Create a new Payment record
-                var payment = new Payment
+                //var payment = new Payment
+                //{
+                //    AppointmentId = , // Replace with the actual OrderId
+                //    SystemTransactionId = Guid.NewGuid(), // Replace with actual SystemTransactionId if available
+                //    TotalAmount = (decimal)depositMoney,
+                //    Tax = 0, // Add tax calculation if applicable
+                //    TransactionDate = DateTime.UtcNow
+                //};
+
+                //await _unitOfWork.PaymentRepository.AddPaymentAsync(payment);
+
+                //// Update user's wallet balance
+                var walletUpdateResult = await _walletService.UpdateWalletBalanceAsync(userId, (decimal)depositMoney);
+                if (!walletUpdateResult.IsSuccess)
                 {
-                    OrderId = Guid.NewGuid(), // Replace with the actual OrderId
-                    SystemTransactionId = Guid.NewGuid(), // Replace with actual SystemTransactionId if available
-                    TotalAmount = (decimal)depositMoney,
-                    Tax = 0, // Add tax calculation if applicable
-                    TransactionDate = DateTime.UtcNow
-                };
+                    return Result.Failure(Error.Failure("WalletUpdate", "Failed to update wallet balance after payment."));
+                }
 
-                await _unitOfWork.PaymentRepository.AddPaymentAsync(payment);
-
-                return Result.SuccessWithObject(new { Message = "Transaction successful", PaymentId = payment.Id });
+                return Result.SuccessWithObject(new { Message = "Transaction successful"});
             }
             else
             {

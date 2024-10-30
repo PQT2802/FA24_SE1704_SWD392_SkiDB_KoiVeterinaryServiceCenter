@@ -32,6 +32,7 @@ namespace KVSC.Infrastructure.Interface
 
         
         IPaymentRepository PaymentRepository { get; }
+        IWalletRepository WalletRepository { get; }
         int Complete();
     }
 }
