@@ -61,7 +61,7 @@ namespace KVSC.Application.Implement.Service
             if (payment != null)
             {
                 payment.Deposit = depositAmount;
-                payment.Status = true; // Update the status as required
+                payment.depositStatus = true; // Update the status as required
                 await _unitOfWork.PaymentRepository.UpdateAsync(payment);
             }
 
@@ -93,7 +93,7 @@ namespace KVSC.Application.Implement.Service
             if (payment != null)
             {
                 payment.TotalAmount = totalAmount;
-                payment.Status = true; // Update the status as required
+                payment.totalAmountStatus = true; // Update the status as required
                 await _unitOfWork.PaymentRepository.UpdateAsync(payment);
             }
 
