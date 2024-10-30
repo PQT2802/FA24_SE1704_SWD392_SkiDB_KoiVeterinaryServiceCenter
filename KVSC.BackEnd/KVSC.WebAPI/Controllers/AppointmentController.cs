@@ -48,6 +48,24 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
+        // GET: api/appointment/list/customer/
+        [Authorize]
+        [HttpGet("list/customer")]
+        public async Task<IResult> GetAppointmentListByCustomerIdAsync()
+        {
+            // Retrieve the current user's information from the token
+            CurrentUserObject c = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
+    
+            // Call the service method for customer appointments
+            Result result = await _appointmentService.GetAppointmentListByCustomerIdAsync(c.UserId);
+    
+            // Return appropriate response based on success or failure of the service call
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Fetched appointment list for the specified customer successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+        
+        
         // GET: api/appointment/list/vet/
         [Authorize]
         [HttpGet("list/vet")]
