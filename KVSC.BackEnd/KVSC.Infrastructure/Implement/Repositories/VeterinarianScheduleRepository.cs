@@ -103,5 +103,27 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .Include(v => v.User) // Include User to fetch User details if needed
                 .FirstOrDefaultAsync(v => v.UserId == userId);
         }
+        public async Task<List<VeterinarianSchedule>> GetAvailableVeterinariansForDateAsync(DateTime appointmentDate)
+        {
+            return await _context.VeterinarianSchedules
+                .Include(v => v.Veterinarian).ThenInclude(u => u.User)
+                .Where(s => s.Date == appointmentDate.Date && s.IsAvailable)
+                .ToListAsync();
+        }
+        public async Task<List<VeterinarianSchedule>> GetAvailableVeterinariansForDateTimeAsync(DateTime selectedDate, TimeSpan startTime, TimeSpan endTime)
+        {
+            return await _context.VeterinarianSchedules
+                .Include(v => v.Veterinarian)
+                .ThenInclude(u => u.User)
+                .Where(s => s.Date.Date == selectedDate.Date && s.IsAvailable
+                            && s.StartTime <= endTime && s.EndTime >= startTime) // Allows overlapping time ranges
+                .OrderBy(s => s.Date)
+                .ThenBy(s => s.StartTime)
+                .ToListAsync();
+        }
+
+
+
+
     }
 }

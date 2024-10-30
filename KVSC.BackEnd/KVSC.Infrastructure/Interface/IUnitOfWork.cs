@@ -30,6 +30,8 @@ namespace KVSC.Infrastructure.Interface
         IRatingRepository RatingRepository { get; }
         IVeterinarianScheduleRepository VeterinarianScheduleRepository { get; }
 
+        
+        IPaymentRepository PaymentRepository { get; }
         int Complete();
     }
 }

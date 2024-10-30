@@ -390,3 +390,20 @@
     .online-status.online {
         color: green;
     }
+
+
+.tooltip {
+    background-color: #f8f9fa; /* Màu nền tooltip */
+    color: #212529; /* Màu chữ trong tooltip */
+    border: 1px solid #dee2e6; /* Đường viền cho tooltip */
+    border-radius: 0.2rem; /* Bo tròn góc */
+}
+
+.tooltip-inner {
+    max-width: 200px; /* Kích thước tối đa của tooltip */
+    padding: 5px 10px; /* Padding cho nội dung */
+}
+
+.tooltip-arrow {
+    border-top-color: #f8f9fa; /* Màu nền cho mũi tên tooltip */
+}

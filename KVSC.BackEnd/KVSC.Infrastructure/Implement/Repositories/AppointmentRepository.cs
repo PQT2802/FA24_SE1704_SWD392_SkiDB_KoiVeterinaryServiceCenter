@@ -26,9 +26,18 @@ namespace KVSC.Infrastructure.Implement.Repositories
         }
 
         // READ (các phương thức khác nếu cần)
-        public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
+        //public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
+        //{
+        //    return await _context.Appointments.Where(a => !a.IsDeleted).ToListAsync();
+        //}
+        public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()//edit hung
         {
-            return await _context.Appointments.Where(a => !a.IsDeleted).ToListAsync();
+            return await _context.Appointments
+                .Where(a => !a.IsDeleted) 
+                .Include(a => a.Customer)
+                .Include(a => a.AppointmentVeterinarians)
+                .Include(a => a.PetService) 
+                .ToListAsync();
         }
 
 
@@ -286,5 +295,46 @@ namespace KVSC.Infrastructure.Implement.Repositories
             }
             return appointmentDetail;
         }
-    } 
+        public async Task<Appointment> GetAppointmentByIdAsync(Guid appointmentId)
+        {
+            return await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.PetService)
+                .Include(a => a.AppointmentVeterinarians)
+                    .ThenInclude(av => av.Veterinarian)
+                .Include(a => a.Pet)
+                .Include(a => a.ComboService)
+                .Include(a => a.ServiceReport)
+                .FirstOrDefaultAsync(a => a.Id == appointmentId && !a.IsDeleted);
+        }
+        public async Task<int> AssignVeterinarianToAppointment(Guid appointmentId, Guid veterinarianId)
+        {
+            // Kiểm tra nếu đã tồn tại trước đó
+            var exists = await _context.AppointmentVeterinarians
+                .AnyAsync(av => av.AppointmentId == appointmentId && av.VeterinarianId == veterinarianId);
+
+            if (exists)
+            {
+                return 0; // Nếu đã tồn tại thì không làm gì
+            }
+
+            var newAssignment = new AppointmentVeterinarian
+            {
+                AppointmentId = appointmentId,
+                VeterinarianId = veterinarianId
+            };
+
+            _context.AppointmentVeterinarians.Add(newAssignment);
+
+            try
+            {
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw new InvalidOperationException("The data was modified or deleted by another process.");
+            }
+        }
+
+    }
 }

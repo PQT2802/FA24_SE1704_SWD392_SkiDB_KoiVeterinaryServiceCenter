@@ -123,6 +123,15 @@
         </a>
     </div>
 }
+@if (Model.ListType == "UnassignedAppointment")
+{
+    <div>
+        <button type="button" data-toggle="modal" data-target="#veterinarianModal"
+                onclick="loadVeterinarians('@Model.Item.AppointmentListId')">
+            Choose Veterinarian
+        </button>
+    </div>
+}
 else if (Model.ListType == "appointment")
 {
     <!-- Appointment List Buttons -->

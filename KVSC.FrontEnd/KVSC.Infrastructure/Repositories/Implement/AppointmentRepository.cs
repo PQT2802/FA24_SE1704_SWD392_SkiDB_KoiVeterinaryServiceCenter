@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
+using KVSC.Infrastructure.DTOs.Appointment.AddAppointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.Login;
@@ -224,6 +225,146 @@ public class AppointmentRepository : IAppointmentRepository
         {
             // Handling any other exceptions
             return new ResponseDto<UpdateStatusResponse>
+            {
+                IsSuccess = false,
+                Data = null,
+                Message = $"An unexpected error occurred: {ex.Message}"
+            };
+        }
+    }
+    public async Task<ResponseDto<AppointmentList>> GetUnassignedAppointmentsAsync()
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync("api/Appointment/unassigned");
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(errorContent, options);
+
+                return new ResponseDto<AppointmentList>
+                {
+                    IsSuccess = false,
+                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                    Message = "Failed to fetch appointments."
+                };
+            }
+
+            var appointments = await response.Content.ReadFromJsonAsync<AppointmentList>(options);
+            return new ResponseDto<AppointmentList>
+            {
+                IsSuccess = true,
+                Data = appointments,
+                Message = "Appointments fetched successfully."
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDto<AppointmentList>
+            {
+                IsSuccess = false,
+                Message = $"An error occurred: {ex.Message}"
+            };
+        }
+    }
+    public async Task<ResponseDto<VeterinarianDto>> GetAvailableVeterinariansAsync(Guid appointmentId)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"api/Appointment/assign/{appointmentId}");
+
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                return new ResponseDto<VeterinarianDto>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                    Message = "An error occurred while retrieving veterinarians."
+                };
+            }
+
+            var veterinarians = await response.Content.ReadFromJsonAsync<VeterinarianDto>(options);
+
+            return new ResponseDto<VeterinarianDto>
+            {
+                IsSuccess = true,
+                Data = veterinarians,
+                Message = "Get veterinarians successful."
+            };
+        }
+        catch (HttpRequestException httpEx)
+        {
+            return new ResponseDto<VeterinarianDto>
+            {
+                IsSuccess = false,
+                Data = null,
+                Message = $"Request error: {httpEx.Message}"
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDto<VeterinarianDto>
+            {
+                IsSuccess = false,
+                Data = null,
+                Message = $"An unexpected error occurred: {ex.Message}"
+            };
+        }
+    }
+    public async Task<ResponseDto<AssignVeterinarianResponse>> AssignVeterinarian(AssignVeterinarianRequest request)
+    {
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync("api/Appointment/assign-vet", request);
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                return new ResponseDto<AssignVeterinarianResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                    Message = "An error occurred during assigning veterinarian."
+                };
+            }
+            var assigningResponse = await response.Content.ReadFromJsonAsync<AssignVeterinarianResponse>(options);
+
+            return new ResponseDto<AssignVeterinarianResponse>
+            {
+                IsSuccess = true,
+                Data = assigningResponse,
+                Message = "Assign veterinarian successful."
+            };
+        }
+        catch (HttpRequestException httpEx)
+        {
+            return new ResponseDto<AssignVeterinarianResponse>
+            {
+                IsSuccess = false,
+                Data = null,
+                Message = $"Request error: {httpEx.Message}"
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDto<AssignVeterinarianResponse>
             {
                 IsSuccess = false,
                 Data = null,

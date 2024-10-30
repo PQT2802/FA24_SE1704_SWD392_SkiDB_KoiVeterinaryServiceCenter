@@ -3,6 +3,7 @@ using FluentValidation;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppointment;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
@@ -170,5 +171,74 @@ namespace KVSC.Application.Implement.Service
             }
             return Result.SuccessWithObject(appointment);
         }
+        public async Task<Result> GetUnassignedAppointmentsAsync()
+        {
+            var unassignedAppointments = await _unitOfWork.AppointmentRepository
+                .GetAllAppointmentsAsync(); // Adjust this line based on your data access implementation.
+            if (unassignedAppointments == null)
+            {
+                return Result.Failure(Error.NotFound("AppointmentsNotFound", "No appointments found."));
+            }
+            // Lọc ra các cuộc hẹn chưa có bác sĩ chỉ định
+            var filteredAppointments = unassignedAppointments
+                .Where(a => a.AppointmentVeterinarians == null || !a.AppointmentVeterinarians.Any())
+                .Select(a => new GetAllAppointment
+                {
+                    AppointmentListId = a.Id,  // Sử dụng Id từ đối tượng Appointment
+                    CustomerId = a.CustomerId,
+                    PetServiceId = a.PetServiceId ?? Guid.Empty,
+                    VeterinarianId = Guid.Empty, 
+                    CustomerName = a.Customer?.FullName ?? string.Empty, 
+                    VeterinarianName = string.Empty, 
+                    ServiceName = a.PetService?.Name ?? string.Empty, 
+                    Status = a.Status,
+                    AppointmentDate = a.AppointmentDate
+                }).ToList();
+
+            return Result.SuccessWithObject(filteredAppointments);
+        }
+        public async Task<Result> GetAppointmentByIdAsync(Guid appointmentId)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentByIdAsync(appointmentId); // Or similar method in the repository
+
+            if (appointment == null)
+            {
+                return Result.Failure(Error.NotFound("AppointmentNotFound", "Appointment not found."));
+            }
+            var appointmentDto = new GetAllAppointment
+            {
+                AppointmentListId = appointment.Id,
+                CustomerId = appointment.CustomerId,
+                PetServiceId = appointment.PetServiceId ?? Guid.Empty, // Sử dụng Guid.Empty nếu không có
+                VeterinarianId = appointment.AppointmentVeterinarians?.FirstOrDefault()?.VeterinarianId ?? Guid.Empty,
+                CustomerName = appointment.Customer?.FullName ?? string.Empty, // Giả sử Customer có thuộc tính Name
+                VeterinarianName = string.Empty, // Tên bác sĩ thú y đầu tiên
+                ServiceName = appointment.PetService?.Name ?? string.Empty, // Giả sử PetService có thuộc tính Name
+                Status = appointment.Status,
+                AppointmentDate = appointment.AppointmentDate
+            };
+
+            return Result.SuccessWithObject(appointmentDto);
+        }
+
+        public async Task<Result> AssignVeterinarianAsync(Guid appointmentId, Guid veterinarianId)
+        {
+            try
+            {
+                var result = await _unitOfWork.AppointmentRepository.AssignVeterinarianToAppointment(appointmentId, veterinarianId);
+                if(result > 0)
+                {
+                    return Result.SuccessWithObject(appointmentId);
+                }
+                return Result.Failure(Error.NotFound("AppointmentNotFound", "Appointment not found."));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Result.Failure(Error.NotFound("AssignmentError", ex.Message));
+            }
+        }
+
+
+
     }
 }

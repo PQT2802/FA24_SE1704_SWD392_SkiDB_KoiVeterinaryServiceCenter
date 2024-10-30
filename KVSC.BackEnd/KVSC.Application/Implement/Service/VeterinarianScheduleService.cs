@@ -72,15 +72,20 @@ namespace KVSC.Application.Implement.Service
         }
 
         // Get weekly schedule for a veterinarian
-        public async Task<Result> GetWeeklyScheduleAsync(Guid veterinarianId, DateTime currentDay)
+        public async Task<Result> GetWeeklyScheduleAsync(Guid userId, DateTime currentDay)
         {
             // Xác định ngày CN đầu tuần và T7 cuối tuần
             var dayOfWeek = currentDay.DayOfWeek;
             DateTime startOfWeek = currentDay.AddDays(-((int)dayOfWeek)); // Chủ Nhật (CN)
             DateTime endOfWeek = startOfWeek.AddDays(6); // Thứ Bảy (T7)
+            var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(userId);
+            if (veterinarian == null)
+            {
+                return Result.Failure(Error.NotFound("VeterinarianNotFound", "Veterinarian not found for the provided user."));
+            }
 
             // Lấy lịch làm việc từ CN đến T7
-            var schedules = await _unitOfWork.VeterinarianScheduleRepository.GetWeeklySchedule(veterinarianId, startOfWeek);
+            var schedules = await _unitOfWork.VeterinarianScheduleRepository.GetWeeklySchedule(veterinarian.Id, startOfWeek);
             if (schedules == null || !schedules.Any())
             {
                 return Result.Failure(Error.NotFound("ScheduleNotFound", "No schedule found for the specified veterinarian."));
@@ -216,5 +221,50 @@ namespace KVSC.Application.Implement.Service
             await _unitOfWork.VeterinarianScheduleRepository.UpdateScheduleAvailability(veterinarian.Id, appointmentDate, startTime, endTime);
             return Result.SuccessWithObject(new { Message = "UpdateScheduleAvailability" });
         }
+        public async Task<Result> GetAvailableVeterinariansForDateAsync(DateTime appointmentDate)
+        {
+            var availableVeterinarians = await _unitOfWork.VeterinarianScheduleRepository.GetAvailableVeterinariansForDateAsync(appointmentDate);
+            if (!availableVeterinarians.Any())
+            {
+                return Result.Failure(Error.NotFound("NoAvailableVeterinarians", "No veterinarians available on the specified date."));
+            }
+            var veterinarianDetails = availableVeterinarians.Select(vs => new
+            {
+                vs.VeterinarianId,
+                vs.Veterinarian.UserId,
+                vs.Veterinarian.Qualifications,
+                vs.StartTime,
+                vs.EndTime,
+                vs.Veterinarian.Specialty,
+                FullName = vs.Veterinarian.User.FullName
+            }).ToList();
+
+            return Result.SuccessWithObject(veterinarianDetails);
+        }
+        public async Task<Result> GetAvailableVeterinariansForDateTimeAsync(DateTime selectedDate, TimeSpan startTime, TimeSpan endTime)
+        {
+            var availableVeterinarians = await _unitOfWork.VeterinarianScheduleRepository.GetAvailableVeterinariansForDateTimeAsync(selectedDate, startTime, endTime);
+
+            if (!availableVeterinarians.Any())
+            {
+                return Result.Failure(Error.NotFound("NoAvailableVeterinarians", "No veterinarians available on the specified date and time."));
+            }
+
+            var result = availableVeterinarians
+                .Select(schedule => new
+                {
+                    schedule.VeterinarianId,
+                    VeterinarianName = schedule.Veterinarian.User.FullName,
+                    schedule.Date,
+                    schedule.StartTime,
+                    schedule.EndTime,
+                    schedule.IsAvailable
+                })
+                .ToList();
+
+            return Result.SuccessWithObject(result);
+        }
+
+
     }
 }

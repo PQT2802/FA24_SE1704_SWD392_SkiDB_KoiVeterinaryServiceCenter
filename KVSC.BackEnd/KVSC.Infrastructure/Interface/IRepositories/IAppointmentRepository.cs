@@ -23,7 +23,9 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         public Task<bool> AppointmentExistsAsync(Guid appointmentId);
         public Task<Guid> UpdateAppointmentStatusAsync(Guid appointmentId, string status);
 
-        Task<GetAppointmentDetail> GetAppointmentDetailAsync(Guid appointmentId);
+        public Task<GetAppointmentDetail> GetAppointmentDetailAsync(Guid appointmentId);
+        public Task<Appointment> GetAppointmentByIdAsync(Guid appointmentId);
+        public Task<int> AssignVeterinarianToAppointment(Guid appointmentId, Guid veterinarianId);
 
 
     }

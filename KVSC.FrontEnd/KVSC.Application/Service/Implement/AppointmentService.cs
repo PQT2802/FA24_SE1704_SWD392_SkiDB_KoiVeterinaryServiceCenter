@@ -5,6 +5,7 @@
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
+using KVSC.Infrastructure.DTOs.Appointment.AddAppointment;
 
 public class AppointmentService : IAppointmentService
 {
@@ -50,6 +51,19 @@ public class AppointmentService : IAppointmentService
         // Add any additional business logic or transformations here
 
         return result;
+    }
+    public async Task<ResponseDto<AppointmentList>> GetUnassignedAppointmentsAsync()
+    {
+        return await _appointmentRepository.GetUnassignedAppointmentsAsync();
+    }
+    public async Task<ResponseDto<VeterinarianDto>> GetAvailableVeterinarians(Guid appointmentId)
+    {
+        var response = await _appointmentRepository.GetAvailableVeterinariansAsync(appointmentId);
+        return response;
+    }
+    public async Task<ResponseDto<AssignVeterinarianResponse>> AssignVeterinarianToAppointment(AssignVeterinarianRequest request)
+    {
+        return await _appointmentRepository.AssignVeterinarian(request);
     }
 
 }
