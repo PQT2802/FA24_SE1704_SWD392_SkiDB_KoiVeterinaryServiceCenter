@@ -1,6 +1,7 @@
 ﻿using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.Dashboard.Admin;
+using KVSC.Infrastructure.DTOs.Dashboard.Vet;
 using KVSC.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,19 @@ namespace KVSC.Application.Implement.Service
             _unitOfWork = unitOfWork;
         }
 
+        //ADMIN
         public async Task<Result> GetDashboardDataAsync(int topCount = 5)
         {
-            // Retrieve top veterinarians
             var topVeterinariansResult = await GetTopVeterinariansAsync(topCount);
             if (!topVeterinariansResult.IsSuccess) return topVeterinariansResult;
 
-            // Retrieve best services
             var bestServicesResult = await GetBestServicesAsync(topCount);
             if (!bestServicesResult.IsSuccess) return bestServicesResult;
 
-            // Retrieve top-selling products
             var topProductsResult = await GetTopSellingProductsAsync(topCount);
             if (!topProductsResult.IsSuccess) return topProductsResult;
 
-            // Aggregate results into a DTO
-            var dashboardData = new DashboardData
+            var dashboardData = new AdminDashboardData
             {
                 TopVeterinarians = topVeterinariansResult.Object as List<TopVeterinarian>,
                 BestServices = bestServicesResult.Object as List<TopService>,
@@ -47,14 +45,12 @@ namespace KVSC.Application.Implement.Service
         {
             var veterinarians = await _unitOfWork.DashboardRepository.GetTopVeterinariansByAppointmentsAsync(topCount);
 
-            var veterinarianDtos = veterinarians
-                //.Where(v => v != null) 
-                .Select(v => new TopVeterinarian
-                {
-                    Id = v.UserId,
-                    Name = v.User?.FullName,
-                    AppointmentCount = v.AppointmentVeterinarians?.Count ?? 0
-                })
+            var veterinarianDtos = veterinarians.Select(v => new TopVeterinarian
+            {
+                Id = v.UserId,
+                Name = v.User?.FullName,
+                AppointmentCount = v.AppointmentVeterinarians?.Count ?? 0
+            })
                 .ToList();
 
             return Result.SuccessWithObject(veterinarianDtos);
@@ -87,5 +83,53 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(productDtos);
         }
 
+
+        //VET
+        public async Task<Result> GetVeterinarianDashboardDataAsync(int topCount = 5)
+        {
+            var newestCompletedAppointmentsResult = await GetNewestCompletedAppointmentsAsync(topCount);
+            if (!newestCompletedAppointmentsResult.IsSuccess) return newestCompletedAppointmentsResult;
+
+            var nextUpcomingAppointmentsResult = await GetNextUpcomingAppointmentsAsync(topCount);
+            if (!nextUpcomingAppointmentsResult.IsSuccess) return nextUpcomingAppointmentsResult;
+
+            var dashboardData = new VetDashboardData
+            {
+                NextUpcomingAppointment = nextUpcomingAppointmentsResult.Object as List<NextAppointment>,
+                NewestCompletedAppointment = newestCompletedAppointmentsResult.Object as List<NewestAppointment>
+            };
+
+            return Result.SuccessWithObject(dashboardData);
+        }
+
+        public async Task<Result> GetNewestCompletedAppointmentsAsync(int topCount)
+        {
+            var appointments = await _unitOfWork.DashboardRepository.GetNewestCompletedAppointmentAsync(topCount);
+            var appointmentDtos = appointments.Select(a => new NewestAppointment
+            {
+                AppointmentId = a.Id,
+                CustomerName = a.Customer.FullName,
+                AppointmentDate = a.AppointmentDate,
+                CompletedDate = a.CompletedDate,
+                AcceptedDate = a.AcceptedDate
+            }).ToList();
+
+            return Result.SuccessWithObject(appointmentDtos);
+        }
+
+        public async Task<Result> GetNextUpcomingAppointmentsAsync(int topCount)
+        {
+            var appointments = await _unitOfWork.DashboardRepository.GetNextUpcomingAppointmentAsync(topCount);
+            var appointmentDtos = appointments.Select(a => new NextAppointment
+            {
+                AppointmentId = a.Id,
+                CustomerName = a.Customer.FullName,
+                AppointmentDate = a.AppointmentDate,
+                AcceptedDate = a.AcceptedDate,
+                ServiceName = a.PetService?.Name ?? a.ComboService?.Name
+            }).ToList();
+
+            return Result.SuccessWithObject(appointmentDtos);
+        }
     }
 }

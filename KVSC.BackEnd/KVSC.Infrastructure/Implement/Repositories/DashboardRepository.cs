@@ -19,6 +19,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
             _context = context;
         }
 
+        //ADMIN
         public async Task<List<Veterinarian>> GetTopVeterinariansByAppointmentsAsync(int topCount)
         {
             return await _context.Veterinarians
@@ -46,5 +47,31 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .Take(topCount)
                 .ToListAsync();
         }
+
+        //VET
+        public async Task<List<Appointment>> GetNewestCompletedAppointmentAsync(int topCount)
+        {
+            return await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.PetService)
+                .Include(a => a.ComboService)
+                .Where(a => a.CompletedDate.HasValue)
+                .OrderByDescending(a => a.CompletedDate)
+                .Take(topCount)
+                .ToListAsync();
+        }
+
+        public async Task<List<Appointment>> GetNextUpcomingAppointmentAsync(int topCount)
+        {
+            return await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.PetService)
+                .Include(a => a.ComboService)
+                .Where(a => a.Status == "Accepted" && a.AppointmentDate > a.AcceptedDate)
+                .OrderBy(a => a.AppointmentDate)
+                .Take(topCount)
+                .ToListAsync();
+        }
+
     }
 }
