@@ -1,19 +1,38 @@
 ﻿@page
-@model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.Appointments
+@using KVSC.Infrastructure.DTOs.Service
+@using KVSC.Infrastructure.DTOs
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.AppointmentsModel
 
 @{
-    Layout = null;
+    Layout = "_LayoutBoard";
 }
 
-<!DOCTYPE html>
+<!-- Display success message if available in TempData -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
-</div>
-</body>
-</html>
+<!-- Display error messages if there are any in Model.ErrorMessage -->
+@if (Model.ErrorMessage != null && Model.ErrorMessage.Any())
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in Model.ErrorMessage)
+            {
+                <li>@error.Description</li>
+            }
+        </ul>
+    </div>
+}
+else if (Model.AppointmentList?.Extensions?.Data != null)
+{
+    <!-- Invoke the GenericTable component if appointment data is available -->
+    @await Component.InvokeAsync("GenericTable", new { items = (IEnumerable<IPropertyNameProvider>)Model.AppointmentList.Extensions.Data, listType = "appointment" })
+}
+else
+{
+    <p>No appointments available.</p>
+}

@@ -1,7 +1,5 @@
-
-﻿using KVSC.Infrastructure.DTOs;
-
-﻿using System.Threading.Tasks;
+using KVSC.Infrastructure.DTOs;
+using System.Threading.Tasks;
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
@@ -31,9 +29,16 @@ public class AppointmentService : IAppointmentService
         return result;
     }
 
- 
+    public async Task<ResponseDto<AppointmentList>> GetAppointmentListForCustomer(string token)
+    {
+        var result = await _appointmentRepository.GetAppointmentListForCustomer(token);
+        return result;
+    }
 
-    public async Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request)
+
+
+    public async Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(
+        MakeAppointmentForServiceRequest request)
     {
         // Here you can add additional business logic before calling the repository
         var result = await _appointmentRepository.MakeAppointmentForServiceAsync(request);
@@ -51,5 +56,4 @@ public class AppointmentService : IAppointmentService
 
         return result;
     }
-
 }
