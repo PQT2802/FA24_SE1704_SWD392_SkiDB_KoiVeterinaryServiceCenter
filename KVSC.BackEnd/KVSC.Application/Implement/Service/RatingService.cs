@@ -97,12 +97,14 @@ namespace KVSC.Application.Implement.Service
             foreach (var r in ratings.Ratings)
             {
                 var user = await _unitOfWork.UserRepository.GetUserByIdAsync(r.CustomerId);
+                var service = await _unitOfWork.PetServiceRepository.GetServiceByIdAsync(r.ServiceId);
                 ratingResponses.Add(new GetRatingResponse
                 {
                     Id = r.Id,
                     ServiceId = r.ServiceId,
                     CustomerId = r.CustomerId,
                     CustomerName = user.FullName ?? string.Empty,
+                    ServiceName = service.Name ?? string.Empty,
                     Score = r.Score,
                     Feedback = r.Feedback,
                     CreatedDate = r.CreatedDate

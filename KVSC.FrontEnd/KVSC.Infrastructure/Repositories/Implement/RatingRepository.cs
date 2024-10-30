@@ -87,11 +87,29 @@ namespace KVSC.Infrastructure.Repositories.Implement
             }
         }
 
-        public async Task<ResponseDto<RatingList>> GetManagerRatingList(string customerName, string feedback, int score, int pageNumber, int pageSize)
+        public async Task<ResponseDto<RatingList>> GetManagerRatingList(Guid serviceId, int score, DateTime? createdDate, int pageNumber, int pageSize)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/rating/all/ratings?customerName={customerName}&feedback={feedback}&score={score}&pageNumber={pageNumber}&pageSize={pageSize}");
+                var url = $"api/rating/all/ratings?PageNumber={pageNumber}&PageSize={pageSize}";
+
+                if (serviceId != Guid.Empty)
+                {
+                    url += $"&ServiceId={serviceId}";
+                }
+
+                if (score > 0)
+                {
+                    url += $"&Score={score}";
+                }
+
+                if (createdDate.HasValue)
+                {
+                    url += $"&CreatedDate={createdDate.Value:yyyy-MM-dd}";
+                }
+
+                var response = await _httpClient.GetAsync(url);
+
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
@@ -132,6 +150,50 @@ namespace KVSC.Infrastructure.Repositories.Implement
             }
         }
 
+        public async Task<ResponseDto<RatingList>> GetAllRatings(int pageNumber, int pageSize)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/rating/all/ratings?PageNumber={pageNumber}&PageSize={pageSize}");
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var errorResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>(options);
+                    return new ResponseDto<RatingList>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during fetching all ratings."
+                    };
+                }
+
+                var ratingList = await response.Content.ReadFromJsonAsync<RatingList>(options);
+                return new ResponseDto<RatingList>
+                {
+                    IsSuccess = true,
+                    Data = ratingList,
+                    Message = "All ratings fetched successfully."
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseDto<RatingList>
+                {
+                    IsSuccess = false,
+                    Message = $"Request error: {ex.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<RatingList>
+                {
+                    IsSuccess = false,
+                    Message = $"Unexpected error: {ex.Message}"
+                };
+            }
+        }
 
     }
 }

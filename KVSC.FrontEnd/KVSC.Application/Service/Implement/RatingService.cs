@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace KVSC.Application.Service.Implement
 {
@@ -21,9 +22,13 @@ namespace KVSC.Application.Service.Implement
         {
             return await _ratingRepository.GetAllRatingsByServiceId(serviceId, score, createdDate, pageNumber, pageSize);
         }
-        public async Task<ResponseDto<RatingList>> GetManagerRatingList(string customerName, string feedback, int score, int pageNumber, int pageSize)
+        public async Task<ResponseDto<RatingList>> GetManagerRatingList(Guid serviceId, int score, DateTime? createdDate, int pageNumber, int pageSize)
         {
-            return await _ratingRepository.GetManagerRatingList(customerName, feedback, score, pageNumber, pageSize);
+            return await _ratingRepository.GetManagerRatingList(serviceId, score, createdDate, pageNumber, pageSize);
+        }
+        public async Task<ResponseDto<RatingList>> GetAllRatings(int pageNumber, int pageSize)
+        {
+            return await _ratingRepository.GetAllRatings(pageNumber, pageSize);
         }
     }
 }
