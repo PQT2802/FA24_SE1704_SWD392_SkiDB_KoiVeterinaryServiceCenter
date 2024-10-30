@@ -54,5 +54,17 @@ namespace KVSC.Application.Service.Implement
             var response = await _userRepository.GetUserDetail(id);
             return response;
         }
+        public async Task<ResponseDto<GetVeterinarianResponse>> GetVeterinarianDetail(Guid id)
+        {
+            var response = await _userRepository.GetVeter(id);
+            return response;
+        }
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateVeterinarianQualifications(GetVeterinarianRequest updatedProfile)
+        {
+            updatedProfile.Qualifications = string.IsNullOrWhiteSpace(updatedProfile.Qualifications) ? string.Empty : updatedProfile.Qualifications;
+            updatedProfile.LicenseNumber = string.IsNullOrWhiteSpace(updatedProfile.LicenseNumber) ? string.Empty : updatedProfile.LicenseNumber;
+            updatedProfile.Specialty = string.IsNullOrWhiteSpace(updatedProfile.Specialty) ? string.Empty : updatedProfile.Specialty;
+            return await _userRepository.UpdateVeterinarianQualificationsAsync(updatedProfile);
+        }
     }
 }

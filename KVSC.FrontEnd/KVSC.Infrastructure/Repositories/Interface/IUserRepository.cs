@@ -20,5 +20,7 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request, IFormFile imageFile);
         Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request);
         Task<ResponseDto<GetUserResponse>> GetUserDetail(Guid id);
+        Task<ResponseDto<GetVeterinarianResponse>> GetVeter(Guid id);
+        Task<ResponseDto<UpdateUserResponse>> UpdateVeterinarianQualificationsAsync(GetVeterinarianRequest updatedProfile);
     }
 }

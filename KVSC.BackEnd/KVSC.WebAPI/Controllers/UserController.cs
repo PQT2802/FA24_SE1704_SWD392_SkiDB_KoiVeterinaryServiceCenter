@@ -6,6 +6,7 @@ using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Common;
+using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.PetService;
 using KVSC.Infrastructure.DTOs.User.AddUser;
 using KVSC.Infrastructure.DTOs.User.GetUser;
@@ -110,6 +111,23 @@ namespace KVSC.WebAPI.Controllers
             return result.IsSuccess
                ? ResultExtensions.ToSuccessDetails(result, "All roles retrieved successfully")
                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpPut("{userId}")]
+        public async Task<IResult> UpdateVeterinarian(Guid userId, [FromBody] UpdateVeterinarianRequest updateRequest)
+        {
+            var result = await _userService.UpdateVeterinarianAsync(userId, updateRequest);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Veterinarian updated successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+        [HttpGet("veterinarian/{id}")]
+        public async Task<IResult> GetById(Guid id)
+        {
+            var veterinarian = await _userService.GetVeterinarianByIdAsync(id);
+            return veterinarian.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(veterinarian, "Veterinarian retrieved successfully")
+                : ResultExtensions.ToProblemDetails(veterinarian);
         }
     }
 }

@@ -10,9 +10,11 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
     public class VeternarianProfileModel : PageModel
     {
         private readonly IUserService _userService;
-
+        [BindProperty]
+        public bool isProfileEditable { get; set; }
         [BindProperty]
         public GetUserResponse UserProfile { get; set; } = new();
+       
 
         [BindProperty]
         public UpdateUserRequest UpdateUserRequest { get; set; } = default!;
@@ -79,5 +81,6 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             ViewData["IsEditMode"] = true;
             return Redirect("/User/Veterinarian/VeternarianProfile");
         }
+        
     }
 }
