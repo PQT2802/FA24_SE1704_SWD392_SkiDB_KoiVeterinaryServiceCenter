@@ -7,10 +7,12 @@
     Layout = "_LayoutBoard";
 }
 
+<h2 class="text-center my-4">Your Appointments</h2>
+
 <!-- Display success message if available in TempData -->
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success">
+    <div class="alert alert-success text-center">
         @TempData["SuccessMessage"]
     </div>
 }
@@ -18,8 +20,8 @@
 <!-- Display error messages if there are any in Model.ErrorMessage -->
 @if (Model.ErrorMessage != null && Model.ErrorMessage.Any())
 {
-    <div class="alert alert-danger">
-        <ul>
+    <div class="alert alert-danger text-center">
+        <ul class="mb-0">
             @foreach (var error in Model.ErrorMessage)
             {
                 <li>@error.Description</li>
@@ -27,12 +29,119 @@
         </ul>
     </div>
 }
-else if (Model.AppointmentList?.Extensions?.Data != null)
+else if (Model.AppointmentList?.Extensions?.Data != null && Model.AppointmentList.Extensions.Data.Any())
 {
-    <!-- Invoke the GenericTable component if appointment data is available -->
-    @await Component.InvokeAsync("GenericTable", new { items = (IEnumerable<IPropertyNameProvider>)Model.AppointmentList.Extensions.Data, listType = "appointment" })
+    <div class="table-responsive">
+        <table class="table table-hover table-borderless align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Veterinarian Name</th>
+                    <th>Service Name</th>
+                    <th>Status</th>
+                    <th>Appointment Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var appointment in Model.AppointmentList.Extensions.Data)
+                {
+                    <tr>
+                        <td>@appointment.CustomerName</td>
+                        <td>@appointment.VeterinarianName</td>
+                        <td>@appointment.ServiceName</td>
+                        <td>
+                            <span class="badge @GetStatusBadgeClass(appointment.Status)">
+                                @appointment.Status
+                            </span>
+                        </td>
+                        <td>@appointment.AppointmentDate.ToString("f")</td>
+                        <td>
+                            <a class="btn btn-outline-primary btn-sm" 
+                               asp-page="/User/Customer/AppointmentDetail" 
+                               asp-route-appointmentId="@appointment.AppointmentListId">
+                                View Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
-    <p>No appointments available.</p>
+    <p class="text-muted text-center">No appointments available.</p>
+}
+
+<!-- Styles for the minimalist modern table -->
+<style>
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .table {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .table thead th {
+        font-weight: 600;
+        color: #555;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.4em 0.7em;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .badge-pending { background-color: #ffc107; }
+    .badge-waiting { background-color: #17a2b8; }
+    .badge-inprogress { background-color: #007bff; }
+    .badge-reported { background-color: #28a745; }
+    .badge-completed { background-color: #6c757d; }
+
+    .btn-outline-primary {
+        font-size: 0.9rem;
+        border-width: 1.5px;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .alert {
+        max-width: 600px;
+        margin: 1rem auto;
+        font-size: 1rem;
+    }
+</style>
+
+<!-- Helper function to get status badge class -->
+@functions {
+    private string GetStatusBadgeClass(string status) => status switch
+    {
+        "Pending" => "badge-pending",
+        "Waiting" => "badge-waiting",
+        "InProgress" => "badge-inprogress",
+        "Reported" => "badge-reported",
+        "Completed" => "badge-completed",
+        _ => "badge-secondary"
+    };
 }
