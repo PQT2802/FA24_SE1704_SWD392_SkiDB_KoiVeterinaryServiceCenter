@@ -58,6 +58,30 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 })
                 .ToListAsync();
         }
+        
+        public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByCustomerIdAsync(Guid userId)
+        {
+            return await _context.Appointments
+                .Where(a => !a.IsDeleted && a.Customer.Id == userId) // Filter by customer's UserId
+                .Select(a => new GetAllAppointment
+                {
+                    AppointmentListId = a.Id,
+                    CustomerId = a.CustomerId,
+                    PetServiceId = a.PetServiceId ?? Guid.Empty, // Handle nullable PetServiceId with Guid.Empty
+                    VeterinarianId = a.AppointmentVeterinarians
+                        .Select(av => av.VeterinarianId)
+                        .FirstOrDefault(), // Return the first matching VeterinarianId
+                    CustomerName = a.Customer != null ? a.Customer.FullName : "Unknown", // Handle null Customer safely
+                    VeterinarianName = a.AppointmentVeterinarians
+                        .Select(av => av.Veterinarian != null ? av.Veterinarian.User.FullName : "Unknown")
+                        .FirstOrDefault(), // Handle null Veterinarian or User
+                    ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService safely
+                    Status = a.Status,
+                    AppointmentDate = a.AppointmentDate
+                })
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByUserIdAsync(Guid userId)
         {
             return await _context.Appointments
