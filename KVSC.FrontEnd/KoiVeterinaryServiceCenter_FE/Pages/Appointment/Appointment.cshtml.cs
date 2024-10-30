@@ -5,7 +5,10 @@ using KVSC.Infrastructure.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
-using System.Net;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
 {
@@ -15,13 +18,17 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
         private readonly IPetBusinessService _petBusinessService;
         private readonly IPetServiceService _petServiceService;
         private readonly IUserService _userService;
-        public AppointmentModel(IAuthService authService, IPetServiceService petServiceService, IPetBusinessService petBusinessService, IUserService userService)
+        private readonly IScheduleService _scheduleService;
+
+        public AppointmentModel(IAuthService authService, IPetServiceService petServiceService, IPetBusinessService petBusinessService, IUserService userService, IScheduleService scheduleService)
         {
             _authService = authService;
             _petServiceService = petServiceService;
             _petBusinessService = petBusinessService;
             _userService = userService;
+            _scheduleService = scheduleService;
         }
+
         [BindProperty]
         public UserInfo UserInfo { get; set; } = new UserInfo();
         public List<KVSC.Infrastructure.DTOs.Service.Data> Services { get; set; } = new List<KVSC.Infrastructure.DTOs.Service.Data>();
@@ -31,41 +38,36 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
         public MakeAppointmentRequest MakeAppointmentRequest { get; set; }
         public bool IsAuthenticated { get; private set; }
 
-        public async void OnGetAsync()
+        public async Task OnGetAsync()
         {
             var accessToken = HttpContext.Session.GetString("Token");
             IsAuthenticated = accessToken != null;
 
-            if (!IsAuthenticated)
-            {
-                // If the user is not authenticated, return early without fetching data
-                return;
-            }
+            if (!IsAuthenticated) return;
+
+            // Fetch user information
             var getResult = await _authService.GetUserInforByToken(accessToken);
             if (getResult.IsSuccess)
             {
                 UserInfo = getResult.Data;
-                UserInfo.Extensions ??= new ExtensionsData();
+                UserInfo.Extensions ??= new Extensions<Data>();
 
-                // Fetch pets by owner ID
                 var petResponse = await _petBusinessService.GetPetsByOwnerIdAsync(accessToken);
+                Pets = petResponse.IsSuccess ? petResponse.Data?.Extensions?.Data ?? new List<PetData>() : new List<PetData>();
 
-                Pets = petResponse.IsSuccess
-                    ? petResponse.Data?.Extensions?.Data ?? new List<PetData>()
-                    : new List<PetData>();
-
-                // Fetch Koi Service List
                 var serviceResponse = await _petServiceService.GetKoiServiceList();
-                Services = serviceResponse.IsSuccess
-                    ? serviceResponse.Data.Extensions.Data
-                    : new List<KVSC.Infrastructure.DTOs.Service.Data>();
-            }
-            if(MakeAppointmentRequest.AppointmentDate != null)
-            {
-                var vets = await _userService.GetVetForAppoinment();
-                Veterinarians = vets.IsSuccess ? vets.Data.Extensions.Data : new List<GetVetIdData>();
+                Services = serviceResponse.IsSuccess ? serviceResponse.Data.Extensions.Data : new List<KVSC.Infrastructure.DTOs.Service.Data>();
             }
         }
 
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OnPostFindAvailableVetsAsync(DateTime selectedDate)
+        {
+            var vets = await _scheduleService.GetAvailableVeterinariansByDateTime(selectedDate);
+            Veterinarians = vets.IsSuccess ? vets.Data.Extensions.Data.Where(v => v.IsAvailable).ToList() : new List<GetVetIdData>();
+
+            // Return the partial view with available veterinarians
+            return Partial("_VeterinarianSelection", Veterinarians);
+        }
     }
 }

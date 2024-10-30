@@ -12,7 +12,11 @@ namespace KVSC.Infrastructure.DTOs.User
     }
     public class GetVetIdData
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public Guid VeterinarianId { get; set; }
+        public string VeterinarianName { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

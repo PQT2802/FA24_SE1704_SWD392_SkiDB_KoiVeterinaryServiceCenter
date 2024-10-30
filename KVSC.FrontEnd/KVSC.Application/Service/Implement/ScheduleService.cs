@@ -51,5 +51,11 @@ namespace KVSC.Application.Service.Implement
         {
             return await _scheduleRepository.GetWeeklySchedule(currentDay, token);
         }
+
+        public async Task<ResponseDto<GetVetId>> GetAvailableVeterinariansByDateTime(DateTime selectedDate)
+        {
+            var response = await _scheduleRepository.GetAvailableVeterinariansByDateTime(selectedDate);
+            return response;
+        }
     }
 }
