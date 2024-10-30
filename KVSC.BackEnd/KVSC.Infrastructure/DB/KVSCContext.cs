@@ -42,6 +42,8 @@ namespace KVSC.Infrastructure.DB
 
         public DbSet<Wallet> Wallets { get; set; }
 
+        public DbSet<Transaction> Transactions { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -97,6 +99,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<Message>().ToTable("Message");
             modelBuilder.Entity<Rating>().ToTable("Rating");
             modelBuilder.Entity<Wallet>().ToTable("Wallet");
+            modelBuilder.Entity<Transaction>().ToTable("Transaction");
             #endregion
 
             #region Relationships and Additional Configuration
@@ -255,7 +258,14 @@ namespace KVSC.Infrastructure.DB
                 .HasOne(u => u.Wallet)
                 .WithOne(w => w.User)
                 .HasForeignKey<Wallet>(w => w.UserId);
+            
 
+            // User and Transactions relationship
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Transactions)
+                .WithOne(t => t.User)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
             #endregion
 
         }

@@ -8,5 +8,7 @@ namespace KVSC.Application.Interface.IService
     {
         Task<Result> GetWalletBalanceAsync(Guid userId);
         Task<Result> UpdateWalletBalanceAsync(Guid userId, decimal amount);
+        Task<Result> DepositPaymentAsync(Guid userId, Guid appointmentId, decimal depositAmount);
+        Task<Result> TotalAmountPaymentAsync(Guid userId, Guid appointmentId, decimal totalAmount);
     }
 }

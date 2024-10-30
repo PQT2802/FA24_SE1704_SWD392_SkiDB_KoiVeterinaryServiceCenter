@@ -73,31 +73,30 @@ namespace KVSC.Application.Implement.Service
             string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
             if (vnp_ResponseCode == "00")  // "00" indicates a successful transaction
             {
-                // Create a new Payment record
-                //var payment = new Payment
-                //{
-                //    AppointmentId = , // Replace with the actual OrderId
-                //    SystemTransactionId = Guid.NewGuid(), // Replace with actual SystemTransactionId if available
-                //    TotalAmount = (decimal)depositMoney,
-                //    Tax = 0, // Add tax calculation if applicable
-                //    TransactionDate = DateTime.UtcNow
-                //};
-
-                //await _unitOfWork.PaymentRepository.AddPaymentAsync(payment);
-
-                //// Update user's wallet balance
+                // Update wallet balance
                 var walletUpdateResult = await _walletService.UpdateWalletBalanceAsync(userId, (decimal)depositMoney);
                 if (!walletUpdateResult.IsSuccess)
                 {
                     return Result.Failure(Error.Failure("WalletUpdate", "Failed to update wallet balance after payment."));
                 }
 
-                return Result.SuccessWithObject(new { Message = "Transaction successful"});
+                // Log transaction
+                var transaction = new Transaction
+                {
+                    UserId = userId,
+                    Amount = (decimal)depositMoney,
+                    TransactionType = "Top-Up",
+                    TransactionDate = DateTime.UtcNow
+                };
+                await _unitOfWork.TransactionRepository.AddTransactionAsync(transaction);
+
+                return Result.SuccessWithObject(new { Message = "Transaction successful" });
             }
             else
             {
                 return Result.Failure(Error.Failure("Transaction", $"Transaction failed with response code: {vnp_ResponseCode}"));
             }
         }
+
     }
 }

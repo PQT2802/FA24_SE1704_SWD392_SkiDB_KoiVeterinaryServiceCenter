@@ -29,7 +29,7 @@ namespace KVSC.Infrastructure.Interface
         IPrescriptionRepository PrescriptionRepository { get; }
         IRatingRepository RatingRepository { get; }
         IVeterinarianScheduleRepository VeterinarianScheduleRepository { get; }
-
+        ITransactionRepository TransactionRepository { get; }
         
         IPaymentRepository PaymentRepository { get; }
         IWalletRepository WalletRepository { get; }
