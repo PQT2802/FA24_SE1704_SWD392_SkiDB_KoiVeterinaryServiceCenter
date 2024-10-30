@@ -58,7 +58,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\User\Staff\" />
     <Folder Include="wwwroot\img\service-img\" />
   </ItemGroup>
 

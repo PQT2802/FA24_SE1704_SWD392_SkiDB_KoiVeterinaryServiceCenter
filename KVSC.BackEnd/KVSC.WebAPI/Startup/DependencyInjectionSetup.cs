@@ -168,6 +168,7 @@ namespace KVSC.WebAPI.Startup
 
             
             services.AddTransient<IRatingRepository, RatingRepository>();
+            services.AddTransient<IDashboardRepository, DashboardRepository>();
 
 
             #endregion
@@ -211,6 +212,7 @@ namespace KVSC.WebAPI.Startup
 
             services.AddTransient<IRatingService, RatingService>();
 
+            services.AddTransient<IDashBoardService, DashBoardService>();
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             #endregion

@@ -13,11 +13,17 @@ namespace KVSC.Application.Common.Validator.Pet
     {
         public UpdatePetvalidator(UnitOfWork unitOfWork) : base(unitOfWork)
         {
-            //AddPetNameRules(request => request.Name);
-            //AddPetAgeRules(request => request.Age.HasValue ? request.Age.Value : 0);
-            //AddPetLengthRules(request => request.Length.HasValue ? request.Length.Value : 0);
-            //AddPetWeightRules(request => request.Weight.HasValue ? request.Weight.Value : 0);
+            AddPetNameRules(request => request.Name!);
+            AddPetAgeRules(request => request.Age ?? 0);
+            AddPetGenderRules(request => request.Gender!);
+            AddPetImageUrlRules(request => request.ImageUrl);
+            AddPetColorRules(request => request.Color!);
+            AddPetLengthRules(request => request.Length ?? 0);
+            AddPetWeightRules(request => request.Weight ?? 0);
             AddPetQuantityRules(request => request.Quantity);
+            AddPetLastHealthCheckRules(request => request.LastHealthCheck);
+            AddPetNoteRules(request => request.Note!);
+            AddPetHealthStatusRules(request => request.HealthStatus ?? 0);
         }
     }
 }

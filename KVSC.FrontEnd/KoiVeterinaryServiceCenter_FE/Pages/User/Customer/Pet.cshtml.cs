@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using KVSC.Infrastructure.DTOs.Pet.UpdatePet;
 using KVSC.Infrastructure.DTOs.Pet.DeletePet;
 using System.IdentityModel.Tokens.Jwt;
+using KVSC.Infrastructure.DTOs.User;
+using Newtonsoft.Json.Linq;
+using KVSC.Application.Service.Implement;
+using KVSC.Infrastructure.DTOs.Appointment;
+using KVSC.Infrastructure.DTOs.Product;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 {
@@ -24,36 +29,47 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
         public UpdatePetRequest UpdatePetRequest { get; set; } = default!;
 
         public bool ShowModal { get; set; } = false;
-
+        public Guid UserId { get; set; }
         public PetModel(IPetBusinessService petService)
         {
             _petService = petService;
         }
-        public async Task OnGetAsync()
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            
-            var result = await _petService.GetPetList();
+            var token = HttpContext.Session.GetString("Token");
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToPage("/Account/SignIn");
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+
+            if (!Guid.TryParse(userIdClaimString, out Guid userId))
+            {
+                ModelState.AddModelError(string.Empty, "Unable to decode userId from token..");
+                return Page();
+            }
+
+            var result = await _petService.GetPetsByOwnerAsync(userId);
+
             if (result.IsSuccess)
             {
-                PetList = result.Data;
-
-                if (PetList.Extensions == null)
-                {
-                    PetList.Extensions = new Extensions<List<PetData>>
-                    {
-                        Data = new List<PetData>()
-                    };
-                }
+                PetList = result.Data ?? new PetList();
             }
             else
             {
-                PetList = new PetList
-                {
-                    Extensions = new Extensions<List<PetData>> { Data = new List<PetData>() }
-                };
+                ModelState.AddModelError(string.Empty, "Error fetching koi fish data");
             }
+
+            UserId = userId;
+            return Page();
         }
-        public async Task<IActionResult> OnPostCreatePetAsync()
+
+        public async Task<IActionResult> OnPostCreatePetAsync(IFormFile imageFile)
         {
             var token = HttpContext.Session.GetString("Token");
             if (string.IsNullOrEmpty(token))
@@ -62,14 +78,14 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             }
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(token);
-            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type =="userId")?.Value;
-            if(!Guid.TryParse(userIdClaimString, out var userId))
+            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+            if (!Guid.TryParse(userIdClaimString, out var userId))
             {
                 ModelState.AddModelError(string.Empty, "Unable to decode user id");
                 return Page();
             }
             AddPetRequest.OwnerId = userId;
-            var result = await _petService.AddPetAsync(AddPetRequest);
+            var result = await _petService.AddPetAsync(AddPetRequest, imageFile);
 
             if (result.IsSuccess)
             {
@@ -80,7 +96,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             return new JsonResult(new { isSuccess = false, errors });
         }
 
-        public async Task<IActionResult> OnPostUpdatePetAsync()
+        public async Task<IActionResult> OnPostUpdatePetAsync(IFormFile imageFile)
         {
             var token = HttpContext.Session.GetString("Token");
             if (string.IsNullOrEmpty(token))
@@ -97,9 +113,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 ModelState.AddModelError(string.Empty, "Unable to decode user id");
                 return Page();
             }
-            
+
             UpdatePetRequest.OwnerId = userId;
-            var result = await _petService.UpdatePetAsync(UpdatePetRequest);
+            var result = await _petService.UpdatePetAsync(UpdatePetRequest, imageFile);
 
             if (result.IsSuccess)
             {
@@ -117,12 +133,12 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 
             if (result.IsSuccess)
             {
-                TempData["SuccessMessage"] = "Pet deleted successfully.";
+                TempData["SuccessMessage"] = "Koi fish deleted successfully.";
                 TempData["AlertClass"] = "alert-success";
                 return RedirectToPage("/User/Customer/Pet");
             }
 
-            TempData["ErrorMessage"] = "Failed to delete pet: " + string.Join(", ", result.Errors.Select(e => e.Description));
+            TempData["ErrorMessage"] = "Failed to delete koi fish: " + string.Join(", ", result.Errors.Select(e => e.Description));
             return RedirectToPage("/User/Customer/Pet");
         }
 
@@ -136,15 +152,33 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 {
                     switch (error.Code)
                     {
-                        //case "Pet.Empty":
-                        //    break;
-
-                        case "Pet.Positive":
-                            if (error.Description.Contains("Quantity", System.StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["Quantity"] = error.Description;
+                        case "Pet.Empty":
+                            if (error.Description.Contains("Name", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Name"] = error.Description;
+                            else if (error.Description.Contains("Gender", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Gender"] = error.Description;
+                            else if (error.Description.Contains("ImageUrl", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["ImageUrl"] = error.Description;
+                            else if (error.Description.Contains("Color", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Color"] = error.Description;
+                            else if (error.Description.Contains("Note", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Note"] = error.Description;
+                            //else if (error.Description.Contains("LastHealthCheck", StringComparison.OrdinalIgnoreCase))
+                            //    errorDictionary["LastHealthCheck"] = error.Description;
                             break;
-                        //case "Pet.Length":
-                        //    break;
+
+                        case "Pet.InvalidValue":
+                            if (error.Description.Contains("Age", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Age"] = error.Description;
+                            else if (error.Description.Contains("Length", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Length"] = error.Description;
+                            else if (error.Description.Contains("Weight", System.StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Weight"] = error.Description;
+                            else if (error.Description.Contains("Quantity", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["Quantity"] = error.Description;
+                            else if (error.Description.Contains("HealthStatus", StringComparison.OrdinalIgnoreCase))
+                                errorDictionary["HealthStatus"] = error.Description;
+                            break;
 
                         default:
                             errorDictionary[string.Empty] = error.Description;

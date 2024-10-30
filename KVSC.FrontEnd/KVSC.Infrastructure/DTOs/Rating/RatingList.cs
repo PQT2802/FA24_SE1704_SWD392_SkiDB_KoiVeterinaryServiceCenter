@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace KVSC.Infrastructure.DTOs.Rating
 {
@@ -18,7 +20,7 @@ namespace KVSC.Infrastructure.DTOs.Rating
             public int PageNumber { get; set; }
             public int PageSize { get; set; }
         }
-        public class Rating
+        public class Rating : IPropertyNameProvider
         {
             public Guid Id { get; set; }
             public Guid ServiceId { get; set; }
@@ -27,6 +29,11 @@ namespace KVSC.Infrastructure.DTOs.Rating
             public string Feedback { get; set; }
             public string CustomerName { get; set; }
             public DateTime CreatedDate { get; set; }
+
+            public List<string> GetPropertyNames()
+            {
+                return new List<string> { nameof(CustomerName), nameof(Feedback), nameof(Score) };
+            }
         }
     }
 }
