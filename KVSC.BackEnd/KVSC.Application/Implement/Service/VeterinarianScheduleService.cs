@@ -246,8 +246,21 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(Error.NotFound("NoAvailableVeterinarians", "No veterinarians available on the specified date and time."));
             }
 
-            return Result.SuccessWithObject(availableVeterinarians);
+            var result = availableVeterinarians
+                .Select(schedule => new
+                {
+                    schedule.VeterinarianId,
+                    VeterinarianName = schedule.Veterinarian.User.FullName,
+                    schedule.Date,
+                    schedule.StartTime,
+                    schedule.EndTime,
+                    schedule.IsAvailable
+                })
+                .ToList();
+
+            return Result.SuccessWithObject(result);
         }
+
 
     }
 }

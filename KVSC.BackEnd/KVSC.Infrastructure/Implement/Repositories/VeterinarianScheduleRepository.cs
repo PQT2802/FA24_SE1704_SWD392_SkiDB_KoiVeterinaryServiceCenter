@@ -115,11 +115,15 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<List<VeterinarianSchedule>> GetAvailableVeterinariansForDateTimeAsync(DateTime selectedDate, TimeSpan startTime, TimeSpan endTime)
         {
             return await _context.VeterinarianSchedules
-                .Include(v => v.Veterinarian).ThenInclude(u => u.User) // Include veterinarian and user details
-                .Where(s => s.Date == selectedDate.Date && s.IsAvailable
-                            && s.StartTime <= endTime && s.EndTime >= startTime) // Use actual time range or default
+                .Include(v => v.Veterinarian)
+                .ThenInclude(u => u.User)
+                .Where(s => s.Date.Date == selectedDate.Date && s.IsAvailable
+                            && s.StartTime <= endTime && s.EndTime >= startTime) // Allows overlapping time ranges
+                .OrderBy(s => s.Date)
+                .ThenBy(s => s.StartTime)
                 .ToListAsync();
         }
+
 
 
 
