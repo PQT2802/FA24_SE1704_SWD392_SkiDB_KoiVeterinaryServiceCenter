@@ -1,12 +1,15 @@
+using KVSC.Application.Service.Implement;
 using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
+using KVSC.Infrastructure.DTOs.Message.AddMessage;
 using KVSC.Infrastructure.DTOs.Product;
 using KVSC.Infrastructure.DTOs.Service;
 using KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
@@ -15,12 +18,18 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
     {
         private readonly IAppointmentService _appointmentsService;
         private readonly IProductService _productService;
+        private readonly IMessageService _messageService;
 
-        public AppointmentsModel(IAppointmentService appointmentsService, IProductService productService)
+
+        public AppointmentsModel(IAppointmentService appointmentsService, IProductService productService, IMessageService messageService)
         {
             _appointmentsService = appointmentsService;
             _productService = productService;
+            _messageService = messageService;
         }
+
+        [BindProperty]
+        public CreateMessageRequest CreateMessageRequest { get; set; }
 
         [BindProperty]
         public AppointmentList AppointmentList { get; set; } = default!;
@@ -54,6 +63,41 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
 
             ErrorMessage = response.Errors;
             return Page(); // Return the page with validation errors, if any
+        }
+
+        //===========create message click======================================================
+        public async Task<IActionResult> OnPostMessageAsync(Guid recipientId, string content)
+        {
+            var token = HttpContext.Session.GetString("Token");
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToPage("/Account/SignIn");
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var senderIdString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+
+            if (!Guid.TryParse(senderIdString, out Guid senderId))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid Sender ID.");
+                return BadRequest("Invalid Sender ID.");
+            }
+
+            // Assuming you have a CreateMessageRequest object
+            CreateMessageRequest.SenderId = senderId;
+            CreateMessageRequest.RecipientId = recipientId; // Set recipientId here
+            CreateMessageRequest.Content = content; // Set content here
+
+            var result = await _messageService.SendMessage(CreateMessageRequest);
+            if (result.IsSuccess)
+            {
+                TempData["SuccessMessage"] = "Message sent successfully!";
+                return RedirectToPage(); // Redirect to the same page to show the message
+            }
+
+            TempData["ErrorMessage"] = "Unable to send message.";
+            return RedirectToPage(); // Redirect to the same page to show the error
         }
 
     }

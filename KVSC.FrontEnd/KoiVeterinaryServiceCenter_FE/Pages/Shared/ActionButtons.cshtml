@@ -134,38 +134,69 @@
 }
 else if (Model.ListType == "appointment")
 {
-    <!-- Appointment List Buttons -->
     @if (string.IsNullOrEmpty(Model.Status))
     {
         <!-- Handle case when Status is null or empty -->
-        <button class="btn btn-sm btn-secondary" disabled>No Status Available</button>
+        <button class="btn btn-outline-secondary btn-sm" disabled>No Status Available</button>
     }
     else
     {
-        <form method="post">
-            <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
-            @switch (Model.Status)
-            {
-                case "Pending":
-                    <button class="btn btn-sm btn-success" type="submit" asp-page-handler="UpdateStatus" asp-route-status="Waiting">Accept</button>
-                    <button class="btn btn-sm btn-warning" type="submit" asp-page-handler="UpdateStatus" asp-route-status="Rejected">Reject</button>
-                    break;
-                case "Waiting":
-                    <button class="btn btn-sm btn-warning" type="submit" asp-page-handler="UpdateStatus" asp-route-status="InProgress">Execute</button>
-                    break;
-                case "InProgress":
-                    <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.AppointmentListId">Report</button>
-                    break;
-                case "Reported":
-                    <button class="btn btn-sm btn-secondary" disabled>Completed</button>
-                    break;
-                default:
-                    <button class="btn btn-sm btn-secondary" disabled>No Action</button>
-                    break;
-            }
-        </form>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <form method="post" class="d-inline">
+                <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
+                @switch (Model.Status)
+                {
+                    case "Pending":
+                        <button class="btn btn-outline-success btn-sm" type="submit"
+                                asp-page-handler="UpdateStatus" asp-route-status="Waiting">
+                            Accept
+                        </button>
+                        <button class="btn btn-outline-warning btn-sm" type="submit"
+                                asp-page-handler="UpdateStatus" asp-route-status="Rejected">
+                            Reject
+                        </button>
+                        break;
+                    case "Waiting":
+                        <button class="btn btn-outline-warning btn-sm" type="submit"
+                                asp-page-handler="UpdateStatus" asp-route-status="InProgress">
+                            Execute
+                        </button>
+                        break;
+                    case "InProgress":
+                        <button class="btn btn-outline-primary btn-sm" type="button"
+                                data-bs-toggle="modal" data-bs-target="#reportModal"
+                                data-id="@Model.Item.AppointmentListId">
+                            Report
+                        </button>
+                        break;
+                    case "Reported":
+                        <button class="btn btn-secondary btn-sm" disabled>Completed</button>
+                        break;
+                    default:
+                        <button class="btn btn-outline-secondary btn-sm" disabled>No Action</button>
+                        break;
+                }
+            </form>
 
-        <!-- View button for navigation -->
-        <a class="btn btn-sm btn-info" asp-page="/User/Veterinarian/AppointmentDetail" asp-route-appointmentId="@Model.Item.AppointmentListId">View</a>
-}
+            <!-- View button for navigation -->
+            <a class="btn btn-outline-info btn-sm"
+               asp-page="/User/Veterinarian/AppointmentDetail"
+               asp-route-appointmentId="@Model.Item.AppointmentListId">
+                View
+            </a>
+
+            <!-- Send Message Form -->
+            <form method="post" asp-page-handler="Message" class="d-inline">
+                <input type="hidden" name="RecipientId" value="@Model.Item.CustomerId" />
+                <input type="hidden" name="Content"
+                       value="Cuộc trò chuyện được tạo cho cuộc hẹn vào ngày @Model.Item.AppointmentDate.
+                   Dịch vụ: @Model.Item.ServiceName. Cuộc trò chuyện này sẽ được lưu trữ và sử dụng
+                   để tạo báo cáo về Koi của bạn." />
+
+                <button type="submit" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-chat-dots"></i> Message
+                </button>
+            </form>
+        </div>
+    }
 }

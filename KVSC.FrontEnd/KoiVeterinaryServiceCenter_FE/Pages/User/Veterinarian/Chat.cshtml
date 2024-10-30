@@ -25,7 +25,7 @@
                                     <strong>
                                         <div class="d-flex align-items-center">
                                             <img class="rounded-circle border"
-                                                 src="@(!string.IsNullOrEmpty(conversation.AvatarUrl) ? conversation.AvatarUrl : Url.Content("~/img/user.jpg"))"
+                                                 src="@(!string.IsNullOrEmpty(conversation.AvatarUrl) ? conversation.AvatarUrl : Url.Content("~/img/users.jpg"))"
                                                  alt="User Avatar"
                                                  style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
                                             <div class="fw-bold" style="font-size: 1.1rem;">@conversation.RecipientName</div>
@@ -70,7 +70,7 @@
                                 <div class="message">
                                     <div class="photo">
                                         <img class="rounded-circle border"
-                                             src="@(!string.IsNullOrEmpty(message.AvatarUrl) ? message.AvatarUrl : Url.Content("~/img/user.jpg"))"
+                                             src="@(!string.IsNullOrEmpty(message.AvatarUrl) ? message.AvatarUrl : Url.Content("~/img/users.jpg"))"
                                              alt="User Avatar"
                                              style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
                                     </div>
