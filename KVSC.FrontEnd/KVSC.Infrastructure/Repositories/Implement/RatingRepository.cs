@@ -86,5 +86,52 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+
+        public async Task<ResponseDto<RatingList>> GetManagerRatingList(string customerName, string feedback, int score, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/rating/all/ratings?customerName={customerName}&feedback={feedback}&score={score}&pageNumber={pageNumber}&pageSize={pageSize}");
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var errorResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>(options);
+                    return new ResponseDto<RatingList>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during fetching rating data."
+                    };
+                }
+
+                var ratingList = await response.Content.ReadFromJsonAsync<RatingList>(options);
+                return new ResponseDto<RatingList>
+                {
+                    IsSuccess = true,
+                    Data = ratingList,
+                    Message = "Rating data fetched successfully."
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseDto<RatingList>
+                {
+                    IsSuccess = false,
+                    Message = $"Request error: {ex.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<RatingList>
+                {
+                    IsSuccess = false,
+                    Message = $"Unexpected error: {ex.Message}"
+                };
+            }
+        }
+
+
     }
 }

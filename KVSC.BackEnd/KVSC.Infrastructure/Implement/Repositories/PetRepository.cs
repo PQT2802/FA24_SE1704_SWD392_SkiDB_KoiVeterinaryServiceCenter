@@ -35,20 +35,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
             return await _context.SaveChangesAsync();
         }
 
-        //xoa luon pet
         public async Task<int> DeletePetAsync(Guid id)
-        {
-            var pet = await GetPetByIdAsync(id);
-            if (pet != null)
-            {
-                _context.Pets.Remove(pet);
-                return await _context.SaveChangesAsync();
-            }
-            return 0;
-        }
-
-        //xoa nhe pet
-        public async Task<int> SoftDeletePetAsync(Guid id)
         {
             var pet = await _context.Pets.FindAsync(id);
             if (pet != null)
