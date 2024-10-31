@@ -70,17 +70,28 @@ else if (Model.AppointmentList?.Extensions?.Data != null && Model.AppointmentLis
                         </td>
                         <td>@appointment.AppointmentDate.ToString("f")</td>
                         <td>
+                            @if (appointment.VeterinarianName != null && appointment.VeterinarianName != string.Empty)
+                            {
                             <a class="btn btn-outline-primary btn-sm" 
                                asp-page="/User/Customer/AppointmentDetail" 
                                asp-route-appointmentId="@appointment.AppointmentListId">
                                 View Details
                             </a>
-                                    <button class="btn btn-outline-primary btn-sm open-rating-modal" 
-                                    data-service-id="@appointment.PetServiceId" 
-                                    data-customer-id="@appointment.CustomerId">
-                                <i class="fas fa-star"></i> Rating
-                            </button>
-
+                            }
+                            @if (appointment.Status == "Completed")
+                            {
+                                <button class="btn btn-outline-primary btn-sm open-rating-modal"
+                                        data-service-id="@appointment.PetServiceId"
+                                        data-customer-id="@appointment.CustomerId">
+                                    <i class="fas fa-star"></i> Rating
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-outline-secondary btn-sm" disabled>
+                                    <i class="fas fa-star"></i> Rating
+                                </button>
+                            }
                         </td>
                     </tr>
                 }
