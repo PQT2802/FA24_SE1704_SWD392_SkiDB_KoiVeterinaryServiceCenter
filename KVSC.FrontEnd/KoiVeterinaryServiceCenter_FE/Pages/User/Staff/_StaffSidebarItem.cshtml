@@ -1,8 +1,11 @@
-﻿<a asp-page="/User/Staff/StaffProfile" class="nav-item nav-link @((Context.Request.Path == "/User/Staff/StaffProfile") ? "active" : "")">
+﻿<a asp-page="/User/Staff/Dashboard" class="nav-item nav-link @((Context.Request.Path == "/User/Staff/Dashboard") ? "active" : "")">
     <i class="fa fa-tachometer-alt me-2"></i>Dashboard
 </a>
 <a asp-page="/User/Staff/StaffProfile" class="nav-item nav-link @((Context.Request.Path == "/User/Staff/StaffProfile") ? "active" : "")">
-    <i class="fa fa-user me-2"></i>Profile
+    <i class="fa fa-id-badge me-2"></i>Profile
+</a>
+<a asp-page="/User/Staff/UnassignedAppointments" class="nav-item nav-link @((Context.Request.Path == "/User/Staff/UnassignedAppointments") ? "active" : "")">
+    <i class="fa fa-calendar-check me-2"></i>Appointments
 </a>
 <a asp-page="/Account/Logout" class="nav-item nav-link">
     <i class="fa fa-sign-out-alt me-2"></i>Logout

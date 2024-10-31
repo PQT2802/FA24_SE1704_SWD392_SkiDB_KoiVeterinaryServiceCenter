@@ -1,5 +1,7 @@
-﻿using KVSC.Infrastructure.DTOs;
+﻿using KVSC.Application.Service.Interface;
+using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
+using KVSC.Infrastructure.DTOs.Rating.AddRating;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,10 +11,15 @@ public class AppointmentsModel : PageModel
 {
     private readonly IAppointmentService _appointmentService;
 
-    public AppointmentsModel(IAppointmentService appointmentsService)
+    private readonly IRatingService _ratingService;
+    [BindProperty]
+    public RatingCreateRequest RatingRequest { get; set; } = default!;
+    public AppointmentsModel(IAppointmentService appointmentsService, IRatingService ratingService)
     {
         _appointmentService = appointmentsService;
+        _ratingService = ratingService;
     }
+    
 
     [BindProperty] public AppointmentList AppointmentList { get; set; } = default!;
 
@@ -42,4 +49,19 @@ public class AppointmentsModel : PageModel
         }
     }
 
+    public async Task<IActionResult> OnPostAsync()
+    {
+        var result = await _ratingService.CreateRatingAsync(RatingRequest);
+
+        if (result.IsSuccess)
+        {
+            TempData["SuccessMessageRating"] = result.Message;
+            return RedirectToPage();
+        }
+        else
+        {
+            TempData["ErrorMessageRating"] = result.Message;
+            return RedirectToPage();
+        }
+    }
 }

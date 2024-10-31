@@ -1,5 +1,6 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Rating;
+using KVSC.Infrastructure.DTOs.Rating.AddRating;
 using KVSC.Infrastructure.Repositories.Interface;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static KVSC.Infrastructure.DTOs.Rating.RatingList;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
@@ -131,7 +133,58 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+        public async Task<ResponseDto<RatingCreateResponse>> CreateRatingAsync(RatingCreateRequest ratingRequest)
+        {
+            try
+            {
+                var url = "api/rating";
+                var jsonContent = JsonSerializer.Serialize(ratingRequest);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
+                var response = await _httpClient.PostAsync(url, content);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<RatingCreateResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred while creating the rating."
+                    };
+                }
+
+                var createdRating = await response.Content.ReadFromJsonAsync<RatingCreateResponse>(options);
+
+                return new ResponseDto<RatingCreateResponse>
+                {
+                    IsSuccess = true,
+                    Data = createdRating,
+                    Message = "Rating created successfully."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<RatingCreateResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<RatingCreateResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
     }
 }

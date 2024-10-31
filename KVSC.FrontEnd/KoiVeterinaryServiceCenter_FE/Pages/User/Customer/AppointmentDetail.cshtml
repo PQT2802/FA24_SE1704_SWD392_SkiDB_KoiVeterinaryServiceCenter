@@ -12,6 +12,11 @@ Layout = "_LayoutBoard";
         @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailKoi != null)
         {
         <div class="col-sm-12 col-xl-6 text-center">
+             <div class="mb-3 text-start">
+                 <a href="https://localhost:7241/User/Customer/Appointments" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left"></i> Back
+                 </a>
+             </div>
             <img class="rounded-circle" src="~/img/fish.jpg" alt="" style="width: 200px; height: 200px;">
             <div class="bg-light rounded p-4 mt-3">
                 <h2 class="mb-4 p-2 mb-2 bg-primary text-white">Koi Information</h2>
