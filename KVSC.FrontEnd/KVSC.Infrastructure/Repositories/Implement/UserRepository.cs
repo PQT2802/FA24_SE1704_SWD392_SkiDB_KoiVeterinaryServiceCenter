@@ -1,4 +1,6 @@
 ﻿using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.Service.AddService;
+using KVSC.Infrastructure.DTOs.Service.UpdateService;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
 using KVSC.Infrastructure.DTOs.User.GetUser;
@@ -6,8 +8,10 @@ using KVSC.Infrastructure.DTOs.User.Login;
 using KVSC.Infrastructure.DTOs.User.Register;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.Repositories.Interface;
+using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 
 namespace KVSC.Infrastructure.Repositories.Implement
@@ -285,6 +289,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+        
         public async Task<ResponseDto<RoleList>> GetRoleList()
         {
             try
@@ -343,7 +348,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
-        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request)
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request, IFormFile imageFile)
         {
             try
             {
@@ -366,6 +371,35 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 }
 
                 var updateResponse = await response.Content.ReadFromJsonAsync<UpdateUserResponse>(options);
+                //==================================phan them anh==========================================
+                if(imageFile != null) { 
+                    // Tạo form data để gửi
+                    var formContent = new MultipartFormDataContent();
+                    var fileContent = new StreamContent(imageFile.OpenReadStream());
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+
+                    // Thêm file vào form data
+                    formContent.Add(fileContent, "ImageFile", imageFile.FileName);
+                    formContent.Add(new StringContent(updateResponse.Extensions.Data.Id.ToString()), "Id");
+
+                    // Gọi API cập nhật ảnh
+                    var uploadResponse = await _httpClient.PostAsync("api/User/upload/img", formContent);
+
+                    if (uploadResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                    {
+                        var uploadResponseContent = await uploadResponse.Content.ReadAsStringAsync();
+                        var uploadErrorResponse = JsonSerializer.Deserialize<ErrorResponse>(uploadResponseContent, options);
+
+                        return new ResponseDto<UpdateUserResponse>
+                        {
+                            IsSuccess = false,
+                            Data = null,
+                            Errors = uploadErrorResponse?.Errors ?? new List<ErrorDetail>(),
+                            Message = "An error occurred while uploading the image."
+                        };
+                    }
+                }
+                //==================================ket thuc them anh==========================================
                 return new ResponseDto<UpdateUserResponse>
                 {
                     IsSuccess = true,
@@ -477,6 +511,186 @@ namespace KVSC.Infrastructure.Repositories.Implement
             catch (Exception ex)
             {
                 return new ResponseDto<GetUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<GetVeterinarianResponse>> GetVeter(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/User/veterinarian/{id}");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetVeterinarianResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during getting veterinarian info."
+                    };
+                }
+
+                var veterinarian = await response.Content.ReadFromJsonAsync<GetVeterinarianResponse>(options);
+
+                return new ResponseDto<GetVeterinarianResponse>
+                {
+                    IsSuccess = true,
+                    Data = veterinarian,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<GetVeterinarianResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<GetVeterinarianResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateVeterinarianQualificationsAsync(GetVeterinarianRequest updatedProfile)
+        {
+            try
+            {
+                // Define the endpoint
+                var url = $"api/User/{updatedProfile.UserId}";
+
+                // Serialize the profile data into JSON
+                var jsonContent = JsonSerializer.Serialize(new
+                {
+                    licenseNumber = updatedProfile.LicenseNumber,
+                    specialty = updatedProfile.Specialty,
+                    qualifications = updatedProfile.Qualifications
+                });
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Send PUT request
+                var response = await _httpClient.PutAsync(url, content);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize lỗi trả về từ API
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<UpdateUserResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during updating."
+                    };
+                }
+                // Nếu thành công, lấy dữ liệu phản hồi
+                var updateResponse = await response.Content.ReadFromJsonAsync<UpdateUserResponse>(options);
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = true,
+                    Data = updateResponse,
+                    Message = "Update service successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount)
+        {
+            try
+            {
+                // Set the request with authorization token in headers
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                // Construct the request URL with the depositMoney parameter
+                var requestUrl = $"api/Payment/create-payment-url?depositMoney={amount}";
+
+                // Send the request and get the response
+                var response = await _httpClient.PostAsync(requestUrl, null);
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<AddMoney>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during the payment process."
+                    };
+                }
+
+                // If successful, deserialize the AddMoney response
+                var data = await response.Content.ReadFromJsonAsync<AddMoney>(options);
+
+                return new ResponseDto<AddMoney>
+                {
+                    IsSuccess = true,
+                    Data = data,
+                    Message = "Payment URL created successfully."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<AddMoney>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<AddMoney>
                 {
                     IsSuccess = false,
                     Data = null,

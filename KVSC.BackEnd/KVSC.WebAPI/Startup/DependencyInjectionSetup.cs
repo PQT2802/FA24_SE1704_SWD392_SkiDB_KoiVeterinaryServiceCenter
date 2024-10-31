@@ -10,6 +10,7 @@ using KVSC.Application.Common.Validator.PetServiceCategory;
 using KVSC.Application.Common.Validator.Product;
 using KVSC.Application.Common.Validator.ProductCategory;
 using KVSC.Application.Common.Validator.Rating;
+using KVSC.Application.Common.Validator.Schedule;
 using KVSC.Application.Common.Validator.ServiceReport;
 using KVSC.Application.Common.Validator.User;
 using KVSC.Application.Common.Validator.VeterinarianSchedule;
@@ -60,7 +61,7 @@ namespace KVSC.WebAPI.Startup
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), "Keys",
-                "koiveterinaryservicecent-925db-firebase-adminsdk-vus2r-7e9eaf02d5.json");
+                "koiveterinaryservicecent-925db-firebase-adminsdk-vus2r-0a84673789.json");
 
             try
             {
@@ -132,6 +133,8 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<UpdateRatingRequest>, UpdateRatingValidator>();
 
             services.AddTransient<IValidator<RegisterScheduleRequest>, RegisterScheduleValidator>();
+            services.AddTransient<IValidator<ManagementRegisterScheduleRequest>, ManagementRegisterScheduleValidator>();
+            services.AddTransient<IValidator<UpdateVeterinarianRequest>, UpdateVeterinarianValidator>();
 
 
             //Validator
@@ -158,9 +161,17 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IPrescriptionRepository, PrescriptionRepository>();
             services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
             services.AddTransient<IVeterinarianScheduleRepository, VeterinarianScheduleRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
 
             services.AddTransient<IRatingRepository, RatingRepository>();
+
+            services.AddTransient<IWalletRepository, WalletRepository>();
+            services.AddTransient<ITransactionRepository, TransactionRepository>();
+
+            services.AddTransient<IDashboardRepository, DashboardRepository>();
+
+
 
 
             #endregion
@@ -197,6 +208,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IServiceReportService, ServiceReportService>();
             services.AddTransient<IVeterinarianScheduleService, VeterinarianScheduleService>();
+            services.AddTransient<IVnPaymentService, VnPaymentService>();
 
             services.AddScoped<IMessageService, MessageService>();
 
@@ -204,8 +216,11 @@ namespace KVSC.WebAPI.Startup
 
             services.AddTransient<IRatingService, RatingService>();
 
+            services.AddTransient<IDashBoardService, DashBoardService>();
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IWalletService, WalletService>();
+            services.AddTransient<ITransactionService ,TransactionService>();
             #endregion
 
 

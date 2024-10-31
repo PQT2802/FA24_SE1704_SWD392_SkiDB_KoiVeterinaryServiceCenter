@@ -12,15 +12,13 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
         //Pet
         public static Error FieldIsEmpty(string nameField)
             => Error.Validation("Pet.Empty", $"The '{nameField}' is required.");
-
-        public static Error FieldMustBePositive(string nameField)
-           => Error.Validation("Pet.Positive", $"The '{nameField}' must be a positive value.");
+        public static Error InvalidFieldValue(string nameField)
+            => Error.Validation("Pet.InvalidValue", $"The '{nameField}' field has an invalid value.");
+        public static Error PetUpdateImgFailed()
+            => Error.Validation("Pet.UpdateImgFailed", "Failed to update Image for Pet.");
 
         public static Error FieldLength(string nameField, int minLength, int maxLength)
             => Error.Validation("Pet.Length", $"The '{nameField}' must be between {minLength} and {maxLength} characters long.");
-
-        public static Error InvalidAge(string age)
-           => Error.Validation("Pet.InvalidAge", $"The age '{age}' is not valid.");
 
         public static Error PetCreateFailed()
             => Error.Validation("Pet.CreateFailed", "Failed to create pet.");

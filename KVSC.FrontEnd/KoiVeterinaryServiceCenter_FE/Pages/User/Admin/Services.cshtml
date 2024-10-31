@@ -5,6 +5,11 @@
 @{
     Layout = "_LayoutBoard";
 }
+@{
+    var actorRole = HttpContext.Session.GetString("ActorRole");
+}
+@if (actorRole == "Admin")
+{
 @*-------------------------------- thongbao -----------------------------------------------*@
 @if (TempData["SuccessMessage"] != null)
 {
@@ -83,6 +88,10 @@
                             <label for="imageFile">Upload Image</label>
                             <span asp-validation-for="AddServiceRequest.ImageUrl" class="text-danger"></span>
                         </div>
+                        <!-- Image Preview -->
+                         <div class="mb-3">
+                             <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px;">
+                         </div>
 
                         <!-- Available From -->
                         <div class="form-floating mb-3">
@@ -152,13 +161,6 @@
                         <span asp-validation-for="UpdateServiceRequest.Duration" class="text-danger"></span>
                     </div>
 
-                    @* <!-- Image URL -->
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="imageUrl" name="UpdateServiceRequest.ImageUrl" placeholder="Image URL" >
-                        <label for="imageUrl">Image URL</label>
-                        <span asp-validation-for="UpdateServiceRequest.ImageUrl" class="text-danger"></span>
-                    </div>
- *@
                    <!-- Image File -->
                     <div class="mb-3">
                         <label for="serviceImageFile" class="form-label">Choose Image</label>
@@ -168,8 +170,7 @@
 
                     <!-- Image Preview -->
                     <div class="mb-3">
-                        <label for="serviceImagePreview" class="form-label">Image Preview</label>
-                        <img id="serviceImagePreview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
+                        <img id="serviceImagePreview" src="" alt="Image Preview" style="display: none;  max-width: 300px;" />
                     </div>
 
                     <!-- Available From -->
@@ -199,37 +200,30 @@
         </div>
     </div>
 </div>
-@*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
-@* <script>
-    $(document).ready(function () {
-        $('#submitServiceForm').click(function (e) {
-            e.preventDefault();
+}
 
-            $.ajax({
-                type: "POST",
-                url: window.location.pathname + "?handler=CreateService", /
-                data: $('#createServiceForm').serialize(),
-                success: function (response) {
-                    if (response.isSuccess) {
-                        $('#createServiceModal').modal('hide');
-                        alert('Create successful');
-                        location.reload();
-                    } else {
-                        $('span[data-valmsg-for]').text('');
-                        for (const [key, value] of Object.entries(response.errors)) {
-                            $(`span[data-valmsg-for='AddServiceRequest.${key}']`).text(value);
-                        }
-                    }
-                },
-                error: function () {
-                    console.log('Error.');
-                }
-            });
-        });
-    });
-</script> *@
+else
+{
+    <div class="alert alert-warning">Bạn không có quyền truy cập vào phần này.</div>
+}
+@*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
+
 <script>
 $(document).ready(function () {
+        // Xử lý preview ảnh khi người dùng chọn file
+        $('#imageFile').change(function (e) {
+            var file = e.target.files[0]; // Lấy file được chọn
+            if (file) {
+                var reader = new FileReader(); // Tạo FileReader để đọc file
+                reader.onload = function (e) {
+                    $('#imagePreview').attr('src', e.target.result).show(); // Hiển thị ảnh preview
+                };
+                reader.readAsDataURL(file); // Đọc file dưới dạng URL
+            } else {
+                $('#imagePreview').hide(); // Ẩn ảnh nếu không có file
+            }
+        });
+
     $('#submitServiceForm').click(function (e) {
         e.preventDefault();
 
@@ -240,7 +234,7 @@ $(document).ready(function () {
             alert('Please select a photo before creating a service.');
             return; // Ngừng thực hiện nếu không có ảnh
         }
-
+        
         // Tạo một FormData để gửi dữ liệu
         var formData = new FormData($('#createServiceForm')[0]);
 
@@ -303,33 +297,6 @@ $(document).ready(function () {
             $('#updateServiceModal').modal('show');
         });
 
-        // // Xử lý submit form cập nhật
-        // $('#updateServiceForm').submit(function (e) {
-        //     e.preventDefault(); // Ngăn chặn hành vi mặc định
-
-        //     $.ajax({
-        //         type: "POST",
-        //         url: window.location.pathname + "?handler=UpdateService", // Gửi đến đúng handler
-        //         data: $(this).serialize(),
-        //         success: function (response) {
-        //             if (response.isSuccess) {
-        //                 $('#updateServiceModal').modal('hide');
-        //                 alert('Update successful');
-        //                 location.reload();
-        //             } else {
-        //                 $('span[data-valmsg-for]').text('');
-        //                 // Hiển thị lỗi vào các input tương ứng
-        //                 for (const [key, value] of Object.entries(response.errors)) {
-        //                     $(`span[data-valmsg-for='UpdateServiceRequest.${key}']`).text(value);
-        //                 }
-        //             }
-        //         },
-        //         error: function () {
-        //             console.log('Có lỗi xảy ra.');
-        //         }
-        //     });
-        // });
-        // Xử lý submit form cập nhật
         // Khi chọn file ảnh
         $('#serviceImageFile').change(function (e) {
             var file = e.target.files[0];
@@ -344,12 +311,6 @@ $(document).ready(function () {
         });
         $('#updateServiceForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
-            var imageFile = $('#serviceImageFile').get(0).files.length;
-
-            if (imageFile === 0) {
-                alert('Please select a photo before updating a service.');
-                return; // Ngừng thực hiện nếu không có ảnh
-            }
 
             // Tạo FormData
             var formData = new FormData(this);

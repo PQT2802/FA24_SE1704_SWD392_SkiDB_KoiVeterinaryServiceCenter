@@ -3,6 +3,7 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Chat.AddMessage;
 using KVSC.Infrastructure.DTOs.Common.Message;
+using KVSC.Infrastructure.DTOs.Firebase.GetImage;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.Interface;
 using System;
@@ -57,9 +58,13 @@ namespace KVSC.Application.Implement.Service
             {
                 var senderName = await _unitOfWork.UserRepository.GetByIdAsync(message.SenderId); // Lấy tên người gửi
                 var recipientName = await _unitOfWork.UserRepository.GetByIdAsync(message.RecipientId); // Lấy tên người nhận
-
+                /*============================================lay anh==========================================================*/
+                var getimg = new GetImageRequest(senderName.ProfilePictureUrl);
+                var petSenderImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getimg);
+                /*============================================lay anh==========================================================*/
                 var messageResponse = new CreateMessageResponse
                 {
+                    AvatarUrl = petSenderImg.ImageUrl,
                     SenderId = message.SenderId,
                     SenderName = senderName.FullName,
                     RecipientId = message.RecipientId,
@@ -82,6 +87,9 @@ namespace KVSC.Application.Implement.Service
             foreach (var conversation in conversations)
             {
                 var recipient = await _unitOfWork.UserRepository.GetByIdAsync(conversation.RecipientId);
+                var getimg = new GetImageRequest(recipient.ProfilePictureUrl ?? string.Empty);
+                var petRecipientImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getimg);
+                conversation.AvatarUrl = petRecipientImg.ImageUrl;
                 conversation.RecipientName = recipient.FullName;
             }
             return Result.SuccessWithObject(conversations);

@@ -1,0 +1,119 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.QualificationModel
+@{
+    Layout = "_layoutBoard";
+}
+@{
+    ViewData["Title"] = "Veterinarian Qualification Details";
+}
+<h2>Veterinarian Qualification Details</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ValidationErrors"] is Dictionary<string, string> validationErrors)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Please fix the following errors:</strong>
+        <ul>
+            @foreach (var error in validationErrors)
+            {
+                <li>@error.Value</li>
+            }
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label for="specialty" class="form-label">Specialty</label>
+                <input type="text" class="form-control" id="Specialty" name="VeterinarianProfile.Specialty"
+                       value="@Model.VeterinarianProfile.Extensions.Data.Specialty" readonly />
+            </div>
+            <div class="mb-3">
+                <label for="qualifications" class="form-label">Qualifications</label>
+                <input type="text" class="form-control" id="qualifications" name="VeterinarianProfile.Qualifications" 
+                       value="@Model.VeterinarianProfile.Extensions.Data.Qualifications" readonly />
+            </div>
+            <div class="mb-3">
+                <label for="licenseNumber" class="form-label">License Number</label>
+                <input type="text" class="form-control" id="licenseNumber" name="VeterinarianProfile.LicenseNumber" 
+                       value="@Model.VeterinarianProfile.Extensions.Data.LicenseNumber" readonly />
+            </div>
+            <div class="card-footer text-end">
+                <button type="button" class="btn btn-info" id="qualificationButton">Edit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal for Editing Qualifications -->
+<div class="modal fade" id="qualificationModal" tabindex="-1" aria-labelledby="qualificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="UpdateQualifications">
+                <input type="hidden" name="userId" value="@Model.VeterinarianProfile.Extensions.Data.UserId" />
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="specialty" class="form-label">Specialty</label>
+                        <input type="text" class="form-control" id="specialty" name="specialty" value="@Model.VeterinarianProfile.Extensions.Data.Specialty" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="qualifications" class="form-label">Qualifications</label>
+                        <input type="text" class="form-control" id="qualifications" name="qualifications" value="@Model.VeterinarianProfile.Extensions.Data.Qualifications" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="licenseNumber" class="form-label">License Number</label>
+                        <input type="text" class="form-control" id="licenseNumber" name="licenseNumber" value="@Model.VeterinarianProfile.Extensions.Data.LicenseNumber" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        document.getElementById('qualificationButton').addEventListener('click', function () {
+            const myModal = new bootstrap.Modal(document.getElementById('qualificationModal'));
+            myModal.show();
+        });
+
+        document.getElementById('saveQualificationButton').addEventListener('click', async function () {
+            const specialty = document.getElementById('editSpecialty').value;
+            const qualifications = document.getElementById('editQualifications').value;
+            const licenseNumber = document.getElementById('editLicenseNumber').value;
+
+            const response = await fetch('/User/Veterinarian/Qualification?handler=SaveQualification', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ specialty, qualifications, licenseNumber })
+            });
+
+            const result = await response.json();
+            if (result.isSuccess) {
+                alert("Qualifications saved successfully!");
+                location.reload(); // Reload to show updated info
+            } else {
+                alert("Error saving qualifications: " + result.message);
+            }
+        });
+    </script>

@@ -115,7 +115,7 @@ namespace KVSC.Application.Implement.Service
                 Id = Guid.NewGuid(),
                 FullName = registerRequest.FullName,
                 Email = registerRequest.Email,
-                PasswordHash = passwordHash,
+                PasswordHash = registerRequest.Password,
                 Username = registerRequest.UserName,
                 PhoneNumber = registerRequest.PhoneNumber,
                 Address = registerRequest.Address,

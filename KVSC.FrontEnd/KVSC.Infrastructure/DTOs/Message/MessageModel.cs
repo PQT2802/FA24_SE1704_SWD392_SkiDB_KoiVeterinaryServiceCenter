@@ -13,6 +13,7 @@ namespace KVSC.Infrastructure.DTOs.Message
     }
     public class MessageModelDataList
     {
+        public string AvatarUrl { get; set; }
         public Guid Id { get; set; }
         public Guid SenderId { get; set; }
         public Guid RecipientId { get; set; }

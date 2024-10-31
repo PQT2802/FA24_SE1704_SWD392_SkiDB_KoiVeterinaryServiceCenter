@@ -9,8 +9,9 @@
     var isEditMode = ViewData["IsEditMode"] as bool? ?? false;
 }
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
 <div class="container mt-5">
-    <form method="post" id="profileForm">
+    <form method="post" id="profileForm" enctype="multipart/form-data">
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <h2 class="card-title text-center">Profile Details</h2>
@@ -19,11 +20,12 @@
                 @if (Model.UserProfile != null)
                 {
                     <div class="row">
-                        <div class="col-md-6 d-flex justify-content-center">
+                        <input type="hidden" name="ExistingProfilePictureUrl" value="@Model.UserProfile.Extensions.Data.ProfilePictureUrl" />
+                        <div class="col-md-6 d-flex justify-content-center" style="min-height: 600px; max-height: 800px;min-width: 300px; max-width: 500px;">
                             <img src="@Model.UserProfile.Extensions.Data.ProfilePictureUrl"
-                                 alt="Profile Picture"
-                                 class="img-fluid rounded-circle"
-                                 style="max-height: 200px; object-fit: cover;" />
+                                 alt="Service Image"
+                                 class="img-fluid rounded shadow"
+                                 style="max-height: 100%; max-width: 100%; object-fit: contain;" />
                         </div>
                         <div class="col-md-6">
                             <div class="container mt-3">
@@ -54,6 +56,26 @@
                             {
                                 <h3 class="display-4 text-primary mb-4">@Model.UserProfile.Extensions.Data.FullName</h3>
                             }
+
+                            <!-- Upload Profile Picture -->
+                            <div class="mb-4">
+                                @if (isEditMode)
+                                {
+                                    <label class="form-label"><strong>Profile Picture:</strong></label>
+                                    <input type="file" class="form-control" name="imageFile" accept="image/*" />
+                                }
+                            </div>
+
+                            <!-- Wallet -->
+                            @if (!isEditMode)
+                            {
+                                <div class="mb-4">
+                                    <label class="form-label"><strong>Current Amount: @Model.UserProfile.Extensions.Data.Amount.ToString("C")</strong></label>
+                                    <input type="number" asp-for="TopUpAmount" min="10000" class="form-control" placeholder="Enter amount to add" />
+                                    <button type="submit" formaction="/User/Customer/CustomerProfile?handler=TopUp" class="btn btn-primary">Add</button>
+                                </div>
+                            }
+
                             <!-- Username -->
                             <div class="mb-4">
                                 <label class="form-label"><strong>Username:</strong></label>
@@ -149,11 +171,11 @@
             <div class="card-footer text-end">
                 @if (isEditMode)
                 {
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success" formaction="/User/Customer/CustomerProfile?handler=Save">Save</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-primary" id="editCustomButton">Edit</button>
+                    <button type="button" class="btn btn-primary" id="editButton">Edit</button>
                 }
             </div>
         </div>
@@ -162,9 +184,9 @@
 
 <script>
     $(document).ready(function () {
-        $('#editCustomButton').click(function () {
+        $('#editButton').click(function () {
             const url = new URL(window.location.href);
-            url.searchParams.set('editCustom', 'true');
+            url.searchParams.set('edit', 'true');
             window.location.href = url.toString();
         });
     });

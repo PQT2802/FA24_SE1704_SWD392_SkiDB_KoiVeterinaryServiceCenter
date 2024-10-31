@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Cursus_Data.Models.Entities;
 
 namespace KVSC.Domain.Entities
 {
@@ -26,10 +27,16 @@ namespace KVSC.Domain.Entities
         public ICollection<Cart> Carts { get; set; }
         public Veterinarian Veterinarian { get; set; }
         
+        public virtual ICollection<UserEmail> UserEmails { get; set; }
+
+        
 
         // Thêm quan hệ với Appointment
         public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment
         public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+        public ICollection<Transaction> Transactions { get; set; }
+
+        public Wallet Wallet { get; set; }
     }
 
 }

@@ -8,8 +8,10 @@ namespace KVSC.Infrastructure.DTOs
 {
     public class GenericTableViewModel
     {
-        public List<IPropertyNameProvider> Items { get; set; }
+        public IEnumerable<IPropertyNameProvider> Items { get; set; }
         public List<string> PropertyNames { get; set; }
-        public string ListType { get; set; }  // "service" or "appointment"
+        public string ListType { get; set; } = string.Empty;
+        public string UserRole { get; set; } // Add UserRole
+
     }
 }

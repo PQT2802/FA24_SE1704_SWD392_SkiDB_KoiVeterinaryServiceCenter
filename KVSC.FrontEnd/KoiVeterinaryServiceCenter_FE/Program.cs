@@ -4,7 +4,7 @@ using KoiVeterinaryServiceCenter_FE.StartUp;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddSignalR();
 builder.Services.RegisterServices(builder.Configuration);
 
@@ -36,7 +36,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Errors");
+    app.UseStatusCodePagesWithReExecute("/Errors/{0}");
     app.UseHsts(); // Enable HSTS for production
 }
 
@@ -52,6 +53,7 @@ app.UseSession(); // Enable session middleware
 // Use Cookie Policy middleware
 app.UseCookiePolicy();
 app.UseCors("AllowAllOrigins");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

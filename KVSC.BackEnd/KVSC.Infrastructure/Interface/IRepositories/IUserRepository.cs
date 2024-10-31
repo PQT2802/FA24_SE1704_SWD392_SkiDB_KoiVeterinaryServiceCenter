@@ -28,5 +28,7 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         int pageNumber = 1,
         int pageSize = 10);
         Task<List<Role>> GetAllRolesAsync();
+
+        Task<int> UpdateVeterinarianAsync(Veterinarian veterinarian);
     }
 }

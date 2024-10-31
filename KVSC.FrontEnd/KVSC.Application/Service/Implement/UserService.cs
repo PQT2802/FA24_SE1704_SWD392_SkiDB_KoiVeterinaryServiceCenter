@@ -12,6 +12,7 @@ using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
 using KVSC.Infrastructure.DTOs.User.GetUser;
+using Microsoft.AspNetCore.Http;
 
 namespace KVSC.Application.Service.Implement
 {
@@ -26,19 +27,21 @@ namespace KVSC.Application.Service.Implement
         {
             return await _userRepository.GetUserList(fullName, email, phoneNumber, address, role, pageNumber, pageSize);
         }
+      
         public async Task<ResponseDto<RoleList>> GetRoleList()
         {
             return await _userRepository.GetRoleList();
         }
-        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request)
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request, IFormFile imageFile)
         {
             request.FullName = string.IsNullOrWhiteSpace(request.FullName) ? string.Empty : request.FullName;
             request.UserName = string.IsNullOrWhiteSpace(request.UserName) ? string.Empty : request.UserName;
             request.Email = string.IsNullOrWhiteSpace(request.Email) ? string.Empty : request.Email;
             request.Address = string.IsNullOrWhiteSpace(request.Address) ? string.Empty : request.Address;
+            request.PhoneNumber = string.IsNullOrWhiteSpace(request.PhoneNumber) ? string.Empty : request.PhoneNumber;
             request.ProfilePictureUrl = string.IsNullOrWhiteSpace(request.ProfilePictureUrl) ? string.Empty : request.ProfilePictureUrl;
 
-            var response = await _userRepository.UpdateUser(request);
+            var response = await _userRepository.UpdateUser(request, imageFile);
             return response;
         }
         public async Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request)
@@ -49,6 +52,31 @@ namespace KVSC.Application.Service.Implement
         public async Task<ResponseDto<GetUserResponse>> GetUserDetail(Guid id)
         {
             var response = await _userRepository.GetUserDetail(id);
+            return response;
+        }
+
+
+        public Task<ResponseDto<GetVetId>> GetVetForAppoinment()
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<ResponseDto<GetVeterinarianResponse>> GetVeterinarianDetail(Guid id)
+        {
+            var response = await _userRepository.GetVeter(id);
+            return response;
+        }
+        public async Task<ResponseDto<UpdateUserResponse>> UpdateVeterinarianQualifications(GetVeterinarianRequest updatedProfile)
+        {
+            updatedProfile.Qualifications = string.IsNullOrWhiteSpace(updatedProfile.Qualifications) ? string.Empty : updatedProfile.Qualifications;
+            updatedProfile.LicenseNumber = string.IsNullOrWhiteSpace(updatedProfile.LicenseNumber) ? string.Empty : updatedProfile.LicenseNumber;
+            updatedProfile.Specialty = string.IsNullOrWhiteSpace(updatedProfile.Specialty) ? string.Empty : updatedProfile.Specialty;
+            return await _userRepository.UpdateVeterinarianQualificationsAsync(updatedProfile);
+
+        }
+
+        public async Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount)
+        {
+            var response = await _userRepository.TopUpWallet(token,amount);
             return response;
         }
     }

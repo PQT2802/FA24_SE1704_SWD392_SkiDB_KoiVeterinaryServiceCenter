@@ -5,11 +5,6 @@ using KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Implement.Repositories
 {
@@ -26,9 +21,18 @@ namespace KVSC.Infrastructure.Implement.Repositories
         }
 
         // READ (các phương thức khác nếu cần)
-        public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
+        //public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
+        //{
+        //    return await _context.Appointments.Where(a => !a.IsDeleted).ToListAsync();
+        //}
+        public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()//edit hung
         {
-            return await _context.Appointments.Where(a => !a.IsDeleted).ToListAsync();
+            return await _context.Appointments
+                .Where(a => !a.IsDeleted) 
+                .Include(a => a.Customer)
+                .Include(a => a.AppointmentVeterinarians)
+                .Include(a => a.PetService) 
+                .ToListAsync();
         }
 
 
@@ -54,6 +58,30 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 })
                 .ToListAsync();
         }
+        
+        public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByCustomerIdAsync(Guid userId)
+        {
+            return await _context.Appointments
+                .Where(a => !a.IsDeleted && a.Customer.Id == userId) // Filter by customer's UserId
+                .Select(a => new GetAllAppointment
+                {
+                    AppointmentListId = a.Id,
+                    CustomerId = a.CustomerId,
+                    PetServiceId = a.PetServiceId ?? Guid.Empty, // Handle nullable PetServiceId with Guid.Empty
+                    VeterinarianId = a.AppointmentVeterinarians
+                        .Select(av => av.VeterinarianId)
+                        .FirstOrDefault(), // Return the first matching VeterinarianId
+                    CustomerName = a.Customer != null ? a.Customer.FullName : "Unknown", // Handle null Customer safely
+                    VeterinarianName = a.AppointmentVeterinarians
+                        .Select(av => av.Veterinarian != null ? av.Veterinarian.User.FullName : "Unknown")
+                        .FirstOrDefault(), // Handle null Veterinarian or User
+                    ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService safely
+                    Status = a.Status,
+                    AppointmentDate = a.AppointmentDate
+                })
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByUserIdAsync(Guid userId)
         {
             return await _context.Appointments
@@ -84,14 +112,14 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
         public async Task<Veterinarian> GetAvailableVeterinarianAsync(DateTime appointmentDate)
         {
-            var appointmentDay = appointmentDate.Date;   
-            var appointmentTime = appointmentDate.TimeOfDay; 
+            var appointmentDay = appointmentDate.Date;
+            var appointmentTime = appointmentDate.TimeOfDay;
 
             var availableVeterinarian = await _context.Veterinarians
             .Include(v => v.VeterinarianSchedules)
             .Where(v => v.VeterinarianSchedules.Any(s =>
-                s.Date == appointmentDay &&       
-                s.StartTime <= appointmentTime && 
+                s.Date == appointmentDay &&
+                s.StartTime <= appointmentTime &&
                 s.EndTime >= appointmentTime &&
                 s.IsAvailable
             ))
@@ -113,9 +141,9 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
             if (schedule != null)
             {
-                schedule.IsAvailable = false; 
+                schedule.IsAvailable = false;
                 _context.VeterinarianSchedules.Update(schedule);
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
             }
         }
         public async Task<bool> AppointmentExistsAsync(Guid appointmentId)
@@ -286,5 +314,46 @@ namespace KVSC.Infrastructure.Implement.Repositories
             }
             return appointmentDetail;
         }
-    } 
+        public async Task<Appointment> GetAppointmentByIdAsync(Guid appointmentId)
+        {
+            return await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.PetService)
+                .Include(a => a.AppointmentVeterinarians)
+                    .ThenInclude(av => av.Veterinarian)
+                .Include(a => a.Pet)
+                .Include(a => a.ComboService)
+                .Include(a => a.ServiceReport)
+                .FirstOrDefaultAsync(a => a.Id == appointmentId && !a.IsDeleted);
+        }
+        public async Task<int> AssignVeterinarianToAppointment(Guid appointmentId, Guid veterinarianId)
+        {
+            // Kiểm tra nếu đã tồn tại trước đó
+            var exists = await _context.AppointmentVeterinarians
+                .AnyAsync(av => av.AppointmentId == appointmentId && av.VeterinarianId == veterinarianId);
+
+            if (exists)
+            {
+                return 0; // Nếu đã tồn tại thì không làm gì
+            }
+
+            var newAssignment = new AppointmentVeterinarian
+            {
+                AppointmentId = appointmentId,
+                VeterinarianId = veterinarianId
+            };
+
+            _context.AppointmentVeterinarians.Add(newAssignment);
+
+            try
+            {
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw new InvalidOperationException("The data was modified or deleted by another process.");
+            }
+        }
+
+    }
 }

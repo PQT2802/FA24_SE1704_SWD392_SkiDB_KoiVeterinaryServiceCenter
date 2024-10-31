@@ -21,7 +21,7 @@
 }
 
 <!-- Nút thêm mới Pet -->
-<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createPetModal">Add Pet</button>
+<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createPetModal">Add Koi Fish</button>
 
 <!-- Bảng hiển thị danh sách Pet -->
 @await Component.InvokeAsync("GenericTable", new { items = Model.PetList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "pet" })
@@ -31,12 +31,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createPetModalLabel">Add New Pet</h5>
+                <h5 class="modal-title" id="createPetModalLabel">Add New Koi Fish</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="bg-light rounded h-100 p-4">
-                    <h6 class="mb-4">Pet Form</h6>
+                    <h6 class="mb-4">Koi Form</h6>
 
                     <!-- Hiển thị tổng hợp lỗi -->
                     <div asp-validation-summary="All" class="text-danger"></div>
@@ -44,8 +44,8 @@
                     <form id="createPetForm" method="post" asp-page-handler="CreatePet">
                         <!-- Tên Pet -->
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="name" name="AddPetRequest.Name" placeholder="Pet Name">
-                            <label for="name">Pet Name</label>
+                            <input type="text" class="form-control" id="name" name="AddPetRequest.Name" placeholder="Koi Name">
+                            <label for="name">Koi Name</label>
                             <span asp-validation-for="AddPetRequest.Name" class="text-danger"></span>
                         </div>
 
@@ -63,11 +63,16 @@
                             <span asp-validation-for="AddPetRequest.Gender" class="text-danger"></span>
                         </div>
 
-                        <!-- Image URL -->
+                        <!-- Image Upload -->
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="imageUrl" name="AddPetRequest.ImageUrl" placeholder="Image URL">
-                            <label for="imageUrl">Image URL</label>
+                            <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
+                            <label for="imageFile">Upload Image</label>
                             <span asp-validation-for="AddPetRequest.ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <!-- Image Preview -->
+                        <div class="mb-3">
+                            <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px;">
                         </div>
 
                         <!-- Color -->
@@ -135,7 +140,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updatePetModalLabel">Edit Pet</h5>
+                <h5 class="modal-title" id="updatePetModalLabel">Edit Koi Fish</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -144,8 +149,8 @@
 
                     <!-- Name Input -->
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" name="UpdatePetRequest.Name" placeholder="Pet Name">
-                        <label for="name">Pet Name</label>
+                        <input type="text" class="form-control" id="name" name="UpdatePetRequest.Name" placeholder="Koi Name">
+                        <label for="name">Koi Name</label>
                         <span asp-validation-for="UpdatePetRequest.Name" class="text-danger"></span>
                     </div>
 
@@ -161,6 +166,17 @@
                         <input type="text" class="form-control" id="gender" name="UpdatePetRequest.Gender" placeholder="Gender">
                         <label for="gender">Gender</label>
                         <span asp-validation-for="UpdatePetRequest.Gender" class="text-danger"></span>
+                    </div>
+
+                   <div class="mb-3">
+                        <label for="petImageFile" class="form-label">Choose Image</label>
+                        <input type="file" class="form-control" id="petImageFile" name="imageFile" accept="image/*" />
+                        <span data-valmsg-for="UpdatePetRequest.ImageUrl" class="text-danger"></span>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div class="mb-3">
+                        <img id="petImagePreview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
                     </div>
 
                     <!-- Color -->
@@ -184,6 +200,15 @@
                         <span asp-validation-for="UpdatePetRequest.Weight" class="text-danger"></span>
                     </div>
 
+                    <!-- Last Health Check -->
+                    <div class="form-floating mb-3">
+                        <input type="datetime-local" class="form-control" id="lastHealthCheck" name="UpdatePetRequest.LastHealthCheck"
+                               placeholder="Last Health Check"
+                               value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
+                        <label for="lastHealthCheck">Last Health Check</label>
+                        <span asp-validation-for="UpdatePetRequest.LastHealthCheck" class="text-danger"></span>
+                    </div>
+
                     <!-- Quantity -->
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="quantity" name="UpdatePetRequest.Quantity" placeholder="Quantity" min="0">
@@ -191,7 +216,7 @@
                         <span asp-validation-for="UpdatePetRequest.Quantity" class="text-danger"></span>
                     </div>
 
-                    <!-- healthstatus -->
+                    <!-- Healthstatus -->
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="healthStatus" name="UpdatePetRequest.HealthStatus" placeholder="HealthStatus" min="0">
                         <label for="healthStatus">HealthStatus</label>
@@ -215,27 +240,51 @@
 <!-- Script cho việc tạo Pet -->
 <script>
     $(document).ready(function () {
+        // Xử lý preview ảnh khi người dùng chọn file
+        $('#imageFile').change(function (e) {
+            var file = e.target.files[0]; // Lấy file được chọn
+            if (file) {
+                var reader = new FileReader(); // Tạo FileReader để đọc file
+                reader.onload = function (e) {
+                    $('#imagePreview').attr('src', e.target.result).show(); // Hiển thị ảnh preview
+                };
+                reader.readAsDataURL(file); // Đọc file dưới dạng URL
+            } else {
+                $('#imagePreview').hide(); // Ẩn ảnh nếu không có file
+            }
+        });
+
         $('#submitPetForm').click(function (e) {
             e.preventDefault();
+            // Kiểm tra trường file ảnh
+            var imageFile = $('#imageFile').get(0).files.length;
+            if (imageFile === 0) {
+                alert('Please select a photo before creating a pet.');
+                return; // Ngừng thực hiện nếu không có ảnh
+            }
 
+            // Tạo một FormData để gửi dữ liệu
+            var formData = new FormData($('#createPetForm')[0]);
             $.ajax({
                 type: "POST",
-                url: window.location.pathname + "?handler=CreatePet",
-                data: $('#createPetForm').serialize(),
+                url: window.location.pathname + "?handler=CreatePet", // Cập nhật URL handler cho Pet
+                data: formData,
+                contentType: false, // Không gửi Content-Type
+                processData: false, // Không xử lý dữ liệu
                 success: function (response) {
                     if (response.isSuccess) {
-                        $('#createPetModal').modal('hide');
-                        alert('Create successful');
-                        location.reload();
+                        $('#createPetModal').modal('hide'); // Ẩn modal tạo mới Pet
+                        alert('Create successful'); // Thông báo thành công
+                        location.reload(); // Tải lại trang
                     } else {
                         $('span[data-valmsg-for]').text('');
                         for (const [key, value] of Object.entries(response.errors)) {
-                            $(`span[data-valmsg-for='AddPetRequest.${key}']`).text(value);
+                            $(`span[data-valmsg-for='AddPetRequest.${key}']`).text(value); // Hiển thị lỗi cho từng trường
                         }
                     }
                 },
                 error: function () {
-                    console.log('Có lỗi xảy ra.');
+                    console.log('Error.');
                 }
             });
         });
@@ -247,7 +296,6 @@
     $(document).ready(function () {
         // Khi nhấn nút "Edit"
         $('.edit-pet-button').click(function () {
-            // Lấy dữ liệu từ các thuộc tính data-*
             var id = $(this).data('id');
             var name = $(this).data('name');
             var age = $(this).data('age');
@@ -256,17 +304,16 @@
             var color = $(this).data('color');
             var length = $(this).data('length');
             var weight = $(this).data('weight');
-            var quantity = $(this).data('quantity');
             var lastHealthCheck = $(this).data('lasthealthcheck');
-            var note = $(this).data('note');
             var healthStatus = $(this).data('healthstatus');
+            var quantity = $(this).data('quantity');
+            var note = $(this).data('note');
 
-            // Gán các giá trị vào các trường trong modal
+            // Cập nhật các trường trong modal
             $('#updatePetModal #petId').val(id);
             $('#updatePetModal #name').val(name);
             $('#updatePetModal #age').val(age);
             $('#updatePetModal #gender').val(gender);
-            $('#updatePetModal #imageUrl').val(imageUrl);
             $('#updatePetModal #color').val(color);
             $('#updatePetModal #length').val(length);
             $('#updatePetModal #weight').val(weight);
@@ -274,19 +321,39 @@
             $('#updatePetModal #healthStatus').val(healthStatus);
             $('#updatePetModal #quantity').val(quantity);
             $('#updatePetModal #note').val(note);
+            $('#updatePetModal #imageUrl').val(imageUrl);
+            $('#updatePetModal #petImagePreview').attr('src', imageUrl).show();
 
             // Hiển thị modal
             $('#updatePetModal').modal('show');
         });
 
-        // Xử lý submit form cập nhật
+        // Khi chọn file ảnh
+        $('#petImageFile').change(function (e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    // Cập nhật ảnh xem trước
+                    $('#petImagePreview').attr('src', event.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
         $('#updatePetForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
 
+            // Tạo FormData
+            var formData = new FormData(this);
+            console.log("update");
+            // Gọi Ajax
             $.ajax({
                 type: "POST",
                 url: window.location.pathname + "?handler=UpdatePet", // Gửi đến đúng handler
-                data: $(this).serialize(),
+                data: formData,
+                processData: false, // Ngăn jQuery xử lý dữ liệu
+                contentType: false, // Ngăn jQuery thiết lập Content-Type
                 success: function (response) {
                     if (response.isSuccess) {
                         $('#updatePetModal').modal('hide');
@@ -307,7 +374,6 @@
         });
     });
 </script>
-
 
 <!-- Script cho việc xóa Pet -->
 <script>

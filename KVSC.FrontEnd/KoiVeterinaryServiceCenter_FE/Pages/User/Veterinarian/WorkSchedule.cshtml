@@ -1,0 +1,259 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.WorkScheduleModel
+@{
+    Layout = "_layoutBoard";
+}
+@{
+    var daysOfWeek = new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+    var shifts = new[] { "Morning (8 AM - 12 PM)", "Afternoon (1 PM - 5 PM)", "Evening (6 PM - 9 PM)" };
+}
+<div class="container mt-5">
+    <div style="height: 20px;"></div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <button class="btn btn-outline-primary" id="previousWeekBtn">
+            <i class="fa fa-chevron-left"></i> Previous
+        </button>
+        <h4 class="text-center text-uppercase">
+            Work Schedule for Week: <span id="currentWeek">@Model.CurrentWeek</span>
+        </h4>
+        <button class="btn btn-outline-primary" id="nextWeekBtn">
+            Next <i class="fa fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <div style="height: 30px;"></div>
+        <table class="table table-bordered text-center" id="scheduleTable">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th class="text-uppercase">Shift / Day</th>
+                    @foreach (var day in Model.DaysInWeek)
+                    {
+                        <th>@day.ToString("dd/MM/yyyy")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var shift in Model.Shifts)
+                {
+                    <tr>
+                        <td class="bg-light text-uppercase fw-bold text-center">
+                            <div>@shift</div>
+                            <small class="text-muted d-block">
+                                @(shift == "Morning" ? "08:00 - 12:00" :
+                                    shift == "Afternoon" ? "13:00 - 17:00" :
+                                    "17:00 - 21:00")
+                            </small>
+                        </td>
+                        @foreach (var day in Model.DaysInWeek)
+                        {
+                            string startTime = shift == "Morning" ? "08:00" : shift == "Afternoon" ? "13:00" : "17:00";
+                            string endTime = shift == "Morning" ? "12:00" : shift == "Afternoon" ? "17:00" : "21:00";
+
+                            @if (Model.WeeklySchedule?.Extensions?.Data != null && Model.WeeklySchedule.Extensions.Data.Any())
+                            {
+                                var schedulesForShift = Model.WeeklySchedule.Extensions.Data
+                                .Where(sd => sd.Date.Date == day.Date && sd.Shift == shift && sd.IsAvailable)
+                                    .ToList(); 
+
+                            bool isShiftFull = schedulesForShift.Count >= 2;
+
+                            bool isAssigned = schedulesForShift.Any(sd => sd.VeterinarianName == Model.CurrentVeterinarianName);
+                            DateTime today = DateTime.Today;
+                            <td>
+                                    <div style="height: 10px;"></div>
+                                 @if (day.Date > today && !isAssigned && !isShiftFull)
+                                {
+                                    <button class="btn btn-sm btn-success w-100 mb-2 assign-btn"
+                                            data-date="@day.ToString("yyyy-MM-dd")"
+                                            data-start="@startTime"
+                                            data-end="@endTime">
+                                        Assign to Me
+                                    </button>
+                                }
+                                else if (isAssigned)
+                                {
+                                    <span class="badge bg-warning text-dark d-block">You are assigned</span>
+                                }
+                                else if(day.Date <= today)
+                                {
+                                        <span class="badge bg-danger text-white d-block">Expired</span>
+                                }
+                                else{
+                                    <span class="badge bg-danger text-white d-block">Shift Full</span>
+                                }
+                                    <div style="height: 5px;"></div>
+                                <span class="badge bg-info text-white d-block">
+                                    Available: @schedulesForShift.Count / 2
+                                </span>
+                                    <div style="height: 10px;"></div>
+                            </td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap Modal for Confirmation -->
+    <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignModalLabel">Confirm Shift Assignment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <strong class="text-danger">Are you sure you want to assign this shift to yourself?</strong>
+                    </p>
+                    <p class="text-muted">
+                        <em>(This action cannot be undone)</em>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="assignShiftForm" method="post" asp-page-handler="Register">
+                        <input type="hidden" name="date" id="shiftDate">
+                        <input type="hidden" name="startTime" id="shiftStartTime">
+                        <input type="hidden" name="endTime" id="shiftEndTime">
+                        <button type="submit" class="btn btn-primary" id="confirmAssignBtn">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*  ===========================assign to me =======================================*@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function attachAssignBtnListeners() {
+        document.querySelectorAll('.assign-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                console.log("assign-btn click");
+                const date = btn.getAttribute('data-date');
+                const startTime = btn.getAttribute('data-start');
+                const endTime = btn.getAttribute('data-end');
+
+                document.getElementById('shiftDate').value = date;
+                document.getElementById('shiftStartTime').value = startTime;
+                document.getElementById('shiftEndTime').value = endTime;
+
+                let assignModal = new bootstrap.Modal(document.getElementById('assignModal'));
+                assignModal.show();
+            });
+        });
+    }
+    attachAssignBtnListeners();
+
+    $('#assignShiftForm').submit(function (event) {
+        event.preventDefault();
+
+        const form = $(this);
+
+        $.ajax({
+            type: "POST",
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function (result) {
+                if (result.isSuccess) {
+                    alert("Shift assigned successfully!");
+                    let assignModal = bootstrap.Modal.getInstance(document.getElementById('assignModal'));
+                    assignModal.hide();
+                    // Load lại trang sau khi thành công
+                    location.reload();
+                } else {
+                    if (Array.isArray(result.errors) && result.errors.length > 0) {
+                        alert("Error assigning shift: " + result.errors.join(", "));
+                    } else {
+                        alert("Error assigning shift: An unknown error occurred.");
+                    }
+                }
+            },
+            error: function (xhr) {
+                console.error("Error response:", xhr.responseText);
+                alert("An error occurred while assigning the shift.");
+            }
+        });
+    });
+    //==========================================================================
+
+    document.getElementById('previousWeekBtn').addEventListener('click', async () => {
+        await changeWeek(-7);
+    });
+
+    document.getElementById('nextWeekBtn').addEventListener('click', async () => {
+        await changeWeek(7);
+    });
+
+    async function changeWeek(days) {
+        console.log("chay changeweek");
+
+        const currentWeekText = document.getElementById('currentWeek').innerText;
+        console.log("Current week text:", currentWeekText);
+
+        const dateParts = currentWeekText.split(' ');
+
+        if (dateParts.length < 2) {
+            console.error("Invalid currentWeekText format:", currentWeekText);
+            return;
+        }
+
+        const day = parseInt(dateParts[0]); 
+        let monthShort = dateParts[1]; 
+
+        monthShort = monthShort.charAt(0).toUpperCase() + monthShort.slice(1).toLowerCase();
+
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthIndex = monthNames.indexOf(monthShort);
+
+        if (monthIndex === -1) {
+            console.error("Invalid Month:", monthShort);
+            return;
+        }
+
+        const year = new Date().getFullYear();
+
+        const startDateString = `${year}-${(monthIndex + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+        const currentDate = new Date(startDateString);
+        console.log("Current date:", currentDate);
+
+        if (isNaN(currentDate)) {
+            console.error("Invalid Date:", startDateString);
+            return;
+        }
+
+        const newDate = new Date(currentDate.setDate(currentDate.getDate() + days));
+
+        console.log("New date:", newDate.toISOString());
+
+        const url = `/user/veterinarian/workschedule?handler=WeeklySchedule&currentDay=${newDate.toISOString()}`;
+
+        const response = await fetch(url);
+        if (response.ok) {
+            const resultHtml = await response.text();  
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(resultHtml, 'text/html');
+
+            const newWeek = doc.querySelector('#currentWeek')?.innerText;
+            if (newWeek) {
+                document.getElementById('currentWeek').innerText = newWeek;
+            } else {
+                console.error("Không tìm thấy phần tử #currentWeek trong phản hồi.");
+            }
+
+            const newSchedule = doc.querySelector('#scheduleTable')?.innerHTML;
+            if (newSchedule) {
+                document.getElementById('scheduleTable').innerHTML = newSchedule;
+            } else {
+                console.error("Không tìm thấy phần tử #scheduleTable trong phản hồi.");
+            }
+            attachAssignBtnListeners();
+        } else {
+            alert("Failed to load the new schedule.");
+        }
+    }
+</script>

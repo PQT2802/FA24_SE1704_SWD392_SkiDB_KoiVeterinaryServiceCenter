@@ -1,0 +1,249 @@
+﻿@page
+@using KVSC.Infrastructure.DTOs.Service
+@using KVSC.Infrastructure.DTOs
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.AppointmentsModel
+
+@{
+    Layout = "_LayoutBoard";
+}
+
+<h2 class="text-center my-4">Your Appointments</h2>
+
+<!-- Display success message if available in TempData -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["SuccessMessageRating"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessageRating"]
+    </div>
+}
+
+@if (TempData["ErrorMessageRating"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessageRating"]
+    </div>
+}
+
+<!-- Display error messages if there are any in Model.ErrorMessage -->
+@if (Model.ErrorMessage != null && Model.ErrorMessage.Any())
+{
+    <div class="alert alert-danger text-center">
+        <ul class="mb-0">
+            @foreach (var error in Model.ErrorMessage)
+            {
+                <li>@error.Description</li>
+            }
+        </ul>
+    </div>
+}
+else if (Model.AppointmentList?.Extensions?.Data != null && Model.AppointmentList.Extensions.Data.Any())
+{
+    <div class="table-responsive p-5">
+        <table class="table table-hover table-borderless align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Veterinarian Name</th>
+                    <th>Service Name</th>
+                    <th>Status</th>
+                    <th>Appointment Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var appointment in Model.AppointmentList.Extensions.Data)
+                {
+                    <tr>
+                        <td>@appointment.CustomerName</td>
+                        <td>@appointment.VeterinarianName</td>
+                        <td>@appointment.ServiceName</td>
+                        <td>
+                            <span class="badge @GetStatusBadgeClass(appointment.Status)">
+                                @appointment.Status
+                            </span>
+                        </td>
+                        <td>@appointment.AppointmentDate.ToString("f")</td>
+                        <td>
+                            @if (appointment.VeterinarianName != null && appointment.VeterinarianName != string.Empty)
+                            {
+                            <a class="btn btn-outline-primary btn-sm" 
+                               asp-page="/User/Customer/AppointmentDetail" 
+                               asp-route-appointmentId="@appointment.AppointmentListId">
+                                View Details
+                            </a>
+                            }
+                            @if (appointment.Status == "Completed")
+                            {
+                                <button class="btn btn-outline-primary btn-sm open-rating-modal"
+                                        data-service-id="@appointment.PetServiceId"
+                                        data-customer-id="@appointment.CustomerId">
+                                    <i class="fas fa-star"></i> Rating
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-outline-secondary btn-sm" disabled>
+                                    <i class="fas fa-star"></i> Rating
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="text-muted text-center">No appointments available.</p>
+}
+@* ================================Create Rating Popup=================================== *@
+<!-- Rating Modal -->
+<div id="ratingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="ratingModalLabel">Rating</h5>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <input type="hidden" id="serviceId" name="ServiceId" />
+                    <input type="hidden" id="customerId" name="CustomerId" />
+
+                    <div class="form-group">
+                        <label for="score">Score</label>
+                        <div id="ratingStars" class="d-flex align-items-center">
+                            <i class="far fa-star fa-2x" data-value="1"></i>
+                            <i class="far fa-star fa-2x" data-value="2"></i>
+                            <i class="far fa-star fa-2x" data-value="3"></i>
+                            <i class="far fa-star fa-2x" data-value="4"></i>
+                            <i class="far fa-star fa-2x" data-value="5"></i>
+                            <input type="hidden" id="score" name="Score" required />
+                        </div>
+                    </div>
+                    <div class="my-3"></div>
+                    <div class="form-group">
+                        <label for="feedback">Feedback</label>
+                        <textarea id="feedback" name="Feedback" class="form-control" rows="3" placeholder="Share your experience..." required></textarea>
+                    </div>
+                    <div class="my-5"></div>
+                    <button type="submit" class="btn btn-success w-100">Submit Rating</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ratingModal = document.getElementById("ratingModal");
+        const serviceIdInput = document.getElementById("serviceId");
+        const customerIdInput = document.getElementById("customerId");
+
+        document.querySelectorAll(".open-rating-modal").forEach(button => {
+            button.addEventListener("click", function () {
+                const serviceId = this.getAttribute("data-service-id");
+                const customerId = this.getAttribute("data-customer-id");
+
+                serviceIdInput.value = serviceId;
+                customerIdInput.value = customerId;
+
+                $(ratingModal).modal("show");
+            });
+        });
+
+        document.querySelectorAll("#ratingStars i").forEach((star, index) => {
+            star.addEventListener("click", () => {
+                const rating = index + 1;
+                document.getElementById("score").value = rating;
+
+                document.querySelectorAll("#ratingStars i").forEach((s, i) => {
+                    s.classList.toggle("fas", i < rating);
+                    s.classList.toggle("far", i >= rating);
+                    s.classList.toggle("text-warning", i < rating);
+                });
+            });
+        });
+    });
+      $(document).ready(function () {
+        setTimeout(function () {
+            $(".alert").alert('close');
+        }, 1000); // 1 giây
+    }); 
+</script>
+<!-- Styles for the minimalist modern table -->
+<style>
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .table {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .table thead th {
+        font-weight: 600;
+        color: #555;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.4em 0.7em;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .badge-pending { background-color: #ffc107; }
+    .badge-waiting { background-color: #17a2b8; }
+    .badge-inprogress { background-color: #007bff; }
+    .badge-reported { background-color: #28a745; }
+    .badge-completed { background-color: #6c757d; }
+
+    .btn-outline-primary {
+        font-size: 0.9rem;
+        border-width: 1.5px;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .alert {
+        max-width: 600px;
+        margin: 1rem auto;
+        font-size: 1rem;
+    }
+</style>
+
+<!-- Helper function to get status badge class -->
+@functions {
+    private string GetStatusBadgeClass(string status) => status switch
+    {
+        "Pending" => "badge-pending",
+        "Waiting" => "badge-waiting",
+        "InProgress" => "badge-inprogress",
+        "Reported" => "badge-reported",
+        "Completed" => "badge-completed",
+        _ => "badge-secondary"
+    };
+}

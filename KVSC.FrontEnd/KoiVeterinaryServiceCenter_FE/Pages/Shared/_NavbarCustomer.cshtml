@@ -10,22 +10,60 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link">Services</a>
-                    <a href="pricing.html" class="nav-item nav-link">Pricing</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                            <a href="detail.html" class="dropdown-item">Blog Detail</a>
-                            <a href="team.html" class="dropdown-item">Our Team</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonials</a>
-                            <a href="appointment.html" class="dropdown-item">Book Appointment</a>
-                            <a href="search.html" class="dropdown-item">Search</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a asp-page ="index.cshtml" class="nav-item nav-link active">Home</a>
+                    <a asp-page="/Services" class="nav-item nav-link">Services</a>
+                    <a asp-page="/Appointment" class="nav-item nav-link">Book Appointment</a>
+
+                    @{
+                        var actorRole = Context.Session.GetString("ActorRole");
+                        if (actorRole != null)
+                        {
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    @{
+                                        var actorAvatar = Context.Session.GetString("ActorAvatar");
+                                        if (!string.IsNullOrEmpty(actorAvatar))
+                                        {
+                                            <img class="rounded-circle" src="@actorAvatar" alt="User Avatar" style="width: 40px; height: 40px;">
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle" src="~/img/users.jpg" alt="Default Avatar" style="width: 40px; height: 40px;">
+                                        }
+                                    }
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0 shadow">
+                                    @* Tiêu đề cho menu *@
+                                    <h6 class="dropdown-header">User Menu</h6>
+                                    @if (actorRole == "Admin")
+                                    {
+                                        <a href="/User/Admin/AdminProfile" class="dropdown-item">
+                                            <i class="fa fa-user-shield me-2"></i>My Profile
+                                        </a>
+                                        <a href="/User/Admin/DashBoard" class="dropdown-item">
+                                            <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+                                        </a>
+                                    }
+                                    else if (actorRole == "Customer")
+                                    {
+                                        <a href="/User/Customer/CustomerProfile" class="dropdown-item">
+                                            <i class="fa fa-user me-2"></i>My Profile
+                                        </a>
+                                        <a href="/User/Customer/Pet" class="dropdown-item">
+                                            <i class="fas fa-fish me-2"></i>My Koi
+                                        </a>
+                                    }
+
+                                    <div class="dropdown-divider"></div> <!-- Phân cách giữa các mục -->
+                                    <a href="/Account/Logout" class="dropdown-item text-danger">
+                                        <i class="fa fa-sign-out-alt me-2"></i>Log Out
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                   
                 </div>
             </div>
         </nav>

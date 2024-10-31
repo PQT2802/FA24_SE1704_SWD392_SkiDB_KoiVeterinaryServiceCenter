@@ -60,13 +60,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\User\Manager\" />
-    <Folder Include="Pages\User\Staff\" />
     <Folder Include="wwwroot\img\service-img\" />
   </ItemGroup>
 
   <ItemGroup>
+
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.10" />
+
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
   </ItemGroup>
 

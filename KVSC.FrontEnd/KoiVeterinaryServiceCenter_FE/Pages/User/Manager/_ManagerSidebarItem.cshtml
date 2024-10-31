@@ -1,0 +1,24 @@
+﻿<a asp-page="/User/Manager/DashBoard" class="nav-item nav-link @((Context.Request.Path == "/User/Manager/DashBoard") ? "active" : "")">
+    <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+</a>
+<a asp-page="/User/Manager/ManagerProfile" class="nav-item nav-link @((Context.Request.Path == "/User/Manager/ManagerProfile") ? "active" : "")">
+    <i class="fa fa-user me-2"></i>Profile
+</a>
+<a asp-page="/User/Manager/Rating" class="nav-item nav-link @((Context.Request.Path == "/User/Manager/Rating") ? "active" : "")">
+    <i class="fa fa-star me-2"></i>Ratings
+</a>
+@* <a asp-page="/User/Veterinarian/Appointments" class="nav-item nav-link @((Context.Request.Path == "/User/Veterinarian/Appointments") ? "active" : "")">
+    <i class="fa fa-calendar-check me-2"></i>Appointments
+</a> *@
+@* <a asp-page="/User/Veterinarian/Chat" class="nav-item nav-link @((Context.Request.Path == "/User/Veterinarian/Chat") ? "active" : "")">
+    <i class="fa fa-comments me-2"></i>Koi Care Chat
+</a> *@
+<a asp-page="/User/Manager/ScheduleManagement" class="nav-item nav-link @((Context.Request.Path == "/User/Manager/ScheduleManagement") ? "active" : "")">
+    <i class="fa fa-calendar me-2"></i>Schedule
+</a>
+<a asp-page="/User/Manager/ManageUser" class="nav-item nav-link @((Context.Request.Path == "/User/Manager/ManageUser") ? "active" : "")">
+    <i class="fa fa-user me-2"></i>Manage User
+</a>
+<a asp-page="/Account/Logout" class="nav-item nav-link">
+    <i class="fa fa-sign-out-alt me-2"></i>Logout
+</a>

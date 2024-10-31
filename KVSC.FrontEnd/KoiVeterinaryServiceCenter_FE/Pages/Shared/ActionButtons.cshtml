@@ -59,8 +59,8 @@
 }
 @if (Model.ListType == "pet")
 {
-     <div class="d-flex align-items-center ">
-    <!-- Service List Buttons -->
+     <div class="d-flex align-items-center">
+    <!-- Pet List Buttons -->
         <button class="btn btn-sm btn-primary edit-pet-button  me-2"
             data-id="@Model.Item.Id"
             data-name="@Model.Item.Name"
@@ -78,7 +78,7 @@
             data-bs-target="#updatePetModal">
         Edit
     </button>
-    <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this pet?');">
+    <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this koi fish?');">
         <input type="hidden" name="Id" value="@Model.Item.Id" />
         <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
     </form>
@@ -88,7 +88,7 @@
        asp-route-id="@Model.Item.Id">
         Detail
     </a>
-}
+
     </div>
 }
 @if (Model.ListType == "user")
@@ -123,40 +123,80 @@
         </a>
     </div>
 }
+@if (Model.ListType == "UnassignedAppointment")
+{
+    <div>
+        <button type="button" data-toggle="modal" data-target="#veterinarianModal"
+                onclick="loadVeterinarians('@Model.Item.AppointmentListId')">
+            Choose Veterinarian
+        </button>
+    </div>
+}
 else if (Model.ListType == "appointment")
 {
-    <!-- Appointment List Buttons -->
     @if (string.IsNullOrEmpty(Model.Status))
     {
         <!-- Handle case when Status is null or empty -->
-        <button class="btn btn-sm btn-secondary" disabled>No Status Available</button>
+        <button class="btn btn-outline-secondary btn-sm" disabled>No Status Available</button>
     }
     else
     {
-        <form method="post">
-            <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
-            @switch (Model.Status)
-            {
-                case "Pending":
-                    <button class="btn btn-sm btn-success" type="submit" asp-page-handler="UpdateStatus" asp-route-status="Waiting">Accept</button>
-                    <button class="btn btn-sm btn-warning" type="submit" asp-page-handler="UpdateStatus" asp-route-status="Rejected">Reject</button>
-                    break;
-                case "Waiting":
-                    <button class="btn btn-sm btn-warning" type="submit" asp-page-handler="UpdateStatus" asp-route-status="InProgress">Execute</button>
-                    break;
-                case "InProgress":
-                    <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal" data-bs-target="#reportModal" data-id="@Model.Item.AppointmentListId">Report</button>
-                    break;
-                case "Reported":
-                    <button class="btn btn-sm btn-secondary" disabled>Completed</button>
-                    break;
-                default:
-                    <button class="btn btn-sm btn-secondary" disabled>No Action</button>
-                    break;
-            }
-        </form>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <form method="post" class="d-inline">
+                <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
+                @switch (Model.Status)
+                {
+                    case "Pending":
+                        <button class="btn btn-outline-success btn-sm" type="submit"
+                                asp-page-handler="UpdateStatus" asp-route-status="Waiting">
+                            Accept
+                        </button>
+                        <button class="btn btn-outline-warning btn-sm" type="submit"
+                                asp-page-handler="UpdateStatus" asp-route-status="Rejected">
+                            Reject
+                        </button>
+                        break;
+                    case "Waiting":
+                        <button class="btn btn-outline-warning btn-sm" type="submit"
+                                asp-page-handler="UpdateStatus" asp-route-status="InProgress">
+                            Execute
+                        </button>
+                        break;
+                    case "InProgress":
+                        <button class="btn btn-outline-primary btn-sm" type="button"
+                                data-bs-toggle="modal" data-bs-target="#reportModal"
+                                data-id="@Model.Item.AppointmentListId">
+                            Report
+                        </button>
+                        break;
+                    case "Reported":
+                        <button class="btn btn-secondary btn-sm" disabled>Completed</button>
+                        break;
+                    default:
+                        <button class="btn btn-outline-secondary btn-sm" disabled>No Action</button>
+                        break;
+                }
+            </form>
 
-        <!-- View button for navigation -->
-        <a class="btn btn-sm btn-info" asp-page="/User/Veterinarian/AppointmentDetail" asp-route-appointmentId="@Model.Item.AppointmentListId">View</a>
-}
+            <!-- View button for navigation -->
+            <a class="btn btn-outline-info btn-sm"
+               asp-page="/User/Veterinarian/AppointmentDetail"
+               asp-route-appointmentId="@Model.Item.AppointmentListId">
+                View
+            </a>
+
+            <!-- Send Message Form -->
+            <form method="post" asp-page-handler="Message" class="d-inline">
+                <input type="hidden" name="RecipientId" value="@Model.Item.CustomerId" />
+                <input type="hidden" name="Content"
+                       value="Conversation created for appointment on @Model.Item.AppointmentDate.
+                Service: @Model.Item.ServiceName. This conversation will be stored and used
+                to generate reports about your Koi." />
+
+                <button type="submit" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-chat-dots"></i> Message
+                </button>
+            </form>
+        </div>
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.PetService;
 using KVSC.Infrastructure.DTOs.User.AddUser;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.User.Login;
@@ -29,5 +30,8 @@ namespace KVSC.Application.Interface.IService
 
         Task<Result> DeleteUserAsync(Guid id);
         Task<Result> GetAllRolesAsync();
+        Task<Result> UploadImageAsync(UploadImageRequest request);
+        Task<Result> UpdateVeterinarianAsync(Guid userId, UpdateVeterinarianRequest request);
+        Task<Result> GetVeterinarianByIdAsync(Guid id);
     }
 }

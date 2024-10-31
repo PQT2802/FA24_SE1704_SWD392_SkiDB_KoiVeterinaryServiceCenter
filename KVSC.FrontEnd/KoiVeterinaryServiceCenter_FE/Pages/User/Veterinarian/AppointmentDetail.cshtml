@@ -52,6 +52,12 @@
                 </div>
             </div>
         }
+        else
+        {
+            <div class="col-sm-12 col-xl-6 text-center">
+                No data
+                </div>
+        }
         <!-- Koi Information End -->
         @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailService != null)
         {
@@ -122,6 +128,12 @@
                 <!-- Service Information End -->
             </div>
         }
+        else
+        {
+            <div class="col-sm-12 col-xl-6">
+            No data    
+            </div>
+        }
     </div>
     <div style="height: 20px ;width: 100%;"></div>
     <div class="row g-4">
@@ -151,37 +163,37 @@
                     </div>
                 </div>
             </div>
-        }
-
-        <!-- Prescription Section (Visible if PrescriptionDetail is not null) -->
-        @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport?.PrescriptionDetail != null)
-        {
-            <div class="col-sm-12 col-xl-6">
-                <div class="bg-light rounded h-100 p-4">
-                    <h6 class="mb-4">Prescription Details</h6>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Medicine Name</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var prescription in Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.PrescriptionDetail)
-                            {
+            <!-- Prescription Section (Visible if PrescriptionDetail is not null) -->
+            @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport?.PrescriptionDetail != null)
+            {
+                <div class="col-sm-12 col-xl-6">
+                    <div class="bg-light rounded h-100 p-4">
+                        <h6 class="mb-4">Prescription Details</h6>
+                        <table class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td>@prescription.MedicineName</td>
-                                    <td>@prescription.Quantity</td>
-                                    <td>@prescription.Price</td>
+                                    <th>Medicine Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var prescription in Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.PrescriptionDetail)
+                                {
+                                    <tr>
+                                        <td>@prescription.MedicineName</td>
+                                        <td>@prescription.Quantity</td>
+                                        <td>@prescription.Price</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        }  
         <!-- Vet Information Start -->
+
         <div class="col-sm-12 col-xl-6">
             <div class="row g-4">
                 <!-- Left Column: Information -->

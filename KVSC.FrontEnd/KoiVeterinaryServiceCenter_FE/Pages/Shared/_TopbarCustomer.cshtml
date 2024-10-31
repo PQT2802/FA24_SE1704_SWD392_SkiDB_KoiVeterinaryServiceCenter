@@ -26,6 +26,16 @@
                     <a class="text-body ps-2" href="">
                         <i class="fab fa-youtube"></i>
                     </a>
+                     @{
+                        var actorRole = Context.Session.GetString("ActorRole");
+                        if (actorRole == null)
+                        {
+                             @* Nút Login *@
+                             <a href="/Account/SignIn" class="btn btn-outline-primary ms-3">Login</a>
+                             @* Nút Sign Up *@
+                             <a href="/Account/SignUp" class="btn btn-primary ms-2">Sign Up</a>
+                        };
+                      }
                 </div>
             </div>
         </div>
