@@ -52,6 +52,12 @@
                 </div>
             </div>
         }
+        else
+        {
+            <div class="col-sm-12 col-xl-6 text-center">
+                No data
+                </div>
+        }
         <!-- Koi Information End -->
         @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailService != null)
         {
@@ -120,6 +126,12 @@
                     </div>
                 </div>
                 <!-- Service Information End -->
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-12 col-xl-6">
+            No data    
             </div>
         }
     </div>
