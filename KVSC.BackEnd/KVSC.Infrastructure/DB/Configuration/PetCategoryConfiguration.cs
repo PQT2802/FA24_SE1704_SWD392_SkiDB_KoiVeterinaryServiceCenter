@@ -110,6 +110,16 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ApplicableTo = "Koi Enthusiasts",
                     CreatedDate = DateTime.Now,
                     IsDeleted = false
+                },
+                new PetServiceCategory
+                {
+                    Id = new Guid("ca4801df-081c-4db5-a416-b04891797d92"),
+                    Name = "Koi Care Advisory",
+                    Description = "Advisory sessions on best practices in Koi care, pond management, and maintenance for Koi enthusiasts.",
+                    ServiceType = "Advisory",
+                    ApplicableTo = "Koi Enthusiasts and Pond Owners",
+                    CreatedDate = DateTime.Now,
+                    IsDeleted = false
                 }
             );
         }

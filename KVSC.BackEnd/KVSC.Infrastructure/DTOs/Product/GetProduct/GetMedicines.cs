@@ -10,5 +10,6 @@ namespace KVSC.Infrastructure.DTOs.Product.GetProduct
     {
         public Guid MedicineId { get; set; }
         public string MedicineName { get; set; }
+        public decimal Price { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport
         public string ReportContent { get; set; }
         public string Recommendations { get; set; }
         public bool HasPrescription { get; set; }
-        public List<PrescriptionDetailRequest> PrescriptionDetails { get; set; } = new List<PrescriptionDetailRequest>();
+        public List<PrescriptionDetailRequest>? PrescriptionDetails { get; set; } = new List<PrescriptionDetailRequest>();
     }
 
     public class PrescriptionDetailRequest

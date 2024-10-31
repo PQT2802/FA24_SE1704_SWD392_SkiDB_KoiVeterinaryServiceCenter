@@ -94,7 +94,7 @@ namespace KVSC.Application.Implement.Service
                 serviceReport.PrescriptionId = prescription.Id;
                 await _unitOfWork.ServiceReportRepository.UpdateServiceReportAsync(serviceReport);
             }
-
+            await _unitOfWork.AppointmentRepository.UpdateAppointmentStatusAsync(addServiceReportRequest.AppointmentId, "Reported");
             return Result.SuccessWithObject(createResult);
         }
 

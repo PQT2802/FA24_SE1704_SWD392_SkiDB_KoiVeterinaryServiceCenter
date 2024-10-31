@@ -173,7 +173,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
             .Select(p => new GetMedicines
             {
                 MedicineId = p.Id, // Convert GUID to string
-                MedicineName = p.Name
+                MedicineName = p.Name,
+                Price = p.Price,
             })
             .ToListAsync();
 

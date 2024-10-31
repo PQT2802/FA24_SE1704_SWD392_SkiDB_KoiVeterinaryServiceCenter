@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KVSC.Infrastructure.Migrations
 {
     [DbContext(typeof(KVSCContext))]
-    [Migration("20241031142848_init")]
+    [Migration("20241031200732_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -70,120 +70,120 @@ namespace KVSC.Infrastructure.Migrations
                             EmailTemplateId = new Guid("fe3df183-1f42-4301-a1fb-35e6211c8816"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>You have a new appointment notification for your koi fish:</p>\r\n                    <p>{{AppointmentDetails}}</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(960),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3205),
                             IsDelete = false,
                             Subject = "New Appointment Notification",
                             Type = "AppointmentNotification",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(973)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3216)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("b4a72a2f-77b9-4fa7-8a87-bb1ef61f2446"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>We received a request to reset your password. Click the link below to reset your password:</p>\r\n                    <p><a href='{{ResetLink}}'>Reset Password</a></p>\r\n                    <p>If you did not request a password reset, please ignore this email.</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(976),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3219),
                             IsDelete = false,
                             Subject = "Password Reset Request",
                             Type = "ForgetPassword",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(977)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3220)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("fe241b67-9fb5-49d4-94ec-7801a8e71e9a"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>Your password has been successfully reset. You can now log in with your new password.</p>\r\n                    <p>If you did not request this change, please contact our support team immediately.</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(980),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3223),
                             IsDelete = false,
                             Subject = "Your Password Has Been Reset",
                             Type = "ResetPassword",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(981)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3224)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("e42c3d1a-2e1c-4b2a-92f2-33d1cf2fdc2b"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>Thank you for registering with the Koi Veterinary Service Center. Please confirm your account by clicking the link below:</p>\r\n                    <p><a href='{{ConfirmationLink}}'>Confirm Account</a></p>\r\n                    <p>If you did not register, please ignore this email.</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(983),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3226),
                             IsDelete = false,
                             Subject = "Account Confirmation",
                             Type = "ConfirmationAccount",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(984)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3227)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("c2f45678-1a3d-4012-b4c1-234d5d7f8cde"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>We regret to inform you that your appointment for koi services has been rejected for the following reason:</p>\r\n                    <p>{{RejectionReason}}</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(987),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3232),
                             IsDelete = false,
                             Subject = "Appointment Rejection Notification",
                             Type = "RejectAppointment",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(987)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3233)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("94e2d05c-fbf9-4f1f-bf89-d2298f8b6b4b"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>We are pleased to inform you that your appointment for koi fish care has been approved.</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(990),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3236),
                             IsDelete = false,
                             Subject = "Appointment Approval Notification",
                             Type = "ApproveAppointment",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(991)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3236)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("ef3455b2-3a6e-4cb5-9c6d-a432d9f1c7ab"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>Your account has been successfully activated. You can now log in and start using our koi veterinary services.</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(993),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3238),
                             IsDelete = false,
                             Subject = "Account Activation",
                             Type = "ActivateUser",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(994)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3239)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("46db13e8-7899-432b-ae8c-febc15d0f1b2"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>Your account has been deactivated. If you think this is a mistake, please contact our support team.</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(996),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3240),
                             IsDelete = false,
                             Subject = "Account Deactivation",
                             Type = "DeactivateUser",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(997)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3241)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("f1d7a678-87b5-4c12-b5f2-ae9e4a3d9b8a"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Dear {{UserName}},</p>\r\n                    <p>Your requested koi service titled '{{ServiceTitle}}' has been successfully updated.</p>\r\n                    <p>If you have any questions or need further assistance, please feel free to reach out to us.</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(999),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3243),
                             IsDelete = false,
                             Subject = "Service Update Notification",
                             Type = "UpdateService",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(999)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3244)
                         },
                         new
                         {
                             EmailTemplateId = new Guid("1f7d6a3c-523d-44b6-b9c5-6f3d3c9874f1"),
                             Body = "\r\n                <html>\r\n                <body>\r\n                    <p>Hello {{UserName}},</p>\r\n                    <p>Your service titled '{{ServiceTitle}}' has been deactivated for the following reason:</p>\r\n                    <p>{{DeactivationReason}}</p>\r\n                    <p>Best regards,<br>Koi Veterinary Service Center</p>\r\n                </body>\r\n                </html>",
                             CreateBy = "System",
-                            CreateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1002),
+                            CreateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3247),
                             IsDelete = false,
                             Subject = "Service Deactivation Notification",
                             Type = "DeactivateService",
                             UpdateBy = "System",
-                            UpdateDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1002)
+                            UpdateDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3247)
                         });
                 });
 
@@ -285,7 +285,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
                             AppointmentDate = new DateTime(2024, 11, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2017),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4161),
                             CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             IsDeleted = false,
                             PetId = new Guid("f1111111-1111-1111-1111-111111111111"),
@@ -296,18 +296,18 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
                             AppointmentDate = new DateTime(2024, 11, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2022),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4165),
                             CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             IsDeleted = false,
                             PetId = new Guid("f1111111-1111-1111-1111-111111111111"),
                             PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                            Status = "Waiting"
+                            Status = "Pending"
                         },
                         new
                         {
                             Id = new Guid("33333333-3333-3333-3333-333333333333"),
                             AppointmentDate = new DateTime(2024, 11, 2, 9, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2026),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4169),
                             CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                             IsDeleted = false,
                             PetId = new Guid("f3333333-3333-3333-3333-333333333333"),
@@ -318,27 +318,27 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("44444444-4444-4444-4444-444444444444"),
                             AppointmentDate = new DateTime(2024, 11, 3, 13, 30, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2031),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4172),
                             CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
                             IsDeleted = false,
                             PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
-                            Status = "Waiting"
+                            Status = "Pending"
                         },
                         new
                         {
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
                             AppointmentDate = new DateTime(2024, 11, 5, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2034),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4175),
                             CustomerId = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
                             IsDeleted = false,
                             PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                            Status = "Waiting"
+                            Status = "Pending"
                         },
                         new
                         {
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
                             AppointmentDate = new DateTime(2024, 11, 6, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2067),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4179),
                             CustomerId = new Guid("5f28fcb6-675b-4f97-a925-01ac8c68b5ac"),
                             IsDeleted = false,
                             PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
@@ -348,7 +348,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("77777777-7777-7777-7777-777777777777"),
                             AppointmentDate = new DateTime(2024, 11, 8, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2071),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4182),
                             CustomerId = new Guid("0d1fbbab-a175-4d90-8291-d5d96ebb9359"),
                             IsDeleted = false,
                             PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
@@ -359,7 +359,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
                             AppointmentDate = new DateTime(2024, 11, 10, 14, 0, 0, 0, DateTimeKind.Unspecified),
                             CompletedDate = new DateTime(2024, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2078),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4189),
                             CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             IsDeleted = false,
                             PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
@@ -370,7 +370,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("99999999-9999-9999-9999-999999999999"),
                             AppointmentDate = new DateTime(2024, 11, 12, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             CompletedDate = new DateTime(2024, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2082),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4220),
                             CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                             IsDeleted = false,
                             PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
@@ -381,7 +381,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             AppointmentDate = new DateTime(2024, 11, 7, 11, 0, 0, 0, DateTimeKind.Unspecified),
                             CompletedDate = new DateTime(2024, 11, 7, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2085),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4224),
                             CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
                             IsDeleted = false,
                             PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
@@ -392,7 +392,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                             AppointmentDate = new DateTime(2024, 11, 9, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             CompletedDate = new DateTime(2024, 11, 9, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2089),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4227),
                             CustomerId = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
                             IsDeleted = false,
                             PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
@@ -440,7 +440,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("11111111-aaaa-1111-aaaa-111111111111"),
                             AppointmentId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2172),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4313),
                             IsDeleted = false,
                             VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4")
                         },
@@ -448,7 +448,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("22222222-aaaa-2222-aaaa-222222222222"),
                             AppointmentId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2175),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4316),
                             IsDeleted = false,
                             VeterinarianId = new Guid("21a15a4f-32f5-4d45-a056-f0d61f384e1b")
                         },
@@ -456,7 +456,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("33333333-aaaa-3333-aaaa-333333333333"),
                             AppointmentId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2178),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4318),
                             IsDeleted = false,
                             VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4")
                         },
@@ -464,7 +464,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("44444444-aaaa-4444-aaaa-444444444444"),
                             AppointmentId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2180),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4320),
                             IsDeleted = false,
                             VeterinarianId = new Guid("21a15a4f-32f5-4d45-a056-f0d61f384e1b")
                         },
@@ -472,7 +472,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("55555555-aaaa-5555-aaaa-555555555555"),
                             AppointmentId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2182),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4325),
                             IsDeleted = false,
                             VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4")
                         },
@@ -480,7 +480,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("55555555-bbbb-5555-bbbb-555555555555"),
                             AppointmentId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2184),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4327),
                             IsDeleted = false,
                             VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4")
                         },
@@ -488,7 +488,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("55555555-cccc-5555-cccc-555555555555"),
                             AppointmentId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2187),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4329),
                             IsDeleted = false,
                             VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4")
                         });
@@ -667,131 +667,131 @@ namespace KVSC.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3db6ac65-fc34-484f-a0fb-51928cc74974"),
+                            Id = new Guid("1f7ee732-033e-42c5-876b-97d187114aac"),
                             Content = "Chào bạn, bạn có khỏe không?",
                             RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
                             SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3141)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5259)
                         },
                         new
                         {
-                            Id = new Guid("7d9f3305-a119-4cda-8a72-554df9a4d686"),
+                            Id = new Guid("7cbd0b62-99a0-4540-b4f7-f962a592ca54"),
                             Content = "Mình vẫn khỏe, cảm ơn bạn! Bạn thì sao?",
                             RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3144)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5262)
                         },
                         new
                         {
-                            Id = new Guid("2ce22769-3baa-4c4d-b721-da9a987b07fe"),
+                            Id = new Guid("684f21c8-d539-42af-8144-fc5c715d7433"),
                             Content = "Mình cũng tốt, hôm nay bạn có rảnh không?",
                             RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
                             SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3146)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5266)
                         },
                         new
                         {
-                            Id = new Guid("7621cb9c-ecdc-49f8-91dd-8d90be86c945"),
+                            Id = new Guid("aa19d31c-b4e0-4e6f-8ce3-d1b10ea3ecc4"),
                             Content = "Mình có chút thời gian, bạn cần gì không?",
                             RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3149)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5268)
                         },
                         new
                         {
-                            Id = new Guid("74f0aad6-4a76-4220-a640-8c9854c37fc8"),
+                            Id = new Guid("102d5af4-521e-4ed2-b2cb-69edcef01488"),
                             Content = "Mình muốn hỏi bạn về dự án mới.",
                             RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
                             SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3151)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5270)
                         },
                         new
                         {
-                            Id = new Guid("8f6d8987-27ff-460e-920f-f6324a9ea0e1"),
+                            Id = new Guid("97769c6e-2720-4fbf-89ab-9e4e8053377d"),
                             Content = "Chắc chắn rồi! Bạn cần biết gì?",
                             RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3153)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5273)
                         },
                         new
                         {
-                            Id = new Guid("3e0deac2-f720-44f0-9f46-270fbdeadaec"),
+                            Id = new Guid("a378c134-b172-4a91-9df7-56138fc58886"),
                             Content = "Bạn có thông tin chi tiết về tiến độ không?",
                             RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
                             SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3157)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5275)
                         },
                         new
                         {
-                            Id = new Guid("a4df470f-53fa-4ec6-b827-2b8a0af1f6c2"),
+                            Id = new Guid("f9bf0b97-10cd-4729-b304-ad9a0aca8870"),
                             Content = "Tôi sẽ gửi cho bạn một bản tóm tắt.",
                             RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3159)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5279)
                         },
                         new
                         {
-                            Id = new Guid("ea93c3bd-66ef-480d-9d7d-bb7deeced94f"),
+                            Id = new Guid("7a6c82ba-2f9c-4286-b956-f2505b61d29f"),
                             Content = "Cảm ơn bạn, tôi sẽ xem xét ngay.",
                             RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
                             SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3162)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5281)
                         },
                         new
                         {
-                            Id = new Guid("2917fc07-99e5-40ea-acc3-81d9eece1ff2"),
+                            Id = new Guid("a9274bdb-9243-4a35-a48d-78efb6ed2157"),
                             Content = "Không có gì, mình luôn sẵn lòng giúp đỡ.",
                             RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3164)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5283)
                         },
                         new
                         {
-                            Id = new Guid("f71d5d0c-81f3-47e3-9add-4bf605e0ebd0"),
+                            Id = new Guid("2ab797f5-85ca-47ec-b8da-299d5c624881"),
                             Content = "Xin chào! Tôi là bác sĩ thú y, bạn cần tôi giúp gì về cá koi của bạn?",
                             RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(3166)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(5286)
                         },
                         new
                         {
-                            Id = new Guid("18f8544b-8df7-48ec-9fc0-438b41d58012"),
+                            Id = new Guid("601ff594-fe74-49d4-a61b-14d05bb196e5"),
                             Content = "Chào bác sĩ! Con koi của tôi có dấu hiệu lờ đờ và không ăn. Tôi rất lo lắng.",
                             RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
                             SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 29, 46, 814, DateTimeKind.Local).AddTicks(3168)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 8, 29, 922, DateTimeKind.Local).AddTicks(5289)
                         },
                         new
                         {
-                            Id = new Guid("d7100361-1ab3-42cb-9909-b4ccc7c9cb22"),
+                            Id = new Guid("8a642298-53d4-428b-85ba-8e83af78f42d"),
                             Content = "Tôi hiểu. Bạn có thể cho tôi biết nhiệt độ nước và tình trạng nước trong hồ không?",
                             RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 30, 46, 814, DateTimeKind.Local).AddTicks(3170)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 9, 29, 922, DateTimeKind.Local).AddTicks(5291)
                         },
                         new
                         {
-                            Id = new Guid("e49e5b6f-7c88-4223-ab5b-42e9fb5738b5"),
+                            Id = new Guid("dccca2b6-674e-4b3a-99d8-cdc637722159"),
                             Content = "Nhiệt độ nước là 20 độ C và nước có vẻ trong, nhưng tôi thấy một ít tảo xanh.",
                             RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
                             SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 31, 46, 814, DateTimeKind.Local).AddTicks(3172)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 10, 29, 922, DateTimeKind.Local).AddTicks(5293)
                         },
                         new
                         {
-                            Id = new Guid("40308f4f-4b5a-469e-b923-c63cf9fbeee8"),
+                            Id = new Guid("ffb9415b-2102-4cc8-9cc2-fced663ad1f4"),
                             Content = "Tảo có thể ảnh hưởng đến chất lượng nước. Tôi khuyên bạn nên kiểm tra pH và amoniac trong nước. Có thể sử dụng bộ thử nghiệm nước để làm điều này.",
                             RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 32, 46, 814, DateTimeKind.Local).AddTicks(3176)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 11, 29, 922, DateTimeKind.Local).AddTicks(5295)
                         },
                         new
                         {
-                            Id = new Guid("09f5eb23-2717-4a12-884c-d2dbb5afde44"),
+                            Id = new Guid("10ee246a-9048-403f-a74a-d17b6294033a"),
                             Content = "Cảm ơn bác sĩ! Tôi sẽ kiểm tra và liên lạc lại nếu cần thêm giúp đỡ.",
                             RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
                             SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                            Timestamp = new DateTime(2024, 10, 31, 21, 33, 46, 814, DateTimeKind.Local).AddTicks(3178)
+                            Timestamp = new DateTime(2024, 11, 1, 3, 12, 29, 922, DateTimeKind.Local).AddTicks(5297)
                         });
                 });
 
@@ -1022,7 +1022,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("f1111111-1111-1111-1111-111111111111"),
                             Age = 3,
                             Color = "Orange and White",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2272),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4411),
                             Gender = "Male",
                             HealthStatus = 1,
                             ImageUrl = "https://example.com/koi1.jpg",
@@ -1041,7 +1041,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("f2222222-2222-2222-2222-222222222222"),
                             Age = 4,
                             Color = "Red and White",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2284),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4423),
                             Gender = "Female",
                             HealthStatus = 2,
                             ImageUrl = "https://example.com/koi2.jpg",
@@ -1060,7 +1060,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("f3333333-3333-3333-3333-333333333333"),
                             Age = 2,
                             Color = "Yellow and White",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2290),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4429),
                             Gender = "Male",
                             HealthStatus = 1,
                             ImageUrl = "https://example.com/koi3.jpg",
@@ -1079,7 +1079,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("f4444444-4444-4444-4444-444444444444"),
                             Age = 1,
                             Color = "Black and White",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2294),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4433),
                             Gender = "Female",
                             HealthStatus = 1,
                             ImageUrl = "https://example.com/koi4.jpg",
@@ -1098,7 +1098,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("f5555555-5555-5555-5555-555555555555"),
                             Age = 5,
                             Color = "Blue and White",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2298),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4437),
                             Gender = "Male",
                             HealthStatus = 1,
                             ImageUrl = "https://example.com/koi5.jpg",
@@ -1117,7 +1117,7 @@ namespace KVSC.Infrastructure.Migrations
                             Id = new Guid("f6666666-6666-6666-6666-666666666666"),
                             Age = 2,
                             Color = "White",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2303),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4444),
                             Gender = "Female",
                             HealthStatus = 1,
                             ImageUrl = "https://example.com/koi6.jpg",
@@ -1166,14 +1166,14 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(3049),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(5158),
                             HabitatType = "Freshwater Pond",
                             IsDeleted = false
                         },
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(3051),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(5160),
                             HabitatType = "Saltwater Pond",
                             IsDeleted = false
                         });
@@ -1240,7 +1240,7 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 10, 31, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             BasePrice = 150.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1674),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3820),
                             Duration = "3 hours",
                             ImageUrl = "https://example.com/image7.jpg",
                             IsDeleted = false,
@@ -1254,7 +1254,7 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 10, 31, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             BasePrice = 100.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1678),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3825),
                             Duration = "2 hours",
                             ImageUrl = "https://example.com/image5.jpg",
                             IsDeleted = false,
@@ -1268,7 +1268,7 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 3, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 10, 25, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             BasePrice = 20.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1683),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3829),
                             Duration = "45 minutes",
                             ImageUrl = "https://example.com/image3.jpg",
                             IsDeleted = false,
@@ -1282,7 +1282,7 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 3, 22, 10, 20, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 10, 4, 2, 10, 20, 0, DateTimeKind.Unspecified),
                             BasePrice = 29.99m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1686),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3834),
                             Duration = "30 minutes",
                             ImageUrl = "https://example.com/image.jpg",
                             IsDeleted = false,
@@ -1296,7 +1296,7 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 5, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 10, 20, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             BasePrice = 30.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1690),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3838),
                             Duration = "1 hour",
                             ImageUrl = "https://example.com/image2.jpg",
                             IsDeleted = false,
@@ -1310,7 +1310,7 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 10, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 10, 15, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             BasePrice = 75.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1694),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3842),
                             Duration = "1.5 hours",
                             ImageUrl = "https://example.com/image4.jpg",
                             IsDeleted = false,
@@ -1324,7 +1324,7 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 3, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 10, 28, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             BasePrice = 40.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1700),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3845),
                             Duration = "1 hour",
                             ImageUrl = "https://example.com/image8.jpg",
                             IsDeleted = false,
@@ -1338,7 +1338,7 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 4, 14, 2, 32, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 11, 3, 14, 2, 32, 0, DateTimeKind.Unspecified),
                             BasePrice = 1.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1703),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3850),
                             Duration = "string",
                             ImageUrl = "string",
                             IsDeleted = false,
@@ -1352,13 +1352,27 @@ namespace KVSC.Infrastructure.Migrations
                             AvailableFrom = new DateTime(2024, 10, 5, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             AvailableTo = new DateTime(2024, 10, 30, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             BasePrice = 60.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1707),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3854),
                             Duration = "1 hour",
                             ImageUrl = "https://example.com/image6.jpg",
                             IsDeleted = false,
                             Name = "Pond Maintenance",
                             PetServiceCategoryId = new Guid("82b86176-d076-4576-b0f3-60220ca3e5ba"),
                             TravelCost = 15.00m
+                        },
+                        new
+                        {
+                            Id = new Guid("c33e3a87-0230-428b-8c06-ee91b7e8cc21"),
+                            AvailableFrom = new DateTime(2024, 10, 5, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            AvailableTo = new DateTime(2024, 10, 30, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            BasePrice = 20.00m,
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3858),
+                            Duration = "1 hour",
+                            ImageUrl = "https://example.com/image6.jpg",
+                            IsDeleted = false,
+                            Name = "Koi Care Advisory",
+                            PetServiceCategoryId = new Guid("ca4801df-081c-4db5-a416-b04891797d92"),
+                            TravelCost = 0m
                         });
                 });
 
@@ -1408,7 +1422,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("83d70177-2e40-49c9-a0bf-27ce80cce340"),
                             ApplicableTo = "Koi Fish",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1500),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3680),
                             Description = "A standard health check for Koi fish to monitor their overall well-being and prevent diseases.",
                             IsDeleted = false,
                             Name = "Health Check",
@@ -1418,7 +1432,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("fe3df183-1f42-4301-a1fb-35e6211c8816"),
                             ApplicableTo = "Koi Fish",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1503),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3683),
                             Description = "Specialized feeding service for Koi fish, ensuring proper nutrition and dietary requirements.",
                             IsDeleted = false,
                             Name = "Feeding Service",
@@ -1428,7 +1442,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("75efc332-0e1b-4d35-a609-4897d83c173e"),
                             ApplicableTo = "Koi Fish",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1506),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3685),
                             Description = "Testing water quality parameters to ensure a healthy environment for Koi.",
                             IsDeleted = false,
                             Name = "Water Quality Testing",
@@ -1438,7 +1452,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("a5e47a8f-f6e1-4c7a-8955-4a928744f9bf"),
                             ApplicableTo = "Koi Fish",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1509),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3688),
                             Description = "Treatment services for Koi suffering from fungal infections.",
                             IsDeleted = false,
                             Name = "Fungal Treatment",
@@ -1448,7 +1462,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("da91046c-71d1-429b-ade3-5e8ff9f701a6"),
                             ApplicableTo = "Koi Fish",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1511),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3690),
                             Description = "Services to treat and prevent parasites in Koi fish.",
                             IsDeleted = false,
                             Name = "Parasite Treatment",
@@ -1458,7 +1472,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("82b86176-d076-4576-b0f3-60220ca3e5ba"),
                             ApplicableTo = "Ponds",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1514),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3693),
                             Description = "Regular maintenance services for Koi ponds to ensure optimal conditions.",
                             IsDeleted = false,
                             Name = "Pond Maintenance",
@@ -1468,7 +1482,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("3d3bb172-c3d0-4d0f-ac50-713708bc6498"),
                             ApplicableTo = "Koi Fish",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1544),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3700),
                             Description = "Guidance and assistance in breeding Koi fish.",
                             IsDeleted = false,
                             Name = "Koi Breeding Assistance",
@@ -1478,7 +1492,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("15c55a94-06fb-4dac-8b32-7c1d7af085a3"),
                             ApplicableTo = "Koi Fish",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1547),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3702),
                             Description = "Safe transportation services for Koi fish.",
                             IsDeleted = false,
                             Name = "Koi Transportation",
@@ -1488,7 +1502,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("fb21c5e6-5db5-4dab-99b1-9c5d51f0ab51"),
                             ApplicableTo = "Koi Fish",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1551),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3705),
                             Description = "Emergency medical services for Koi in distress.",
                             IsDeleted = false,
                             Name = "Emergency Care",
@@ -1498,11 +1512,21 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("ca3801df-081c-4db5-a416-b04791797d92"),
                             ApplicableTo = "Koi Enthusiasts",
-                            CreatedDate = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1554),
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3707),
                             Description = "Workshops on Koi care and pond management.",
                             IsDeleted = false,
                             Name = "Educational Workshops",
                             ServiceType = "Education"
+                        },
+                        new
+                        {
+                            Id = new Guid("ca4801df-081c-4db5-a416-b04891797d92"),
+                            ApplicableTo = "Koi Enthusiasts and Pond Owners",
+                            CreatedDate = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(3709),
+                            Description = "Advisory sessions on best practices in Koi care, pond management, and maintenance for Koi enthusiasts.",
+                            IsDeleted = false,
+                            Name = "Koi Care Advisory",
+                            ServiceType = "Advisory"
                         });
                 });
 
@@ -1548,7 +1572,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e1111111-1111-1111-1111-111111111111"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2386),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4520),
                             GeneralType = "Fish",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1557,7 +1581,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e2222222-2222-2222-2222-222222222222"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2389),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4523),
                             GeneralType = "Fish",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1566,7 +1590,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e3333333-3333-3333-3333-333333333333"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2391),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4525),
                             GeneralType = "Reptile",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1575,7 +1599,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e4444444-4444-4444-4444-444444444444"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2395),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4527),
                             GeneralType = "Mammal",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1584,7 +1608,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e5555555-5555-5555-5555-555555555555"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2397),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4529),
                             GeneralType = "Mammal",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1593,7 +1617,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e6666666-6666-6666-6666-666666666666"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2399),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4531),
                             GeneralType = "Bird",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1602,7 +1626,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e7777777-7777-7777-7777-777777777777"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2401),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4533),
                             GeneralType = "Bird",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1611,7 +1635,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e8888888-8888-8888-8888-888888888888"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2403),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4536),
                             GeneralType = "Fish",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1620,7 +1644,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e9999999-9999-9999-9999-999999999999"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2405),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4538),
                             GeneralType = "Reptile",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1629,7 +1653,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("eaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2407),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4540),
                             GeneralType = "Mammal",
                             IsDeleted = false,
                             PetHabitatId = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -1676,7 +1700,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2833),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4938),
                             IsDeleted = false,
                             PrescriptionDate = new DateTime(2024, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ServiceReportId = new Guid("22222222-2222-2222-2222-222222222222")
@@ -1684,7 +1708,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2836),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4941),
                             IsDeleted = false,
                             PrescriptionDate = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ServiceReportId = new Guid("44444444-4444-4444-4444-444444444444")
@@ -1692,7 +1716,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("33333333-3333-3333-3333-333333333333"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2838),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4943),
                             IsDeleted = false,
                             PrescriptionDate = new DateTime(2024, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ServiceReportId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
@@ -1820,7 +1844,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2514),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4614),
                             Description = "Medicine to treat parasite infections in Koi.",
                             ImageUrl = "https://example.com/image1.jpg",
                             IsDeleted = false,
@@ -1832,7 +1856,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2520),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4618),
                             Description = "Water conditioner for Koi ponds.",
                             ImageUrl = "https://example.com/image2.jpg",
                             IsDeleted = false,
@@ -1844,7 +1868,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("33333333-3333-3333-3333-333333333333"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2523),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4621),
                             Description = "Nutritional supplement to enhance Koi growth.",
                             ImageUrl = "https://example.com/image3.jpg",
                             IsDeleted = false,
@@ -1856,7 +1880,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("44444444-4444-4444-4444-444444444444"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2526),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4623),
                             Description = "Stabilizes the pH level of pond water.",
                             ImageUrl = "https://example.com/image4.jpg",
                             IsDeleted = false,
@@ -1868,7 +1892,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2528),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4647),
                             Description = "Treatment for fungal infections in Koi.",
                             ImageUrl = "https://example.com/image5.jpg",
                             IsDeleted = false,
@@ -1880,7 +1904,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2531),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4651),
                             Description = "Replacement filter for Koi ponds.",
                             ImageUrl = "https://example.com/image6.jpg",
                             IsDeleted = false,
@@ -1892,7 +1916,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("77777777-7777-7777-7777-777777777777"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2533),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4653),
                             Description = "Antibiotic for treating bacterial infections in Koi.",
                             ImageUrl = "https://example.com/image7.jpg",
                             IsDeleted = false,
@@ -1904,7 +1928,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2536),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4656),
                             Description = "Prevents algae buildup in Koi ponds.",
                             ImageUrl = "https://example.com/image8.jpg",
                             IsDeleted = false,
@@ -1916,7 +1940,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("99999999-9999-9999-9999-999999999999"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2538),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4658),
                             Description = "Controls parasite infections in Koi.",
                             ImageUrl = "https://example.com/image9.jpg",
                             IsDeleted = false,
@@ -1928,7 +1952,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2542),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4660),
                             Description = "Increases oxygen levels in Koi ponds.",
                             ImageUrl = "https://example.com/image10.jpg",
                             IsDeleted = false,
@@ -1976,7 +2000,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2623),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4739),
                             Description = "Medicines for Koi fish treatments.",
                             IsDeleted = false,
                             Name = "Medicines"
@@ -1984,7 +2008,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2626),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4742),
                             Description = "Products for water conditioning and treatment.",
                             IsDeleted = false,
                             Name = "Water Treatment"
@@ -1992,7 +2016,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("33333333-3333-3333-3333-333333333333"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2627),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4744),
                             Description = "Equipment and accessories for Koi ponds.",
                             IsDeleted = false,
                             Name = "Pond Equipment"
@@ -2000,7 +2024,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("44444444-4444-4444-4444-444444444444"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2629),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4747),
                             Description = "Food and nutritional supplements for Koi fish.",
                             IsDeleted = false,
                             Name = "Food & Nutrition"
@@ -2008,7 +2032,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2630),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4748),
                             Description = "Devices and kits for monitoring Koi health.",
                             IsDeleted = false,
                             Name = "Health Monitoring"
@@ -2016,7 +2040,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2632),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4750),
                             Description = "Products for cleaning and maintaining Koi ponds.",
                             IsDeleted = false,
                             Name = "Cleaning & Maintenance"
@@ -2024,7 +2048,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("77777777-7777-7777-7777-777777777777"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2634),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4751),
                             Description = "Supplies for Koi breeding and spawning.",
                             IsDeleted = false,
                             Name = "Breeding Supplies"
@@ -2032,7 +2056,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2637),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4752),
                             Description = "Materials and accessories for pond landscaping.",
                             IsDeleted = false,
                             Name = "Pond Landscaping"
@@ -2040,7 +2064,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("99999999-9999-9999-9999-999999999999"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2638),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4754),
                             Description = "Tools and equipment for safe fish transportation.",
                             IsDeleted = false,
                             Name = "Fish Transportation"
@@ -2048,7 +2072,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2640),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4755),
                             Description = "Essential supplies for emergency situations with Koi fish.",
                             IsDeleted = false,
                             Name = "Emergency Supplies"
@@ -2101,7 +2125,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("1b2c3d4e-5f6a-7b8c-9d10-11e12f13a14b"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(3265),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(5374),
                             CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             Feedback = "Excellent service!",
                             IsDeleted = false,
@@ -2111,7 +2135,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("2e3f4a5b-6c7d-8e9f-0a1b-21c22d23e24f"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(3269),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(5378),
                             CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
                             Feedback = "Good service but could be faster.",
                             IsDeleted = false,
@@ -2120,8 +2144,8 @@ namespace KVSC.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fae595dd-a1e3-4e26-8079-9de8c343bf1a"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(3272),
+                            Id = new Guid("86f2948a-06d4-46e9-8b84-3fee052d9112"),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(5382),
                             CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                             Feedback = "Average experience.",
                             IsDeleted = false,
@@ -2130,8 +2154,8 @@ namespace KVSC.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("35fbb78b-2e55-4946-ac39-1bd1ba5c0e45"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(3274),
+                            Id = new Guid("dfc123b8-1968-4f1b-bc29-ada01d2a1a23"),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(5385),
                             CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                             Feedback = "Not satisfied with the waiting time.",
                             IsDeleted = false,
@@ -2140,8 +2164,8 @@ namespace KVSC.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7949189b-f88b-43ed-a262-4a14ebb43874"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(3279),
+                            Id = new Guid("e6e6647c-8e69-45c5-b746-a8e5875310cb"),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(5388),
                             CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                             Feedback = "Very professional and caring staff.",
                             IsDeleted = false,
@@ -2250,7 +2274,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("44444444-4444-4444-4444-444444444444"),
                             AppointmentId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2721),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4834),
                             HasPrescription = true,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2263,7 +2287,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
                             AppointmentId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2726),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4840),
                             HasPrescription = false,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2275,7 +2299,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
                             AppointmentId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2729),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4843),
                             HasPrescription = true,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2288,7 +2312,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("33333333-3333-3333-3333-333333333333"),
                             AppointmentId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2733),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4846),
                             HasPrescription = false,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2300,7 +2324,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
                             AppointmentId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2735),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4848),
                             HasPrescription = false,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2312,7 +2336,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
                             AppointmentId = new Guid("66666666-6666-6666-6666-666666666666"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2739),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4851),
                             HasPrescription = false,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2324,7 +2348,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("77777777-7777-7777-7777-777777777777"),
                             AppointmentId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2742),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4853),
                             HasPrescription = false,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2336,7 +2360,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("88888888-8888-8888-8888-888888888888"),
                             AppointmentId = new Guid("88888888-8888-8888-8888-888888888888"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2744),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4855),
                             HasPrescription = false,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2348,7 +2372,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("99999999-9999-9999-9999-999999999999"),
                             AppointmentId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2746),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4858),
                             HasPrescription = false,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2360,7 +2384,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             AppointmentId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(2749),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4861),
                             HasPrescription = true,
                             IsCompleted = true,
                             IsDeleted = false,
@@ -2475,7 +2499,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("4feb4940-94dc-4aed-b580-ee116b668704"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1142),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3374),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             FullName = "Admin",
@@ -2490,7 +2514,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1151),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3395),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "manager@gmail.com",
                             FullName = "Manager",
@@ -2504,7 +2528,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1154),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3401),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "veterinarian1@gmail.com",
                             FullName = "Veterinarian_1",
@@ -2519,7 +2543,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1168),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3404),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "veterinarian2@gmail.com",
                             FullName = "Veterinarian_2",
@@ -2534,7 +2558,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("d78f90b4-9e62-4b45-9e6e-0a01e5931234"),
                             Address = "456 Elm St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1170),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3407),
                             DateOfBirth = new DateTime(1985, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "veterinarian3@gmail.com",
                             FullName = "Veterinarian_3",
@@ -2549,7 +2573,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("5f28fcb6-675b-4f97-a925-01ac8c68b5ac"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1174),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3409),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "staff1@gmail.com",
                             FullName = "Staff_1",
@@ -2563,7 +2587,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("0d1fbbab-a175-4d90-8291-d5d96ebb9359"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1206),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3411),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "staff2@gmail.com",
                             FullName = "Staff_2",
@@ -2577,7 +2601,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1209),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3414),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer1@gmail.com",
                             FullName = "Customer_1",
@@ -2592,7 +2616,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1212),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3416),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer2@gmail.com",
                             FullName = "Customer_2",
@@ -2606,7 +2630,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                             Address = "123 Main St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1214),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3420),
                             DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer3@gmail.com",
                             FullName = "Customer_3",
@@ -2620,7 +2644,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("d13e5c69-8d8a-4b67-b378-0e2de003816b"),
                             Address = "456 Elm St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1216),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3422),
                             DateOfBirth = new DateTime(1992, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer4@gmail.com",
                             FullName = "Customer_4",
@@ -2634,7 +2658,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("a1d5c6e2-4f26-4860-9f3e-563a07f1cbf6"),
                             Address = "789 Pine St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1222),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3448),
                             DateOfBirth = new DateTime(1993, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer5@gmail.com",
                             FullName = "Customer_5",
@@ -2648,7 +2672,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("6b1f16be-c12a-4709-95d4-f0c623239823"),
                             Address = "321 Maple St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1224),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3450),
                             DateOfBirth = new DateTime(1994, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer6@gmail.com",
                             FullName = "Customer_6",
@@ -2662,7 +2686,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("f1f55d2a-b96f-4c74-b89e-e4c29a1d8e2e"),
                             Address = "654 Cedar St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1226),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3453),
                             DateOfBirth = new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer7@gmail.com",
                             FullName = "Customer_7",
@@ -2676,7 +2700,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("ca28f1ab-1cfc-4e99-835f-e44c65756bb3"),
                             Address = "987 Birch St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1229),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3455),
                             DateOfBirth = new DateTime(1996, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer8@gmail.com",
                             FullName = "Customer_8",
@@ -2690,7 +2714,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("c30d6f58-b8e0-4fb4-b10c-f9c2af7a3622"),
                             Address = "159 Willow St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1231),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3457),
                             DateOfBirth = new DateTime(1997, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer9@gmail.com",
                             FullName = "Customer_9",
@@ -2704,7 +2728,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("a41b99c8-7d70-4c8c-9bc3-e249f93c9278"),
                             Address = "753 Cherry St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1233),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3460),
                             DateOfBirth = new DateTime(1998, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer10@gmail.com",
                             FullName = "Customer_10",
@@ -2718,7 +2742,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("e79cb43f-3b60-4d8d-84c5-579c1d6c80e4"),
                             Address = "852 Oak St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1236),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3464),
                             DateOfBirth = new DateTime(1999, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer11@gmail.com",
                             FullName = "Customer_11",
@@ -2732,7 +2756,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("f81253a8-7937-4c29-80d3-bcfa0522f9e8"),
                             Address = "963 Sycamore St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1238),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3466),
                             DateOfBirth = new DateTime(2000, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer12@gmail.com",
                             FullName = "Customer_12",
@@ -2746,7 +2770,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("4b171e29-8041-4d4d-a96d-4f7efc1f635b"),
                             Address = "357 Fir St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1242),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3468),
                             DateOfBirth = new DateTime(1988, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer13@gmail.com",
                             FullName = "Customer_13",
@@ -2760,7 +2784,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("c4e31a0b-982b-43e5-bb52-93b7c2e4b307"),
                             Address = "258 Spruce St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1245),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3471),
                             DateOfBirth = new DateTime(1987, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer14@gmail.com",
                             FullName = "Customer_14",
@@ -2774,7 +2798,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("a255eb98-d5b4-4e57-bbff-1de8c6b844b0"),
                             Address = "369 Redwood St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1248),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3473),
                             DateOfBirth = new DateTime(1986, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer15@gmail.com",
                             FullName = "Customer_15",
@@ -2788,7 +2812,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("79a27f2e-e21b-49b1-99a3-e66b18c5cba0"),
                             Address = "147 Palm St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1250),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3475),
                             DateOfBirth = new DateTime(1985, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer16@gmail.com",
                             FullName = "Customer_16",
@@ -2802,7 +2826,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("e3c1e155-dbc4-40a8-8a5a-091557942c55"),
                             Address = "258 Acacia St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1252),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3478),
                             DateOfBirth = new DateTime(1984, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer17@gmail.com",
                             FullName = "Customer_17",
@@ -2816,7 +2840,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("0f43fda0-fbde-4079-8ae4-66da674c8455"),
                             Address = "369 Larch St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1255),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3480),
                             DateOfBirth = new DateTime(1983, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer18@gmail.com",
                             FullName = "Customer_18",
@@ -2830,7 +2854,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("fe29d53f-44b8-40b5-8672-bb37f6b5c8c5"),
                             Address = "579 Fir St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1257),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3484),
                             DateOfBirth = new DateTime(1982, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer19@gmail.com",
                             FullName = "Customer_19",
@@ -2844,7 +2868,7 @@ namespace KVSC.Infrastructure.Migrations
                         {
                             Id = new Guid("c5e4f6e5-bd3c-4fd5-b3d7-8a7f9c8e3b44"),
                             Address = "690 Cedar St",
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1259),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3486),
                             DateOfBirth = new DateTime(1981, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer20@gmail.com",
                             FullName = "Customer_20",
@@ -2903,7 +2927,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1805),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3966),
                             IsDeleted = false,
                             LicenseNumber = "VN123456",
                             Qualifications = "Doctor of Veterinary Medicine (DVM)",
@@ -2913,7 +2937,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("21a15a4f-32f5-4d45-a056-f0d61f384e1b"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1808),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3971),
                             IsDeleted = false,
                             LicenseNumber = "VN789012",
                             Qualifications = "PhD in Veterinary Science",
@@ -2923,7 +2947,7 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("b87a3240-e68a-4f38-8f14-7a56f7b9d123"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1811),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(3974),
                             IsDeleted = false,
                             LicenseNumber = "VN345678",
                             Qualifications = "Master's in Veterinary Medicine",
@@ -2978,8 +3002,8 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("9f6e0f34-45c2-46ea-8d65-8191d7c6fa6f"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1905),
-                            Date = new DateTime(2024, 11, 4, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1885),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4056),
+                            Date = new DateTime(2024, 11, 4, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(4038),
                             EndTime = new TimeSpan(0, 12, 0, 0, 0),
                             IsAvailable = true,
                             IsDeleted = false,
@@ -2989,8 +3013,8 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("24ab377f-4312-495f-8f6f-738d347f70b3"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1909),
-                            Date = new DateTime(2024, 11, 5, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1885),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4060),
+                            Date = new DateTime(2024, 11, 5, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(4038),
                             EndTime = new TimeSpan(0, 17, 0, 0, 0),
                             IsAvailable = true,
                             IsDeleted = false,
@@ -3000,8 +3024,8 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("d0f377db-34e2-4b65-8f2f-76d347e70b41"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1913),
-                            Date = new DateTime(2024, 11, 6, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1885),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4063),
+                            Date = new DateTime(2024, 11, 6, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(4038),
                             EndTime = new TimeSpan(0, 12, 0, 0, 0),
                             IsAvailable = true,
                             IsDeleted = false,
@@ -3011,8 +3035,8 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c034eaf7-d41b-46e1-bb5f-84843f4793c6"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1916),
-                            Date = new DateTime(2024, 10, 31, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1885),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4065),
+                            Date = new DateTime(2024, 11, 7, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(4038),
                             EndTime = new TimeSpan(0, 17, 0, 0, 0),
                             IsAvailable = true,
                             IsDeleted = false,
@@ -3022,8 +3046,8 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("eb0f377d-3412-4c62-8f6f-738d347f70b4"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1919),
-                            Date = new DateTime(2024, 11, 1, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1885),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4068),
+                            Date = new DateTime(2024, 11, 1, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(4038),
                             EndTime = new TimeSpan(0, 17, 0, 0, 0),
                             IsAvailable = true,
                             IsDeleted = false,
@@ -3033,8 +3057,8 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("75856d7e-125c-4a36-9e24-fabc6d8a7e31"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1922),
-                            Date = new DateTime(2024, 11, 2, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1885),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4071),
+                            Date = new DateTime(2024, 11, 2, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(4038),
                             EndTime = new TimeSpan(0, 12, 0, 0, 0),
                             IsAvailable = true,
                             IsDeleted = false,
@@ -3044,8 +3068,8 @@ namespace KVSC.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("6b34ed3f-0fb1-451e-90cc-bd53bc1ac3a9"),
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(1925),
-                            Date = new DateTime(2024, 11, 3, 21, 28, 46, 814, DateTimeKind.Local).AddTicks(1885),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(4075),
+                            Date = new DateTime(2024, 11, 3, 3, 7, 29, 922, DateTimeKind.Local).AddTicks(4038),
                             EndTime = new TimeSpan(0, 21, 0, 0, 0),
                             IsAvailable = true,
                             IsDeleted = false,
@@ -3091,57 +3115,57 @@ namespace KVSC.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5377daee-e2e7-41cc-ab15-4e87d86a2977"),
+                            Id = new Guid("5960d51c-3cd1-492f-9857-9ef7d7ee931e"),
                             Amount = 1000.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(5532),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(7308),
                             IsDeleted = false,
                             UserId = new Guid("4feb4940-94dc-4aed-b580-ee116b668704")
                         },
                         new
                         {
-                            Id = new Guid("e9cf6df2-100d-481e-8e41-0dfe63362adf"),
+                            Id = new Guid("c144b57f-fde6-4c7f-a82d-768c1b28a033"),
                             Amount = 1000.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(5537),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(7314),
                             IsDeleted = false,
                             UserId = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73")
                         },
                         new
                         {
-                            Id = new Guid("61a2bd37-d3c2-46c3-8610-88f6608dd961"),
+                            Id = new Guid("dc90dc94-7ba1-4b4d-8baf-ec3a703ca9f5"),
                             Amount = 1000.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(5540),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(7317),
                             IsDeleted = false,
                             UserId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea")
                         },
                         new
                         {
-                            Id = new Guid("62986fb3-aac8-4df2-b8c2-81687ac94e90"),
+                            Id = new Guid("b00da5c7-f086-49fc-b706-77546d46a961"),
                             Amount = 1000.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(5548),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(7319),
                             IsDeleted = false,
                             UserId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a")
                         },
                         new
                         {
-                            Id = new Guid("312b8ad9-827c-4f84-8d0b-4b9396a2ab20"),
+                            Id = new Guid("8bda5b70-66ac-4f6d-ad07-6ade98d8854e"),
                             Amount = 1000.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(5551),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(7322),
                             IsDeleted = false,
                             UserId = new Guid("5f28fcb6-675b-4f97-a925-01ac8c68b5ac")
                         },
                         new
                         {
-                            Id = new Guid("1512fc23-2713-4443-afae-836543a0a4f9"),
+                            Id = new Guid("a5face10-b0d3-4b88-9f6c-28c88fdd1b6a"),
                             Amount = 1000.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(5553),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(7325),
                             IsDeleted = false,
                             UserId = new Guid("0d1fbbab-a175-4d90-8291-d5d96ebb9359")
                         },
                         new
                         {
-                            Id = new Guid("fc831037-184f-43af-bb62-cec3e3b63297"),
+                            Id = new Guid("33eb63e2-932b-41de-9087-9b96acdf6dfe"),
                             Amount = 1000.00m,
-                            CreatedDate = new DateTime(2024, 10, 31, 14, 28, 46, 814, DateTimeKind.Utc).AddTicks(5556),
+                            CreatedDate = new DateTime(2024, 10, 31, 20, 7, 29, 922, DateTimeKind.Utc).AddTicks(7328),
                             IsDeleted = false,
                             UserId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e")
                         });

@@ -37,7 +37,8 @@
                                             { 
                                                 Item = item, 
                                                 ListType = Model.ListType, 
-                                                Status = item.GetType().GetProperty("Status")?.GetValue(item)?.ToString() ?? "", 
+                                                Status = item.GetType().GetProperty("Status")?.GetValue(item)?.ToString() ?? "",
+                                                ServiceCategory = item.GetType().GetProperty("ServiceCategory")?.GetValue(item)?.ToString() ?? "",
                                                 UserRole = Model.UserRole  // Add UserRole here
                                             })
                                         </td>
