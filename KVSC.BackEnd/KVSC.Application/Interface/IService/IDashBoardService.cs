@@ -9,9 +9,21 @@ namespace KVSC.Application.Interface.IService
 {
     public interface IDashBoardService
     {
+        //ADMIN
+        Task<Result> GetDashboardDataAsync(int topCount = 5);
         Task<Result> GetTopVeterinariansAsync(int topCount);
         Task<Result> GetBestServicesAsync(int topCount);
         Task<Result> GetTopSellingProductsAsync(int topCount);
-        Task<Result> GetDashboardDataAsync(int topCount = 5);
+
+        //VET
+        Task<Result> GetVeterinarianDashboardDataAsync(int topCount = 5);
+        Task<Result> GetNewestCompletedAppointmentsAsync(int topCount);
+        Task<Result> GetNextUpcomingAppointmentsAsync(int topCount);
+
+        //MANAGER
+        Task<Result> GetManagerDashboardDataAsync(int topCount = 5);
+        Task<Result> GetAllAppointmentsAsync(int topCount);
+        Task<Result> GetServiceReportsAsync(int topCount);
+        Task<Result> GetManageDetailAsync();
     }
 }

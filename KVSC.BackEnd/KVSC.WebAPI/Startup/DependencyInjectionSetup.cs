@@ -61,7 +61,7 @@ namespace KVSC.WebAPI.Startup
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), "Keys",
-                "koiveterinaryservicecent-925db-firebase-adminsdk-vus2r-0a84673789.json");
+                "koiveterinaryservicecent-925db-firebase-adminsdk-vus2r-7e9eaf02d5.json");
 
             try
             {

@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KVSC.Infrastructure.DTOs.Rating.GetRating
+namespace KVSC.Infrastructure.DTOs.Rating.GetRatingDetail
 {
     public class GetRatingResponse
+    {
+        public Extensions<List<GetRatingData>> Extensions { get; set; }
+    }
+    public class GetRatingData
     {
         public Guid Id { get; set; }
         public Guid ServiceId { get; set; }
