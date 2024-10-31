@@ -189,9 +189,9 @@ else if (Model.ListType == "appointment")
             <form method="post" asp-page-handler="Message" class="d-inline">
                 <input type="hidden" name="RecipientId" value="@Model.Item.CustomerId" />
                 <input type="hidden" name="Content"
-                       value="Cuộc trò chuyện được tạo cho cuộc hẹn vào ngày @Model.Item.AppointmentDate.
-                   Dịch vụ: @Model.Item.ServiceName. Cuộc trò chuyện này sẽ được lưu trữ và sử dụng
-                   để tạo báo cáo về Koi của bạn." />
+                       value="Conversation created for appointment on @Model.Item.AppointmentDate.
+                Service: @Model.Item.ServiceName. This conversation will be stored and used
+                to generate reports about your Koi." />
 
                 <button type="submit" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-chat-dots"></i> Message

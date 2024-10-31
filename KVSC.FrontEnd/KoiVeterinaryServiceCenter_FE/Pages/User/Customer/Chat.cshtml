@@ -15,7 +15,9 @@
                     </div>
                 </div>
                 <div id="conversationList" class="discussion message-active">
-                    @foreach (var conversation in Model.Conversations.Extensions?.Data)
+                    @if (Model.Conversations.Extensions?.Data != null && Model.Conversations.Extensions.Data.Any())
+                    {
+                    @foreach (var conversation in Model.Conversations.Extensions.Data)
                     {
                         <a href="@Url.Page("Chat", new { recipientId = conversation.RecipientId , recipientName = conversation.RecipientName })"
                            class="conversation-item" data-name="@conversation.RecipientName">
@@ -34,6 +36,7 @@
                             <div class="timer">@conversation.Timestamp</div>
                         </a>
                     }
+                    }
                 </div>
             </section>
             <section class="chat">
@@ -43,7 +46,9 @@
                     <div class="online" style="display: none;"><span class="online-status">online</span></div>
                 </div>
                 <div class="messages-chat" id="messagesContainer" style="display: flex; flex-direction: column-reverse;">
-                     @foreach (var message in Model.Messages.Extensions?.Data)
+                     @if (Model.Messages.Extensions?.Data != null && Model.Messages.Extensions.Data.Any())
+                    {
+                    @foreach (var message in Model.Messages.Extensions?.Data)
                     {
                         if (message.SenderId == Model.CurrentUserId)
                         {
@@ -68,6 +73,7 @@
                         </div>
                     }
                     <p class="time">@message.Timestamp.ToString("g")</p>
+                    }
                     }
                 </div>
                 <div class="footer-chat">
