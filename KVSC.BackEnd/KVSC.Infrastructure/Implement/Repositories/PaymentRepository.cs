@@ -2,6 +2,7 @@
 using KVSC.Infrastructure.DB;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,10 @@ namespace KVSC.Infrastructure.Implement.Repositories
             await _context.SaveChangesAsync();
             return payment;
         }
-
+        public async Task<Payment> GetPaymentByAppointmentIdAsync(Guid appointmentId)
+        {
+            return await _context.Payments.FirstOrDefaultAsync(p => p.AppointmentId == appointmentId);
+        }
 
     }
 }

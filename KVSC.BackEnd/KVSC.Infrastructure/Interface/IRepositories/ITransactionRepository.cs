@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.Interface.IRepositories
 {
-    public interface IPaymentRepository : IGenericRepository<Payment>
+    public interface ITransactionRepository : IGenericRepository<Transaction>
     {
-        Task<Payment> AddPaymentAsync(Payment payment);
-        Task<Payment> GetPaymentByAppointmentIdAsync(Guid appointmentId);
+        Task AddTransactionAsync(Transaction transaction);
     }
 }
