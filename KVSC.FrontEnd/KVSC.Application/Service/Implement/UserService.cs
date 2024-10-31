@@ -73,5 +73,11 @@ namespace KVSC.Application.Service.Implement
             return await _userRepository.UpdateVeterinarianQualificationsAsync(updatedProfile);
 
         }
+
+        public async Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount)
+        {
+            var response = await _userRepository.TopUpWallet(token,amount);
+            return response;
+        }
     }
 }

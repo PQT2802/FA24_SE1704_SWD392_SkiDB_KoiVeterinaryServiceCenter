@@ -49,7 +49,7 @@ namespace KVSC.Application.Implement.Service
             vnpay.AddRequestData("vnp_TxnRef", tick);
 
             var paymentUrl = vnpay.CreateRequestUrl(_config["VnPay:BaseUrl"], _config["VnPay:HashSecret"]);
-            return Result.SuccessWithObject(paymentUrl);
+            return Result.SuccessWithObject(new {Url = paymentUrl});
         }
 
         public async Task<Result> PaymentExecute(IQueryCollection collections, Guid userId, double depositMoney)

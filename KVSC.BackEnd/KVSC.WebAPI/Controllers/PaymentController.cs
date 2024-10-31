@@ -36,14 +36,22 @@ namespace KVSC.WebAPI.Controllers
 
         // GET: api/payment/callback
         [HttpGet("callback")]
-        public async Task<IResult> PaymentCallback([FromQuery] Guid userId, [FromQuery] double depositMoney)
+        public async Task<IActionResult> PaymentCallback([FromQuery] Guid userId, [FromQuery] double depositMoney)
         {
             var collections = HttpContext.Request.Query;
             Result result = await _vnPaymentService.PaymentExecute(collections, userId, depositMoney);
 
-            return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "Payment executed successfully.")
-                : ResultExtensions.ToProblemDetails(result);
+            string redirectUrl = "https://localhost:7241/User/Customer/CustomerProfile";
+            if (result.IsSuccess)
+            {
+                redirectUrl += $"?message=Payment executed successfully&type=success";
+            }
+            else
+            {
+                redirectUrl += $"?message=Transaction failed&type=error";
+            }
+
+            return Redirect(redirectUrl);
         }
     }
 }
