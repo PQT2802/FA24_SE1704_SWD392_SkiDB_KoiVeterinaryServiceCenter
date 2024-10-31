@@ -1,5 +1,6 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Rating;
+using KVSC.Infrastructure.DTOs.Rating.DeleteRating;
 using KVSC.Infrastructure.Repositories.Interface;
 using System;
 using System.Collections.Generic;
@@ -195,5 +196,55 @@ namespace KVSC.Infrastructure.Repositories.Implement
             }
         }
 
+        public async Task<ResponseDto<DeleteRatingResponse>> DeleteRating(DeleteRatingRequest request)
+        {
+            try
+            {
+                var url = $"api/rating?Id={request.Id}";
+
+                // Gửi yêu cầu DELETE với Id của rating
+                var response = await _httpClient.DeleteAsync(url);
+
+                // Kiểm tra phản hồi từ server
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent);
+
+                    return new ResponseDto<DeleteRatingResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during deletion."
+                    };
+                }
+
+                return new ResponseDto<DeleteRatingResponse>
+                {
+                    IsSuccess = true,
+                    Data = null,
+                    Message = "Delete rating successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<DeleteRatingResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<DeleteRatingResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
     }
 }

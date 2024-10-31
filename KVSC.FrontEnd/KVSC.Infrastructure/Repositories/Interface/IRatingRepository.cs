@@ -1,5 +1,6 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Rating;
+using KVSC.Infrastructure.DTOs.Rating.DeleteRating;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<RatingList>> GetAllRatingsByServiceId(Guid serviceId, int score, DateTime? createdDate, int pageNumber, int pageSize);
         Task<ResponseDto<RatingList>> GetManagerRatingList(Guid serviceId, int score, DateTime? createdDate, int pageNumber, int pageSize);
         Task<ResponseDto<RatingList>> GetAllRatings(int pageNumber, int pageSize);
+
+        Task<ResponseDto<DeleteRatingResponse>> DeleteRating(DeleteRatingRequest request);
     }
 }

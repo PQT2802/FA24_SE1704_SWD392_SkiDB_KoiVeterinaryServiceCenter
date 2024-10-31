@@ -1,6 +1,7 @@
 using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Rating;
+using KVSC.Infrastructure.DTOs.Rating.DeleteRating;
 using KVSC.Infrastructure.DTOs.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -116,6 +117,22 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Manager
             {
                 RedirectToPage("/Errors/404");
             }
+        }
+
+        public async Task<IActionResult> OnPostDeleteRatingAsync(Guid Id)
+        {
+            var request = new DeleteRatingRequest { Id = Id };
+            var result = await _ratingService.DeleteRating(request);
+
+            if (result.IsSuccess)
+            {
+                TempData["SuccessMessage"] = "Rating deleted successfully.";
+                TempData["AlertClass"] = "alert-success";
+                return RedirectToPage("/User/Manager/Rating");
+            }
+
+            TempData["ErrorMessage"] = "Failed to delete rating: " + string.Join(", ", result.Errors.Select(e => e.Description));
+            return RedirectToPage("/User/Manager/Rating");
         }
     }
 }

@@ -5,24 +5,24 @@
     <!-- Service List Buttons -->
     <div class="d-flex align-items-center ">
         <button class="btn btn-sm btn-primary edit-service-button  me-2"
-            data-id="@Model.Item.Id"
-            data-name="@Model.Item.Name"
-            data-category="@Model.Item.PetServiceCategoryId"
-            data-categoryname="@Model.Item.serviceCategory"
-            data-baseprice="@Model.Item.BasePrice"
-            data-duration="@Model.Item.Duration"
-            data-imageurl="@Model.Item.ImageUrl"
-            data-availablefrom="@Model.Item.AvailableFrom.ToString("yyyy-MM-ddTHH:mm")"
-            data-availableto="@Model.Item.AvailableTo.ToString("yyyy-MM-ddTHH:mm")"
-            data-travelcost="@Model.Item.TravelCost"
-            data-bs-toggle="modal"
-            data-bs-target="#updateServiceModal">
-        Edit
-    </button>
-    <form method="post" asp-page-handler="DeleteService" onsubmit="return confirm('Are you sure you want to delete?');">
-        <input type="hidden" name="Id" value="@Model.Item.Id" />
-        <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
-    </form>
+                data-id="@Model.Item.Id"
+                data-name="@Model.Item.Name"
+                data-category="@Model.Item.PetServiceCategoryId"
+                data-categoryname="@Model.Item.serviceCategory"
+                data-baseprice="@Model.Item.BasePrice"
+                data-duration="@Model.Item.Duration"
+                data-imageurl="@Model.Item.ImageUrl"
+                data-availablefrom="@Model.Item.AvailableFrom.ToString("yyyy-MM-ddTHH:mm")"
+                data-availableto="@Model.Item.AvailableTo.ToString("yyyy-MM-ddTHH:mm")"
+                data-travelcost="@Model.Item.TravelCost"
+                data-bs-toggle="modal"
+                data-bs-target="#updateServiceModal">
+            Edit
+        </button>
+        <form method="post" asp-page-handler="DeleteService" onsubmit="return confirm('Are you sure you want to delete?');">
+            <input type="hidden" name="Id" value="@Model.Item.Id" />
+            <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
+        </form>
         <!-- Detail Button -->
         <a class="btn btn-sm btn-info"
            asp-page="/User/Admin/PetServiceDetail"
@@ -59,61 +59,61 @@
 }
 @if (Model.ListType == "pet")
 {
-     <div class="d-flex align-items-center">
-    <!-- Pet List Buttons -->
+    <div class="d-flex align-items-center">
+        <!-- Pet List Buttons -->
         <button class="btn btn-sm btn-primary edit-pet-button  me-2"
-            data-id="@Model.Item.Id"
-            data-name="@Model.Item.Name"
-            data-age="@Model.Item.Age"
-            data-gender="@Model.Item.Gender"
-            data-imageurl="@Model.Item.ImageUrl"
-            data-color="@Model.Item.Color"
-            data-length="@Model.Item.Length"
-            data-weight="@Model.Item.Weight"
-            data-lasthealthcheck="@Model.Item.LastHealthCheck.ToString("yyyy-MM-ddTHH:mm")"
-            data-healthstatus="@Model.Item.HealthStatus"
-            data-quantity="@Model.Item.Quantity"
-            data-note="@Model.Item.Note"
-            data-bs-toggle="modal"
-            data-bs-target="#updatePetModal">
-        Edit
-    </button>
-    <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this koi fish?');">
-        <input type="hidden" name="Id" value="@Model.Item.Id" />
-        <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
-    </form>
-    <!-- Detail Button -->
-    <a class="btn btn-sm btn-info"
-       asp-page="/User/Customer/PetDetail"
-       asp-route-id="@Model.Item.Id">
-        Detail
-    </a>
-}
+                data-id="@Model.Item.Id"
+                data-name="@Model.Item.Name"
+                data-age="@Model.Item.Age"
+                data-gender="@Model.Item.Gender"
+                data-imageurl="@Model.Item.ImageUrl"
+                data-color="@Model.Item.Color"
+                data-length="@Model.Item.Length"
+                data-weight="@Model.Item.Weight"
+                data-lasthealthcheck="@Model.Item.LastHealthCheck.ToString("yyyy-MM-ddTHH:mm")"
+                data-healthstatus="@Model.Item.HealthStatus"
+                data-quantity="@Model.Item.Quantity"
+                data-note="@Model.Item.Note"
+                data-bs-toggle="modal"
+                data-bs-target="#updatePetModal">
+            Edit
+        </button>
+        <form method="post" asp-page-handler="DeletePet" onsubmit="return confirm('Are you sure you want to delete this koi fish?');">
+            <input type="hidden" name="Id" value="@Model.Item.Id" />
+            <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
+        </form>
+        <!-- Detail Button -->
+        <a class="btn btn-sm btn-info"
+           asp-page="/User/Customer/PetDetail"
+           asp-route-id="@Model.Item.Id">
+            Detail
+        </a>
     </div>
 }
 @if (Model.ListType == "user")
 {
     <!-- User List Buttons -->
     <div class="d-flex align-items-center">
-        @if(Model.Item.Role != 1){
-        <button class="btn btn-sm btn-primary edit-user-button me-2"
-                data-id="@Model.Item.Id"
-                data-fullname="@Model.Item.FullName"
-                data-username="@Model.Item.UserName"
-                data-email="@Model.Item.Email"
-                data-phonenumber="@Model.Item.PhoneNumber"
-                data-address="@Model.Item.Address"
-                data-profilepictureurl="@Model.Item.ProfilePictureUrl"
-                data-dateofbirth="@Model.Item.DateOfBirth.ToString("yyyy-MM-dd")"
-                data-role="@Model.Item.Role"
-                data-bs-toggle="modal"
-                data-bs-target="#updateUserModal">
-            Edit
-        </button>
-        <form method="post" asp-page-handler="DeleteUser" onsubmit="return confirm('Are you sure you want to delete this user?');">
-            <input type="hidden" name="Id" value="@Model.Item.Id" />
-            <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
-        </form>
+        @if (Model.Item.Role != 1)
+        {
+            <button class="btn btn-sm btn-primary edit-user-button me-2"
+                    data-id="@Model.Item.Id"
+                    data-fullname="@Model.Item.FullName"
+                    data-username="@Model.Item.UserName"
+                    data-email="@Model.Item.Email"
+                    data-phonenumber="@Model.Item.PhoneNumber"
+                    data-address="@Model.Item.Address"
+                    data-profilepictureurl="@Model.Item.ProfilePictureUrl"
+                    data-dateofbirth="@Model.Item.DateOfBirth.ToString("yyyy-MM-dd")"
+                    data-role="@Model.Item.Role"
+                    data-bs-toggle="modal"
+                    data-bs-target="#updateUserModal">
+                Edit
+            </button>
+            <form method="post" asp-page-handler="DeleteUser" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                <input type="hidden" name="Id" value="@Model.Item.Id" />
+                <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
+            </form>
         }
         <!-- Detail Button -->
         <a class="btn btn-sm btn-info"
@@ -158,5 +158,14 @@ else if (Model.ListType == "appointment")
 
         <!-- View button for navigation -->
         <a class="btn btn-sm btn-info" asp-page="/User/Veterinarian/AppointmentDetail" asp-route-appointmentId="@Model.Item.AppointmentListId">View</a>
+    }
 }
+@if (Model.ListType == "rating")
+{
+    <div class="d-flex align-items-center">
+        <form method="post" asp-page-handler="DeleteRating" onsubmit="return confirm('Are you sure you want to delete?');">
+            <input type="hidden" name="Id" value="@Model.Item.Id" />
+            <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
+        </form>
+    </div>
 }

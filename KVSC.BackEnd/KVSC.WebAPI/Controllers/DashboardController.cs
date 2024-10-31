@@ -34,5 +34,22 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
+        [HttpGet("Manager/Dashboard")]
+        public async Task<IResult> GetManagerDashboardData()
+        {
+            var result = await _dashboardService.GetManagerDashboardDataAsync();
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Manager dashboard data retrieved successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpGet("Staff/Dashboard")]
+        public async Task<IResult> GetStaffDashboardData()
+        {
+            var result = await _dashboardService.GetStaffDashboardDataAsync();
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Staff dashboard data retrieved successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.Dashboard.Admin;
+using KVSC.Infrastructure.DTOs.Dashboard.Manager;
+using KVSC.Infrastructure.DTOs.Dashboard.Staff;
 using KVSC.Infrastructure.DTOs.Dashboard.Vet;
 using KVSC.Infrastructure.Interface;
 using System;
@@ -130,6 +132,105 @@ namespace KVSC.Application.Implement.Service
             }).ToList();
 
             return Result.SuccessWithObject(appointmentDtos);
+        }
+
+        //MANAGER
+
+        public async Task<Result> GetManagerDashboardDataAsync(int topCount = 5)
+        {
+            var appointmentsResult = await GetAllAppointmentsAsync(topCount);
+            if (!appointmentsResult.IsSuccess) return appointmentsResult;
+
+            var serviceReportsResult = await GetServiceReportsAsync(topCount);
+            if (!serviceReportsResult.IsSuccess) return serviceReportsResult;
+
+            var dashboardData = new ManagerDashboardData
+            {
+                AppointmentDetails = appointmentsResult.Object as List<AppointmentDetail>,
+                ServiceReportDetails = serviceReportsResult.Object as List<ServiceReportDetail>
+            };
+
+            return Result.SuccessWithObject(dashboardData);
+        }
+
+        public async Task<Result> GetAllAppointmentsAsync(int topCount)
+        {
+            var appointments = await _unitOfWork.DashboardRepository.GetAllAppointmentsByDateAsync(topCount);
+
+            var appointmentDtos = appointments.Select(a => new AppointmentDetail
+            {
+                Id = a.Id,
+                AppointmentDate = a.AppointmentDate,
+                Status = a.Status,
+                CustomerName = a.Customer?.FullName,
+                PetServiceName = a.PetService?.Name
+            }).ToList();
+
+            return Result.SuccessWithObject(appointmentDtos);
+        }
+
+        public async Task<Result> GetServiceReportsAsync(int topCount)
+        {
+            var serviceReports = await _unitOfWork.DashboardRepository.GetServiceReportsByDateAsync(topCount);
+
+            var serviceReportDtos = serviceReports.Select(sr => new ServiceReportDetail
+            {
+                Id = sr.Id,
+                ReportDate = sr.ReportDate,
+                ReportContent = sr.ReportContent,
+                HasPrescription = sr.HasPrescription
+            }).ToList();
+
+            return Result.SuccessWithObject(serviceReportDtos);
+        }
+
+        //STAFF
+        public async Task<Result> GetStaffDashboardDataAsync(int topCount = 5)
+        {
+            var productsResult = await GetProductsInStockAsync();
+            if (!productsResult.IsSuccess) return productsResult;
+
+            var ordersResult = await GetRecentOrdersAsync(topCount);
+            if (!ordersResult.IsSuccess) return ordersResult;
+
+            var dashboardData = new StaffDashboardData
+            {
+                ProductsInStock = productsResult.Object as List<ProductInStock>,
+                RecentOrders = ordersResult.Object as List<OrderDataDetail>
+            };
+
+            return Result.SuccessWithObject(dashboardData);
+        }
+
+        public async Task<Result> GetProductsInStockAsync()
+        {
+            var products = await _unitOfWork.DashboardRepository.GetProductsInStockAsync();
+
+            var productDtos = products.Select(p => new ProductInStock
+            {
+                Id = p.Id,
+                Name = p.Name,
+                StockQuantity = p.StockQuantity,
+                ImageUrl = p.ImageUrl
+            }).ToList();
+
+            return Result.SuccessWithObject(productDtos);
+        }
+
+        public async Task<Result> GetRecentOrdersAsync(int topCount)
+        {
+            var orders = await _unitOfWork.DashboardRepository.GetRecentOrdersByDateAsync(topCount);
+
+            var orderDtos = orders.Select(o => new OrderDataDetail
+            {
+                Id = o.Id,
+                OrderDate = o.OrderDate,
+                TotalPrice = o.TotalPrice,
+                OrderStatus = o.OrderStatus,
+                CustomerName = o.Customer?.FullName
+            }).ToList();
+
+            return Result.SuccessWithObject(orderDtos);
         }
     }
 }

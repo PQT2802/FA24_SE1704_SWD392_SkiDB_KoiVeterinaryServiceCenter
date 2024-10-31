@@ -18,5 +18,13 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         //VET
         Task<List<Appointment>> GetNextUpcomingAppointmentAsync(int topCount);
         Task<List<Appointment>> GetNewestCompletedAppointmentAsync(int topCount);
+
+        //MANAGER
+        Task<List<Appointment>> GetAllAppointmentsByDateAsync(int topCount);
+        Task<List<ServiceReport>> GetServiceReportsByDateAsync(int topCount);
+
+        //STAFF
+        Task<List<Product>> GetProductsInStockAsync();
+        Task<List<Order>> GetRecentOrdersByDateAsync(int topCount);
     }
 }

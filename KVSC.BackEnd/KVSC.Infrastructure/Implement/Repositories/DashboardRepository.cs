@@ -73,5 +73,40 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .ToListAsync();
         }
 
+        //MANAGER
+        public async Task<List<Appointment>> GetAllAppointmentsByDateAsync(int topCount)
+        {
+            return await _context.Appointments
+                .Include(a => a.Customer)
+                .Include(a => a.PetService)
+                .OrderByDescending(a => a.AppointmentDate)
+                .Take(topCount)
+                .ToListAsync();
+        }
+
+        public async Task<List<ServiceReport>> GetServiceReportsByDateAsync(int topCount)
+        {
+            return await _context.ServiceReports
+                .OrderByDescending(sr => sr.ReportDate)
+                .Take(topCount)
+                .ToListAsync();
+        }
+
+        //STAFF
+        public async Task<List<Product>> GetProductsInStockAsync()
+        {
+            return await _context.Products
+                .Where(p => p.StockQuantity > 0)
+                .ToListAsync();
+        }
+
+        public async Task<List<Order>> GetRecentOrdersByDateAsync(int topCount)
+        {
+            return await _context.Orders
+                .Include(o => o.Customer)
+                .OrderByDescending(o => o.OrderDate)
+                .Take(topCount)
+                .ToListAsync();
+        }
     }
 }

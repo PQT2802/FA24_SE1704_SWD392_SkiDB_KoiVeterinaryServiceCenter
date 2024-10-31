@@ -77,3 +77,15 @@
         </nav>
     }
 </div>
+@*-------------- delete ------------*@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alertElement = document.getElementById('alertMessage');
+        if (alertElement) {
+            setTimeout(function () {
+                alertElement.classList.add('fade');
+                alertElement.classList.remove('show');
+            }, 3000); // 3 giây
+        }
+    });
+</script>

@@ -16,9 +16,18 @@ namespace KVSC.Application.Interface.IService
         Task<Result> GetTopSellingProductsAsync(int topCount);
 
         //VET
-
         Task<Result> GetVeterinarianDashboardDataAsync(int topCount = 5);
         Task<Result> GetNewestCompletedAppointmentsAsync(int topCount);
         Task<Result> GetNextUpcomingAppointmentsAsync(int topCount);
+
+        //MANAGER
+        Task<Result> GetManagerDashboardDataAsync(int topCount = 5);
+        Task<Result> GetAllAppointmentsAsync(int topCount);
+        Task<Result> GetServiceReportsAsync(int topCount);
+
+        //STAFF
+        Task<Result> GetStaffDashboardDataAsync(int topCount = 5);
+        Task<Result> GetProductsInStockAsync();
+        Task<Result> GetRecentOrdersAsync(int topCount);
     }
 }
