@@ -387,7 +387,7 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
-        public async Task<ResponseDto<GetPetServiceResponse>> GetPetServiceDetail(Guid id)
+        public async Task<ResponseDto<GetPetServiceResponse>> GetPetServiceDetail(Guid id)//dung
         {
             try
             {

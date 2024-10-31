@@ -125,5 +125,11 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.Roles.ToListAsync();
         }
+        
+        public async Task<int> UpdateVeterinarianAsync(Veterinarian veterinarian)
+        {
+            _context.Veterinarians.Update(veterinarian);
+            return await _context.SaveChangesAsync();
+        }
     }
 }

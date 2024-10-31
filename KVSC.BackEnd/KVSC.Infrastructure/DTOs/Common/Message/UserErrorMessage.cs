@@ -29,7 +29,8 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
         public static Error UserNameIsExist()
             => Error.Validation("User.UserName.Exist", $"The user name is exist.");
 
-
+        public static Error UserNotFound()
+       => Error.Validation("User.NotFound", "The specified user was not found.");
         public static Error EmailInValidFormat()
             => Error.Validation("User.Email.Format", $"The email is invalid.");
         public static Error EmailIsExist()
@@ -47,6 +48,16 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
         => Error.Validation("User.DeleteFailed", "Failed to delete user.");
         public static Error UserUpdateFailed()
         => Error.Validation("User.UpdateFailed", "Failed to update user.");
+
+
+        public static Error LicenseNumberInvalidFormat()
+       => Error.Validation("User.LicenseNumberInvalidFormat", "The 'License Number' must be in the format XX123456."); // Ví dụ định dạng
+
+        public static Error SpecialtyInvalidLength()
+            => Error.Validation("User.SpecialtyInvalidLength", "The 'Specialty' must be at least 3 characters long.");
+
+        public static Error QualificationsInvalidLength()
+            => Error.Validation("User.QualificationsInvalidLength", "The 'Qualifications' must be at least 5 characters long.");
 
     }
 }

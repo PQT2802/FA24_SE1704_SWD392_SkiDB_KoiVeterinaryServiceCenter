@@ -73,14 +73,12 @@ namespace KVSC.Infrastructure.Implement.Repositories
         //        .ThenBy(s => s.StartTime)
         //        .ToListAsync();
         //}
-        public async Task<List<VeterinarianSchedule>> GetAllVeterinariansWeeklySchedule(DateTime startOfWeek) //dung cai nay lay 3 tuan Edit : hung
+        public async Task<List<VeterinarianSchedule>> GetAllVeterinariansScheduleAsync(DateTime startOfPeriod, DateTime endOfPeriod)
         {
-            var endOfWeek = startOfWeek.AddDays(20); // Bao gồm tuần trước, tuần này và tuần sau
-
             return await _context.VeterinarianSchedules
-                .Include(s => s.Veterinarian) // Include the Veterinarian entity
-                .ThenInclude(v => v.User) // Include the related User entity to access the name
-                .Where(s => s.Date >= startOfWeek && s.Date <= endOfWeek)
+                .Include(s => s.Veterinarian) 
+                .ThenInclude(v => v.User)
+                .Where(s => s.Date >= startOfPeriod && s.Date <= endOfPeriod)
                 .OrderBy(s => s.Date)
                 .ThenBy(s => s.StartTime)
                 .ToListAsync();

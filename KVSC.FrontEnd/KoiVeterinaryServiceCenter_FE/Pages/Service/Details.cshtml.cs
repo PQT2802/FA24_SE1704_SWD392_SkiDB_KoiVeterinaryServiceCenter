@@ -1,4 +1,5 @@
 ﻿using KVSC.Application.Service.Interface;
+using KVSC.Infrastructure.DTOs.Rating;
 using KVSC.Infrastructure.DTOs.Service.ServiceDetail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,33 +9,59 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Service;
 public class DetailsModel : PageModel
 {
     private readonly IPetServiceService _petServiceService;
-
-    public DetailsModel(IPetServiceService petServiceService)
+    private readonly IRatingService _ratingService;
+    public DetailsModel(IPetServiceService petServiceService, IRatingService ratingService)
     {
         _petServiceService = petServiceService;
+        _ratingService = ratingService;
     }
 
     public PetServiceDto ServiceDetails { get; set; }
     public string ErrorMessage { get; set; }
+    public RatingList Ratings { get; set; }
 
-    public async Task<IActionResult> OnGetAsync(Guid id)
+    // Thêm các thuộc tính cho tìm kiếm và phân trang
+    [BindProperty(SupportsGet = true)]
+    public int Score { get; set; } // Điểm tìm kiếm
+
+    [BindProperty(SupportsGet = true)]
+    public DateTime? CreatedDate { get; set; } = null; // Ngày tạo tìm kiếm
+
+    [BindProperty(SupportsGet = true)]
+    public int PageNumber { get; set; } = 1; // Số trang
+
+    [BindProperty(SupportsGet = true)]
+    public int PageSize { get; set; } = 10; // Kích thước trang
+
+    public async Task<IActionResult> OnGetAsync(Guid id, int score = 0, DateTime? createdDate = null, int pageNumber = 1, int pageSize = 10)
     {
         if (id == Guid.Empty)
         {
-            return NotFound(); // Return 404 if the ID is invalid
+            return NotFound(); 
         }
 
-        // Fetch the service details based on the ID
         var result = await _petServiceService.GetPetServiceByIdAsync(id);
-
         if (result.IsSuccess)
         {
-            ServiceDetails = result.Data;  // Ensure this is populated
+            ServiceDetails = result.Data ?? new PetServiceDto();  
+
+            // Get all rating
+            var ratingResult = await _ratingService.GetAllRatingsByServiceIdAsync(id, score, createdDate, pageNumber, pageSize);
+            if (ratingResult.IsSuccess)
+            {
+                Ratings = ratingResult.Data ?? new RatingList(); 
+            }
+            else
+            {
+                ErrorMessage = ratingResult.Message ?? string.Empty;
+                Ratings = new RatingList();  
+            }
+
             return Page();
         }
         else
         {
-            ErrorMessage = result.Message;  // Set the error message if something goes wrong
+            ErrorMessage = result.Message ?? string.Empty;  
             return Page();
         }
     }

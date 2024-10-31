@@ -16,7 +16,7 @@ namespace KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail
         public AppointmentDetailCustomer AppointmentDetailCustomer { get; set; }
         public AppointmentDetailVeterinarian AppointmentDetailVeterinarian { get; set; }
         public AppointmentDetailKoi AppointmentDetailKoi { get; set; }
-        public AppointmentDetailReport AppointmentDetailReport { get; set; }
+        public AppointmentDetailReport? AppointmentDetailReport { get; set; }
     }
     
 }

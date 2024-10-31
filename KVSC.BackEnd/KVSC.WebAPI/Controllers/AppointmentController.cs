@@ -5,6 +5,7 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.AssignVeterinarian;
+using KVSC.Infrastructure.DTOs.Appointment.GetAppointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using KVSC.Infrastructure.DTOs.Common;
@@ -64,6 +65,24 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
+        // GET: api/appointment/list/customer/
+        [Authorize]
+        [HttpGet("list/customer")]
+        public async Task<IResult> GetAppointmentListByCustomerIdAsync()
+        {
+            // Retrieve the current user's information from the token
+            CurrentUserObject c = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
+    
+            // Call the service method for customer appointments
+            Result result = await _appointmentService.GetAppointmentListByCustomerIdAsync(c.UserId);
+    
+            // Return appropriate response based on success or failure of the service call
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Fetched appointment list for the specified customer successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+        
+        
         // GET: api/appointment/list/vet/
         [Authorize]
         [HttpGet("list/vet")]
@@ -113,21 +132,16 @@ namespace KVSC.WebAPI.Controllers
                 return ResultExtensions.ToProblemDetails(appointmentResult);
 
             // Since GetAppointmentByIdAsync now returns an Appointment entity directly
-            var appointment = appointmentResult.Object as Appointment;
+            var appointment = appointmentResult.Object as GetAllAppointment;
             if (appointment == null)
                 return Results.Problem("Appointment not found.", statusCode: 404);
 
-            // Get available veterinarians based on the appointment's date
+              
             var availableVetsResult = await _veterinarianScheduleService.GetAvailableVeterinariansForDateAsync(appointment.AppointmentDate);
-            if (!availableVetsResult.IsSuccess)
-                return ResultExtensions.ToProblemDetails(availableVetsResult);
 
-            // Return both the appointment details and available veterinarians
-            return Results.Ok(new
-            {
-                Appointment = appointment,
-                AvailableVeterinarians = availableVetsResult.Object // List of veterinarians and their available time slots
-            });
+            return availableVetsResult.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(availableVetsResult, "Assigned veterinarian to appointment successfully.")
+                : ResultExtensions.ToProblemDetails(availableVetsResult);
         }
 
 

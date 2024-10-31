@@ -1,10 +1,10 @@
-
-﻿using KVSC.Infrastructure.DTOs;
-
-﻿using System.Threading.Tasks;
+using KVSC.Infrastructure.DTOs;
+using System.Threading.Tasks;
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
+using KVSC.Infrastructure.DTOs.Appointment.AddAppointment;
+using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 
 public class AppointmentService : IAppointmentService
 {
@@ -31,9 +31,16 @@ public class AppointmentService : IAppointmentService
         return result;
     }
 
- 
+    public async Task<ResponseDto<AppointmentList>> GetAppointmentListForCustomer(string token)
+    {
+        var result = await _appointmentRepository.GetAppointmentListForCustomer(token);
+        return result;
+    }
 
-    public async Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request)
+
+
+    public async Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(
+        MakeAppointmentForServiceRequest request)
     {
         // Here you can add additional business logic before calling the repository
         var result = await _appointmentRepository.MakeAppointmentForServiceAsync(request);
@@ -51,5 +58,22 @@ public class AppointmentService : IAppointmentService
 
         return result;
     }
+    public async Task<ResponseDto<AppointmentList>> GetUnassignedAppointmentsAsync()
+    {
+        return await _appointmentRepository.GetUnassignedAppointmentsAsync();
+    }
+    public async Task<ResponseDto<VeterinarianDto>> GetAvailableVeterinarians(Guid appointmentId)
+    {
+        var response = await _appointmentRepository.GetAvailableVeterinariansAsync(appointmentId);
+        return response;
+    }
+    public async Task<ResponseDto<AssignVeterinarianResponse>> AssignVeterinarianToAppointment(AssignVeterinarianRequest request)
+    {
+        return await _appointmentRepository.AssignVeterinarian(request);
+    }
 
+    public async Task<ResponseDto<MakeAppointmentResponse>> MakeAppointmentAsync(MakeAppointmentRequest request)
+    {
+        return await _appointmentRepository.MakeAppointmentAsync(request);
+    }
 }

@@ -19,14 +19,16 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
         private readonly IPetServiceService _petServiceService;
         private readonly IUserService _userService;
         private readonly IScheduleService _scheduleService;
+        private readonly IAppointmentService _appointmentService;
 
-        public AppointmentModel(IAuthService authService, IPetServiceService petServiceService, IPetBusinessService petBusinessService, IUserService userService, IScheduleService scheduleService)
+        public AppointmentModel(IAuthService authService, IPetServiceService petServiceService, IPetBusinessService petBusinessService, IUserService userService, IScheduleService scheduleService, IAppointmentService appointmentService)
         {
             _authService = authService;
             _petServiceService = petServiceService;
             _petBusinessService = petBusinessService;
             _userService = userService;
             _scheduleService = scheduleService;
+            _appointmentService = appointmentService;
         }
 
         [BindProperty]
@@ -52,7 +54,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
                 UserInfo = getResult.Data;
                 UserInfo.Extensions ??= new Extensions<Data>();
 
-                var petResponse = await _petBusinessService.GetPetsByOwnerIdAsync(accessToken);
+                var petResponse = await _petBusinessService.GetPetsByOwnerAsync(getResult.Data.Extensions.Data.UserId);
                 Pets = petResponse.IsSuccess ? petResponse.Data?.Extensions?.Data ?? new List<PetData>() : new List<PetData>();
 
                 var serviceResponse = await _petServiceService.GetKoiServiceList();
@@ -69,5 +71,51 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
             // Return the partial view with available veterinarians
             return Partial("_VeterinarianSelection", Veterinarians);
         }
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OnPostSubmitAppointmentAsync(Guid serviceId, DateTime appointmentDate, Guid petId, List<Guid>? vetIds)
+        {
+            // Reload Services to ensure they are available for the post request
+            var serviceResponse = await _petServiceService.GetKoiServiceList();
+            Services = serviceResponse.IsSuccess ? serviceResponse.Data.Extensions.Data : new List<KVSC.Infrastructure.DTOs.Service.Data>();
+
+            var selectedService = Services.FirstOrDefault(s => s.Id == serviceId);
+            if (selectedService == null)
+            {
+                TempData["ErrorMessage"] = "The selected service is invalid.";
+                return Page();
+            }
+            var accessToken = HttpContext.Session.GetString("Token");
+            var getResult = await _authService.GetUserInforByToken(accessToken);
+            UserInfo = getResult.Data;
+            UserInfo.Extensions ??= new Extensions<Data>();
+            var requiredAmount = selectedService.BasePrice * 0.20m;
+            if (UserInfo.Extensions.Data.Amount < requiredAmount)
+            {
+                TempData["ErrorMessage"] = "Insufficient balance. Please top up your wallet to book this appointment.";
+                return Page();
+            }
+
+            MakeAppointmentRequest = new MakeAppointmentRequest
+            {
+                CustomerId = UserInfo.Extensions.Data.UserId,
+                PetId = petId,
+                PetServiceId = serviceId,
+                VeterinarianIds = vetIds,
+                AppointmentDate = appointmentDate
+            };
+
+            var result = await _appointmentService.MakeAppointmentAsync(MakeAppointmentRequest);
+            if (result.IsSuccess)
+            {
+                TempData["SuccessMessage"] = "Appointment successfully booked!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Failed to book appointment. Please try again.";
+            }
+
+            return Page();
+        }
+
     }
 }

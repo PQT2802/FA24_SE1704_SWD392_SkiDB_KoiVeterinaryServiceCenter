@@ -52,6 +52,11 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             {
                 client.BaseAddress = new Uri("https://localhost:7283");
             });
+            services.AddHttpClient<IRatingRepository, RatingRepository>(client =>
+
+            {
+                client.BaseAddress = new Uri("https://localhost:7283");
+            });
 
 
 
@@ -64,6 +69,7 @@ namespace KoiVeterinaryServiceCenter_FE.StartUp
             services.AddTransient<IPetServiceService, PetServiceService>();
             services.AddTransient<IPetServiceService, PetServiceService>();
             services.AddTransient<IPetServiceCategoryService, PetServiceCategoryService>();
+            services.AddTransient<IRatingService, RatingService>();
 
 
 

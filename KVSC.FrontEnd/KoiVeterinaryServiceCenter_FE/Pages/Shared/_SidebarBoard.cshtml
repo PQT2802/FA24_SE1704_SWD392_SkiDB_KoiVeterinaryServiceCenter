@@ -30,16 +30,23 @@
         </div>
         <div class="navbar-nav w-100">
             @{
-
-                @await (actorRole switch
-                    {
-                        "Admin" => Html.PartialAsync("_AdminSidebarItem"),
-                        "Manager" => Html.PartialAsync("_ManagerSidebarItem"),
-                        "Staff" => Html.PartialAsync("_StaffSidebarItem"),
-                        "Veterinarian" => Html.PartialAsync("_VeterinarianSidebarItem"),
-                    _=> Html.PartialAsync("_CustomerSidebarItem") // Default or fallback partial
-                    })
-                ;
+                try
+                {
+                    @await (actorRole switch
+                        {
+                            "Admin" => Html.PartialAsync("_AdminSidebarItem"),
+                            "Manager" => Html.PartialAsync("_ManagerSidebarItem"),
+                            "Staff" => Html.PartialAsync("_StaffSidebarItem"),
+                            "Veterinarian" => Html.PartialAsync("_VeterinarianSidebarItem"),
+                            _ => Html.PartialAsync("_CustomerSidebarItem") // Fallback partial
+                        })
+                    ;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine($"Error rendering partial view: {ex.Message}");
+                    <div class="alert alert-danger">You do not have right to access to this page</div>
+                }
             }
         </div>
 </div>

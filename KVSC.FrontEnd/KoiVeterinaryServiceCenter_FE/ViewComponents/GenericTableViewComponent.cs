@@ -11,7 +11,9 @@ namespace KoiVeterinaryServiceCenter_FE.ViewComponents
             {
                 Items = items.ToList(),
                 PropertyNames = items.FirstOrDefault()?.GetPropertyNames() ?? new List<string>(),
-                ListType = listType
+                ListType = listType,
+                UserRole = HttpContext.User.IsInRole("Veterinarian") ? "Veterinarian" : "Customer" // Set UserRole here
+
             };
 
             return View(model);

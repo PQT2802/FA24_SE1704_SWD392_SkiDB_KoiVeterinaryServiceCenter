@@ -129,7 +129,7 @@ namespace KVSC.WebAPI.Controllers
             Result result = await _veterinarianScheduleService.GetAllVeterinariansWeeklyScheduleAsync(currentDay);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Fetched all veterinarians' weekly schedule successfully.")
-                : ResultExtensions.ToProblemDetails(result);
+                : ResultExtensions.ToProblemDetails(result);    
         }
         // GET: api/veterinarian-schedule/available-vets
         [HttpGet("available-vets")]

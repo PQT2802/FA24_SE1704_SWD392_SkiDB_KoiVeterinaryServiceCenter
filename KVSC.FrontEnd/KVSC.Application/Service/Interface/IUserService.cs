@@ -20,6 +20,8 @@ namespace KVSC.Application.Service.Interface
         Task<ResponseDto<DeleteUserResponse>> DeleteUser(DeleteUserRequest request);
         Task<ResponseDto<UpdateUserResponse>> UpdateUser(UpdateUserRequest request, IFormFile imageFile);
         Task<ResponseDto<GetUserResponse>> GetUserDetail(Guid id);
+        Task<ResponseDto<GetVeterinarianResponse>> GetVeterinarianDetail(Guid id);
+        Task<ResponseDto<UpdateUserResponse>> UpdateVeterinarianQualifications(GetVeterinarianRequest updatedProfile);
 
         Task<ResponseDto<GetVetId>> GetVetForAppoinment();
     }

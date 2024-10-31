@@ -1,4 +1,4 @@
-using KVSC.Application.Service.Implement;
+﻿using KVSC.Application.Service.Implement;
 using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Service;
@@ -34,17 +34,38 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
         public async Task OnGetAsync()
         {
-            var result = await _petServiceCategoryService.GetKoiServiceCategoryList();
-            if (result.IsSuccess)
+            try
             {
-                KoiServiceCategoryList = result.Data ?? new KoiServiceCategoryList();
-                
+                var token = HttpContext.Session.GetString("Token");
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    RedirectToPage("/Account/SignIn");
+                }
+                var result = await _petServiceCategoryService.GetKoiServiceCategoryList();
+
+                if (result.IsSuccess)
+                {
+                    KoiServiceCategoryList = result.Data ?? new KoiServiceCategoryList();
+                }
+                else
+                {
+                    KoiServiceCategoryList = new KoiServiceCategoryList();
+                }
             }
-            else
+            catch (NullReferenceException ex)
             {
-                KoiServiceCategoryList = new KoiServiceCategoryList();
+                // Chuyển hướng đến trang lỗi 500
+                RedirectToPage("/Errors/500");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi không xác định: {ex.Message}");
+
+                RedirectToPage("/Errors/500");
             }
         }
+
         public async Task<IActionResult> OnPostCreateCategoryAsync()
         {
             var result = await _petServiceCategoryService.CreateCategoryAsync(AddServiceCategoryRequest);

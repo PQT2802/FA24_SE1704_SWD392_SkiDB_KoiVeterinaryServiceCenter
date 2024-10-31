@@ -33,8 +33,13 @@
                                             <!-- Pass ListType as the Model to the _ActionButtons partial view -->
                                             @* @await Html.PartialAsync("ActionButtons", Model.ListType) *@
                                             @*await Html.PartialAsync("ActionButtons", new { Item = item, ListType = Model.ListType })*@
-                                            @await Html.PartialAsync("ActionButtons", new { Item = item, ListType = Model.ListType, Status = item.GetType().GetProperty("Status")?.GetValue(item)?.ToString() ?? "" })
-
+                                            @await Html.PartialAsync("ActionButtons", new 
+                                            { 
+                                                Item = item, 
+                                                ListType = Model.ListType, 
+                                                Status = item.GetType().GetProperty("Status")?.GetValue(item)?.ToString() ?? "", 
+                                                UserRole = Model.UserRole  // Add UserRole here
+                                            })
                                         </td>
                                     </tr>
                                 }

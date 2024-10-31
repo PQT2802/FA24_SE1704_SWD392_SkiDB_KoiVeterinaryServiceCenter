@@ -29,12 +29,14 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
         private readonly UnitOfWork _unitOfWork;
         private readonly IValidator<AddUserRequest> _userValidator;
         private readonly IValidator<UpdateUserRequest> _updateUserValidator;
+        private readonly IValidator<UpdateVeterinarianRequest> _updateVeter;
 
-        public UserService(UnitOfWork unitOfWork, IValidator<AddUserRequest> userValiator, IValidator<UpdateUserRequest> updateUserValidator) 
+        public UserService(UnitOfWork unitOfWork, IValidator<AddUserRequest> userValiator, IValidator<UpdateUserRequest> updateUserValidator, IValidator<UpdateVeterinarianRequest> updateVeter) 
         {
             _unitOfWork = unitOfWork;
             _userValidator = userValiator;
             _updateUserValidator = updateUserValidator;
+            _updateVeter = updateVeter;
         }
 
         public async Task<Result> GetUserByEmail(string email)
@@ -53,6 +55,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
 
             var userInfor = new UserInfor
             {
+                UserId = user.Id,
                 UserName = user.Username,
                 Email = user.Email,
                 Avatar = UserImg.ImageUrl ?? string.Empty,
@@ -258,6 +261,56 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             var result = await _unitOfWork.UserRepository.GetAllRolesAsync();
 
             return Result.SuccessWithObject(result);
+        }
+        public async Task<Result> UpdateVeterinarianAsync(Guid userId, UpdateVeterinarianRequest request)
+        {
+            var validationResult = await _updateVeter.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors
+                    .Select(e => (Error)e.CustomState)
+                    .ToList();
+                return Result.Failures(errors);
+            }
+
+            var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(userId);
+            if (veterinarian == null)
+            {
+                return Result.Failure(UserErrorMessage.UserNotFound());
+            }
+
+            veterinarian.LicenseNumber = request.LicenseNumber;
+            veterinarian.Specialty = request.Specialty;
+            veterinarian.Qualifications = request.Qualifications;
+            veterinarian.ModifiedDate = DateTime.UtcNow;
+
+            var updateResult = await _unitOfWork.UserRepository.UpdateVeterinarianAsync(veterinarian);
+            if (updateResult == 0)
+            {
+                return Result.Failure(UserErrorMessage.UserUpdateFailed());
+            }
+            var response = new CreateResponse { Id = veterinarian.Id };
+            return Result.SuccessWithObject(response);
+        }
+
+        public async Task<Result> GetVeterinarianByIdAsync(Guid id)
+        {
+            var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(id);
+            if (veterinarian == null)
+            {
+                return Result.Failure(UserErrorMessage.UserNotFound());
+            }
+
+            // Tạo response từ đối tượng veterinarian
+            var response = new VeterinarianResponse
+            {
+                UserId = veterinarian.UserId,
+                LicenseNumber = veterinarian.LicenseNumber,
+                Specialty = veterinarian.Specialty,
+                Qualifications = veterinarian.Qualifications,
+            };
+
+            return Result.SuccessWithObject(response);
         }
     }
 }

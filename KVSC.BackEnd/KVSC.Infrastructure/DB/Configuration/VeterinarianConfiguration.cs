@@ -30,6 +30,16 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Qualifications = "PhD in Veterinary Science",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
+                },
+                new Veterinarian
+                {
+                    Id = new Guid("b87a3240-e68a-4f38-8f14-7a56f7b9d123"),
+                    UserId = new Guid("d78f90b4-9e62-4b45-9e6e-0a01e5931234"),
+                    LicenseNumber = "VN345678",
+                    Specialty = "Aquatic Animal Medicine",
+                    Qualifications = "Master's in Veterinary Medicine",
+                    CreatedDate = DateTime.UtcNow,
+                    IsDeleted = false
                 }
             );
         }
