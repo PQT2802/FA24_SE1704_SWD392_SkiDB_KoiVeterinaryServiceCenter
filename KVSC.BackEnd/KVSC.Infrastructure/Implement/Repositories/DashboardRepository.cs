@@ -1,5 +1,6 @@
 ﻿using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DB;
+using KVSC.Infrastructure.DTOs.Dashboard.Manager;
 using KVSC.Infrastructure.Interface.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -47,6 +48,10 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .Take(topCount)
                 .ToListAsync();
         }
+        public Task<int> GetTotalUserAsync()
+        {
+            throw new NotImplementedException();
+        }
 
         //VET
         public async Task<List<Appointment>> GetNewestCompletedAppointmentAsync(int topCount)
@@ -73,12 +78,21 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .ToListAsync();
         }
 
+        public Task<int> GetTotalAppointmentAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         //MANAGER
         public async Task<List<Appointment>> GetAllAppointmentsByDateAsync(int topCount)
         {
             return await _context.Appointments
                 .Include(a => a.Customer)
+                .Include(a => a.Pet)
                 .Include(a => a.PetService)
+                .Include(a => a.AppointmentVeterinarians)
+                    .ThenInclude(av => av.Veterinarian)
+                        .ThenInclude(u => u.User)
                 .OrderByDescending(a => a.AppointmentDate)
                 .Take(topCount)
                 .ToListAsync();
@@ -87,26 +101,26 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<List<ServiceReport>> GetServiceReportsByDateAsync(int topCount)
         {
             return await _context.ServiceReports
+                .Include(s => s.Appointment)
+                .ThenInclude(a => a.Customer)
                 .OrderByDescending(sr => sr.ReportDate)
                 .Take(topCount)
                 .ToListAsync();
         }
 
-        //STAFF
-        public async Task<List<Product>> GetProductsInStockAsync()
+        public async Task<int> GetTotalCustomersAsync()
         {
-            return await _context.Products
-                .Where(p => p.StockQuantity > 0)
-                .ToListAsync();
+            return await _context.Users.CountAsync(u => u.role == 5);
         }
 
-        public async Task<List<Order>> GetRecentOrdersByDateAsync(int topCount)
+        public async Task<int> GetTotalVeterinariansAsync()
         {
-            return await _context.Orders
-                .Include(o => o.Customer)
-                .OrderByDescending(o => o.OrderDate)
-                .Take(topCount)
-                .ToListAsync();
+            return await _context.Users.CountAsync(u => u.role == 3);
+        }
+
+        public async Task<decimal> GetTotalPaymentsAsync()
+        {
+            return await _context.Payments.SumAsync(p => p.TotalAmount);
         }
     }
 }

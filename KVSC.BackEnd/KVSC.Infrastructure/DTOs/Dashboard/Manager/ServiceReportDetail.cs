@@ -8,9 +8,12 @@ namespace KVSC.Infrastructure.DTOs.Dashboard.Manager
 {
     public class ServiceReportDetail
     {
-        public Guid Id { get; set; }
+        public Guid ReportId { get; set; }
         public DateTime ReportDate { get; set; }
         public string ReportContent { get; set; }
-        public bool HasPrescription { get; set; }
+
+        public Guid AppointmentId { get; set; }
+        public string CustomerName { get; set; }
+        public string VeterinarianName { get; set; }
     }
 }

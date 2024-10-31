@@ -2,7 +2,6 @@
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.Dashboard.Admin;
 using KVSC.Infrastructure.DTOs.Dashboard.Manager;
-using KVSC.Infrastructure.DTOs.Dashboard.Staff;
 using KVSC.Infrastructure.DTOs.Dashboard.Vet;
 using KVSC.Infrastructure.Interface;
 using System;
@@ -79,7 +78,7 @@ namespace KVSC.Application.Implement.Service
             {
                 Id = p.Id,
                 Name = p.Name,
-                SoldQuantity = p.OrderItems?.Count ?? 0 // Check if OrderItems is null
+                SoldQuantity = p.OrderItems?.Count ?? 0 
             }).ToList();
 
             return Result.SuccessWithObject(productDtos);
@@ -135,7 +134,6 @@ namespace KVSC.Application.Implement.Service
         }
 
         //MANAGER
-
         public async Task<Result> GetManagerDashboardDataAsync(int topCount = 5)
         {
             var appointmentsResult = await GetAllAppointmentsAsync(topCount);
@@ -144,8 +142,12 @@ namespace KVSC.Application.Implement.Service
             var serviceReportsResult = await GetServiceReportsAsync(topCount);
             if (!serviceReportsResult.IsSuccess) return serviceReportsResult;
 
+            var manageDetailResult = await GetManageDetailAsync();
+            if (!manageDetailResult.IsSuccess) return manageDetailResult;
+
             var dashboardData = new ManagerDashboardData
             {
+                ManageDetails = manageDetailResult.Object as ManageDetail,
                 AppointmentDetails = appointmentsResult.Object as List<AppointmentDetail>,
                 ServiceReportDetails = serviceReportsResult.Object as List<ServiceReportDetail>
             };
@@ -159,11 +161,13 @@ namespace KVSC.Application.Implement.Service
 
             var appointmentDtos = appointments.Select(a => new AppointmentDetail
             {
-                Id = a.Id,
+                AppointmentId = a.Id,
                 AppointmentDate = a.AppointmentDate,
                 Status = a.Status,
                 CustomerName = a.Customer?.FullName,
-                PetServiceName = a.PetService?.Name
+                PetName = a.Pet?.Name,
+                ServiceName = a.PetService?.Name ?? a.ComboService?.Name,
+                VeterinarianName = a.AppointmentVeterinarians.FirstOrDefault()?.Veterinarian.User.FullName
             }).ToList();
 
             return Result.SuccessWithObject(appointmentDtos);
@@ -174,63 +178,32 @@ namespace KVSC.Application.Implement.Service
             var serviceReports = await _unitOfWork.DashboardRepository.GetServiceReportsByDateAsync(topCount);
 
             var serviceReportDtos = serviceReports.Select(sr => new ServiceReportDetail
-            {
-                Id = sr.Id,
-                ReportDate = sr.ReportDate,
-                ReportContent = sr.ReportContent,
-                HasPrescription = sr.HasPrescription
+        {
+            ReportId = sr.Id,
+            ReportDate = sr.ReportDate,
+            ReportContent = sr.ReportContent,
+            AppointmentId = sr.AppointmentId, 
+            CustomerName = sr.Appointment?.Customer?.FullName,
+            VeterinarianName = sr.Appointment?.AppointmentVeterinarians?.FirstOrDefault()?.Veterinarian.User.FullName
             }).ToList();
 
             return Result.SuccessWithObject(serviceReportDtos);
         }
 
-        //STAFF
-        public async Task<Result> GetStaffDashboardDataAsync(int topCount = 5)
+        public async Task<Result> GetManageDetailAsync()
         {
-            var productsResult = await GetProductsInStockAsync();
-            if (!productsResult.IsSuccess) return productsResult;
+            var totalCustomers = await _unitOfWork.DashboardRepository.GetTotalCustomersAsync();
+            var totalVeterinarians = await _unitOfWork.DashboardRepository.GetTotalVeterinariansAsync();
+            var totalPayments = await _unitOfWork.DashboardRepository.GetTotalPaymentsAsync();
 
-            var ordersResult = await GetRecentOrdersAsync(topCount);
-            if (!ordersResult.IsSuccess) return ordersResult;
-
-            var dashboardData = new StaffDashboardData
+            var manageDetail = new ManageDetail
             {
-                ProductsInStock = productsResult.Object as List<ProductInStock>,
-                RecentOrders = ordersResult.Object as List<OrderDataDetail>
+                TotalCustomers = totalCustomers,
+                TotalVeterinarians = totalVeterinarians,
+                TotalPayments = totalPayments
             };
 
-            return Result.SuccessWithObject(dashboardData);
-        }
-
-        public async Task<Result> GetProductsInStockAsync()
-        {
-            var products = await _unitOfWork.DashboardRepository.GetProductsInStockAsync();
-
-            var productDtos = products.Select(p => new ProductInStock
-            {
-                Id = p.Id,
-                Name = p.Name,
-                StockQuantity = p.StockQuantity,
-                ImageUrl = p.ImageUrl
-            }).ToList();
-
-            return Result.SuccessWithObject(productDtos);
-        }
-
-        public async Task<Result> GetRecentOrdersAsync(int topCount)
-        {
-            var orders = await _unitOfWork.DashboardRepository.GetRecentOrdersByDateAsync(topCount);
-
-            var orderDtos = orders.Select(o => new OrderDataDetail
-            {
-                Id = o.Id,
-                OrderDate = o.OrderDate,
-                TotalPrice = o.TotalPrice,
-                OrderStatus = o.OrderStatus,
-                CustomerName = o.Customer?.FullName
-            }).ToList();
-
-            return Result.SuccessWithObject(orderDtos);
+            return Result.SuccessWithObject(manageDetail);
         }
     }
 }

@@ -24,10 +24,6 @@ namespace KVSC.Application.Interface.IService
         Task<Result> GetManagerDashboardDataAsync(int topCount = 5);
         Task<Result> GetAllAppointmentsAsync(int topCount);
         Task<Result> GetServiceReportsAsync(int topCount);
-
-        //STAFF
-        Task<Result> GetStaffDashboardDataAsync(int topCount = 5);
-        Task<Result> GetProductsInStockAsync();
-        Task<Result> GetRecentOrdersAsync(int topCount);
+        Task<Result> GetManageDetailAsync();
     }
 }
