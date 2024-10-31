@@ -150,6 +150,20 @@ namespace KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(appointments);
         }
+        
+        public async Task<Result> GetAppointmentListByCustomerIdAsync(Guid userId)
+        {
+            var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentListByCustomerIdAsync(userId);
+
+            if (appointments == null || !appointments.Any())
+            {
+                var error = Error.NotFound("AppointmentNotFound", "No appointments found for the specified customer.");
+                return Result.Failure(error);
+            }
+
+            return Result.SuccessWithObject(appointments);
+        }
+
 
         public async Task<Result> UpdateAppointmentStatusAsync(Guid appointmentId, string status)
         {

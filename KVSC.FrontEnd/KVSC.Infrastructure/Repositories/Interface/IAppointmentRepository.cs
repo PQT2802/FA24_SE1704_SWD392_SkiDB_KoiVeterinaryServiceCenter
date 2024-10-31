@@ -6,8 +6,11 @@ using KVSC.Infrastructure.DTOs.Appointment.AddAppointment;
 
 public interface IAppointmentRepository
 {
-    Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request);
+    Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(
+        MakeAppointmentForServiceRequest request);
+
     Task<ResponseDto<AppointmentList>> GetAppoitmentListForVet(string token);
+    Task<ResponseDto<AppointmentList>> GetAppointmentListForCustomer(string token);
     Task<ResponseDto<UpdateStatusResponse>> UpdateAppointmentStatusAsync(Guid appointmentId, string status);
     Task<ResponseDto<GetAppointmentDetailResponse>> GetAppointmentDetail(Guid appointmentId);
     Task<ResponseDto<AppointmentList>> GetUnassignedAppointmentsAsync();

@@ -80,6 +80,8 @@ public class AppointmentRepository : IAppointmentRepository
             };
         }
     }
+    
+    
 
     public async Task<ResponseDto<AppointmentList>> GetAppoitmentListForVet(string token)
     {
@@ -144,6 +146,73 @@ public class AppointmentRepository : IAppointmentRepository
             };
         }
     }
+    
+    public async Task<ResponseDto<AppointmentList>> GetAppointmentListForCustomer(string token)
+{
+    try
+    {
+        // Set the authorization token in the headers
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        // Send the HTTP request to get customer-specific appointment data
+        var response = await _httpClient.GetAsync("/api/Appointment/list/customer");
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        // Check if the response indicates failure
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+        {
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            // Deserialize the error response using the options for case insensitivity
+            var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+            return new ResponseDto<AppointmentList>
+            {
+                IsSuccess = false,
+                Data = null,
+                Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                Message = "An error occurred while fetching customer appointments."
+            };
+        }
+
+        // If successful, deserialize the appointment list response
+        var appointmentList = await response.Content.ReadFromJsonAsync<AppointmentList>(options);
+
+        return new ResponseDto<AppointmentList>
+        {
+            IsSuccess = true,
+            Data = appointmentList,
+            Message = "Data retrieved successfully."
+        };
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Handle HTTP request exceptions (e.g., network errors)
+        return new ResponseDto<AppointmentList>
+        {
+            IsSuccess = false,
+            Data = null,
+            Message = $"Request error: {httpEx.Message}"
+        };
+    }
+    catch (Exception ex)
+    {
+        // Handle any other exceptions
+        return new ResponseDto<AppointmentList>
+        {
+            IsSuccess = false,
+            Data = null,
+            Message = $"An unexpected error occurred: {ex.Message}"
+        };
+    }
+}
+
+
+    
 
     public async Task<ResponseDto<MakeAppointmentForServiceRequest>> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request)
     {
