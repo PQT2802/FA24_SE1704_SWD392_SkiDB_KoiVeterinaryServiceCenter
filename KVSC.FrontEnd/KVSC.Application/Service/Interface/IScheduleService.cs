@@ -16,5 +16,6 @@ namespace KVSC.Application.Service.Interface
         Task<ResponseDto<bool>> ManagementRegisterShiftAsync(ManagementRegisterShiftRequest request);
         Task<ResponseDto<DeleteShiftResponse>> DeleteShiftAsync(DeleteShiftRequest request);
         Task<ResponseDto<ScheduleDto>> GetWeeklyScheduleAsync(DateTime currentDay, string token);
+        Task<ResponseDto<GetVetId>> GetAvailableVeterinariansByDateTime(DateTime selectedDate);
     }
 }

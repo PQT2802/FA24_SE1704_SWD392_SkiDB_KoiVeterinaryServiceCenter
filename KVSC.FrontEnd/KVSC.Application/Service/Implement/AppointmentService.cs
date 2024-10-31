@@ -4,6 +4,7 @@ using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
 using KVSC.Infrastructure.DTOs.Appointment.AddAppointment;
+using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 
 public class AppointmentService : IAppointmentService
 {
@@ -71,4 +72,8 @@ public class AppointmentService : IAppointmentService
         return await _appointmentRepository.AssignVeterinarian(request);
     }
 
+    public async Task<ResponseDto<MakeAppointmentResponse>> MakeAppointmentAsync(MakeAppointmentRequest request)
+    {
+        return await _appointmentRepository.MakeAppointmentAsync(request);
+    }
 }

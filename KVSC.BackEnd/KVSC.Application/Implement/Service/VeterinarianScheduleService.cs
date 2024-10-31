@@ -211,9 +211,20 @@ namespace KVSC.Application.Implement.Service
         }
 
         // Update the availability after an appointment
+
+
+        //public async Task<Result> UpdateScheduleAvailabilityAsync(Guid UserId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)
+        //{
+        //    var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(UserId);
+        //}
+        //public async Task<Result> UpdateScheduleAvailabilityAsync(Guid userId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)
+        //{
+        //    var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(userId);
+        //}
         public async Task<Result> UpdateScheduleAvailabilityAsync(Guid UserId, DateTime appointmentDate, TimeSpan startTime, TimeSpan endTime)
         {
             var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(UserId);
+
             if (veterinarian == null)
             {
                 return Result.Failure(Error.NotFound("VeterinarianNotFound", "Veterinarian not found for the provided user."));

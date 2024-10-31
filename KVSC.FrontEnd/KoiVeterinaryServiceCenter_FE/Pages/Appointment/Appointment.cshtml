@@ -1,0 +1,205 @@
+﻿@page "/appointment"
+@model KoiVeterinaryServiceCenter_FE.Pages.Appointment.AppointmentModel
+@{
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card p-4">
+                <h2 class="text-center mb-4">Book an Appointment</h2>
+
+                <!-- Check if the user is authenticated before showing the form -->
+                @if (Model.IsAuthenticated)
+                {
+                    <form method="post" id="appointmentForm" class="needs-validation" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <!-- Customer Information (Read-Only) -->
+                        <div class="form-group mb-3">
+                            <label for="customerName">Name</label>
+                            <input type="text" class="form-control" id="customerName" name="CustomerName" value="@Model.UserInfo?.Extensions?.Data?.UserName ?? " N /A"" readonly />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="customerEmail">Email Address</label>
+                            <input type="text" class="form-control" id="customerEmail" name="CustomerEmail" value="@Model.UserInfo?.Extensions?.Data?.Email ?? " N /A"" readonly />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="customerPhone">Phone Number</label>
+                            <input type="text" class="form-control" id="customerPhone" name="CustomerPhone" value="@Model.UserInfo?.Extensions?.Data?.PhoneNumber ?? " N /A"" readonly />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="customerAddress">Address</label>
+                            <input type="text" class="form-control" id="customerAddress" name="CustomerAddress" value="@Model.UserInfo?.Extensions?.Data?.Address ?? " N /A"" readonly />
+                        </div>
+
+                        <!-- Pet Selection Dropdown -->
+                        <div class="form-group mb-3">
+                            <label for="petId">Select Your Pet</label>
+                            <select class="form-control" id="petId" name="PetId" required>
+                                <option value="">-- Select a Pet --</option>
+                                @foreach (var pet in Model.Pets)
+                                {
+                                    <option value="@pet.Id">@pet.Name</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback">Please select a pet.</div>
+                        </div>
+
+                        <!-- Service Selection Dropdown -->
+                        <div class="form-group mb-3">
+                            <label for="serviceId">Select a Service</label>
+                            <select class="form-control" id="serviceId" name="ServiceId" required>
+                                <option value="">-- Select a Service --</option>
+                                @foreach (var service in Model.Services)
+                                {
+                                    var deposit = service.BasePrice * 0.2m;  // Calculate 20% deposit
+                                    <option value="@service.Id">@service.Name - @service.BasePrice.ToString("C") - Deposit: @deposit.ToString("C") (@service.Duration)</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback">Please select a service.</div>
+                        </div>
+
+                        <!-- Appointment Date and Time with "Find" Button -->
+                        <div class="form-group mb-3">
+                            <label for="appointmentDate">Appointment Date & Time</label>
+                            <div class="input-group">
+                                <input type="datetime-local" class="form-control" id="appointmentDate" name="AppointmentDate" required />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-secondary" id="findAvailableVets">Find</button>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback">Please select a valid date and time.</div>
+                        </div>
+
+                        <!-- Veterinarian Selection Dropdown (Supports multiple selections) -->
+                        <div class="form-group mb-3" id="vetSelectionContainer" style="display: none;">
+                            <label for="vetId">Select a Veterinarian (Optional)</label>
+                            <select multiple class="form-control" id="vetId" name="VetIds">
+                                <option value="">-- Select a Veterinarian --</option>
+                            </select>
+                            <small class="form-text text-muted">You can select multiple veterinarians or leave it blank if you don't have a preference.</small>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="button" class="btn btn-primary btn-block" id="submitAppointment">Book Appointment</button>
+
+                        <!-- Success/Error Message Display -->
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+                        }
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger mt-3">@TempData["ErrorMessage"]</div>
+                        }
+                    </form>
+                }
+                else
+                {
+                    <!-- Trigger the modal if not authenticated -->
+                    <script>
+                        $(document).ready(function () {
+                            $('#authModal').modal('show');
+                        });
+                    </script>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Authentication Modal -->
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authModalLabel">Please Sign In or Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                To book an appointment, please sign in or sign up.
+            </div>
+            <div class="modal-footer">
+                <a href="/Account/SignIn" class="btn btn-primary">Sign In</a>
+                <a href="/Account/SignUp" class="btn btn-secondary">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function fetchAvailableVets(selectedDate) {
+                $.ajax({
+                    url: '/appointment?handler=FindAvailableVets',
+                    type: 'POST',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    data: { selectedDate: selectedDate },
+                    success: function (response) {
+                        $('#vetSelectionContainer').html(response).show();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("An error occurred:", xhr.responseText || error);
+                        alert("An error occurred while fetching available veterinarians. Please try again.");
+                    }
+                });
+            }
+
+            $('#findAvailableVets').click(function (e) {
+                e.preventDefault();
+                const selectedDate = $('#appointmentDate').val();
+                if (selectedDate) {
+                    fetchAvailableVets(selectedDate);
+                } else {
+                    alert("Please select a date and time.");
+                }
+            });
+
+            // Function to validate balance and submit form
+            $('#submitAppointment').click(function (e) {
+                e.preventDefault();
+
+                const serviceId = $('#serviceId').val();
+                const appointmentDate = $('#appointmentDate').val();
+                const petId = $('#petId').val();
+
+                // Collect all selected veterinarian IDs
+                const vetIds = $('#vetId').val() || [];
+
+                if (!serviceId || !appointmentDate || !petId) {
+                    alert("Please complete all fields.");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/appointment?handler=SubmitAppointment',
+                    type: 'POST',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    data: {
+                        serviceId: serviceId,
+                        appointmentDate: appointmentDate,
+                        petId: petId,
+                        vetIds: vetIds // Send array of selected veterinarian IDs
+                    },
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (xhr) {
+                        const errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "An error occurred. Please try again.";
+                        alert(errorMessage);
+                    }
+                });
+            });
+        });
+    </script>
+}

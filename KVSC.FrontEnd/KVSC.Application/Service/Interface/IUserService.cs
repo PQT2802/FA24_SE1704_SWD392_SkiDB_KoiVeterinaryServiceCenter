@@ -1,4 +1,4 @@
-﻿using KVSC.Infrastructure.DTOs.User;
+﻿
 using KVSC.Infrastructure.DTOs;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using KVSC.Infrastructure.DTOs.User.DeleteUser;
 using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.DTOs.User.GetUser;
 using Microsoft.AspNetCore.Http;
+using KVSC.Infrastructure.DTOs.User;
 
 namespace KVSC.Application.Service.Interface
 {
@@ -22,5 +23,6 @@ namespace KVSC.Application.Service.Interface
         Task<ResponseDto<GetVeterinarianResponse>> GetVeterinarianDetail(Guid id);
         Task<ResponseDto<UpdateUserResponse>> UpdateVeterinarianQualifications(GetVeterinarianRequest updatedProfile);
 
+        Task<ResponseDto<GetVetId>> GetVetForAppoinment();
     }
 }

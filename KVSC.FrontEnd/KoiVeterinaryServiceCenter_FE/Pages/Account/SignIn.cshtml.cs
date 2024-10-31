@@ -44,7 +44,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Account
                     // Check if the Id is available and store it in the session as a string
                     if (userInfor.Extensions.Data.UserId != null)
                     {
-                        HttpContext.Session.SetString("UserId", userInfor.Extensions.Data.UserId); // Storing GUID as a string
+                        HttpContext.Session.SetString("UserId", userInfor.Extensions.Data.UserId.ToString()); // Storing GUID as a string
                     }
 
                     // Redirect based on role
