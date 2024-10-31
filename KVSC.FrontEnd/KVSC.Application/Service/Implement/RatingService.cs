@@ -2,6 +2,7 @@
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Rating;
 using KVSC.Infrastructure.DTOs.Rating.DeleteRating;
+using KVSC.Infrastructure.DTOs.Rating.GetRatingDetail;
 using KVSC.Infrastructure.Repositories.Implement;
 using KVSC.Infrastructure.Repositories.Interface;
 using System;
@@ -32,10 +33,14 @@ namespace KVSC.Application.Service.Implement
         {
             return await _ratingRepository.GetAllRatings(pageNumber, pageSize);
         }
-
         public async Task<ResponseDto<DeleteRatingResponse>> DeleteRating(DeleteRatingRequest request)
         {
             var response = await _ratingRepository.DeleteRating(request);
+            return response;
+        }
+        public async Task<ResponseDto<GetRatingResponse>> GetRatingDetail(Guid serviceId)
+        {
+            var response = await _ratingRepository.GetRatingDetail(serviceId);
             return response;
         }
     }

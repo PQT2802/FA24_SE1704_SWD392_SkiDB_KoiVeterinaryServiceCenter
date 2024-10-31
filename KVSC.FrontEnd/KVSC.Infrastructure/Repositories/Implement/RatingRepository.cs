@@ -1,11 +1,14 @@
 ﻿using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Rating;
 using KVSC.Infrastructure.DTOs.Rating.DeleteRating;
+using KVSC.Infrastructure.DTOs.Rating.GetRatingDetail;
+using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -239,6 +242,68 @@ namespace KVSC.Infrastructure.Repositories.Implement
             catch (Exception ex)
             {
                 return new ResponseDto<DeleteRatingResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDto<GetRatingResponse>> GetRatingDetail(Guid serviceId)
+        {
+            try
+            {
+                // Send the request and get the response
+                var response = await _httpClient.GetAsync($"api/rating/service?Id={serviceId}");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetRatingResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get infor."
+                    };
+                }
+
+                // If successful, deserialize the UserInfo response
+                var userInfo = await response.Content.ReadFromJsonAsync<GetRatingResponse>(options);
+                Console.WriteLine(JsonSerializer.Serialize(userInfo, new JsonSerializerOptions { WriteIndented = true }));
+
+                return new ResponseDto<GetRatingResponse>
+                {
+                    IsSuccess = true,
+                    Data = userInfo,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<GetRatingResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<GetRatingResponse>
                 {
                     IsSuccess = false,
                     Data = null,
