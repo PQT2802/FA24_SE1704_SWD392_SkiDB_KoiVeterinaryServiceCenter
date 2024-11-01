@@ -11,5 +11,7 @@ namespace KVSC.Infrastructure.Interface.IRepositories
     {
         Task<Payment> AddPaymentAsync(Payment payment);
         Task<Payment> GetPaymentByAppointmentIdAsync(Guid appointmentId);
+        Task<Payment> GetPaymentByUserIdAsync(Guid userId);
+        Task<bool> UpdatePayment(Guid userId);
     }
 }

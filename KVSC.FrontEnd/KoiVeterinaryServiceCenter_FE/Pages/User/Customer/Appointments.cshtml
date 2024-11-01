@@ -78,7 +78,7 @@ else if (Model.AppointmentList?.Extensions?.Data != null && Model.AppointmentLis
                                 View Details
                             </a>
                             }
-                            @if (appointment.Status == "Completed")
+                            @if (appointment.Status == "Reported")
                             {
                                 <button class="btn btn-outline-primary btn-sm open-rating-modal"
                                         data-service-id="@appointment.PetServiceId"

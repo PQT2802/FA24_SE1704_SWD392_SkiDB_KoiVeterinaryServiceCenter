@@ -52,6 +52,12 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(new {Url = paymentUrl});
         }
 
+        public async Task<Result> GetPaymentByUserIdAsync(Guid userId)
+        {
+            var result = await _unitOfWork.PaymentRepository.GetPaymentByUserIdAsync(userId);
+            return Result.SuccessWithObject(result);
+        }
+
         public async Task<Result> PaymentExecute(IQueryCollection collections, Guid userId, double depositMoney)
         {
             var vnpay = new VnPayLibrary();
@@ -98,5 +104,16 @@ namespace KVSC.Application.Implement.Service
             }
         }
 
+        public async Task<Result> UpdatePayment(Guid userId,Guid paymentId)
+        {
+            var wallet = await _unitOfWork.WalletRepository.GetWalletByUserIdAsync(userId);
+            var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(paymentId);
+            if (payment.TotalAmount > wallet.Amount)
+            {
+                return Result.Failure(Error.Failure("Transaction", $"Not enough money"));
+            }
+            var result = await _unitOfWork.PaymentRepository.UpdatePayment(userId);
+            return Result.SuccessWithObject(new {Message =" Pay successfully"});
+        }
     }
 }

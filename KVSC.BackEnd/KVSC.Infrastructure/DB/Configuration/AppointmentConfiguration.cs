@@ -137,6 +137,17 @@ namespace KVSC.Infrastructure.DB.Configuration
                     CompletedDate = new DateTime(2024, 11, 9, 14, 0, 0), // Completed on the same day
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
+                },
+                new Appointment
+                {
+                    Id = new Guid("bbbbbcbb-bbbb-bcbb-bbbb-bbcbbbbbbbbb"),
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    PetServiceId = new Guid("c33e3a87-0230-428b-8c06-ee91b7e8cc21"),
+                    AppointmentDate = new DateTime(2024, 11, 9, 10, 0, 0), // Saturday
+                    Status = "Pending",
+                    CompletedDate = new DateTime(2024, 11, 9, 14, 0, 0), // Completed on the same day
+                    CreatedDate = DateTime.UtcNow,
+                    IsDeleted = false
                 }
             );
         }

@@ -95,6 +95,18 @@ namespace KVSC.Application.Implement.Service
                 await _unitOfWork.ServiceReportRepository.UpdateServiceReportAsync(serviceReport);
             }
             await _unitOfWork.AppointmentRepository.UpdateAppointmentStatusAsync(addServiceReportRequest.AppointmentId, "Reported");
+            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentByIdAsync(addServiceReportRequest.AppointmentId);
+            Payment newPayment = new Payment()
+            {
+                AppointmentId = addServiceReportRequest.AppointmentId,
+                Deposit = appointment.PetService.BasePrice * 0.2m,
+                TotalAmount = appointment.PetService.BasePrice + appointment.PetService.TravelCost - appointment.PetService.BasePrice * 0.2m,
+                totalAmountStatus =false,
+                depositStatus = true,
+            };
+            await _unitOfWork.PaymentRepository.CreateAsync(newPayment);
+
+
             return Result.SuccessWithObject(createResult);
         }
 

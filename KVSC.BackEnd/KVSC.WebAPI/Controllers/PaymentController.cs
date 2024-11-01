@@ -33,6 +33,29 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Payment URL created successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        [HttpGet("payment")]
+        [Authorize]
+        public async Task<IResult> GetPayments()
+        {
+            CurrentUserObject currentUser = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
+            Result result = await _vnPaymentService.GetPaymentByUserIdAsync(currentUser.UserId);
+
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Payment URL created successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+        [HttpPut("pay")]
+        [Authorize]
+        public async Task<IResult> PayPayment(Guid paymentId)
+        {
+            CurrentUserObject currentUser = await TokenHelper.Instance.GetThisUserInfo(HttpContext);
+            Result result = await _vnPaymentService.UpdatePayment(currentUser.UserId, paymentId);
+
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Payment URL created successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
 
         // GET: api/payment/callback
         [HttpGet("callback")]

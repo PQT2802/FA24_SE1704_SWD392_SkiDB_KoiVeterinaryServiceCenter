@@ -222,7 +222,7 @@ namespace KVSC.Application.Implement.Service
                     VeterinarianId = v
                 }).ToList();
             
-            // Lưu cuộc hẹn
+            // Lưu cuộc hẹn 
             await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
 
             // Cập nhật trạng thái IsAvailable của lịch bác sĩ qua repository

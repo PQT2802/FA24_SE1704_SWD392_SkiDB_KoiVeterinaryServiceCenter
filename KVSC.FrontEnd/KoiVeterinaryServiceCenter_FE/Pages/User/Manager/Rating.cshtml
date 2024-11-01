@@ -3,7 +3,7 @@
 @using KVSC.Infrastructure.DTOs.Rating
 @model KoiVeterinaryServiceCenter_FE.Pages.User.Manager.RatingModel
 @{
-    Layout = "_LayoutBoard"; 
+    Layout = "_LayoutBoard";
 }
 
 @if (TempData["SuccessMessage"] != null || TempData["ErrorMessage"] != null)
@@ -12,22 +12,25 @@
         @TempData["SuccessMessage"] @TempData["ErrorMessage"]
     </div>
 }
+
 <form method="get" class="d-flex align-items-center p-3 border rounded shadow-sm">
     <h4 class="mb-0 me-3"></h4>
 
+    <!-- Service Category Dropdown -->
     <div class="mb-3 me-2">
-        <label asp-for="CustomerName" class="visually-hidden">Customer Name</label>
-        <input type="text" asp-for="CustomerName" class="form-control" placeholder="CustomerName" />
-    </div>
-
-    <div class="mb-3 me-2">
-        <label asp-for="Feedback" class="visually-hidden">Feedback</label>
-        <input type="text" asp-for="Feedback" class="form-control" placeholder="Feedback" />
+        <label asp-for="ServiceId" class="visually-hidden">Service</label>
+        <select asp-for="ServiceId" class="form-select" asp-items="ViewBag.Services" id="serviceId"> 
+        </select>
     </div>
 
     <div class="mb-3 me-2">
         <label asp-for="Score" class="visually-hidden">Score</label>
         <input type="number" asp-for="Score" class="form-control" placeholder="Score" />
+    </div>
+
+    <div class="mb-3 me-2">
+        <label asp-for="CreatedDate" class="visually-hidden">Created Date</label>
+        <input type="date" asp-for="CreatedDate" class="form-control" placeholder="Created Date" />
     </div>
 
     <button type="submit" class="btn btn-primary w-25 align-self-stretch">Search</button>
@@ -36,7 +39,9 @@
 <!-- Table for displaying ratings -->
 @await Component.InvokeAsync("GenericTable", new { items = Model.RatingList.Extensions.Data.Data.Cast<IPropertyNameProvider>(), listType = "rating" })
 
-<!-- Paging -->
+
+
+<!-- Pagination controls -->
 <div class="pagination mt-4 d-flex justify-content-center">
     @if (Model.RatingList.Extensions.Data.TotalCount > 0)
     {
@@ -47,7 +52,7 @@
                 @if (Model.RatingList.Extensions.Data.PageNumber > 1)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="?pageNumber=@(Model.RatingList.Extensions.Data.PageNumber - 1)&CustomerName=@Model.CustomerName&Feedback=@Model.Feedback&Score=@Model.Score" aria-label="Previous">
+                        <a class="page-link" href="?pageNumber=@(Model.RatingList.Extensions.Data.PageNumber - 1)&ServiceId=@Model.ServiceId&Score=@Model.Score&CreatedDate=@Model.CreatedDate" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -56,14 +61,14 @@
                 @for (int i = 1; i <= totalPages; i++)
                 {
                     <li class="page-item @(Model.RatingList.Extensions.Data.PageNumber == i ? "active" : "")">
-                        <a class="page-link" href="?pageNumber=@i&CustomerName=@Model.CustomerName&Feedback=@Model.Feedback&Score=@Model.Score">@i</a>
+                        <a class="page-link" href="?pageNumber=@i&ServiceId=@Model.ServiceId&Score=@Model.Score&CreatedDate=@Model.CreatedDate">@i</a>
                     </li>
                 }
 
                 @if (Model.RatingList.Extensions.Data.PageNumber < totalPages)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="?pageNumber=@(Model.RatingList.Extensions.Data.PageNumber + 1)&CustomerName=@Model.CustomerName&Feedback=@Model.Feedback&Score=@Model.Score" aria-label="Next">
+                        <a class="page-link" href="?pageNumber=@(Model.RatingList.Extensions.Data.PageNumber + 1)&ServiceId=@Model.ServiceId&Score=@Model.Score&CreatedDate=@Model.CreatedDate" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -72,3 +77,15 @@
         </nav>
     }
 </div>
+@*-------------- delete ------------*@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alertElement = document.getElementById('alertMessage');
+        if (alertElement) {
+            setTimeout(function () {
+                alertElement.classList.add('fade');
+                alertElement.classList.remove('show');
+            }, 3000); // 3 giây
+        }
+    });
+</script>

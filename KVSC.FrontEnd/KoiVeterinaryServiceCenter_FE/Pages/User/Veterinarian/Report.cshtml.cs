@@ -56,7 +56,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Service report created successfully.";
-                return RedirectToPage("/User/Veterinarian/AppointmentDetail", new { appointmentId = AddServiceReportRequest.AppointmentId });
+                return RedirectToPage("/User/Veterinarian/Appointment");
             }
 
             ModelState.AddModelError(string.Empty, "Failed to create service report.");

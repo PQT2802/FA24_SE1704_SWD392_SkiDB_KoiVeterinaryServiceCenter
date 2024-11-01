@@ -27,12 +27,13 @@ namespace KVSC.Infrastructure.DTOs.Rating
             public Guid CustomerId { get; set; }
             public int Score { get; set; }
             public string Feedback { get; set; }
+            public string ServiceName { get; set; }
             public string CustomerName { get; set; }
             public DateTime CreatedDate { get; set; }
 
             public List<string> GetPropertyNames()
             {
-                return new List<string> { nameof(CustomerName), nameof(Feedback), nameof(Score) };
+                return new List<string> { nameof(CustomerName), nameof(ServiceName), nameof(Feedback), nameof(Score) };
             }
         }
     }
