@@ -41,20 +41,21 @@
                 data-description="@Model.Item.Description"
                 data-servicetype="@Model.Item.ServiceType"
                 data-applicableto="@Model.Item.ApplicableTo"
+                data-isonline="@Model.Item.IsOnline.ToString().ToLower()"
                 data-bs-toggle="modal"
                 data-bs-target="#updateCategoryModal">
             Edit
         </button>
-        <form method="post" asp-page-handler="DeleteServiceCategory" onsubmit="return confirm('Are you sure you want to delete this category?');">
-            <input type="hidden" name="Id" value="@Model.Item.Id" />
-            <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
-        </form>
         <!-- Detail Button -->
-        <a class="btn btn-sm btn-info"
+        <a class="btn btn-sm btn-info  me-2"
            asp-page="/User/Admin/PetServiceCategoryDetail"
            asp-route-id="@Model.Item.Id">
             Detail
         </a>
+        <form method="post" asp-page-handler="DeleteServiceCategory" onsubmit="return confirm('Are you sure you want to delete this category?');">
+            <input type="hidden" name="Id" value="@Model.Item.Id" />
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
     </div>
 }
 @if (Model.ListType == "pet")
@@ -186,17 +187,33 @@ else if (Model.ListType == "appointment")
             </a>
 
             <!-- Send Message Form -->
-            <form method="post" asp-page-handler="Message" class="d-inline">
-                <input type="hidden" name="RecipientId" value="@Model.Item.CustomerId" />
-                <input type="hidden" name="Content"
-                       value="Conversation created for appointment on @Model.Item.AppointmentDate.
-                Service: @Model.Item.ServiceName. This conversation will be stored and used
-                to generate reports about your Koi." />
+            @if (Model.Item.Status == "InProgress" && Model.Item.IsOnline)
+            {
+               @*  <form method="post" asp-page-handler="Message" class="d-inline">
+                    <input type="hidden" name="RecipientId" value="@Model.Item.CustomerId" />
+                    <input type="hidden" name="Content"
+                           value="Conversation created for appointment on @Model.Item.AppointmentDate.
+               Service: @Model.Item.ServiceName. This conversation will be stored and used
+               to generate reports about your Koi." />
 
-                <button type="submit" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-chat-dots"></i> Message
+                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-chat-dots"></i> Message
+                    </button>
+                </form> *@
+                <button onclick="window.location.href='@Url.Page("Chat", new { recipientId = Model.Item.CustomerId, recipientName = Model.Item.CustomerName })'" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-chat-dots"></i> Start Chat
                 </button>
-            </form>
+
+            }
+            @if (Model.Item.Status != "InProgress" && Model.Item.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
+            {
+            <button class="btn btn-outline-primary btn-sm open-conversation-modal"
+                    data-customer-id="@Model.Item.CustomerId"
+                    data-veterinarian-id="@Model.Item.VeterinarianId"
+                    data-appointment-id="@Model.Item.AppointmentListId">
+                <i class="bi bi-chat-dots"></i> Chat History
+            </button>
+            }
         </div>
     }
 }

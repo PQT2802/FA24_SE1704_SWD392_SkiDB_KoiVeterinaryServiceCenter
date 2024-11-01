@@ -73,20 +73,20 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("66666666-6666-6666-6666-666666666666"),
-                    CustomerId = new Guid("5f28fcb6-675b-4f97-a925-01ac8c68b5ac"),
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//cus1
                     PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
-                    AppointmentDate = new DateTime(2024, 11, 6, 10, 0, 0), // Wednesday
+                    AppointmentDate =  DateTime.UtcNow, // now
                     Status = "InProgress",
-                    CreatedDate = DateTime.UtcNow,
+                    CreatedDate = new DateTime(2024, 10, 24, 14, 0, 0),
                     IsDeleted = false
                 },
                 new Appointment
                 {
                     Id = new Guid("77777777-7777-7777-7777-777777777777"),
-                    CustomerId = new Guid("0d1fbbab-a175-4d90-8291-d5d96ebb9359"),
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//cus1
                     PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
-                    AppointmentDate = new DateTime(2024, 11, 8, 12, 0, 0), // Friday
-                    Status = "InProgress",
+                    AppointmentDate = new DateTime(2024, 11, 10, 14, 0, 0),// Tuesday
+                    Status = "Waiting",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
                 },

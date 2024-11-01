@@ -18,10 +18,11 @@ namespace KVSC.Infrastructure.DTOs.Service
         public string Description { get; set; } = string.Empty;
         public string ServiceType { get; set; } = string.Empty;
         public string ApplicableTo { get; set; } = string.Empty;
+        public bool IsOnline { get; set; }
 
         public List<string> GetPropertyNames()
         {
-            return new List<string> { nameof(Name), nameof(Description), nameof(ServiceType), nameof(ApplicableTo) };
+            return new List<string> { nameof(Name), nameof(Description), nameof(ServiceType), nameof(ApplicableTo) , nameof(IsOnline)};
         }
     }
 }

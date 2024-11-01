@@ -16,6 +16,7 @@ namespace KVSC.Infrastructure.DTOs.Appointment.GetAppointment
         public string VeterinarianName { get; set; }
         public string ServiceName { get; set; }
         public string Status { get; set; }
+        public bool IsOnline {  get; set; }
         public DateTime AppointmentDate { get; set; }
     }
 }

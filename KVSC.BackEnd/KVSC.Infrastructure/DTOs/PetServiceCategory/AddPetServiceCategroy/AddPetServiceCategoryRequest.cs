@@ -12,5 +12,6 @@ namespace KVSC.Infrastructure.DTOs.PetServiceCategory.AddPetServiceCategroy
         public string Description { get; set; } // Mô tả 
         public string ServiceType { get; set; } // Loại dịch vụ
         public string ApplicableTo { get; set; } // Áp dụng cho loại pet nào
+        public bool IsOnline { get; set; }
     }
 }

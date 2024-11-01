@@ -78,6 +78,9 @@
                                 </div>
                             }
                             <p class="time">@message.Timestamp.ToString("g")</p>
+                            <script>
+                                sessionStorage.setItem('avatar_@message.SenderId', '@message.AvatarUrl');
+                            </script>
                         }
                     }
                     else
@@ -132,7 +135,7 @@
         // ----------------layout--------------------------------
         const overlay = document.getElementById('overlay'); // Lấy phần tử overlay
         overlay.addEventListener('click', function () {
-            window.location.href = "https://localhost:7241/User/Veterinarian/DashBoard"; // Chuyển hướng trang
+            window.location.href = "https://localhost:7241/User/Veterinarian/Appointments"; // Chuyển hướng trang
         });
         // ----------------layout--------------------------------
 
@@ -175,9 +178,7 @@
                 // Xử lý khi nhận được phản hồi từ server
                 xhr.onload = function () {
                     if (xhr.status === 200) {
-                        // Xử lý khi gửi thành công, ví dụ: xóa nội dung ô input
                         document.querySelector('.write-message').value = '';
-                        // Cuộn xuống cuối messagesContainer
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     } else {
                         console.error('Error: ', xhr.responseText);
@@ -223,8 +224,7 @@
         }
 
         connection.on("ReceiveMessage", (message) => {
-            console.error("nhan dc roi ");
-
+            const avatarUrl = sessionStorage.getItem(`avatar_${message.senderId}`) || '/img/users.jpg';
             // Tạo phần tử cho tin nhắn mới
             const messageElement = document.createElement("div");
             messageElement.classList.add("message");
@@ -238,8 +238,12 @@
                 `;
             } else {
                 messageElement.innerHTML = `
-                    <div class="photo">
-                    </div>
+                        <div class="photo">
+                               <img class="rounded-circle border"
+                     src="${avatarUrl}"
+                     alt="User Avatar"
+                     style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
+            </div>
                     <p class="text">${message.content}</p>
                 `;
             }

@@ -18,5 +18,6 @@ namespace KVSC.Infrastructure.DTOs.ServiceCategory.GetServiceCategory
         public string Description { get; set; } = string.Empty;
         public string ServiceType { get; set; } = string.Empty;
         public string ApplicableTo { get; set; } = string.Empty;
+        public bool IsOnline {  get; set; }
     }
 }

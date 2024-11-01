@@ -14,5 +14,6 @@ namespace KVSC.Application.Interface.IService
         Task<Result> CreateMessageAsync(CreateMessageRequest createMessageRequest);
         Task<Result> GetMessagesAsync(Guid senderId, Guid recipientId);
         Task<Result> GetConversationsAsync(Guid userId);
+        Task<Result> GetMessagesAsync(Guid senderId, Guid recipientId, Guid appointmentId);
     }
 }

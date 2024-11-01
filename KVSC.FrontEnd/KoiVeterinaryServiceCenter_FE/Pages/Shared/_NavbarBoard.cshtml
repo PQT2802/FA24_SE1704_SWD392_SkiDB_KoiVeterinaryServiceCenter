@@ -16,13 +16,13 @@
             var actorAvatar = Context.Session.GetString("ActorAvatar");
             @if (actorRole == "Veterinarian")
             {
-                <a asp-page="/User/Veterinarian/Chat"
-                   class="nav-item nav-link d-flex align-items-center text-decoration-none
-                      @((Context.Request.Path == "/User/Veterinarian/Chat") ? "active" : "")
-                      hover-effect">
-                    <i class="fa fa-comments me-2 fa-lg"></i>
-                    Koi Care Chat
-                </a>
+                // <a asp-page="/User/Veterinarian/Chat"
+                //    class="nav-item nav-link d-flex align-items-center text-decoration-none
+                //       @((Context.Request.Path == "/User/Veterinarian/Chat") ? "active" : "")
+                //       hover-effect">
+                //     <i class="fa fa-comments me-2 fa-lg"></i>
+                //     Koi Care Chat
+                // </a>
             }else if(actorRole == "Customer")
             {
                 <a asp-page="/User/Customer/Chat"

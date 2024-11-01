@@ -19,7 +19,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Health",
                     ApplicableTo = "Koi Fish",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 },
                 new PetServiceCategory
                 {
@@ -29,7 +30,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Feeding",
                     ApplicableTo = "Koi Fish",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 },
                 new PetServiceCategory
                 {
@@ -39,7 +41,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Testing",
                     ApplicableTo = "Koi Fish",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 },
                 new PetServiceCategory
                 {
@@ -49,17 +52,19 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Treatment",
                     ApplicableTo = "Koi Fish",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 },
                 new PetServiceCategory
                 {
                     Id = new Guid("da91046c-71d1-429b-ade3-5e8ff9f701a6"),
-                    Name = "Parasite Treatment",
+                    Name = "Parasite Treatment Consultation",
                     Description = "Services to treat and prevent parasites in Koi fish.",
                     ServiceType = "Treatment",
                     ApplicableTo = "Koi Fish",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = true
                 },
                 new PetServiceCategory
                 {
@@ -69,7 +74,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Maintenance",
                     ApplicableTo = "Ponds",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 },
                 new PetServiceCategory
                 {
@@ -79,7 +85,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Breeding",
                     ApplicableTo = "Koi Fish",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 },
                 new PetServiceCategory
                 {
@@ -89,7 +96,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Transportation",
                     ApplicableTo = "Koi Fish",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 },
                 new PetServiceCategory
                 {
@@ -99,7 +107,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Emergency",
                     ApplicableTo = "Koi Fish",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 },
                 new PetServiceCategory
                 {
@@ -109,7 +118,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ServiceType = "Education",
                     ApplicableTo = "Koi Enthusiasts",
                     CreatedDate = DateTime.Now,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    IsOnline = false
                 }
             );
         }

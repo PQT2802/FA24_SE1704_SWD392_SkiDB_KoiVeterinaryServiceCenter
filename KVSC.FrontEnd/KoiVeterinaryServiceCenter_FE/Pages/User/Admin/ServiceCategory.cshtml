@@ -66,6 +66,14 @@
                             <span asp-validation-for="AddServiceCategoryRequest.ApplicableTo" class="text-danger"></span>
                         </div>
 
+                        <!-- Hidden input để luôn gửi giá trị false nếu không được check -->
+                        <input type="hidden" name="AddServiceCategoryRequest.IsOnline" value="false" />
+                        <!-- Is Online Checkbox -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="isOnline" name="AddServiceCategoryRequest.IsOnline" value="true">
+                            <label class="form-check-label" for="isOnline">Is Online</label>
+                        </div>
+
                         <button type="submit" class="btn btn-primary" id="submitCategoryForm">Submit</button>
                     </form>
                 </div>
@@ -78,10 +86,19 @@
         $('#submitCategoryForm').click(function (e) {
             e.preventDefault();
 
+            const form = $('#createCategoryForm')[0];
+            const formData = new FormData(form);
+
+            // Kiểm tra xem checkbox có được chọn không và thêm vào formData
+            const isOnlineChecked = $('#isOnline').is(':checked');
+            formData.set("AddServiceCategoryRequest.IsOnline", isOnlineChecked);
+
             $.ajax({
                 type: "POST",
                 url: window.location.pathname + "?handler=CreateCategory",
-                data: $('#createCategoryForm').serialize(),
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function (response) {
                     if (response.isSuccess) {
                         $('#createCategoryModal').modal('hide');
@@ -142,6 +159,12 @@
                         <span asp-validation-for="UpdateCategoryRequest.ApplicableTo" class="text-danger"></span>
                     </div>
 
+                    <!-- Checkbox Is Online -->
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="isOnlineUpdate" name="UpdateCategoryRequest.IsOnline" />
+                        <label class="form-check-label">Is Online</label>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
@@ -151,37 +174,40 @@
 <script>
     $(document).ready(function () {
         $('.edit-category-button').click(function () {
+            // Lấy giá trị từ các thuộc tính data-
             var id = $(this).data('id');
             var name = $(this).data('name');
             var description = $(this).data('description');
             var serviceType = $(this).data('servicetype');
             var applicableTo = $(this).data('applicableto');
+            var isOnline = $(this).data('isonline'); // Lấy giá trị của isOnline
 
-            console.log({
-                id: id,
-                name: name,
-                description: description,
-                serviceType: serviceType,
-                applicableTo: applicableTo
-            });
-
+            // Hiển thị dữ liệu trong modal
             $('#updateCategoryModal #categoryId').val(id);
             $('#updateCategoryModal #name').val(name);
             $('#updateCategoryModal #description').val(description);
             $('#updateCategoryModal #serviceType').val(serviceType);
             $('#updateCategoryModal #applicableTo').val(applicableTo);
+            // Cập nhật trạng thái của checkbox dựa trên giá trị của isOnline  
+            $('#updateCategoryModal #isOnlineUpdate').prop('checked', isOnline);
 
+            // Mở modal
             $('#updateCategoryModal').modal('show');
         });
 
-        // Xử lý submit form
         $('#updateCategoryForm').submit(function (e) {
             e.preventDefault();
+
+            const form = $('#updateCategoryForm')[0];
+            const formData = new FormData(form);
+            formData.set("UpdateCategoryRequest.IsOnline", $('#isOnlineUpdate').is(':checked') ? "true" : "false");
 
             $.ajax({
                 type: "POST",
                 url: window.location.pathname + "?handler=UpdateCategory",
-                data: $(this).serialize(),
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function (response) {
                     if (response.isSuccess) {
                         $('#updateCategoryModal').modal('hide');

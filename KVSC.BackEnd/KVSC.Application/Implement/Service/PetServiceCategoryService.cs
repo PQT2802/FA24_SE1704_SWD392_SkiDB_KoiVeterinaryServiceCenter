@@ -49,7 +49,8 @@ namespace KVSC.Application.Implement.Service
                 Name = addPetServiceCategory.Name,
                 Description = addPetServiceCategory.Description,
                 ServiceType = addPetServiceCategory.ServiceType,
-                ApplicableTo = addPetServiceCategory.ApplicableTo
+                ApplicableTo = addPetServiceCategory.ApplicableTo,
+                IsOnline = addPetServiceCategory.IsOnline,
             };
 
             // Create the category
@@ -72,7 +73,8 @@ namespace KVSC.Application.Implement.Service
                 Name = category.Name,
                 Description = category.Description,
                 ServiceType = category.ServiceType,
-                ApplicableTo = category.ApplicableTo
+                ApplicableTo = category.ApplicableTo,
+                IsOnline = category.IsOnline,
             }).ToList();
 
             return Result.SuccessWithObject(response);
@@ -91,7 +93,8 @@ namespace KVSC.Application.Implement.Service
                 Name = petServiceCategory.Name,
                 Description = petServiceCategory.Description,
                 ServiceType = petServiceCategory.ServiceType,
-                ApplicableTo = petServiceCategory.ApplicableTo
+                ApplicableTo = petServiceCategory.ApplicableTo,
+                IsOnline = petServiceCategory.IsOnline,
             };
 
             return Result.SuccessWithObject(response);
@@ -118,6 +121,7 @@ namespace KVSC.Application.Implement.Service
             existingPetServiceCategory.Description = updatePetServiceCategoryRequest.Description;
             existingPetServiceCategory.ServiceType = updatePetServiceCategoryRequest.ServiceType;
             existingPetServiceCategory.ApplicableTo = updatePetServiceCategoryRequest.ApplicableTo;
+            existingPetServiceCategory.IsOnline = updatePetServiceCategoryRequest.IsOnline;
             // Update the category
             var updateResult = await _unitOfWork.PetServiceCategoryRepository.UpdateAsync(existingPetServiceCategory);
             if (updateResult == 0)

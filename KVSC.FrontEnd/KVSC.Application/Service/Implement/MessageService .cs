@@ -33,6 +33,9 @@ namespace KVSC.Application.Service.Implement
         {
             return await _messageRepository.GetConversationAsync(userId);
         }
-
+        public async Task<ResponseDto<MessageModel>> GetMessages(Guid customerId, Guid veterinarianId, Guid appointmentId)
+        {
+            return await _messageRepository.GetMessages(customerId, veterinarianId, appointmentId);
+        }
     }
 }

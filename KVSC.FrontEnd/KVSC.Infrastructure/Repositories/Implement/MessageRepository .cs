@@ -73,6 +73,29 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 Message = "Messages retrieved successfully."
             };
         }
+        public async Task<ResponseDto<MessageModel>> GetMessages(Guid customerId, Guid veterinarianId, Guid appointmentId)
+        {
+            var response = await _httpClient.GetAsync($"api/messages/{customerId}/{veterinarianId}/{appointmentId}");
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+                return new ResponseDto<MessageModel>
+                {
+                    IsSuccess = false,
+                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                    Message = "An error occurred while retrieving messages."
+                };
+            }
+
+            var messages = await response.Content.ReadFromJsonAsync<MessageModel>();
+            return new ResponseDto<MessageModel>
+            {
+                IsSuccess = true,
+                Data = messages,
+                Message = "Messages retrieved successfully."
+            };
+        }
         public async Task<ResponseDto<ConversationModel>> GetConversationAsync(Guid userId)
         {
             try

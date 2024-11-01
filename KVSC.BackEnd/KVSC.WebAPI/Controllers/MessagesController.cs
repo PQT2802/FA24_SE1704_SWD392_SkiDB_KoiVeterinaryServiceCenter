@@ -35,6 +35,14 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Get message successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        [HttpGet("{customerId}/{veterinarianId}/{appointmentId}")]
+        public async Task<IResult> GetMessages(Guid customerId, Guid veterinarianId, Guid appointmentId)
+        {
+            var result = await _messageService.GetMessagesAsync(customerId, veterinarianId, appointmentId);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Get message script successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
         [HttpGet("conversations/{userId}")]
         public async Task<IResult> GetConversations(Guid userId)
         {

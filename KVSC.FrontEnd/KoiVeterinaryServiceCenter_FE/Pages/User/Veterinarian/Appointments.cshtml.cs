@@ -1,4 +1,4 @@
-using KVSC.Application.Service.Implement;
+﻿using KVSC.Application.Service.Implement;
 using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
@@ -98,6 +98,47 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
 
             TempData["ErrorMessage"] = "Unable to send message.";
             return RedirectToPage(); // Redirect to the same page to show the error
+        }
+        public async Task<IActionResult> OnGetConversationAsync(Guid customerId, Guid veterinarianId, Guid appointmentId)
+        {
+            var token = HttpContext.Session.GetString("Token");
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToPage("/Account/SignIn");
+            }
+
+            // Giải mã token để lấy userId (người dùng hiện tại)
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+
+            if (!Guid.TryParse(userIdClaimString, out Guid currentUserId))
+            {
+                ModelState.AddModelError(string.Empty, "Unable to decode userId from token..");
+                return Page();
+            }
+
+            var result = await _messageService.GetMessages(customerId, veterinarianId, appointmentId);
+
+            if (result.IsSuccess && result.Data != null)
+            {
+
+                return new JsonResult(new
+                {
+                    isSuccess = true,
+                    data = result.Data.Extensions.Data,
+                    currentUserId = currentUserId
+                });
+            }
+            else
+            {
+                return new JsonResult(new
+                {
+                    isSuccess = false,
+                    message = "Failed to retrieve messages."
+                });
+            }
         }
 
     }

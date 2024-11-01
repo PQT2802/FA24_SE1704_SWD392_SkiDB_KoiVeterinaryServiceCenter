@@ -48,47 +48,52 @@
                 <div class="messages-chat" id="messagesContainer" style="display: flex; flex-direction: column-reverse;">
                      @if (Model.Messages.Extensions?.Data != null && Model.Messages.Extensions.Data.Any())
                     {
-                    @foreach (var message in Model.Messages.Extensions?.Data)
-                    {
-                        if (message.SenderId == Model.CurrentUserId)
-                        {
-                        <div class="message">
-                            <div class="response">
-                                <p class="text">@message.Content</p>
-                            </div>
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="message">
-                            <div class="photo">
-                                    <div class="photo">
-                                        <img class="rounded-circle border"
-                                             src="@(!string.IsNullOrEmpty(message.AvatarUrl) ? message.AvatarUrl : Url.Content("~/img/users.jpg"))"
-                                             alt="User Avatar"
-                                             style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
-                                    </div>
-                            </div>
-                            <p class="text">@message.Content</p>
-                        </div>
-                    }
-                    <p class="time">@message.Timestamp.ToString("g")</p>
-                    }
+                           @foreach (var message in Model.Messages.Extensions.Data)
+                          {
+                              if (message.SenderId == Model.CurrentUserId)
+                              {
+                              <div class="message">
+                                  <div class="response">
+                                      <p class="text">@message.Content</p>
+                                  </div>
+                              </div>
+                              }
+                              else
+                              {
+                              <div class="message">
+                                  <div class="photo">
+                                          <div class="photo">
+                                              <img class="rounded-circle border"
+                                                   src="@(!string.IsNullOrEmpty(message.AvatarUrl) ? message.AvatarUrl : Url.Content("~/img/users.jpg"))"
+                                                   alt="User Avatar"
+                                                   style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
+                                          </div>
+                                  </div>
+                                  <p class="text">@message.Content</p>
+                              </div>
+                               }
+                          <p class="time">@message.Timestamp.ToString("g")</p>
+                            <script>
+                                sessionStorage.setItem('avatar_@message.SenderId', '@message.AvatarUrl');
+                            </script>
+                          }
                     }
                 </div>
                 <div class="footer-chat">
-
-                    <form id="sendMessageForm" method="post" onsubmit="sendMessage(event)">
-                        <input type="hidden" asp-for="CreateMessageRequest.SenderId" value="@Model.CurrentUserId" />
-                        <input type="hidden" asp-for="CreateMessageRequest.RecipientId" value="@Model.CurrentRecipientId" />
-                        <div class="message-input-container">
-                            <input type="text" class="write-message" asp-for="CreateMessageRequest.Content" placeholder="Type your message..." required />
-                            <button class="icon send fa fa-paper-plane-o clickable" type="submit"
-                            @(Model.Messages.Extensions?.Data?.Any() != true ? "disabled" : "")>
-                                Send
-                            </button>
-                        </div>
-                    </form>
+                     @if (Model.Messages.Extensions?.Data != null && Model.Messages.Extensions.Data.Any())
+                    {
+                        <form id="sendMessageForm" method="post" onsubmit="sendMessage(event)">
+                            <input type="hidden" asp-for="CreateMessageRequest.SenderId" value="@Model.CurrentUserId" />
+                            <input type="hidden" asp-for="CreateMessageRequest.RecipientId" value="@Model.CurrentRecipientId" />
+                            <div class="message-input-container">
+                                <input type="text" class="write-message" asp-for="CreateMessageRequest.Content" placeholder="Type your message..." required />
+                                <button class="icon send fa fa-paper-plane-o clickable" type="submit"
+                                @(Model.Messages.Extensions?.Data?.Any() != true ? "disabled" : "")>
+                                    Send
+                                </button>
+                            </div>
+                        </form>
+                    }
                 </div>
             </section>
         </div>
@@ -220,7 +225,7 @@
 
 
         connection.on("ReceiveMessage", (message) => {
-            console.error("nhan dc roi ");
+            const avatarUrl = sessionStorage.getItem(`avatar_${message.senderId}`) || '/img/users.jpg';
 
             // Tạo phần tử cho tin nhắn mới
             const messageElement = document.createElement("div");
@@ -235,8 +240,12 @@
             `;
             } else {
                 messageElement.innerHTML = `
-                <div class="photo">
-                </div>
+                    <div class="photo">
+                    <img class="rounded-circle border"
+                                             src="${avatarUrl}"
+                         alt="User Avatar"
+                         style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
+            </div>
                 <p class="text">${message.content}</p>
             `;
             }

@@ -13,5 +13,6 @@ namespace KVSC.Infrastructure.DTOs.PetServiceCategory.GetPetServiceCategory
         public string Description { get; set; }
         public string ServiceType { get; set; }
         public string ApplicableTo { get; set; }
+        public bool IsOnline { get; set; }
     }
 }

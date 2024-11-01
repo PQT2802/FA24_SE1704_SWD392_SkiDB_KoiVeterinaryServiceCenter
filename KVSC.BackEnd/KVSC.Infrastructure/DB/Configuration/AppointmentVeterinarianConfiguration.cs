@@ -52,6 +52,12 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("55555555-cccc-5555-cccc-555555555555"),
                     AppointmentId = new Guid("77777777-7777-7777-7777-777777777777"), // Link with Appointment (InProgress)
                     VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4") // Link with Veterinarian 1
+                },
+                new AppointmentVeterinarian
+                {
+                    Id = new Guid("55555555-dddd-5555-cccc-555555555555"),
+                    AppointmentId = new Guid("66666666-6666-6666-6666-666666666666"), // Link with Appointment (InProgress)
+                    VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4") // Link with Veterinarian 1
                 }
             );
         }

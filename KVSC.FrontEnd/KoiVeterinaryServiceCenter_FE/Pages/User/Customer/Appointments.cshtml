@@ -92,6 +92,15 @@ else if (Model.AppointmentList?.Extensions?.Data != null && Model.AppointmentLis
                                     <i class="fas fa-star"></i> Rating
                                 </button>
                             }
+                            @if (appointment.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
+                            {
+                                <button class="btn btn-outline-primary btn-sm open-conversation-modal"
+                                        data-customer-id="@appointment.CustomerId"
+                                        data-veterinarian-id="@appointment.VeterinarianId"
+                                        data-appointment-id="@appointment.AppointmentListId">
+                                    <i class="bi bi-chat-dots"></i> Chat History
+                                </button>
+                            }
                         </td>
                     </tr>
                 }
@@ -176,6 +185,97 @@ else
         }, 1000); // 1 giây
     }); 
 </script>
+@* ========================================conversiontion history==========================================================*@
+<div class="modal fade" id="conversationModal" tabindex="-1" aria-labelledby="conversationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="conversationModalLabel">Conversation</h5>
+            </div>
+            <div class="modal-body" id="conversationContent">
+                <!-- Nội dung cuộc hội thoại sẽ được thêm vào đây -->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.open-conversation-modal').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const customerId = event.currentTarget.getAttribute('data-customer-id');
+                const veterinarianId = event.currentTarget.getAttribute('data-veterinarian-id');
+                const appointmentId = event.currentTarget.getAttribute('data-appointment-id');
+
+                const apiUrl = `@Url.PageLink("/User/Customer/Appointments")?handler=Conversation&customerId=${customerId}&veterinarianId=${veterinarianId}&appointmentId=${appointmentId}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) throw new Error("Network response was not ok.");
+
+                    const result = await response.json();
+
+                    if (result.isSuccess) {
+                        const conversationContent = document.getElementById('conversationContent');
+                        conversationContent.innerHTML = ''; // Xóa nội dung trước đó
+                        if (Array.isArray(result.data) && result.data.length > 0) {
+                            result.data.forEach(message => {
+                                const messageElement = document.createElement('div');
+                                messageElement.classList.add('message', 'mb-3'); // Thêm khoảng cách giữa các tin nhắn
+
+                                if (message.senderId === result.currentUserId) {
+                                    // Tin nhắn của người dùng hiện tại
+                                    messageElement.innerHTML = `
+                    <div class="d-flex flex-row-reverse">
+                        <div class="bg-primary text-white p-3 rounded" style="max-width: 60%;">
+                            <p class="text mb-1">${message.content}</p>
+                            <p class="time text-end mb-0 small">${new Date(message.timestamp).toLocaleString()}</p>
+                        </div>
+                    </div>
+                `;
+                                } else {
+                                    // Tin nhắn của người khác
+                                    messageElement.innerHTML = `
+                    <div class="d-flex">
+                        <div class="photo me-3">
+                            <img class="rounded-circle border"
+                                 src="${message.avatarUrl ? message.avatarUrl : '/img/users.jpg'}"
+                                 alt="User Avatar"
+                                 style="width: 40px; height: 40px; object-fit: cover;">
+                        </div>
+                        <div class="bg-light p-3 rounded" style="max-width: 60%;">
+                            <p class="text mb-1">${message.content}</p>
+                            <p class="time text-start mb-0 small">${new Date(message.timestamp).toLocaleString()}</p>
+                        </div>
+                    </div>
+                `;
+                                }
+
+                                conversationContent.appendChild(messageElement);
+                            });
+                        } else {
+                            conversationContent.innerHTML = '<p class="text-muted">No messages available.</p>'; // Hiển thị thông báo nếu không có tin nhắn
+                        }
+
+                        $('#conversationModal').modal('show');
+
+                    } else {
+                        alert(result.message || "Could not load messages.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching conversation:", error);
+                    alert("An error occurred while fetching messages.");
+                }
+            });
+        });
+    });
+</script>
+
+@* ======================================================================================================================== *@
 <!-- Styles for the minimalist modern table -->
 <style>
     h2 {

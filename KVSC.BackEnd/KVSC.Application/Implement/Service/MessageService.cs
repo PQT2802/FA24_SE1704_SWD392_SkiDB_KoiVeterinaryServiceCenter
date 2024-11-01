@@ -46,6 +46,26 @@ namespace KVSC.Application.Implement.Service
         }
         public async Task<Result> GetMessagesAsync(Guid senderId, Guid recipientId)
         {
+            Guid veterinarianId;
+            Guid customerId;
+            var veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(senderId);
+            if (veterinarian != null)
+            {
+                veterinarianId = veterinarian.Id; // sender là Veterinarian
+                customerId = recipientId;         // recipient là Customer
+            }
+            else
+            {
+                veterinarian = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(recipientId);
+                veterinarianId = veterinarian.Id; // recipient là Veterinarian
+                customerId = senderId;            // sender là Customer
+            }
+            var appointment = await _unitOfWork.AppointmentRepository.GetLatestAppointmentAsync(customerId, veterinarianId);
+            if (appointment == null || DateTime.UtcNow.Date > appointment.AppointmentDate.AddDays(1) || appointment.Status != "InProgress")
+            {
+                return Result.Failure(MessageErrorMessage.InvalidDateChat());
+            }
+
             var messages = await _unitOfWork.MessageRepository.GetMessagesAsync(senderId, recipientId);
 
             if (messages == null || !messages.Any())
@@ -77,6 +97,54 @@ namespace KVSC.Application.Implement.Service
             }
             return Result.SuccessWithObject(messageResponses);
         }
+        /*==================lay message cho appointment =============================*/
+        public async Task<Result> GetMessagesAsync(Guid customerId, Guid veterinarianId, Guid appointmentId)
+        {
+            var senderId = customerId;
+            var veterinarian = await _unitOfWork.UserRepository.GetVeterinarianByVeterinarianIdAsync(veterinarianId) ;
+            if(veterinarian == null)
+            {
+                return Result.Failure(ChatErrorMessage.NoMessagesFound());
+            }
+            var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentByIdAsync(appointmentId);
+            // Lấy các tin nhắn mà có ngày giống với ngày cuộc hẹn
+            var messages = await _unitOfWork.MessageRepository.GetMessagesAsync(senderId, veterinarian.UserId);
+            var filteredMessages = messages.Where(m => m.Timestamp.Date == appointment.AppointmentDate.Date).ToList();
+
+            if (filteredMessages == null || !filteredMessages.Any())
+            {
+                return Result.Failure(ChatErrorMessage.NoMessagesFound());
+            }
+
+            var messageResponses = new List<CreateMessageResponse>();
+
+            foreach (var message in filteredMessages)
+            {
+                var senderName = await _unitOfWork.UserRepository.GetByIdAsync(message.SenderId); // Lấy tên người gửi
+                var recipientName = await _unitOfWork.UserRepository.GetByIdAsync(message.RecipientId); // Lấy tên người nhận
+
+                /*============================================lay anh==========================================================*/
+                var getimg = new GetImageRequest(senderName.ProfilePictureUrl);
+                var petSenderImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getimg);
+                /*============================================lay anh==========================================================*/
+
+                var messageResponse = new CreateMessageResponse
+                {
+                    AvatarUrl = petSenderImg.ImageUrl,
+                    SenderId = message.SenderId,
+                    SenderName = senderName.FullName,
+                    RecipientId = message.RecipientId,
+                    RecipientName = recipientName.FullName,
+                    Content = message.Content,
+                    Timestamp = message.Timestamp
+                };
+
+                messageResponses.Add(messageResponse);
+            }
+
+            return Result.SuccessWithObject(messageResponses);
+        }
+
         public async Task<Result> GetConversationsAsync(Guid userId)
         {
             var conversations = await _unitOfWork.MessageRepository.GetConversationsAsync(userId);

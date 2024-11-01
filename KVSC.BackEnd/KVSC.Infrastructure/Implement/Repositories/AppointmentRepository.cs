@@ -39,6 +39,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListAsync()
         {
             return await _context.Appointments
+                .Include(u => u.PetService)
+                    .ThenInclude(u => u.PetServiceCategory)
                 .Where(a => !a.IsDeleted)
                 .Select(a => new GetAllAppointment
                 {
@@ -54,7 +56,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
                                         .FirstOrDefault(), // Handle null Veterinarian or User
                     ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService
                     Status = a.Status,
-                    AppointmentDate = a.AppointmentDate
+                    AppointmentDate = a.AppointmentDate,
+                    IsOnline = a.PetService.PetServiceCategory.IsOnline
                 })
                 .ToListAsync();
         }
@@ -62,6 +65,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByCustomerIdAsync(Guid userId)
         {
             return await _context.Appointments
+                .Include(u => u.PetService)
+                .ThenInclude(u => u.PetServiceCategory)
                 .Where(a => !a.IsDeleted && a.Customer.Id == userId) // Filter by customer's UserId
                 .Select(a => new GetAllAppointment
                 {
@@ -77,7 +82,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
                         .FirstOrDefault(), // Handle null Veterinarian or User
                     ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService safely
                     Status = a.Status,
-                    AppointmentDate = a.AppointmentDate
+                    AppointmentDate = a.AppointmentDate,
+                    IsOnline = a.PetService.PetServiceCategory.IsOnline
                 })
                 .ToListAsync();
         }
@@ -85,6 +91,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<IEnumerable<GetAllAppointment>> GetAppointmentListByUserIdAsync(Guid userId)
         {
             return await _context.Appointments
+                .Include(u => u.PetService)
+                .ThenInclude(u=> u.PetServiceCategory)
                 .Where(a => !a.IsDeleted && a.AppointmentVeterinarians
                     .Any(av => av.Veterinarian.UserId == userId)) // Filter by veterinarian's UserId
                 .Select(a => new GetAllAppointment
@@ -103,7 +111,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
                                         .FirstOrDefault(), // Handle null Veterinarian or User
                     ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService safely
                     Status = a.Status,
-                    AppointmentDate = a.AppointmentDate
+                    AppointmentDate = a.AppointmentDate,
+                    IsOnline = a.PetService.PetServiceCategory.IsOnline
                 })
                 .ToListAsync();
         }
@@ -353,6 +362,48 @@ namespace KVSC.Infrastructure.Implement.Repositories
             {
                 throw new InvalidOperationException("The data was modified or deleted by another process.");
             }
+        }
+
+        public async Task<Appointment> GetLatestAppointmentAsync(Guid customerId, Guid veterinarianId)
+        {
+            //DK1: appointmentDate không được là quá khứ.
+            //dk2: Status phải là InProgress
+            //dk3: isOnline trong petservicecategory và petservicecategory trong petservice phải là true
+            var appointmentsForCustomer = await _context.Appointments
+            .Include(a => a.AppointmentVeterinarians)
+            .Include(a => a.PetService) // Include PetService to access PetServiceCategory
+            .ThenInclude(ps => ps.PetServiceCategory) // Include PetServiceCategory
+            .Where(a => a.CustomerId == customerId)
+            .ToListAsync();
+            if (!appointmentsForCustomer.Any())
+            {
+                Console.WriteLine("No appointments found for this customer.");
+                return null;
+            }
+            var appointmentsWithVeterinarian = appointmentsForCustomer
+                .Where(a => a.AppointmentVeterinarians.Any(av => av.VeterinarianId == veterinarianId))
+                .Where(a => a.AppointmentDate.Date >= DateTime.UtcNow.Date) // DK1: Check that AppointmentDate is not in the past
+                .Where(a => a.Status == "InProgress") // DK2: Check that Status is "InProgress"
+                .Where(a => a.PetService != null && // DK3: Check IsOnline in PetServiceCategory
+                            a.PetService.PetServiceCategory != null &&
+                            a.PetService.PetServiceCategory.IsOnline)
+                .ToList();
+            if (!appointmentsWithVeterinarian.Any())
+            {
+                Console.WriteLine("No valid appointments found for this veterinarian.");
+                return null;
+            }
+            var latestAppointment = appointmentsWithVeterinarian
+                .OrderByDescending(a => a.AppointmentDate)
+                .FirstOrDefault();
+
+            if (latestAppointment == null)
+            {
+                Console.WriteLine("No latest appointment found.");
+                return null;
+            }
+
+            return latestAppointment;
         }
 
     }

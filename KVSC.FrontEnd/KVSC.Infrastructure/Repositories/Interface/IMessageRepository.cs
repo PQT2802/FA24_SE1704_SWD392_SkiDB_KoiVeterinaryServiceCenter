@@ -14,5 +14,6 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<CreateMessageResponse>> CreateMessage(CreateMessageRequest request);
         Task<ResponseDto<MessageModel>> GetMessages(Guid senderId, Guid recipientId);
         Task<ResponseDto<ConversationModel>> GetConversationAsync(Guid userId);
+        Task<ResponseDto<MessageModel>> GetMessages(Guid customerId, Guid veterinarianId, Guid appointmentId);
     }
 }
