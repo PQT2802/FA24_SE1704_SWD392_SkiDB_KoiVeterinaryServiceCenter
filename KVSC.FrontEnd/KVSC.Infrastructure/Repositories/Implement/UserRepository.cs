@@ -631,5 +631,72 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+
+        public async Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount)
+        {
+            try
+            {
+                // Set the request with authorization token in headers
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                // Construct the request URL with the depositMoney parameter
+                var requestUrl = $"api/Payment/create-payment-url?depositMoney={amount}";
+
+                // Send the request and get the response
+                var response = await _httpClient.PostAsync(requestUrl, null);
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<AddMoney>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during the payment process."
+                    };
+                }
+
+                // If successful, deserialize the AddMoney response
+                var data = await response.Content.ReadFromJsonAsync<AddMoney>(options);
+
+                return new ResponseDto<AddMoney>
+                {
+                    IsSuccess = true,
+                    Data = data,
+                    Message = "Payment URL created successfully."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<AddMoney>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<AddMoney>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
     }
 }

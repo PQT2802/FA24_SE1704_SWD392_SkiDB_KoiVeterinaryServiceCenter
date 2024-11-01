@@ -10,5 +10,6 @@ namespace KVSC.Infrastructure.Interface.IRepositories
     public interface IPaymentRepository : IGenericRepository<Payment>
     {
         Task<Payment> AddPaymentAsync(Payment payment);
+        Task<Payment> GetPaymentByAppointmentIdAsync(Guid appointmentId);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.DTOs.Dashboard.Admin
 {
-    public class DashboardData
+    public class AdminDashboardData
     {
         public List<TopVeterinarian> TopVeterinarians { get; set; }
         public List<TopService> BestServices { get; set; }

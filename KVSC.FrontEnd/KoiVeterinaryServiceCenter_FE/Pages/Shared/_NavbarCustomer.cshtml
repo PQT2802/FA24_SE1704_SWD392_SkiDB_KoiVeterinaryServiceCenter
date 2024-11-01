@@ -10,10 +10,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="https://localhost:7241/" class="nav-item nav-link active">Home</a>
-                    <a href="service.html" class="nav-item nav-link">Services</a>
-                    <a href="contact.html" class="nav-item nav-link">Veterinarian</a>
-                    <a href="contact.html" class="nav-item nav-link">Book Appointment</a>
+                    <a asp-page ="index.cshtml" class="nav-item nav-link active">Home</a>
+                    <a asp-page="/Services" class="nav-item nav-link">Services</a>
+                    <a asp-page="/Appointment" class="nav-item nav-link">Book Appointment</a>
 
                     @{
                         var actorRole = Context.Session.GetString("ActorRole");

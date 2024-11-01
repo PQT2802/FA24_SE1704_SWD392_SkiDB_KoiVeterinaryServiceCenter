@@ -7,6 +7,7 @@ using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.AddAppointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
+using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.Login;
 
@@ -434,6 +435,70 @@ public class AppointmentRepository : IAppointmentRepository
         catch (Exception ex)
         {
             return new ResponseDto<AssignVeterinarianResponse>
+            {
+                IsSuccess = false,
+                Data = null,
+                Message = $"An unexpected error occurred: {ex.Message}"
+            };
+        }
+    }
+
+    public async Task<ResponseDto<MakeAppointmentResponse>> MakeAppointmentAsync(MakeAppointmentRequest request)
+    {
+        try
+        {
+            // Send the request and get the response
+            var response = await _httpClient.PostAsJsonAsync("api/Appointment/service", request);
+
+            /// must have
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            // Check if the response indicates failure
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the error response using the options for case insensitivity
+                var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                return new ResponseDto<MakeAppointmentResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                    Message = "An error occurred during sign-in."
+                };
+            }
+
+            // If successful, deserialize the login response
+            var loginResponse = await response.Content.ReadFromJsonAsync<MakeAppointmentResponse>(options);
+            Console.WriteLine(JsonSerializer.Serialize(loginResponse, new JsonSerializerOptions { WriteIndented = true }));
+
+            return new ResponseDto<MakeAppointmentResponse>
+            {
+                IsSuccess = true,
+                Data = loginResponse,
+                Message = "Sign-in successful."
+            };
+        }
+        catch (HttpRequestException httpEx)
+        {
+            // Handling HTTP request exceptions (e.g., network errors)
+            return new ResponseDto<MakeAppointmentResponse>
+            {
+                IsSuccess = false,
+                Data = null,
+                Message = $"Request error: {httpEx.Message}"
+            };
+        }
+        catch (Exception ex)
+        {
+            // Handling any other exceptions
+            return new ResponseDto<MakeAppointmentResponse>
             {
                 IsSuccess = false,
                 Data = null,

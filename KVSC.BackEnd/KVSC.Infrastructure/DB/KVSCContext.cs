@@ -48,6 +48,10 @@ namespace KVSC.Infrastructure.DB
         public DbSet<Role> Roles { get; set; }
         public DbSet<Rating> Ratings { get; set; }
 
+        public DbSet<Wallet> Wallets { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -74,6 +78,7 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.ApplyConfiguration(new PetHabitatConfiguration());
             modelBuilder.ApplyConfiguration(new MessageConfiguration());
             modelBuilder.ApplyConfiguration(new RatingConfiguration());
+            modelBuilder.ApplyConfiguration(new WalletConfiguration());
 
             #endregion
 
@@ -105,6 +110,8 @@ namespace KVSC.Infrastructure.DB
             modelBuilder.Entity<AppointmentVeterinarian>().ToTable("AppointmentVeterinarian");
             modelBuilder.Entity<Message>().ToTable("Message");
             modelBuilder.Entity<Rating>().ToTable("Rating");
+            modelBuilder.Entity<Wallet>().ToTable("Wallet");
+            modelBuilder.Entity<Transaction>().ToTable("Transaction");
 
             #endregion
 
@@ -275,7 +282,22 @@ namespace KVSC.Infrastructure.DB
                 .HasForeignKey(r => r.ServiceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+            // User has one Wallet
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Wallet)
+                .WithOne(w => w.User)
+                .HasForeignKey<Wallet>(w => w.UserId);
+            
+
+            // User and Transactions relationship
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Transactions)
+                .WithOne(t => t.User)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
             #endregion
+
         }
     }
 }

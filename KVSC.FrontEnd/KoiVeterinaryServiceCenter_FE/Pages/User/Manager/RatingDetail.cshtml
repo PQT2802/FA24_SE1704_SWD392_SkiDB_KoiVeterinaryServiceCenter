@@ -1,0 +1,51 @@
+﻿@page "{serviceId:guid}"
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Manager.RatingDetailModel
+@{
+    Layout = "_LayoutBoard";
+}
+@{
+    ViewData["Title"] = "Rating Details";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="card-title text-center">Rating Details</h2>
+        </div>
+        <div class="card-body">
+            @if (Model.RatingDetail?.Extensions?.Data != null && Model.RatingDetail.Extensions.Data.Any())
+            {
+                var rating = Model.RatingDetail.Extensions.Data.First(); // Lấy phần tử đầu tiên từ danh sách
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-around align-items-center mb-4">
+                            <h3 class="display-4 text-primary">@rating.ServiceName</h3>
+                            <p class="mb-0"><strong>Rated on:</strong> @rating.CreatedDate.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Customer Name:</strong></p>
+                            <p class="bg-light border rounded p-3">@rating.CustomerName</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Score:</strong></p>
+                            <p class="bg-light border rounded p-3">@rating.Score</p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-1"><strong>Feedback:</strong></p>
+                            <p class="bg-light border rounded p-3">@rating.Feedback</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    Rating not found.
+                </div>
+            }
+        </div>
+        <div class="card-footer text-end">
+            <a href="/User/Manager/Rating" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>

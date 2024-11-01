@@ -34,6 +34,9 @@ namespace KVSC.Domain.Entities
         // Thêm quan hệ với Appointment
         public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment
         public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+        public ICollection<Transaction> Transactions { get; set; }
+
+        public Wallet Wallet { get; set; }
     }
 
 }

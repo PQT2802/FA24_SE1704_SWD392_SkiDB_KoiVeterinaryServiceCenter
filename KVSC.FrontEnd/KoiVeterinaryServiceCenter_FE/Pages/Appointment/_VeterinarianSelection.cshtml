@@ -1,0 +1,16 @@
+﻿@model List<KVSC.Infrastructure.DTOs.User.GetVetIdData>
+
+@if (Model != null && Model.Any())
+{
+    <select class="form-control" id="vetId" name="VetId" required>
+        <option value="">-- Select a Veterinarian --</option>
+        @foreach (var vet in Model)
+        {
+            <option value="@vet.VeterinarianId">@vet.VeterinarianName</option>
+        }
+    </select>
+}
+else
+{
+    <p>No veterinarians available for the selected date and time.</p>
+}

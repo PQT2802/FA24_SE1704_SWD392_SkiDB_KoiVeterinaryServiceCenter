@@ -2,6 +2,7 @@
 using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.AddAppointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
+using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using System.Threading.Tasks;
 
 public interface IAppointmentService
@@ -19,4 +20,5 @@ public interface IAppointmentService
     Task<ResponseDto<AppointmentList>> GetUnassignedAppointmentsAsync();
     Task<ResponseDto<VeterinarianDto>> GetAvailableVeterinarians(Guid appointmentId);
     Task<ResponseDto<AssignVeterinarianResponse>> AssignVeterinarianToAppointment(AssignVeterinarianRequest request);
+    Task<ResponseDto<MakeAppointmentResponse>> MakeAppointmentAsync(MakeAppointmentRequest request);
 }

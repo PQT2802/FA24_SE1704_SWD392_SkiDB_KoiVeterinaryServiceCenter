@@ -66,6 +66,16 @@
                                 }
                             </div>
 
+                            <!-- Wallet -->
+                            @if (!isEditMode)
+                            {
+                                <div class="mb-4">
+                                    <label class="form-label"><strong>Current Amount: @Model.UserProfile.Extensions.Data.Amount.ToString("C")</strong></label>
+                                    <input type="number" asp-for="TopUpAmount" min="10000" class="form-control" placeholder="Enter amount to add" />
+                                    <button type="submit" formaction="/User/Customer/CustomerProfile?handler=TopUp" class="btn btn-primary">Add</button>
+                                </div>
+                            }
+
                             <!-- Username -->
                             <div class="mb-4">
                                 <label class="form-label"><strong>Username:</strong></label>
@@ -161,7 +171,7 @@
             <div class="card-footer text-end">
                 @if (isEditMode)
                 {
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success" formaction="/User/Customer/CustomerProfile?handler=Save">Save</button>
                 }
                 else
                 {

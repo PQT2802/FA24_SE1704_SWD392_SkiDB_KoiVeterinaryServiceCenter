@@ -15,11 +15,13 @@ namespace KVSC.Application.Implement.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _config;
+        private readonly IWalletService _walletService;
 
-        public VnPaymentService(IUnitOfWork unitOfWork, IConfiguration configuration)
+        public VnPaymentService(IUnitOfWork unitOfWork, IConfiguration configuration, IWalletService walletService)
         {
             _unitOfWork = unitOfWork;
             _config = configuration;
+            _walletService = walletService;
         }
 
         public async Task<Result> CreatePaymentUrl(HttpContext context, double depositMoney, Guid userId)
@@ -47,7 +49,7 @@ namespace KVSC.Application.Implement.Service
             vnpay.AddRequestData("vnp_TxnRef", tick);
 
             var paymentUrl = vnpay.CreateRequestUrl(_config["VnPay:BaseUrl"], _config["VnPay:HashSecret"]);
-            return Result.SuccessWithObject(paymentUrl);
+            return Result.SuccessWithObject(new {Url = paymentUrl});
         }
 
         public async Task<Result> PaymentExecute(IQueryCollection collections, Guid userId, double depositMoney)
@@ -71,24 +73,30 @@ namespace KVSC.Application.Implement.Service
             string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
             if (vnp_ResponseCode == "00")  // "00" indicates a successful transaction
             {
-                // Create a new Payment record
-                var payment = new Payment
+                // Update wallet balance
+                var walletUpdateResult = await _walletService.UpdateWalletBalanceAsync(userId, (decimal)depositMoney);
+                if (!walletUpdateResult.IsSuccess)
                 {
-                    OrderId = Guid.NewGuid(), // Replace with the actual OrderId
-                    SystemTransactionId = Guid.NewGuid(), // Replace with actual SystemTransactionId if available
-                    TotalAmount = (decimal)depositMoney,
-                    Tax = 0, // Add tax calculation if applicable
+                    return Result.Failure(Error.Failure("WalletUpdate", "Failed to update wallet balance after payment."));
+                }
+
+                // Log transaction
+                var transaction = new Transaction
+                {
+                    UserId = userId,
+                    Amount = (decimal)depositMoney,
+                    TransactionType = "Top-Up",
                     TransactionDate = DateTime.UtcNow
                 };
+                await _unitOfWork.TransactionRepository.AddTransactionAsync(transaction);
 
-                await _unitOfWork.PaymentRepository.AddPaymentAsync(payment);
-
-                return Result.SuccessWithObject(new { Message = "Transaction successful", PaymentId = payment.Id });
+                return Result.SuccessWithObject(new { Message = "Transaction successful" });
             }
             else
             {
                 return Result.Failure(Error.Failure("Transaction", $"Transaction failed with response code: {vnp_ResponseCode}"));
             }
         }
+
     }
 }
