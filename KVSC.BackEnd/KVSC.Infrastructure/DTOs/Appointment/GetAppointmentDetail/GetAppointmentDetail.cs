@@ -8,6 +8,7 @@ namespace KVSC.Infrastructure.DTOs.Appointment.GetAppointmentDetail
 {
     public class GetAppointmentDetail
     {
+        public Guid AppointmentId { get; set; }
         public AppointmentDetailService AppointmentDetailService { get; set; }
         public AppointmentDetailCustomer AppointmentDetailCustomer { get; set; }
         public AppointmentDetailVeterinarian AppointmentDetailVeterinarian { get; set; }

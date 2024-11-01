@@ -1,0 +1,25 @@
+services:
+  kvsc.webapi:
+    image: ${DOCKER_REGISTRY-}kvscwebapi
+    build:
+      context: .
+      dockerfile: KVSC.WebAPI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MyDb=Server=kvsc-database;Database=kvsc-database;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true
+    ports:
+      - "6000:8080"
+    depends_on:
+      - kvsc-database
+
+  kvsc-database:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: kvsc-database
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "6433:1433"
+    volumes:
+      - ./.containers/kvsc-database:/var/opt/mssql/data

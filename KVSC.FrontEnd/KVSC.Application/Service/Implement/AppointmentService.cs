@@ -5,6 +5,7 @@ using KVSC.Infrastructure.DTOs.Appointment;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail;
 using KVSC.Infrastructure.DTOs.Appointment.AddAppointment;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
+using KVSC.Infrastructure.DTOs.ServiceReport.AddServiceReport;
 
 public class AppointmentService : IAppointmentService
 {
@@ -75,5 +76,10 @@ public class AppointmentService : IAppointmentService
     public async Task<ResponseDto<MakeAppointmentResponse>> MakeAppointmentAsync(MakeAppointmentRequest request)
     {
         return await _appointmentRepository.MakeAppointmentAsync(request);
+    }
+
+    public async Task<ResponseDto<CommonMessage>> AddServiceReport(AddServiceReportRequest request)
+    {
+        return await _appointmentRepository.AddServiceReport(request);
     }
 }

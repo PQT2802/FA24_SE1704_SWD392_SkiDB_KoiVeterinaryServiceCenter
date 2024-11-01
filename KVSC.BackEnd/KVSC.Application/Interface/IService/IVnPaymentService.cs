@@ -1,4 +1,5 @@
 ﻿using KVSC.Application.KVSC.Application.Common.Result;
+using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Schedule;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -13,6 +14,10 @@ namespace KVSC.Application.Interface.IService
     {
         Task<Result> CreatePaymentUrl(HttpContext context, double depositMoney, Guid userId);
         Task<Result> PaymentExecute(IQueryCollection collections, Guid userId, double depositMoney);
+        Task<Result> GetPaymentByUserIdAsync(Guid userId);
+        Task<Result> UpdatePayment(Guid userId,Guid paymentId);
+       
+        
     }
 }
 

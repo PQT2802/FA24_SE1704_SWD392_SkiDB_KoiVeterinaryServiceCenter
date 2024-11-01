@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail
 {
     public class GetAppointmentDetailResponse
@@ -12,6 +14,7 @@ namespace KVSC.Infrastructure.DTOs.Appointment.GetAppoimentDetail
     }
     public class GetAppointmentDetailData
     {
+        public Guid AppointmentId { get; set; }
         public AppointmentDetailService AppointmentDetailService { get; set; }
         public AppointmentDetailCustomer AppointmentDetailCustomer { get; set; }
         public AppointmentDetailVeterinarian AppointmentDetailVeterinarian { get; set; }

@@ -110,6 +110,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
                                         .Select(av => av.Veterinarian != null ? av.Veterinarian.User.FullName : "Unknown")
                                         .FirstOrDefault(), // Handle null Veterinarian or User
                     ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService safely
+                    ServiceCategory = a.PetService.PetServiceCategory.ServiceType,
                     Status = a.Status,
                     AppointmentDate = a.AppointmentDate,
                     IsOnline = a.PetService.PetServiceCategory.IsOnline
@@ -208,10 +209,14 @@ namespace KVSC.Infrastructure.Implement.Repositories
             {
                 return null;
             }
+            
 
             // Map the appointment details to the DTOs
             // Initialize the GetAppointmentDetail object
-            var appointmentDetail = new GetAppointmentDetail();
+            var appointmentDetail = new GetAppointmentDetail()
+            {
+                AppointmentId = appointmentId,
+            };
 
             // Debugging AppointmentDetailService
             if (appointment.PetService == null)

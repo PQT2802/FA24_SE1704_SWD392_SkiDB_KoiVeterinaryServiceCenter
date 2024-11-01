@@ -120,8 +120,15 @@ namespace KVSC.Application.Implement.Service
                 PhoneNumber = registerRequest.PhoneNumber,
                 Address = registerRequest.Address,
                 DateOfBirth = registerRequest.DateOfBirth,
-                role = 5
+                role = 5,
+                
             };
+            //Wallet newWallet = new Wallet()
+            //{
+            //    UserId = newUser.Id,
+            //    Amount = 0,
+            //};
+            //await _unitOfWork.WalletRepository.CreateAsync(newWallet);
             var createUsre = await _unitOfWork.UserRepository.CreateAsync(newUser);
             if (createUsre == 0)
             {

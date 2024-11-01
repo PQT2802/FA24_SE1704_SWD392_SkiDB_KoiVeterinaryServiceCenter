@@ -206,7 +206,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                 FullName = user.FullName,
                 UserName = user.Username,
                 Email = user.Email,
-                Amount = wallet.Amount,
+                Amount =  wallet.Amount,
                 PhoneNumber = user.PhoneNumber,
                 ProfilePictureUrl = UserImg.ImageUrl ?? string.Empty,
                 Address = user.Address,

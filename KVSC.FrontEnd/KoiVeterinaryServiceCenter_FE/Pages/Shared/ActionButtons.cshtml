@@ -148,33 +148,29 @@ else if (Model.ListType == "appointment")
                 @switch (Model.Status)
                 {
                     case "Pending":
-                        <button class="btn btn-outline-success btn-sm" type="submit"
-                                asp-page-handler="UpdateStatus" asp-route-status="Waiting">
-                            Accept
-                        </button>
-                        <button class="btn btn-outline-warning btn-sm" type="submit"
-                                asp-page-handler="UpdateStatus" asp-route-status="Rejected">
-                            Reject
-                        </button>
-                        break;
-                    case "Waiting":
                         <button class="btn btn-outline-warning btn-sm" type="submit"
                                 asp-page-handler="UpdateStatus" asp-route-status="InProgress">
                             Execute
                         </button>
+                        <!-- View button for navigation -->
+                        <a class="btn btn-outline-info btn-sm"
+                           asp-page="/User/Veterinarian/AppointmentDetail"
+                           asp-route-appointmentId="@Model.Item.AppointmentListId">
+                            View
+                        </a>
                         break;
                     case "InProgress":
-                        <button class="btn btn-outline-primary btn-sm" type="button"
-                                data-bs-toggle="modal" data-bs-target="#reportModal"
-                                data-id="@Model.Item.AppointmentListId">
+                        <!-- View button for navigation -->
+                        <a class="btn btn-outline-info btn-sm"
+                           asp-page="/User/Veterinarian/Report"
+                           asp-route-appointmentId="@Model.Item.AppointmentListId">
                             Report
-                        </button>
-                        break;
-                    case "Reported":
-                        <button class="btn btn-secondary btn-sm" disabled>Completed</button>
-                        break;
-                    default:
-                        <button class="btn btn-outline-secondary btn-sm" disabled>No Action</button>
+                        </a>
+                        <a class="btn btn-outline-info btn-sm"
+                           asp-page="/User/Veterinarian/AppointmentDetail"
+                           asp-route-appointmentId="@Model.Item.AppointmentListId">
+                            View
+                        </a>
                         break;
                 }
             </form>
@@ -189,34 +185,24 @@ else if (Model.ListType == "appointment")
             <!-- Send Message Form -->
             @if (Model.Item.Status == "InProgress" && Model.Item.IsOnline)
             {
-               @*  <form method="post" asp-page-handler="Message" class="d-inline">
-                    <input type="hidden" name="RecipientId" value="@Model.Item.CustomerId" />
-                    <input type="hidden" name="Content"
-                           value="Conversation created for appointment on @Model.Item.AppointmentDate.
-               Service: @Model.Item.ServiceName. This conversation will be stored and used
-               to generate reports about your Koi." />
-
-                    <button type="submit" class="btn btn-outline-primary btn-sm">
-                        <i class="bi bi-chat-dots"></i> Message
-                    </button>
-                </form> *@
                 <button onclick="window.location.href='@Url.Page("Chat", new { recipientId = Model.Item.CustomerId, recipientName = Model.Item.CustomerName })'" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-chat-dots"></i> Start Chat
                 </button>
-
             }
-            @if (Model.Item.Status != "InProgress" && Model.Item.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
+
+            @if (Model.Item.Status == "Reported" || Model.Item.Status == "Completed" && Model.Item.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
             {
-            <button class="btn btn-outline-primary btn-sm open-conversation-modal"
-                    data-customer-id="@Model.Item.CustomerId"
-                    data-veterinarian-id="@Model.Item.VeterinarianId"
-                    data-appointment-id="@Model.Item.AppointmentListId">
-                <i class="bi bi-chat-dots"></i> Chat History
-            </button>
+                <button class="btn btn-outline-primary btn-sm open-conversation-modal"
+                        data-customer-id="@Model.Item.CustomerId"
+                        data-veterinarian-id="@Model.Item.VeterinarianId"
+                        data-appointment-id="@Model.Item.AppointmentListId">
+                    <i class="bi bi-chat-dots"></i> Chat History
+                </button>
             }
         </div>
     }
 }
+
 @if (Model.ListType == "rating")
 {
     <div class="d-flex align-items-center ">

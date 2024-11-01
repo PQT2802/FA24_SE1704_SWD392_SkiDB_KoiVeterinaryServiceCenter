@@ -167,14 +167,27 @@ namespace KVSC.Application.Implement.Service
 
         public async Task<Result> UpdateAppointmentStatusAsync(Guid appointmentId, string status)
         {
+            //var appoint = await _unitOfWork.AppointmentRepository.GetByIdAsync(appointmentId);
+            //if (appoint == null)
+            //{
+            //    var error = Error.NotFound("AppointmentNotFound", "No appointments found for the specified veterinarian.");
+            //    return Result.Failure(error);
+            //}
+
+            //if (appoint.AppointmentDate > DateTime.Now)
+            //{
+            //    var error = Error.Validation("AppointmentTooEarly", "The appointment time has not yet arrived for execution.");
+            //    return Result.Failure(error);
+            //}
+
             var result = await _unitOfWork.AppointmentRepository.UpdateAppointmentStatusAsync(appointmentId, status);
             if (result == Guid.Empty)
             {
                 var error = Error.NotFound("AppointmentNotFound", "No appointments found for the specified veterinarian.");
                 return Result.Failure(error);
             }
-            return Result.SuccessWithObject(new { id = result });
 
+            return Result.SuccessWithObject(new { id = result });
         }
         public async Task<Result> GetAppointmentDetailByIdAsync(Guid appointmentId)
         {
@@ -209,7 +222,7 @@ namespace KVSC.Application.Implement.Service
                     VeterinarianId = v
                 }).ToList();
             
-            // Lưu cuộc hẹn
+            // Lưu cuộc hẹn 
             await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
 
             // Cập nhật trạng thái IsAvailable của lịch bác sĩ qua repository

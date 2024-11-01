@@ -9,6 +9,7 @@ namespace KVSC.Infrastructure.DTOs.Appointment
 {
     public class AppointmentList 
     {
+
         public Extensions<List<AppointmentListData>> Extensions { get; set; }
         
     }
@@ -21,13 +22,14 @@ namespace KVSC.Infrastructure.DTOs.Appointment
         public string CustomerName { get; set; }
         public string VeterinarianName { get; set; }
         public string ServiceName { get; set; }
+        public string ServiceCategory { get; set; }
         public string Status { get; set; }
         public bool IsOnline { get; set; }
         public DateTime AppointmentDate { get; set; }
 
         public List<string> GetPropertyNames()
         {
-            return new List<string> { nameof(CustomerName), nameof(VeterinarianName), nameof(ServiceName), nameof(Status), nameof(AppointmentDate) };
+            return new List<string> { nameof(CustomerName), nameof(VeterinarianName), nameof(ServiceName), nameof(Status), nameof(AppointmentDate), nameof(ServiceCategory) };
         }
     }
 }

@@ -62,7 +62,8 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             // If the update fails, return the current page with the error messages
 
             ErrorMessage = response.Errors;
-            return Page(); // Return the page with validation errors, if any
+            TempData["ErrorMessage"] = "The appointment time has not yet arrived for execution.";
+            return RedirectToPage(); // Return the page with validation errors, if any
         }
 
         //===========create message click======================================================

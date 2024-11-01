@@ -136,6 +136,20 @@ namespace KVSC.Infrastructure.DB.Configuration
                     CreatedDate = DateTime.Now,
                     IsDeleted = false,
                     Name = "Pond Maintenance"
+                },
+                new PetService
+                {
+                    Id = new Guid("c33e3a87-0230-428b-8c06-ee91b7e8cc21"),
+                    PetServiceCategoryId = new Guid("ca4801df-081c-4db5-a416-b04891797d92"),
+                    BasePrice = 20.00m,
+                    Duration = "1 hour",
+                    ImageUrl = "https://example.com/image6.jpg",
+                    AvailableFrom = new DateTime(2024, 10, 05, 08, 00, 00),
+                    AvailableTo = new DateTime(2024, 10, 30, 20, 00, 00),
+                    TravelCost = 0,
+                    CreatedDate = DateTime.Now,
+                    IsDeleted = false,
+                    Name = "Koi Care Advisory"
                 }
             );
         }

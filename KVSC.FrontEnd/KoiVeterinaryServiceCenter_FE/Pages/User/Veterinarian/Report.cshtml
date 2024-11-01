@@ -1,0 +1,112 @@
+﻿@page "{appointmentId:guid}"
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.ReportModel
+@{
+    Layout = "_LayoutBoard";
+}
+
+<div class="container pt-4">
+    <h2>Create Service Report</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <form method="post">
+        <input type="hidden" asp-for="AddServiceReportRequest.AppointmentId" />
+
+        <div class="form-floating mb-3">
+            <textarea class="form-control" asp-for="AddServiceReportRequest.ReportContent" placeholder="Enter report content" style="height: 100px;" required></textarea>
+            <label for="reportContent">Report Content</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <textarea class="form-control" asp-for="AddServiceReportRequest.Recommendations" placeholder="Enter recommendations" style="height: 100px;" required></textarea>
+            <label for="recommendations">Recommendations</label>
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" asp-for="AddServiceReportRequest.HasPrescription" id="hasPrescription">
+            <label class="form-check-label" for="hasPrescription">Add Prescription</label>
+        </div>
+
+        <!-- Prescription Section -->
+        <div id="prescriptionDetailsSection" style="display: none;">
+            <h6 class="mb-4">Prescription Details</h6>
+            <table class="table table-bordered" id="prescriptionDetailsTable">
+                <thead>
+                    <tr>
+                        <th>Medicine</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
+            </table>
+            <button class="btn btn-primary" type="button" onclick="addPrescriptionRow()">Add Prescription</button>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Submit Report</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('hasPrescription').addEventListener('change', function () {
+        const isChecked = this.checked;
+        document.getElementById('prescriptionDetailsSection').style.display = isChecked ? 'block' : 'none';
+    });
+
+    function addPrescriptionRow() {
+        const table = document.getElementById('prescriptionDetailsTable').querySelector('tbody');
+        const index = table.rows.length;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+                <td>
+                    <select class="form-control" name="AddServiceReportRequest.PrescriptionDetails[${index}].MedicineId" onchange="updatePrice(this, ${index})" required>
+                        <option value="">Select Medicine</option>
+    @if (Model.GetMedicines.Extensions?.Data != null && Model.GetMedicines.Extensions.Data.Any())
+    {
+        @foreach (var medicine in Model.GetMedicines.Extensions.Data)
+        {
+                                        <option value="@medicine.MedicineId" data-price="@medicine.Price">@medicine.MedicineName</option>
+        }
+    }
+    else
+    {
+                                <option value="" disabled>No medicines available</option>
+    }
+                    </select>
+                </td>
+                <td><input type="number" class="form-control" name="AddServiceReportRequest.PrescriptionDetails[${index}].Quantity" placeholder="Quantity" oninput="updatePrice(this, ${index})" required /></td>
+                <td>
+                    <input type="number" class="form-control" name="AddServiceReportRequest.PrescriptionDetails[${index}].Price" placeholder="Price" step="0.01" readonly />
+                </td>
+                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+            `;
+        table.appendChild(row);
+    }
+
+    function removeRow(button) {
+        button.closest('tr').remove();
+    }
+
+    function updatePrice(element, index) {
+        const row = element.closest('tr');
+        const quantityInput = row.querySelector(`input[name="AddServiceReportRequest.PrescriptionDetails[${index}].Quantity"]`);
+        const selectedOption = row.querySelector(`select[name="AddServiceReportRequest.PrescriptionDetails[${index}].MedicineId"]`).selectedOptions[0];
+
+        const quantity = quantityInput.value;
+        const unitPrice = selectedOption ? parseFloat(selectedOption.getAttribute('data-price')) : 0;
+        const totalPrice = quantity ? unitPrice * parseFloat(quantity) : 0;
+
+        row.querySelector(`input[name="AddServiceReportRequest.PrescriptionDetails[${index}].Price"]`).value = totalPrice.toFixed(2);
+    }
+</script>
