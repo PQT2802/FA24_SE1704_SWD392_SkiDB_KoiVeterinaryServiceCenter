@@ -273,9 +273,12 @@
                 processData: false, // Không xử lý dữ liệu
                 success: function (response) {
                     if (response.isSuccess) {
-                        $('#createPetModal').modal('hide'); // Ẩn modal tạo mới Pet
-                        alert('Create successful'); // Thông báo thành công
-                        location.reload(); // Tải lại trang
+                        $('span[data-valmsg-for]').text('');
+                        setTimeout(function () {
+                            alert('Create successful');
+                            $('#createPetModal').modal('hide');
+                            location.reload();
+                        }, 500);
                     } else {
                         $('span[data-valmsg-for]').text('');
                         for (const [key, value] of Object.entries(response.errors)) {
@@ -356,9 +359,12 @@
                 contentType: false, // Ngăn jQuery thiết lập Content-Type
                 success: function (response) {
                     if (response.isSuccess) {
-                        $('#updatePetModal').modal('hide');
-                        alert('Update successful');
-                        location.reload();
+                        $('span[data-valmsg-for]').text('');
+                        setTimeout(function () {
+                            alert('Update successful');
+                            $('#updatePetModal').modal('hide');
+                            location.reload();
+                        }, 500);
                     } else {
                         $('span[data-valmsg-for]').text('');
                         // Hiển thị lỗi vào các input tương ứng

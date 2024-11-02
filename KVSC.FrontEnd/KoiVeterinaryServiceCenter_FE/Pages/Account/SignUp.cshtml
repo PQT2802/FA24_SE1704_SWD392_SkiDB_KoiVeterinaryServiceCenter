@@ -130,33 +130,104 @@
             }
         </style>
         <script>
-            $(document).ready(function () {
-                $('#signUpForm').click(function (e) {
-                    e.preventDefault(); // Ngăn chặn hành vi mặc định
+    $(document).ready(function () {
+    // Validate email
+    $('#email').on('input', function () {
+                    const emailPattern = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const errorSpan = $(this).siblings("span[data-valmsg-for='SignUpRequest.Email']");
+        if (!emailPattern.test($(this).val())) {
+            errorSpan.text("The email is in an invalid format.");
+        } else {
+            errorSpan.text('');
+        }
+    });
 
-                    $.ajax({
-                        type: "POST",
-                        url: window.location.pathname + "?handler=SignUp", // Gửi đến đúng handler
-                        data: $(this).serialize(),
-                        success: function (response) {
-                            if (response.isSuccess) {
-                                alert('Sign Up successful! Redirecting to login page...');
-                                window.location.href = '/Account/Signin'; 
-                            } else {
-                                $('span[data-valmsg-for]').text(''); 
-                                for (const [key, value] of Object.entries(response.errors)) {
-                                    $(`span[data-valmsg-for='SignUpRequest.${key}']`).text(value);
-                                }
-                            }
-                        },
-                        error: function () {
-                            console.log('Error.');
+    // Validate password
+    $('#password').on('input', function () {
+                    const passwordPattern = /^(?=.*[!@@#\$%\^&\*])(?=.*[A-Z]).{3,}$/;
+        const errorDiv = $(this).siblings('.invalid-feedback');
+        const password = $(this).val();
+        if (!passwordPattern.test(password)) {
+            errorDiv.text("Password must be at least 3 characters, start with an uppercase letter, and contain at least one special character.");
+        } else {
+            errorDiv.text('');
+        }
+    });
+
+    // Validate username
+    $('#username').on('input', function () {
+        const errorSpan = $(this).siblings("span[data-valmsg-for='SignUpRequest.UserName']");
+        if ($(this).val().length < 3) {
+            errorSpan.text("Username must be at least 3 characters.");
+        } else {
+            errorSpan.text('');
+        }
+    });
+                $('#address').on('input', function () {
+                    const errorSpan = $(this).siblings("span[data-valmsg-for='SignUpRequest.Address']");
+        if ($(this).val().length < 1) {
+            errorSpan.text("Address cannot be empty. ");
+        } else {
+            errorSpan.text('');
+        }
+    });
+    $('#fullName').on('input', function () {
+                    const errorSpan = $(this).siblings("span[data-valmsg-for='SignUpRequest.FullName']");
+                    if ($(this).val().length < 1) {
+            errorSpan.text("FullName cannot be empty. ");
+        } else {
+            errorSpan.text('');
+        }
+    });
+
+    // Validate phone number
+    $('#phoneNumber').on('input', function () {
+        const phonePattern = /^\d{10,11}$/;
+        const errorSpan = $(this).siblings("span[data-valmsg-for='SignUpRequest.PhoneNumber']");
+        if (!phonePattern.test($(this).val())) {
+            errorSpan.text("Phone number must be 10-11 digits.");
+        } else {
+            errorSpan.text('');
+        }
+    });
+
+    // Prevent form submission if there are validation errors
+    $('#signUpForm button[type="submit"]').click(function (e) {
+        e.preventDefault();
+
+        const errors = $('span.text-danger').filter(function () {
+            return $(this).text() !== '';
+        });
+
+        if (errors.length === 0) {
+            // Nếu không có lỗi, gửi form qua Ajax
+            $.ajax({
+                type: "POST",
+                url: window.location.pathname + "?handler=SignUp",
+                data: $('#signUpForm').serialize(),
+                success: function (response) {
+                    if (response.isSuccess) {
+                        alert('Sign Up successful! Redirecting to login page...');
+                        window.location.href = '/Account/Signin';
+                    } else {
+                        $('span[data-valmsg-for]').text('');
+                        for (const [key, value] of Object.entries(response.errors)) {
+                            $(`span[data-valmsg-for='SignUpRequest.${key}']`).text(value);
                         }
-                    });
-                });
+                    }
+                },
+                error: function () {
+                    console.log('Error.');
+                }
             });
-            
-        </script>
+        } else {
+            alert("Please correct the errors before submitting the form.");
+        }
+    });
+});
+
+</script>
+
         <!-- Sign Up End -->
     </div>
 

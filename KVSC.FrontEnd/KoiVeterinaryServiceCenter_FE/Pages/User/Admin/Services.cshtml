@@ -24,6 +24,7 @@
     <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 }
 @*-------------------------------- thongbao -----------------------------------------------*@
+
 <!-- Trigger Button for Modal -->
 <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createServiceModal">Add Service</button>
 
@@ -63,25 +64,21 @@
                         </div>
 
                         <!-- Base Price -->
-                        <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="basePrice" name="AddServiceRequest.BasePrice" placeholder="Base Price" min="0" value="0">
-                            <label for="basePrice">Base Price</label>
-                            <span asp-validation-for="AddServiceRequest.BasePrice" class="text-danger"></span>
-                        </div>
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="basePrice" name="AddServiceRequest.BasePrice" placeholder="Ví dụ: 1000000" min="0" value="0" title="Nhập số tiền bằng đồng Việt Nam (VD: 1000000)">
+                                <label for="basePrice">Base Price (VNĐ)</label>
+                                <small class="form-text text-muted d-block">Enter amount in VND (e.g., 1000000).</small>
+                                <span asp-validation-for="AddServiceRequest.BasePrice" class="text-danger"></span>
+                            </div>
 
                         <!-- Duration -->
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="duration" name="AddServiceRequest.Duration" placeholder="Duration">
-                            <label for="duration">Duration</label>
-                            <span asp-validation-for="AddServiceRequest.Duration" class="text-danger"></span>
-                        </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="duration" name="AddServiceRequest.Duration" placeholder="Enter duration in minutes" title="Enter the duration in minutes (e.g., 30 for 30 minutes)">
+                                <label for="duration">Duration</label>
+                                <small class="form-text text-muted d-block">Please enter the duration in hours (e.g., 3 hours).</small>
+                                <span asp-validation-for="AddServiceRequest.Duration" class="text-danger"></span>
+                            </div>
 
-                        @* <!-- Image URL -->
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="imageUrl" name="AddServiceRequest.ImageUrl" placeholder="Image URL">
-                            <label for="imageUrl">Image URL</label>
-                            <span asp-validation-for="AddServiceRequest.ImageUrl" class="text-danger"></span>
-                        </div> *@
                         <!-- Image Upload -->
                         <div class="form-floating mb-3">
                             <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
@@ -89,9 +86,9 @@
                             <span asp-validation-for="AddServiceRequest.ImageUrl" class="text-danger"></span>
                         </div>
                         <!-- Image Preview -->
-                         <div class="mb-3">
-                             <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px;">
-                         </div>
+                            <div class="mb-3">
+                                <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px; max-height: 300px;">
+                            </div>
 
                         <!-- Available From -->
                         <div class="form-floating mb-3">
@@ -151,6 +148,7 @@
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="basePrice" name="UpdateServiceRequest.BasePrice" placeholder="Base Price" min="0" >
                         <label for="basePrice">Base Price</label>
+                            <small class="form-text text-muted d-block">Enter amount in VND (e.g., 1000000).</small>
                         <span asp-validation-for="UpdateServiceRequest.BasePrice" class="text-danger"></span>
                     </div>
 
@@ -158,6 +156,7 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="duration" name="UpdateServiceRequest.Duration" placeholder="Duration" >
                         <label for="duration">Duration</label>
+                            <small class="form-text text-muted d-block">Please enter the duration in hours (e.g., 3 hours).</small>
                         <span asp-validation-for="UpdateServiceRequest.Duration" class="text-danger"></span>
                     </div>
 
@@ -168,10 +167,9 @@
                         <span asp-validation-for="UpdateServiceRequest.ImageUrl" class="text-danger"></span>
                     </div>
 
-                    <!-- Image Preview -->
-                    <div class="mb-3">
-                        <img id="serviceImagePreview" src="" alt="Image Preview" style="display: none;  max-width: 300px;" />
-                    </div>
+                        <div class="mb-3">
+                            <img id="serviceImagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px; max-height: 300px;" />
+                        </div>
 
                     <!-- Available From -->
                     <div class="form-floating mb-3">
@@ -246,10 +244,13 @@ $(document).ready(function () {
             processData: false, // Không xử lý dữ liệu
             success: function (response) {
                 if (response.isSuccess) {
-                    $('#createServiceModal').modal('hide');
-                    alert('Create successful');
-                    location.reload();
-                } else {
+                        $('span[data-valmsg-for]').text('');
+                        setTimeout(function () {
+                            alert('Create successful');
+                            $('#createServiceModal').modal('hide');
+                            location.reload();
+                        }, 500);
+                    } else {
                     $('span[data-valmsg-for]').text('');
                     for (const [key, value] of Object.entries(response.errors)) {
                         $(`span[data-valmsg-for='AddServiceRequest.${key}']`).text(value);
@@ -324,9 +325,12 @@ $(document).ready(function () {
                     contentType: false, // Ngăn jQuery thiết lập Content-Type
                     success: function (response) {
                         if (response.isSuccess) {
-                            $('#updateServiceModal').modal('hide');
+                        $('span[data-valmsg-for]').text('');
+                        setTimeout(function () {
                             alert('Update successful');
+                            $('#updateServiceModal').modal('hide');
                             location.reload();
+                        }, 500);
                         } else {
                             $('span[data-valmsg-for]').text('');
                             // Hiển thị lỗi vào các input tương ứng

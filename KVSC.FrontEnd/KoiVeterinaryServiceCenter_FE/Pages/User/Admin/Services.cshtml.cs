@@ -42,7 +42,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
             if (result.IsSuccess)
             {
-                return new JsonResult(new { isSuccess = true });
+                return new JsonResult(new { isSuccess = true, message = "Service created successfully!" });
                 // return RedirectToPage("/User/Admin/Services");
             }
 

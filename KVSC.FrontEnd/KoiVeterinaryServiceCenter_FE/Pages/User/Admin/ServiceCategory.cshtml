@@ -101,9 +101,12 @@
                 contentType: false,
                 success: function (response) {
                     if (response.isSuccess) {
-                        $('#createCategoryModal').modal('hide');
-                        alert('Create successful');
-                        location.reload();
+                        $('span[data-valmsg-for]').text('');
+                        setTimeout(function () {
+                            alert('Create successful');
+                            $('#createCategoryModal').modal('hide');
+                            location.reload();
+                        }, 500);
                     } else {
                         $('span[data-valmsg-for]').text('');
                         for (const [key, value] of Object.entries(response.errors)) {
@@ -210,9 +213,12 @@
                 contentType: false,
                 success: function (response) {
                     if (response.isSuccess) {
-                        $('#updateCategoryModal').modal('hide');
-                        alert('Update successful');
-                        location.reload();
+                        $('span[data-valmsg-for]').text('');
+                        setTimeout(function () {
+                            alert('Update successful');
+                            $('#updateCategoryModal').modal('hide');
+                            location.reload();
+                        }, 500);
                     } else {
                         $('span[data-valmsg-for]').text('');
                         for (const [key, value] of Object.entries(response.errors)) {
