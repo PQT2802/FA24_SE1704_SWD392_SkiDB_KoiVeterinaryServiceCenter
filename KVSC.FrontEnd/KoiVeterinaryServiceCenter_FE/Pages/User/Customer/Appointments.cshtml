@@ -92,7 +92,7 @@ else if (Model.AppointmentList?.Extensions?.Data != null && Model.AppointmentLis
                                     <i class="fas fa-star"></i> Rating
                                 </button>
                             }
-                            @if (appointment.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
+                            @if (appointment.IsOnline && appointment.Status == "Reported" && appointment.Status == "Completed") // Kiểm tra xem cuộc hẹn có cho phép chat online không
                             {
                                 <button class="btn btn-outline-primary btn-sm open-conversation-modal"
                                         data-customer-id="@appointment.CustomerId"
@@ -101,6 +101,13 @@ else if (Model.AppointmentList?.Extensions?.Data != null && Model.AppointmentLis
                                     <i class="bi bi-chat-dots"></i> Chat History
                                 </button>
                             }
+                            @if (appointment.Status == "InProgress" && appointment.IsOnline && appointment.AppointmentDate.Date == DateTime.Now.Date)
+                            {
+                                <button onclick="window.location.href='@Url.Page("Chat", new { recipientId = appointment.UserIdOfVeterinarian, recipientName = appointment.VeterinarianName })'" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-chat-dots"></i> Start Chat
+                                </button>
+                            }
+
                         </td>
                     </tr>
                 }

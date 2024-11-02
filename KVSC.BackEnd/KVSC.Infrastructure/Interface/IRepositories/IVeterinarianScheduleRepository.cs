@@ -9,7 +9,7 @@ namespace KVSC.Infrastructure.Interface.IRepositories
 {
     public interface IVeterinarianScheduleRepository : IGenericRepository<VeterinarianSchedule>
     {
-        Task RegisterAvailableTime(Guid veterinarianId, DateTime date, TimeSpan startTime, TimeSpan endTime);
+        Task<int> RegisterAvailableTime(Guid veterinarianId, DateTime date, TimeSpan startTime, TimeSpan endTime);
         Task<List<VeterinarianSchedule>> GetWeeklySchedule(Guid veterinarianId, DateTime startOfWeek);
         Task UpdateScheduleAvailability(Guid veterinarianId, DateTime date, TimeSpan startTime, TimeSpan endTime);
 

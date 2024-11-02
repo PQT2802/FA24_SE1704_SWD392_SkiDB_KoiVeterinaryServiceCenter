@@ -3,12 +3,14 @@ using FluentValidation;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Common.Message;
 using KVSC.Infrastructure.DTOs.Schedule;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 namespace KVSC.Application.Implement.Service
@@ -46,7 +48,11 @@ namespace KVSC.Application.Implement.Service
             }
 
             // Register the available schedule using the VeterinarianId
-            await _unitOfWork.VeterinarianScheduleRepository.RegisterAvailableTime(veterinarian.Id, request.Date, request.StartTime, request.EndTime);
+            var result = await _unitOfWork.VeterinarianScheduleRepository.RegisterAvailableTime(veterinarian.Id, request.Date, request.StartTime, request.EndTime);
+            if(result == 0)
+            {
+                return Result.Failure(ScheduleErrorMessage.MaxRegistrationsExceeded());
+            }
             return Result.SuccessWithObject(new { Message = "RegisterAvailableTime" });
         }
         public async Task<Result> RegisterAvailableTimeAsync(ManagementRegisterScheduleRequest request)
@@ -67,7 +73,14 @@ namespace KVSC.Application.Implement.Service
             }
 
             // Register the available schedule using the provided VeterinarianId
-            await _unitOfWork.VeterinarianScheduleRepository.RegisterAvailableTime(veterinarian.Id, request.Date, request.StartTime, request.EndTime);
+            var result = await _unitOfWork.VeterinarianScheduleRepository.RegisterAvailableTime(veterinarian.Id, request.Date, request.StartTime, request.EndTime);
+            if (result == 0)
+            {
+                return Result.Failure(ScheduleErrorMessage.MaxRegistrationsExceeded());
+            }else if(result ==2)
+            {
+                return Result.Failure(ScheduleErrorMessage.VeterinarianAlreadyScheduled());
+            }
             return Result.SuccessWithObject(new { Message = "Schedule registered successfully for Veterinarian "});
         }
 

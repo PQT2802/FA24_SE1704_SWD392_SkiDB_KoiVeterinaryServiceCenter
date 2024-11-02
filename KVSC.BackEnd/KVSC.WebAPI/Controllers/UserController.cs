@@ -129,5 +129,14 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(veterinarian, "Veterinarian retrieved successfully")
                 : ResultExtensions.ToProblemDetails(veterinarian);
         }
+
+        [HttpGet("User/Veterinarian/{id}")]
+        public async Task<IResult> GetUserByVeterId(Guid id)
+        {
+            var veterinarian = await _userService.GetUserByVeterId(id);
+            return veterinarian.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(veterinarian, "User retrieved successfully")
+                : ResultExtensions.ToProblemDetails(veterinarian);
+        }
     }
 }

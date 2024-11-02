@@ -23,126 +23,184 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Content = "Hello, how are you?",
                     Timestamp = DateTime.Now
                 },
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    Content = "I'm good, thank you! How about you?",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    Content = "I'm good too. Are you free today?",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    Content = "I have some time, do you need anything?",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    Content = "I want to ask you about the new project.",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    Content = "Sure! What do you need to know?",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    Content = "Do you have detailed information about the progress?",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    Content = "I’ll send you a summary.",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    Content = "Thank you, I’ll review it right away.",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
-    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    Content = "You're welcome, always happy to help.",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    Content = "Hello! I’m the veterinarian. How can I assist with your koi fish?",
-    Timestamp = DateTime.Now
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-    Content = "Hi, Doctor! My koi fish seems sluggish and isn’t eating. I’m really worried.",
-    Timestamp = DateTime.Now.AddMinutes(1)
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    Content = "I see. Can you tell me the water temperature and the condition of the water?",
-    Timestamp = DateTime.Now.AddMinutes(2)
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-    Content = "The water temperature is 20°C, and the water seems clear, but I noticed a bit of green algae.",
-    Timestamp = DateTime.Now.AddMinutes(3)
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    Content = "Algae can affect water quality. I recommend checking the pH and ammonia levels. You can use a water testing kit for this.",
-    Timestamp = DateTime.Now.AddMinutes(4)
-},
-new Message
-{
-    Id = Guid.NewGuid(),
-    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-    RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
-    Content = "Thank you, Doctor! I’ll check and get back if I need more help.",
-    Timestamp = DateTime.Now.AddMinutes(5)
-}
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    Content = "I'm good, thank you! How about you?",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    Content = "I'm good too. Are you free today?",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    Content = "I have some time, do you need anything?",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    Content = "I want to ask you about the new project.",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    Content = "Sure! What do you need to know?",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    Content = "Do you have detailed information about the progress?",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    Content = "I’ll send you a summary.",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    Content = "Thank you, I’ll review it right away.",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"),
+                    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    Content = "You're welcome, always happy to help.",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
+                    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    Content = "Hello! I’m the veterinarian. How can I assist with your koi fish?",
+                    Timestamp = DateTime.Now
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
+                    Content = "Hi, Doctor! My koi fish seems sluggish and isn’t eating. I’m really worried.",
+                    Timestamp = DateTime.Now.AddMinutes(1)
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
+                    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    Content = "I see. Can you tell me the water temperature and the condition of the water?",
+                    Timestamp = DateTime.Now.AddMinutes(2)
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
+                    Content = "The water temperature is 20°C, and the water seems clear, but I noticed a bit of green algae.",
+                    Timestamp = DateTime.Now.AddMinutes(3)
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
+                    RecipientId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    Content = "Algae can affect water quality. I recommend checking the pH and ammonia levels. You can use a water testing kit for this.",
+                    Timestamp = DateTime.Now.AddMinutes(4)
+                },
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    RecipientId = new Guid("2430f703-cb67-4225-bb7e-c9abe5803b8a"),
+                    Content = "Thank you, Doctor! I’ll check and get back if I need more help.",
+                    Timestamp = DateTime.Now.AddMinutes(5)
+                },
+                //==============cuoc hoi thoai của cus3 và vet1 vao ngay 30/10=============================
+
+                new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"), // Veterinarian
+                    RecipientId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"), // Customer
+                    Content = "Hello! I am a veterinarian specializing in Koi fish. What can I assist you with today?",
+                    Timestamp = new DateTime(2024, 10, 30, 9, 0, 0) // 09:00 AM
+                },
+                 new Message
+                 {
+                     Id = Guid.NewGuid(),
+                     SenderId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"), // Customer
+                     RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"), // Veterinarian
+                     Content = "Hi, Doctor! I would like to ask about the diet for my Koi fish. They seem to be picky eaters.",
+                     Timestamp = new DateTime(2024, 10, 30, 9, 5, 0) // 09:05 AM
+                 },
+                 new Message
+                 {
+                     Id = Guid.NewGuid(),
+                     SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"), // Veterinarian
+                     RecipientId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"), // Customer
+                     Content = "It could be due to poor water conditions or unsuitable food. Could you let me know the water temperature and what type of food you are using?",
+                     Timestamp = new DateTime(2024, 10, 30, 9, 10, 0) // 09:10 AM
+                 },
+                 new Message
+                 {
+                     Id = Guid.NewGuid(),
+                     SenderId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"), // Customer
+                     RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"), // Veterinarian
+                     Content = "The water temperature is 24 degrees Celsius, and I'm feeding them XYZ brand pellets.",
+                     Timestamp = new DateTime(2024, 10, 30, 9, 15, 0) // 09:15 AM
+                 },
+                 new Message
+                 {
+                     Id = Guid.NewGuid(),
+                     SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"), // Veterinarian
+                     RecipientId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"), // Customer
+                     Content = "The temperature is fine, but you might want to try switching to a different food, like ABC, to see if they respond better.",
+                     Timestamp = new DateTime(2024, 10, 30, 9, 20, 0) // 09:20 AM
+                 },
+                 new Message
+                 {
+                     Id = Guid.NewGuid(),
+                     SenderId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"), // Customer
+                     RecipientId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"), // Veterinarian
+                     Content = "Thank you, Doctor! I will try changing the food. Hopefully, they will eat better.",
+                     Timestamp = new DateTime(2024, 10, 30, 9, 25, 0) // 09:25 AM
+                 },
+                 new Message
+                 {
+                     Id = Guid.NewGuid(),
+                     SenderId = new Guid("1dac24c4-08e2-4612-84dc-7c8960e483ea"), // Veterinarian
+                     RecipientId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"), // Customer
+                     Content = "You're welcome! If you have any more questions, feel free to ask.",
+                     Timestamp = new DateTime(2024, 10, 30, 9, 30, 0) // 09:30 AM
+                 }
             );
         }
     }

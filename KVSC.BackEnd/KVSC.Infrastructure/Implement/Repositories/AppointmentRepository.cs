@@ -83,7 +83,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
                     ServiceName = a.PetService != null ? a.PetService.Name : "N/A", // Handle null PetService safely
                     Status = a.Status,
                     AppointmentDate = a.AppointmentDate,
-                    IsOnline = a.PetService.PetServiceCategory.IsOnline
+                    IsOnline = a.PetService.PetServiceCategory.IsOnline,
+                    UserIdOfVeterinarian = a.AppointmentVeterinarians.Select(u => u.Veterinarian.User.Id).FirstOrDefault()
                 })
                 .ToListAsync();
         }

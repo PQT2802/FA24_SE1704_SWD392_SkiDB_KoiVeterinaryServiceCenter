@@ -60,10 +60,11 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Manager
                 {
                     TempData["Success"] = "Shift assigned successfully!";
                     return RedirectToPage();
+                }else if (registerResult.Errors != null && registerResult.Errors.Any())
+                {
+                    TempData["Error"] = registerResult.Errors[0].Description;
+                    return RedirectToPage();
                 }
-
-                TempData["Error"] = "Shift assignment exist!";
-                return RedirectToPage();
             }
 
             TempData["Error"] = "Shift assignment failed.";

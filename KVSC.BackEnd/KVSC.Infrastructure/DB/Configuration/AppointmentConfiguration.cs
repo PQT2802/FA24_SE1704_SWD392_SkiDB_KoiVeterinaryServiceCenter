@@ -108,7 +108,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("99999999-9999-9999-9999-999999999999"),
                     CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                    AppointmentDate = new DateTime(2024, 11, 12, 9, 0, 0), // Tuesday
+                    AppointmentDate = new DateTime(2024, 10, 30, 9, 0, 0), // Tuesday
                     Status = "Reported",
                     CompletedDate = new DateTime(2024, 11, 13),
                     CreatedDate = DateTime.UtcNow,

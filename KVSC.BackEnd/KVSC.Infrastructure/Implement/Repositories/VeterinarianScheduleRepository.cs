@@ -20,14 +20,28 @@ namespace KVSC.Infrastructure.Implement.Repositories
         }
 
         // Register available time for a veterinarian
-        public async Task RegisterAvailableTime(Guid veterinarianId, DateTime date, TimeSpan startTime, TimeSpan endTime)
+        public async Task<int> RegisterAvailableTime(Guid veterinarianId, DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
             // Ensure no overlapping schedules
             var overlappingSchedule = await _context.VeterinarianSchedules
-                .FirstOrDefaultAsync(s => s.VeterinarianId == veterinarianId && s.Date == date &&
-                                          (s.StartTime == endTime && s.EndTime == startTime));
+                .FirstOrDefaultAsync(s => s.VeterinarianId == veterinarianId && s.Date.Date == date.Date &&
+                                          (s.StartTime < endTime && s.EndTime > startTime));
 
-            if (overlappingSchedule != null)
+            var existingRegistrationsCount = await _context.VeterinarianSchedules
+                .CountAsync(s => s.Date.Date == date.Date &&
+                                          (s.StartTime < endTime && s.EndTime > startTime) && s.IsAvailable);
+
+            const int maxRegistrationsPerShift = 2;
+
+            if (existingRegistrationsCount >= maxRegistrationsPerShift)
+            {
+                return 0;
+            }
+            if (overlappingSchedule != null && overlappingSchedule.IsAvailable)
+            {
+                return 2;
+            }
+            else if (overlappingSchedule != null && !overlappingSchedule.IsAvailable)
             {
                 overlappingSchedule.IsAvailable = true;//edit hung => co the assign lai neu bi xoa
             }
@@ -43,7 +57,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 };
                 _context.VeterinarianSchedules.Add(schedule);
             }
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         // Get the weekly schedule for a veterinarian
@@ -89,7 +103,8 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task UpdateScheduleAvailability(Guid veterinarianId, DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
             var schedule = await _context.VeterinarianSchedules
-                .FirstOrDefaultAsync(s => s.VeterinarianId == veterinarianId && s.Date == date && s.StartTime == startTime && s.EndTime == endTime);
+                .FirstOrDefaultAsync(s => s.VeterinarianId == veterinarianId && s.Date.Date == date.Date &&
+                                          (s.StartTime < endTime && s.EndTime > startTime));
 
             if (schedule == null) return;
 

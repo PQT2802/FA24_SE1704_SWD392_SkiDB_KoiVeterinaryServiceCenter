@@ -137,5 +137,11 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
                 .Include(u => u.User)
                 .FirstOrDefaultAsync(v => v.Id == veterinarianId); 
         }
+        public async Task<User> GetUserByVeterinarianIdAsync(Guid veterinarianId)
+        {
+            return await _context.Users
+                .Include(u => u.Veterinarian)
+                .FirstOrDefaultAsync(u => u.Veterinarian.Id == veterinarianId); 
+        }
     }
 }

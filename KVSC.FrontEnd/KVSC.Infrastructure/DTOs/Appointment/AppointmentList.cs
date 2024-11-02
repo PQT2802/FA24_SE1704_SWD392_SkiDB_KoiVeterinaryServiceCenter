@@ -26,6 +26,7 @@ namespace KVSC.Infrastructure.DTOs.Appointment
         public string Status { get; set; }
         public bool IsOnline { get; set; }
         public DateTime AppointmentDate { get; set; }
+        public Guid UserIdOfVeterinarian { get; set; }
 
         public List<string> GetPropertyNames()
         {

@@ -175,12 +175,12 @@ else if (Model.ListType == "appointment")
                 }
             </form>
 
-            <!-- View button for navigation -->
+          @*   <!-- View button for navigation -->
             <a class="btn btn-outline-info btn-sm"
                asp-page="/User/Veterinarian/AppointmentDetail"
                asp-route-appointmentId="@Model.Item.AppointmentListId">
                 View
-            </a>
+            </a> *@
 
             <!-- Send Message Form -->
             @if (Model.Item.Status == "InProgress" && Model.Item.IsOnline)

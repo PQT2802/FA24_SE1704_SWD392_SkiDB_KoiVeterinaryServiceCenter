@@ -33,5 +33,6 @@ namespace KVSC.Application.Interface.IService
         Task<Result> UploadImageAsync(UploadImageRequest request);
         Task<Result> UpdateVeterinarianAsync(Guid userId, UpdateVeterinarianRequest request);
         Task<Result> GetVeterinarianByIdAsync(Guid id);
+        Task<Result> GetUserByVeterId(Guid veterinarianid);
     }
 }

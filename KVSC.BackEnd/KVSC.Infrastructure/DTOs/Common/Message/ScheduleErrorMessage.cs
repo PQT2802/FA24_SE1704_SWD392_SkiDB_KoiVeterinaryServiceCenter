@@ -31,5 +31,9 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
 
         public static Error ScheduleDeletionFailed()
             => Error.Conflict("Schedule.Delete.Failed", $"Failed to delete the schedule.");
+        public static Error MaxRegistrationsExceeded()
+        => Error.Validation("Shift.MaxRegistrationsExceeded", "This shift already has the maximum number of registered veterinarians.");
+        public static Error VeterinarianAlreadyScheduled()
+    => Error.Validation("Schedule.VeterinarianAlreadyScheduled", "This veterinarian is already scheduled for the selected shift.");
     }
 }

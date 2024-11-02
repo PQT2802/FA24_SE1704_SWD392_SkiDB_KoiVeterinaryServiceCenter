@@ -314,5 +314,18 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(response);
         }
+        public async Task<Result> GetUserByVeterId(Guid veterinarianid)
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByVeterinarianIdAsync(veterinarianid);
+            if (user == null)
+            {
+                return Result.Failure(UserErrorMessage.UserNotFound());
+            }
+
+            // Tạo response từ đối tượng veterinarian
+            var response = new CreateResponse { Id = user.Id };
+
+            return Result.SuccessWithObject(response);
+        }
     }
 }

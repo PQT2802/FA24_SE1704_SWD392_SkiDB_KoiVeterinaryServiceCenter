@@ -40,7 +40,7 @@
                     else
                     {
                         <div class="no-conversations">
-                            Không có cuộc trò chuyện nào để hiển thị.
+                            There are no conversations to display.
                         </div>
                     }
                 </div>
@@ -85,20 +85,23 @@
                     }
                     else
                     {
-                        <div class="no-messages">
-                            There are no messages to display.
+                        <div class="no-messages alert alert-info text-center">
+                            The conversation has ended due to the appointment time expiration. You can view the chat in the appointment.
                         </div>
                     }
                 </div>
                 <div class="footer-chat">
-                    <form id="sendMessageForm" method="post" onsubmit="sendMessage(event)">
-                        <input type="hidden" asp-for="CreateMessageRequest.SenderId" value="@Model.CurrentUserId" />
-                        <input type="hidden" asp-for="CreateMessageRequest.RecipientId" value="@Model.CurrentRecipientId" />
-                        <div class="message-input-container">
-                            <input type="text" class="write-message" asp-for="CreateMessageRequest.Content" placeholder="Type your message..." required />
-                            <button class="icon send fa fa-paper-plane-o clickable" type="submit">Send</button>
-                        </div>
-                    </form>
+                     @if (Model.Messages.Extensions?.Data != null && Model.Messages.Extensions.Data.Any())
+                    {
+                        <form id="sendMessageForm" method="post" onsubmit="sendMessage(event)">
+                            <input type="hidden" asp-for="CreateMessageRequest.SenderId" value="@Model.CurrentUserId" />
+                            <input type="hidden" asp-for="CreateMessageRequest.RecipientId" value="@Model.CurrentRecipientId" />
+                            <div class="message-input-container">
+                                <input type="text" class="write-message" asp-for="CreateMessageRequest.Content" placeholder="Type your message..." required />
+                                <button class="icon send fa fa-paper-plane-o clickable" type="submit">Send</button>
+                            </div>
+                        </form>
+                    }
                 </div>
             </section>
         </div>
