@@ -22,7 +22,14 @@
 
 <!-- Table for displaying services -->
 @await Component.InvokeAsync("GenericTable", new { items = Model.KoiServiceCategoryList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "serviceCategory" })
-  
+@{
+    var modalData = new ModalViewModel
+            {
+                Message = "Your action was completed successfully!"
+            };
+}
+
+@Html.Partial("SuccessModal", modalData)
 @*  ===================Create ServiceCategory ===========================*@
 <div class="modal fade @(Model.ShowModal ? "show" : "")" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel" aria-hidden="true" style="display:@(Model.ShowModal ? "block" : "none");">
     <div class="modal-dialog">
@@ -103,9 +110,13 @@
                     if (response.isSuccess) {
                         $('span[data-valmsg-for]').text('');
                         setTimeout(function () {
-                            alert('Create successful');
                             $('#createCategoryModal').modal('hide');
-                            location.reload();
+
+                            $('#successModal').modal('show');
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
                         }, 500);
                     } else {
                         $('span[data-valmsg-for]').text('');
@@ -215,9 +226,11 @@
                     if (response.isSuccess) {
                         $('span[data-valmsg-for]').text('');
                         setTimeout(function () {
-                            alert('Update successful');
                             $('#updateCategoryModal').modal('hide');
-                            location.reload();
+                            $('#successModal').modal('show');
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
                         }, 500);
                     } else {
                         $('span[data-valmsg-for]').text('');

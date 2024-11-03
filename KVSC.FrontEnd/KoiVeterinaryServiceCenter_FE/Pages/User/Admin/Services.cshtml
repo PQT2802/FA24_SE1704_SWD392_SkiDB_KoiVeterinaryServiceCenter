@@ -28,9 +28,10 @@
 <!-- Trigger Button for Modal -->
 <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createServiceModal">Add Service</button>
 
+   
 <!-- Table for displaying services -->
 @await Component.InvokeAsync("GenericTable", new { items = Model.KoiServiceList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "service" })
-
+   
 <div class="modal fade @(Model.ShowModal ? "show" : "")" id="createServiceModal" tabindex="-1" aria-labelledby="createServiceModalLabel" aria-hidden="true" style="display:@(Model.ShowModal ? "block" : "none");">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -204,8 +205,23 @@ else
 {
     <div class="alert alert-warning">Bạn không có quyền truy cập vào phần này.</div>
 }
-@*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
+@{
+    var modalData = new ModalViewModel
+            {
+                Message = "Your action was completed successfully!"
+            };
+}
 
+@Html.Partial("SuccessModal", modalData)
+@*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
+@if (ViewData["ShowSuccessModal"] != null && (bool)ViewData["ShowSuccessModal"])
+{
+    <script>
+        $(document).ready(function () {
+            $('#successModal').modal('show');
+        });
+    </script>
+}
 <script>
 $(document).ready(function () {
         // Xử lý preview ảnh khi người dùng chọn file
@@ -246,10 +262,16 @@ $(document).ready(function () {
                 if (response.isSuccess) {
                         $('span[data-valmsg-for]').text('');
                         setTimeout(function () {
-                            alert('Create successful');
-                            $('#createServiceModal').modal('hide');
-                            location.reload();
-                        }, 500);
+                            $('#createServiceModal').modal('hide'); // Ẩn modal hiện tại
+
+                            // Hiển thị modal thông báo thành công
+                            $('#successModal').modal('show'); // Hiện modal thành công
+
+                            // Tải lại trang sau 500ms
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500); 
+                        }, 700);
                     } else {
                     $('span[data-valmsg-for]').text('');
                     for (const [key, value] of Object.entries(response.errors)) {
@@ -325,12 +347,18 @@ $(document).ready(function () {
                     contentType: false, // Ngăn jQuery thiết lập Content-Type
                     success: function (response) {
                         if (response.isSuccess) {
+
                         $('span[data-valmsg-for]').text('');
                         setTimeout(function () {
-                            alert('Update successful');
-                            $('#updateServiceModal').modal('hide');
-                            location.reload();
+                            $('#updateServiceModal').modal('hide'); 
+
+                            $('#successModal').modal('show'); 
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
                         }, 500);
+
                         } else {
                             $('span[data-valmsg-for]').text('');
                             // Hiển thị lỗi vào các input tương ứng

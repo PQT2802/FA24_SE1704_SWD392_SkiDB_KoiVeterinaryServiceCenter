@@ -42,6 +42,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
             if (result.IsSuccess)
             {
+                ViewData["ShowSuccessModal"] = true;
                 return new JsonResult(new { isSuccess = true, message = "Service created successfully!" });
                 // return RedirectToPage("/User/Admin/Services");
             }
