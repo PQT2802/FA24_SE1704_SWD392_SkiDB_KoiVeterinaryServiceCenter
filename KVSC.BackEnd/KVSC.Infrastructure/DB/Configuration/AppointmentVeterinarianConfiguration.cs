@@ -31,18 +31,6 @@ namespace KVSC.Infrastructure.DB.Configuration
                 },
                 new AppointmentVeterinarian
                 {
-                    Id = new Guid("44444444-aaaa-4444-aaaa-444444444444"),
-                    AppointmentId = new Guid("44444444-4444-4444-4444-444444444444"), // Link with Appointment (Waiting)
-                    VeterinarianId = new Guid("21a15a4f-32f5-4d45-a056-f0d61f384e1b") // Link with Veterinarian 2
-                },
-                new AppointmentVeterinarian
-                {
-                    Id = new Guid("55555555-aaaa-5555-aaaa-555555555555"),
-                    AppointmentId = new Guid("55555555-5555-5555-5555-555555555555"), // Link with Appointment (Waiting)
-                    VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4") // Link with Veterinarian 1
-                },
-                new AppointmentVeterinarian
-                {
                     Id = new Guid("55555555-bbbb-5555-bbbb-555555555555"),
                     AppointmentId = new Guid("99999999-9999-9999-9999-999999999999"), // Link with Appointment (Reported)
                     VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4") // Link with Veterinarian 1
@@ -50,7 +38,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new AppointmentVeterinarian
                 {
                     Id = new Guid("55555555-cccc-5555-cccc-555555555555"),
-                    AppointmentId = new Guid("77777777-7777-7777-7777-777777777777"), // Link with Appointment (InProgress)
+                    AppointmentId = new Guid("88888888-8888-8888-8888-888888888888"), // Link with Appointment (InProgress)
                     VeterinarianId = new Guid("d59b53f6-7bc4-4af7-b5f5-438e16b75dd4") // Link with Veterinarian 1
                 },
                 new AppointmentVeterinarian

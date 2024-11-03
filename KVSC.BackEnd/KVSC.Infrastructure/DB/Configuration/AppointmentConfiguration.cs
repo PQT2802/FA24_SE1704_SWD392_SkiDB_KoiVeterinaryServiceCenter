@@ -19,7 +19,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                     PetId = new Guid("f1111111-1111-1111-1111-111111111111"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                    AppointmentDate = new DateTime(2024, 11, 1, 10, 0, 0), // Friday
+                    AppointmentDate = DateTime.UtcNow.AddDays(2), // Friday
                     Status = "Pending",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
@@ -30,9 +30,9 @@ namespace KVSC.Infrastructure.DB.Configuration
                     CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                     PetId = new Guid("f1111111-1111-1111-1111-111111111111"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                    AppointmentDate = new DateTime(2024, 11, 1, 10, 0, 0), // Friday
-                    Status = "Pending",
-                    CreatedDate = DateTime.UtcNow,
+                    AppointmentDate = DateTime.UtcNow.AddDays(-1), // Friday
+                    Status = "Reported",
+                    CreatedDate = DateTime.UtcNow.AddDays(-3),
                     IsDeleted = false
                 },
                 new Appointment
@@ -41,7 +41,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                     PetId = new Guid("f3333333-3333-3333-3333-333333333333"),
                     PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
-                    AppointmentDate = new DateTime(2024, 11, 2, 9, 0, 0), // Saturday
+                    AppointmentDate = DateTime.UtcNow.AddDays(2), // Saturday
                     Status = "Pending",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
@@ -53,7 +53,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("44444444-4444-4444-4444-444444444444"),
                     CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
                     PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
-                    AppointmentDate = new DateTime(2024, 11, 3, 13, 30, 0), // Sunday
+                    AppointmentDate = DateTime.UtcNow.AddDays(2), // Sunday
                     Status = "Pending",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
@@ -63,7 +63,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("55555555-5555-5555-5555-555555555555"),
                     CustomerId = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                    AppointmentDate = new DateTime(2024, 11, 5, 14, 0, 0), // Tuesday
+                    AppointmentDate = DateTime.UtcNow.AddDays(3), // Tuesday
                     Status = "Pending",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
@@ -77,7 +77,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
                     AppointmentDate =  DateTime.UtcNow, // now
                     Status = "InProgress",
-                    CreatedDate = new DateTime(2024, 10, 24, 14, 0, 0),
+                    CreatedDate = DateTime.UtcNow.AddDays(-2),
                     IsDeleted = false
                 },
                 new Appointment
@@ -85,8 +85,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("77777777-7777-7777-7777-777777777777"),
                     CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//cus1
                     PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
-                    AppointmentDate = new DateTime(2024, 11, 10, 14, 0, 0),// Tuesday
-                    Status = "Waiting",
+                    AppointmentDate = DateTime.UtcNow.AddDays(3),// Tuesday
+                    Status = "Pending",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
                 },
@@ -97,10 +97,9 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("88888888-8888-8888-8888-888888888888"),
                     CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                     PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
-                    AppointmentDate = new DateTime(2024, 11, 10, 14, 0, 0), // Sunday
+                    AppointmentDate = DateTime.UtcNow.AddDays(-1), // Sunday
                     Status = "Reported",
-                    CompletedDate = new DateTime(2024, 11, 11),
-                    CreatedDate = DateTime.UtcNow,
+                    CreatedDate = DateTime.UtcNow.AddDays(-3),
                     IsDeleted = false
                 },
                 new Appointment
@@ -108,10 +107,9 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("99999999-9999-9999-9999-999999999999"),
                     CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                    AppointmentDate = new DateTime(2024, 10, 30, 9, 0, 0), // Tuesday
+                    AppointmentDate = DateTime.UtcNow.AddDays(-2), // Tuesday
                     Status = "Reported",
-                    CompletedDate = new DateTime(2024, 11, 13),
-                    CreatedDate = DateTime.UtcNow,
+                    CreatedDate = DateTime.UtcNow.AddDays(-5),
                     IsDeleted = false
                 },
 
@@ -121,10 +119,10 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                     CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
                     PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
-                    AppointmentDate = new DateTime(2024, 11, 7, 11, 0, 0), // Thursday
+                    AppointmentDate = DateTime.UtcNow.AddDays(-5), 
                     Status = "Completed",
-                    CompletedDate = new DateTime(2024, 11, 7, 16, 0, 0), // Completed on the same day
-                    CreatedDate = DateTime.UtcNow,
+                    CompletedDate = DateTime.UtcNow.AddDays(-3), // Completed on the same day
+                    CreatedDate = DateTime.UtcNow.AddDays(-7),
                     IsDeleted = false
                 },
                 new Appointment
@@ -132,10 +130,10 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                     CustomerId = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                    AppointmentDate = new DateTime(2024, 11, 9, 10, 0, 0), // Saturday
+                    AppointmentDate = DateTime.UtcNow.AddDays(-3), 
                     Status = "Completed",
-                    CompletedDate = new DateTime(2024, 11, 9, 14, 0, 0), // Completed on the same day
-                    CreatedDate = DateTime.UtcNow,
+                    CompletedDate = DateTime.UtcNow, // Completed on the same day
+                    CreatedDate = DateTime.UtcNow.AddDays(-5),
                     IsDeleted = false
                 },
                 new Appointment
@@ -143,9 +141,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Id = new Guid("bbbbbcbb-bbbb-bcbb-bbbb-bbcbbbbbbbbb"),
                     CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
                     PetServiceId = new Guid("c33e3a87-0230-428b-8c06-ee91b7e8cc21"),
-                    AppointmentDate = new DateTime(2024, 11, 9, 10, 0, 0), // Saturday
+                    AppointmentDate = DateTime.UtcNow.AddDays(3), // Saturday
                     Status = "Pending",
-                    CompletedDate = new DateTime(2024, 11, 9, 14, 0, 0), // Completed on the same day
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
                 }

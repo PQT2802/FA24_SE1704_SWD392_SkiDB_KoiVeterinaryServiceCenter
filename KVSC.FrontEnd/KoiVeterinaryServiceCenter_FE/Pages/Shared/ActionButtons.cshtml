@@ -19,16 +19,17 @@
                 data-bs-target="#updateServiceModal">
             Edit
         </button>
-        <form method="post" asp-page-handler="DeleteService" onsubmit="return confirm('Are you sure you want to delete?');">
-            <input type="hidden" name="Id" value="@Model.Item.Id" />
-            <button type="submit" class="btn btn-sm btn-danger me-2">Delete</button>
-        </form>
+        
         <!-- Detail Button -->
-        <a class="btn btn-sm btn-info"
+        <a class="btn btn-sm btn-info  me-2"
            asp-page="/User/Admin/PetServiceDetail"
            asp-route-id="@Model.Item.Id">
             Detail
         </a>
+        <form method="post" asp-page-handler="DeleteService" onsubmit="return confirm('Are you sure you want to delete?');">
+            <input type="hidden" name="Id" value="@Model.Item.Id" />
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
     </div>
 }
 @if (Model.ListType == "serviceCategory")
