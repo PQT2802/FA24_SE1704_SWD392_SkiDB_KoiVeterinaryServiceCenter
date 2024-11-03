@@ -32,7 +32,7 @@ namespace KVSC.Application.Implement.Service
         private readonly IPasswordHasher _passwordHasher;
         private readonly IConfiguration _configuration;
         private readonly ITokenService _tokenService;
-
+        private readonly IEmailService _emailService;
 
         public AuthService(
             IUnitOfWork unitOfWork,
@@ -40,7 +40,8 @@ namespace KVSC.Application.Implement.Service
             IValidator<LoginRequest> loginRequestValidator,
             IPasswordHasher passwordHasher,
             ITokenService tokenService,
-            IConfiguration configuration
+            IConfiguration configuration,
+            IEmailService emailService
             )
         {
             _unitOfWork = unitOfWork;
@@ -49,6 +50,7 @@ namespace KVSC.Application.Implement.Service
             _passwordHasher = passwordHasher;
             _tokenService = tokenService;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         public async Task<Result> SignIn(LoginRequest loginRequest)
@@ -134,8 +136,35 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(UserErrorMessage.UserNoCreated());
             }
+            var activationLink = $"https://localhost:7283/api/Auth/confirm?userId={newUser.Id}";
+
+            // Send activation email
+            var emailSent = await _emailService.SendAccountActivationEmailAsync(newUser.Email, newUser.FullName, activationLink);
+            if (!emailSent)
+            {
+                return Result.Failure(Error.None);
+            }
             return Result.SuccessWithObject(newUser);
         }
+
+        public async Task<Result> ConfirmEmail(Guid userId)
+        {
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+            if (user == null)
+            {
+                return Result.Failure(Error.NotFound("UserNotFound", "User not found."));
+            }
+
+            user.IsEmailConfirmed = true;
+            await _unitOfWork.UserRepository.UpdateAsync(user);
+
+            return Result.Success();
+        }
+
+
+
+
+
         private string HashPassword(string password)
         {
             return BCrypt.Net.BCrypt.HashPassword(password);

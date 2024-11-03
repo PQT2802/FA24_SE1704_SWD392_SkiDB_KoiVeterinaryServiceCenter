@@ -37,6 +37,19 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Register successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
+
+        [HttpGet("confirm")]
+        public async Task<IResult> ConfirmEmail(Guid userId)
+        {
+            Result result = await _authService.ConfirmEmail(userId);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Email confirmed successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+
+
+
         [HttpPost("google-sign-in")]
         public async Task<IActionResult> GoogleSignIn([FromBody] GoogleSignInRequest request)
         {

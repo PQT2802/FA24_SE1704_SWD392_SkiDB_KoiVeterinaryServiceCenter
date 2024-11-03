@@ -1,78 +1,75 @@
 ﻿using Cursus_Data.Models.Entities;
 using KVSC.Application.Interface.IService;
-using KVSC.Infrastructure.DTOs.EmailTemplate;
+using KVSC.Infrastructure.Interface;
+using Microsoft.Extensions.Configuration;
+using System.Net.Mail;
+using System.Net;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
 using KVSC.Infrastructure.Interface.IRepositories;
 
-namespace KVSC.Application.Implement.Service;
-
-public class EmailService : IEmailService
+namespace KVSC.Application.Implement.Service
 {
-    private readonly IMailRepository _mailRepository;
-    private readonly IEmailTemplateRepository _emailTemplateRepository;
-    private readonly IEmailTemplateService _emailTemplateService;
-
-    public EmailService(IMailRepository mailRepository, IEmailTemplateRepository emailTemplateRepository,
-        IEmailTemplateService emailTemplateService)
+    public class EmailService : IEmailService
     {
-        _mailRepository = mailRepository;
-        _emailTemplateRepository = emailTemplateRepository;
-        _emailTemplateService = emailTemplateService;
-    }
+        private readonly IEmailTemplateRepository _emailTemplateRepository;
+        private readonly IConfiguration _configuration;
 
-    public async Task<string> SendAccountActivationEmail(string toEmail, string userName, string activationLink)
-    {
-        // Retrieve the Account Activation email template
-        var template = await _emailTemplateRepository.GetEmailTemplateByTypeAsync("AccountActivation");
-        if (template == null)
+        public EmailService(IEmailTemplateRepository emailTemplateRepository, IConfiguration configuration)
         {
-            throw new Exception("Account Activation email template not found.");
+            _emailTemplateRepository = emailTemplateRepository;
+            _configuration = configuration;
         }
 
-        // Set up placeholders for dynamic content in the email body
-        var placeholders = new Dictionary<string, string>
+        public async Task<bool> SendAccountActivationEmailAsync(string toEmail, string userName, string activationLink)
         {
-            { "UserName", userName },
-            { "ActivationLink", activationLink }
-        };
+            var template = await _emailTemplateRepository.GetEmailTemplateByTypeAsync("AccountActivation");
+            if (template == null)
+            {
+                throw new Exception("Account Activation email template not found.");
+            }
 
-        // Generate the email body using the template and placeholders
-        var body = await _emailTemplateService.GenerateEmailBody(template.Type, placeholders);
+            // Replace placeholders
+            var body = template.Body
+        .Replace("{ActivationLink}", activationLink);
 
-        // Create the mail object to send
-        var mailObject = new MailObject
+
+            return await SendEmailAsync(toEmail, template.Subject, body);
+        }
+
+        private async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
         {
-            ToMailIds = new List<string> { toEmail },
-            Subject = template.Subject,
-            Body = body,
-            IsBodyHtml = true // Assuming the email body should be HTML formatted
-        };
+            try
+            {
+                var mailSender = _configuration["MailService:MailSender"];
+                var passwordSender = _configuration["MailService:PasswordSender"];
+                var smtpServer = _configuration["SMTP:Server"];
+                var smtpPort = int.Parse(_configuration["SMTP:Port"]);
 
-        // Send the email using the email template service
-        var sendResult = await _emailTemplateService.SendMail(mailObject);
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(mailSender),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                };
+                mailMessage.To.Add(new MailAddress(toEmail));
 
-      
+                using (var smtpClient = new SmtpClient(smtpServer, smtpPort))
+                {
+                    smtpClient.Credentials = new NetworkCredential(mailSender, passwordSender);
+                    smtpClient.EnableSsl = true;
+                    await smtpClient.SendMailAsync(mailMessage);
+                }
 
-        // Log the sent email in the UserEmail table
-        var userEmailRecord = new UserEmail
-        {
-            UserID = Guid.NewGuid(), // Replace with actual user ID if available
-            EmailTemplateId = template.EmailTemplateId,
-            Description = "Account Activation",
-            CreateDate = DateTime.Now,
-            UpdateDate = DateTime.Now,
-            CreateBy = "System",
-            UpdateBy = "System"
-        };
-
-        // Save the email record
-        await _emailTemplateRepository.SaveEmailSending(userEmailRecord);
-
-        return "Account activation email sent successfully.";
-    }
-
-    public Task<string> SendForgetPasswordEmail(string toEmail, string userName, string resetLink)
-    {
-        throw new NotImplementedException();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Email sending failed: {ex.Message}");
+                return false;
+            }
+        }
     }
 }
-
