@@ -72,7 +72,7 @@
 
                         <!-- Image Preview -->
                         <div class="mb-3">
-                            <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px;">
+                            <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px; max-height: 300px;">
                         </div>
 
                         <!-- Color -->
@@ -176,7 +176,7 @@
 
                     <!-- Image Preview -->
                     <div class="mb-3">
-                        <img id="petImagePreview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
+                        <img id="petImagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px; max-height: 300px;">
                     </div>
 
                     <!-- Color -->
@@ -251,6 +251,17 @@
                 reader.readAsDataURL(file); // Đọc file dưới dạng URL
             } else {
                 $('#imagePreview').hide(); // Ẩn ảnh nếu không có file
+            }
+        });
+
+        // Kiểm tra và xóa thông báo lỗi khi người dùng nhập đúng
+        $('#createPetForm input, #createPetForm textarea').on('input', function () {
+            var fieldName = $(this).attr('name').split('.').pop(); // Lấy tên của trường
+            var errorSpan = $(`span[data-valmsg-for='AddPetRequest.${fieldName}']`);
+
+            // Kiểm tra nếu giá trị hiện tại của input là hợp lệ
+            if ($(this)[0].checkValidity()) {
+                errorSpan.text(''); // Xóa thông báo lỗi nếu input hợp lệ
             }
         });
 
@@ -342,6 +353,17 @@
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        // Kiểm tra và xóa thông báo lỗi khi người dùng nhập đúng
+        $('#updatePetForm input, #updatePetForm textarea').on('input change', function () {
+            var fieldName = $(this).attr('name').split('.').pop(); // Lấy tên field từ name attribute
+            var errorSpan = $(`span[data-valmsg-for='UpdatePetRequest.${fieldName}']`);
+    
+        // Kiểm tra nếu giá trị hiện tại của input là hợp lệ
+            if ($(this)[0].checkValidity()) {
+            errorSpan.text(''); // Xóa thông báo lỗi nếu input hợp lệ
+        }
         });
 
         $('#updatePetForm').submit(function (e) {
