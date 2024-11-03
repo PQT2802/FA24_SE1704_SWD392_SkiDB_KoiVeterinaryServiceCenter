@@ -21,9 +21,9 @@ namespace KVSC.Application.Common.Validator.Pet
             AddPetLengthRules(request => request.Length ?? 0);
             AddPetWeightRules(request => request.Weight ?? 0);
             AddPetQuantityRules(request => request.Quantity);
-            AddPetLastHealthCheckRules(request => request.LastHealthCheck);
+            //AddPetLastHealthCheckRules(request => request.LastHealthCheck);
             AddPetNoteRules(request => request.Note!);
-            AddPetHealthStatusRules(request => request.HealthStatus ?? 0);
+            //AddPetHealthStatusRules(request => request.HealthStatus ?? 0);
         }
     }
 }

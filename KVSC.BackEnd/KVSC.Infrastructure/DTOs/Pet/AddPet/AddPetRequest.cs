@@ -16,9 +16,9 @@ namespace KVSC.Infrastructure.DTOs.Pet.AddPet
         public double? Length { get; set; }
         public double? Weight { get; set; }
         public int Quantity { get; set; }
-        public DateTime LastHealthCheck { get; set; }
+        //public DateTime LastHealthCheck { get; set; }
         public string? Note { get; set; }
-        public int? HealthStatus { get; set; }
+        //public int? HealthStatus { get; set; }
         public Guid OwnerId { get; set; }
     }
 }

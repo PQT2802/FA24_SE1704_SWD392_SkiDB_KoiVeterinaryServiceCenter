@@ -54,9 +54,9 @@ namespace KVSC.Application.Implement.Service
                 Length = pet.Length,
                 Weight = pet.Weight,
                 Quantity = pet.Quantity,
-                LastHealthCheck = pet.LastHealthCheck,
+                //LastHealthCheck = pet.LastHealthCheck,
                 Note = pet.Note,
-                HealthStatus = pet.HealthStatus,
+                //HealthStatus = pet.HealthStatus,
                 Owner = pet.Owner?.FullName,
                 OwnerId = pet.OwnerId
             };
@@ -84,9 +84,9 @@ namespace KVSC.Application.Implement.Service
                     Length = pet.Length,
                     Weight = pet.Weight,
                     Quantity = pet.Quantity,
-                    LastHealthCheck = pet.LastHealthCheck,
+                    //LastHealthCheck = pet.LastHealthCheck,
                     Note = pet.Note,
-                    HealthStatus = pet.HealthStatus,
+                    //HealthStatus = pet.HealthStatus,
                     Owner = pet.Owner?.FullName,
                     OwnerId = pet.OwnerId
                 };
@@ -125,9 +125,9 @@ namespace KVSC.Application.Implement.Service
                 Length = addPet.Length,
                 Weight = addPet.Weight,
                 Quantity = addPet.Quantity,
-                LastHealthCheck = addPet.LastHealthCheck,
+                //LastHealthCheck = addPet.LastHealthCheck,
                 Note = addPet.Note,
-                HealthStatus = addPet.HealthStatus,
+                //HealthStatus = addPet.HealthStatus,
                 OwnerId = addPet.OwnerId
             };
 
@@ -167,9 +167,9 @@ namespace KVSC.Application.Implement.Service
             pet.Length = updatePet.Length;
             pet.Weight = updatePet.Weight;
             pet.Quantity = updatePet.Quantity;
-            pet.LastHealthCheck = updatePet.LastHealthCheck;
+            //pet.LastHealthCheck = updatePet.LastHealthCheck;
             pet.Note = updatePet.Note;
-            pet.HealthStatus = updatePet.HealthStatus;
+            //pet.HealthStatus = updatePet.HealthStatus;
 
             var updateResult = await _unitOfWork.PetRepository.UpdatePetAsync(pet);
             if (updateResult == 0)
@@ -217,9 +217,9 @@ namespace KVSC.Application.Implement.Service
                 Length = pet.Length,
                 Weight = pet.Weight,
                 Quantity = pet.Quantity,
-                LastHealthCheck = pet.LastHealthCheck,
+                //LastHealthCheck = pet.LastHealthCheck,
                 Note = pet.Note,
-                HealthStatus = pet.HealthStatus
+                //HealthStatus = pet.HealthStatus
             }).ToList();
 
             return Result.SuccessWithObject(petResponseList);
