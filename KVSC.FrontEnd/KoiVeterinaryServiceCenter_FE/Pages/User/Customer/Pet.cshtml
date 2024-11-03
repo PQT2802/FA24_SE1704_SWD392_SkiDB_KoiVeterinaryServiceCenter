@@ -72,7 +72,7 @@
 
                         <!-- Image Preview -->
                         <div class="mb-3">
-                            <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px;">
+                            <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px; max-height: 300px;">
                         </div>
 
                         <!-- Color -->
@@ -104,13 +104,13 @@
                         </div>
 
                         <!-- Last Health Check -->
-                        <div class="form-floating mb-3">
+                        @* <div class="form-floating mb-3">
                             <input type="datetime-local" class="form-control" id="lastHealthCheck" name="AddPetRequest.LastHealthCheck"
                                    placeholder="Last Health Check"
                                    value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
                             <label for="lastHealthCheck">Last Health Check</label>
                             <span asp-validation-for="AddPetRequest.LastHealthCheck" class="text-danger"></span>
-                        </div>
+                        </div> *@
 
                         <!-- Note -->
                         <div class="form-floating mb-3">
@@ -120,11 +120,11 @@
                         </div>
 
                         <!-- Health Status -->
-                        <div class="form-floating mb-3">
+                        @* <div class="form-floating mb-3">
                             <input type="number" class="form-control" id="healthStatus" name="AddPetRequest.HealthStatus" placeholder="Health Status" min="0">
                             <label for="healthStatus">Health Status</label>
                             <span asp-validation-for="AddPetRequest.HealthStatus" class="text-danger"></span>
-                        </div>
+                        </div> *@
 
                         <!-- Nút submit -->
                         <button type="submit" class="btn btn-primary" id="submitPetForm">Submit</button>
@@ -176,7 +176,7 @@
 
                     <!-- Image Preview -->
                     <div class="mb-3">
-                        <img id="petImagePreview" src="" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
+                        <img id="petImagePreview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 300px; max-height: 300px;">
                     </div>
 
                     <!-- Color -->
@@ -201,13 +201,13 @@
                     </div>
 
                     <!-- Last Health Check -->
-                    <div class="form-floating mb-3">
+                    @* <div class="form-floating mb-3">
                         <input type="datetime-local" class="form-control" id="lastHealthCheck" name="UpdatePetRequest.LastHealthCheck"
                                placeholder="Last Health Check"
                                value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
                         <label for="lastHealthCheck">Last Health Check</label>
                         <span asp-validation-for="UpdatePetRequest.LastHealthCheck" class="text-danger"></span>
-                    </div>
+                    </div> *@
 
                     <!-- Quantity -->
                     <div class="form-floating mb-3">
@@ -217,11 +217,11 @@
                     </div>
 
                     <!-- Healthstatus -->
-                    <div class="form-floating mb-3">
+                    @* <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="healthStatus" name="UpdatePetRequest.HealthStatus" placeholder="HealthStatus" min="0">
                         <label for="healthStatus">HealthStatus</label>
                         <span asp-validation-for="UpdatePetRequest.HealthStatus" class="text-danger"></span>
-                    </div>
+                    </div> *@
 
                     <!-- Note -->
                     <div class="form-floating mb-3">
@@ -251,6 +251,17 @@
                 reader.readAsDataURL(file); // Đọc file dưới dạng URL
             } else {
                 $('#imagePreview').hide(); // Ẩn ảnh nếu không có file
+            }
+        });
+
+        // Kiểm tra và xóa thông báo lỗi khi người dùng nhập đúng
+        $('#createPetForm input, #createPetForm textarea').on('input', function () {
+            var fieldName = $(this).attr('name').split('.').pop(); // Lấy tên của trường
+            var errorSpan = $(`span[data-valmsg-for='AddPetRequest.${fieldName}']`);
+
+            // Kiểm tra nếu giá trị hiện tại của input là hợp lệ
+            if ($(this)[0].checkValidity()) {
+                errorSpan.text(''); // Xóa thông báo lỗi nếu input hợp lệ
             }
         });
 
@@ -307,8 +318,8 @@
             var color = $(this).data('color');
             var length = $(this).data('length');
             var weight = $(this).data('weight');
-            var lastHealthCheck = $(this).data('lasthealthcheck');
-            var healthStatus = $(this).data('healthstatus');
+            // var lastHealthCheck = $(this).data('lasthealthcheck');
+            // var healthStatus = $(this).data('healthstatus');
             var quantity = $(this).data('quantity');
             var note = $(this).data('note');
 
@@ -320,8 +331,8 @@
             $('#updatePetModal #color').val(color);
             $('#updatePetModal #length').val(length);
             $('#updatePetModal #weight').val(weight);
-            $('#updatePetModal #lastHealthCheck').val(lastHealthCheck);
-            $('#updatePetModal #healthStatus').val(healthStatus);
+            // $('#updatePetModal #lastHealthCheck').val(lastHealthCheck);
+            // $('#updatePetModal #healthStatus').val(healthStatus);
             $('#updatePetModal #quantity').val(quantity);
             $('#updatePetModal #note').val(note);
             $('#updatePetModal #imageUrl').val(imageUrl);
@@ -342,6 +353,17 @@
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        // Kiểm tra và xóa thông báo lỗi khi người dùng nhập đúng
+        $('#updatePetForm input, #updatePetForm textarea').on('input change', function () {
+            var fieldName = $(this).attr('name').split('.').pop(); // Lấy tên field từ name attribute
+            var errorSpan = $(`span[data-valmsg-for='UpdatePetRequest.${fieldName}']`);
+    
+        // Kiểm tra nếu giá trị hiện tại của input là hợp lệ
+            if ($(this)[0].checkValidity()) {
+            errorSpan.text(''); // Xóa thông báo lỗi nếu input hợp lệ
+        }
         });
 
         $('#updatePetForm').submit(function (e) {

@@ -176,8 +176,8 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                                 errorDictionary["Weight"] = error.Description;
                             else if (error.Description.Contains("Quantity", StringComparison.OrdinalIgnoreCase))
                                 errorDictionary["Quantity"] = error.Description;
-                            else if (error.Description.Contains("HealthStatus", StringComparison.OrdinalIgnoreCase))
-                                errorDictionary["HealthStatus"] = error.Description;
+                            //else if (error.Description.Contains("HealthStatus", StringComparison.OrdinalIgnoreCase))
+                            //    errorDictionary["HealthStatus"] = error.Description;
                             break;
 
                         default:
