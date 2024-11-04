@@ -1,8 +1,11 @@
 ﻿using System.Net.Mail;
+using Cursus_Data.Models.Entities;
 using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.EmailTemplate;
+using KVSC.Infrastructure.Implement.Repositories;
 using KVSC.Infrastructure.Interface.IRepositories;
+using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
 using Microsoft.Extensions.Configuration;
 
 namespace KVSC.Application.Implement.Service;
@@ -27,7 +30,7 @@ public class EmailTemplateService : IEmailTemplateService
         string body = emailTemplate.Body;
         foreach (var placeholder in placeholders)
         {
-            body = body.Replace($"{{{{{placeholder.Key}}}}}", placeholder.Value);
+            body = body.Replace($"{{{placeholder.Key}}}", placeholder.Value);
         }
 
         return body;
@@ -69,6 +72,19 @@ public class EmailTemplateService : IEmailTemplateService
         {
 
             return ex.Message;
+        }
+
+    }
+    public async Task<Result> SaveEmailTemplateAsync(EmailTemplate emailTemplate)
+    {
+        try
+        {
+            await _emailTemplateRepsository.AddEmailTemplateAsync(emailTemplate); // Use the new Add method
+            return Result.Success();
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure(Error.Failure("SaveError", $"Failed to save email template: {ex.Message}"));
         }
     }
 }
