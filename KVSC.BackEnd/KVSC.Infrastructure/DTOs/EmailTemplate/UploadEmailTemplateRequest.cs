@@ -7,5 +7,6 @@ namespace KVSC.Infrastructure.DTOs.EmailTemplate
         public string Subject { get; set; }
         public string Type { get; set; }
         public IFormFile TemplateFile { get; set; }
+        public IFormFileCollection Images { get; set; } // New field for multiple images
     }
 }
