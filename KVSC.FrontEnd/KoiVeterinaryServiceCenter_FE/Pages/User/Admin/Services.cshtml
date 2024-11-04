@@ -205,6 +205,7 @@ else
 {
     <div class="alert alert-warning">Bạn không có quyền truy cập vào phần này.</div>
 }
+@Html.Partial("_LoadingPopup")
 @{
     var modalData = new ModalViewModel
             {
@@ -212,7 +213,7 @@ else
             };
 }
 
-@Html.Partial("SuccessModal", modalData)
+@Html.Partial("_SuccessModal",Model.Success)
 @*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
 @if (ViewData["ShowSuccessModal"] != null && (bool)ViewData["ShowSuccessModal"])
 {
@@ -248,7 +249,7 @@ $(document).ready(function () {
             alert('Please select a photo before creating a service.');
             return; // Ngừng thực hiện nếu không có ảnh
         }
-        
+
         // Tạo một FormData để gửi dữ liệu
         var formData = new FormData($('#createServiceForm')[0]);
 
@@ -263,15 +264,14 @@ $(document).ready(function () {
                         $('span[data-valmsg-for]').text('');
                         setTimeout(function () {
                             $('#createServiceModal').modal('hide'); // Ẩn modal hiện tại
-
                             // Hiển thị modal thông báo thành công
                             $('#successModal').modal('show'); // Hiện modal thành công
 
                             // Tải lại trang sau 500ms
                             setTimeout(function () {
                                 location.reload();
-                            }, 1500); 
-                        }, 700);
+                            }, 1000); 
+                        }, 100);
                     } else {
                     $('span[data-valmsg-for]').text('');
                     for (const [key, value] of Object.entries(response.errors)) {
@@ -356,8 +356,8 @@ $(document).ready(function () {
 
                             setTimeout(function () {
                                 location.reload();
-                            }, 1500);
-                        }, 500);
+                            }, 1000);
+                        }, 100);
 
                         } else {
                             $('span[data-valmsg-for]').text('');

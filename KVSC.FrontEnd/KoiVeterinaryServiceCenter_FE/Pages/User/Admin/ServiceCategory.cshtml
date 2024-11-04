@@ -29,7 +29,7 @@
             };
 }
 
-@Html.Partial("SuccessModal", modalData)
+@Html.Partial("_SuccessModal", modalData)
 @*  ===================Create ServiceCategory ===========================*@
 <div class="modal fade @(Model.ShowModal ? "show" : "")" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel" aria-hidden="true" style="display:@(Model.ShowModal ? "block" : "none");">
     <div class="modal-dialog">
