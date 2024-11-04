@@ -207,7 +207,20 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(PetErrorMessage.FieldIsEmpty("pet"));
             }
-
+            var wallet = await _unitOfWork.WalletRepository.GetWalletByUserIdAsync(request.CustomerId);
+            if(wallet == null)
+            {
+                return Result.Failure(UserErrorMessage.UserNotExist());
+            }
+            var service = await _unitOfWork.PetServiceRepository.GetByIdAsync(request.PetServiceId);
+            if(service == null)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
+            }
+            if(wallet.Amount < (service.BasePrice * 0.2m))
+            {
+                return Result.Failure(Error.Validation("InsufficientFunds", "Insufficient funds in wallet."));
+            }
             var appointment = new Appointment
             {
                 CustomerId = request.CustomerId,
@@ -224,6 +237,8 @@ namespace KVSC.Application.Implement.Service
             
             // Lưu cuộc hẹn 
             await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
+            wallet.Amount = wallet.Amount - (service.BasePrice * 0.2m);
+            await _unitOfWork.WalletRepository.UpdateAsync(wallet);
 
             // Cập nhật trạng thái IsAvailable của lịch bác sĩ qua repository
             foreach (var veterinarian in appointment.AppointmentVeterinarians)

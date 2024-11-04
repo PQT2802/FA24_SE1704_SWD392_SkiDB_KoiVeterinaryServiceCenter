@@ -123,18 +123,19 @@ namespace KVSC.Application.Implement.Service
                 role = 5,
                 
             };
-            //Wallet newWallet = new Wallet()
-            //{
-            //    UserId = newUser.Id,
-            //    Amount = 0,
-            //};
-            //await _unitOfWork.WalletRepository.CreateAsync(newWallet);
+            Wallet newWallet = new Wallet()
+            {
+                UserId = newUser.Id,
+                Amount = 0,
+            };
+            
             var createUsre = await _unitOfWork.UserRepository.CreateAsync(newUser);
             if (createUsre == 0)
             {
                 return Result.Failure(UserErrorMessage.UserNoCreated());
             }
-            return Result.SuccessWithObject(newUser);
+            await _unitOfWork.WalletRepository.CreateAsync(newWallet);
+            return Result.SuccessWithObject(new {Message = "Create successfully!!!"});
         }
         private string HashPassword(string password)
         {
