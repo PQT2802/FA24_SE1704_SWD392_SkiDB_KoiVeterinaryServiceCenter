@@ -244,7 +244,14 @@ namespace KVSC.Application.Implement.Service
                 }
             }
             string appointmentDetailUrl = $"https://localhost:7283/api/appointment/detail/{appointment.Id}";
-
+            var placeholders = new Dictionary<string, string>
+            {
+                { "AppointmentDate", appointment.AppointmentDate.ToString("MMMM dd, yyyy") },
+                { "AppointmentTime", appointment.AppointmentDate.ToString("hh:mm tt") },
+                { "ServiceName", "Koi Care Service" },  // Replace with actual service name if available
+                { "PetName", pet?.Name ?? "Your Pet" },  // Replace with actual pet name if available
+                { "AppointmentDetailURL", appointmentDetailUrl }
+            };
             // Send email notifications to veterinarians, if any
             if (appointment.AppointmentVeterinarians != null)
             {
@@ -253,8 +260,9 @@ namespace KVSC.Application.Implement.Service
                     var vet = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(veterinarian.VeterinarianId);
                     if (vet != null && !string.IsNullOrEmpty(vet.User.FullName))
                     {
+                        placeholders["Name"] = vet.User.FullName;
                         var emailBodyResult = await _emailTemplateService.GenerateEmailWithAppointmentLink(
-                            "MakeAppointment", appointmentDetailUrl, new Dictionary<string, string> { { "Name", vet.User.FullName } }
+                            "MakeAppointment", appointmentDetailUrl, placeholders
                         );
 
                         if (emailBodyResult.IsSuccess)
@@ -276,8 +284,9 @@ namespace KVSC.Application.Implement.Service
             var customer = await _unitOfWork.UserRepository.GetByIdAsync(request.CustomerId);
             if (customer != null && !string.IsNullOrEmpty(customer.Email))
             {
+                placeholders["Name"] = customer.FullName;
                 var emailBodyResult = await _emailTemplateService.GenerateEmailWithAppointmentLink(
-                    "MakeAppointment", appointmentDetailUrl, new Dictionary<string, string> { { "Name", customer.FullName } }
+                    "MakeAppointment", appointmentDetailUrl, placeholders
                 );
 
                 if (emailBodyResult.IsSuccess)
