@@ -138,5 +138,14 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(veterinarian, "User retrieved successfully")
                 : ResultExtensions.ToProblemDetails(veterinarian);
         }
+
+        [HttpGet("veterinarian/all")]
+        public async Task<IResult> GetAllVeterinarians()
+        {
+            var result = await _userService.GetAllVeterinarians();
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "All veterinarian retrieved successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
     }
 }

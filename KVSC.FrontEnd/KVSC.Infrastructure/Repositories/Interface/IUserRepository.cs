@@ -23,7 +23,6 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<GetVeterinarianResponse>> GetVeter(Guid id);
         Task<ResponseDto<UpdateUserResponse>> UpdateVeterinarianQualificationsAsync(GetVeterinarianRequest updatedProfile);
         Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount);
-
-        
+        Task<ResponseDto<GetVetInfo>> GetVetList();
     }
 }

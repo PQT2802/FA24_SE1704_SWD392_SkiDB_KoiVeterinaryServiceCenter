@@ -7,8 +7,8 @@
 <div class="container-fluid py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Blog Post</h5>
-            <h1 class="display-4">Our Latest Medical Blog Posts</h1>
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">KoiVet Services</h5>
+            <h1 class="display-4">Our Services For Your Koi Fish</h1>
         </div>
         <div class="row g-5">
             @if (Model.KoiServiceList?.Extensions?.Data != null && Model.KoiServiceList.Extensions.Data.Any())
@@ -33,9 +33,6 @@
                     <p>No services available.</p>
                 </div>
             }
-            <div class="col-12 text-center">
-                <button class="btn btn-primary py-3 px-5">Load More</button>
-            </div>
         </div>
     </div>
 </div>
