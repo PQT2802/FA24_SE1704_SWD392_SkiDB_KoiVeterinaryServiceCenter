@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using KVSC.Application.Interface.IService;
 using Cursus_Data.Models.Entities;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
+using KVSC.Application.Implement.Service;
+using KVSC.Infrastructure.DTOs.Firebase.GetImage;
 
 namespace KVSC.WebAPI.Controllers
 {
@@ -15,10 +17,12 @@ namespace KVSC.WebAPI.Controllers
     public class EmailTemplateController : ControllerBase
     {
         private readonly IEmailTemplateService _emailTemplateService;
+        private readonly IFirebaseService _firebaseService;
 
-        public EmailTemplateController(IEmailTemplateService emailTemplateService)
+        public EmailTemplateController(IEmailTemplateService emailTemplateService, IFirebaseService firebaseService)
         {
             _emailTemplateService = emailTemplateService;
+            _firebaseService = firebaseService;
         }
 
         [HttpPost("upload-template")]
@@ -37,7 +41,41 @@ namespace KVSC.WebAPI.Controllers
                 htmlContent = await streamReader.ReadToEndAsync();
             }
 
-            // Create a new EmailTemplate object
+            // Process images: Upload and retrieve Firebase URLs
+            Dictionary<string, string> imagePlaceholders = new Dictionary<string, string>();
+            foreach (var image in request.Images)
+            {
+                // Upload image to Firebase and get the file path
+                var uploadResult = await _firebaseService.UploadImageAsync(image, request.Type);
+                if (uploadResult.IsFailure)
+                {
+                    return ResultExtensions.ToProblemDetails(uploadResult);
+                }
+
+                var filePath = (string)uploadResult.Object;
+
+                // Retrieve the image URL from Firebase using GetImageAsync
+                var getImageRequest = new GetImageRequest(filePath);
+                var imageUrlResult = await _firebaseService.GetImageAsync(getImageRequest);
+                if (imageUrlResult.IsFailure)
+                {
+                    return ResultExtensions.ToProblemDetails(imageUrlResult);
+                }
+
+                var imageUrl = ((GetImageResponse)imageUrlResult.Object).ImageUrl;
+
+                // Generate placeholder key based on the image file name without extension
+                var placeholderKey = Path.GetFileNameWithoutExtension(image.FileName);
+                imagePlaceholders[$"{{{placeholderKey}}}"] = imageUrl;
+            }
+
+            // Replace image placeholders in the HTML content with Firebase URLs
+            foreach (var placeholder in imagePlaceholders)
+            {
+                htmlContent = htmlContent.Replace(placeholder.Key, placeholder.Value);
+            }
+
+            // Create a new EmailTemplate object with updated HTML content
             var emailTemplate = new EmailTemplate
             {
                 Subject = request.Subject,
@@ -56,6 +94,7 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Template uploaded successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
+
         [HttpPost("send-template-email")]
         public async Task<IResult> SendTemplateEmail([FromBody] SendTemplateEmailRequest request)
         {
