@@ -11,5 +11,6 @@ public interface IEmailTemplateService
     Task<Result> SaveEmailTemplateAsync(EmailTemplate emailTemplate);
     Task<Result> GetTemplateByTypeAsync(string templateType);
     Task<Result> GenerateEmailWithActivationLink(string templateType, string activationLink, Dictionary<string, string> additionalPlaceholders = null);
+    Task<Result> GenerateEmailWithAppointmentLink(string templateType, string activationLink, Dictionary<string, string> additionalPlaceholders = null);
 
 }

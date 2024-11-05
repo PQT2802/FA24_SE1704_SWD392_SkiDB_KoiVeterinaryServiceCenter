@@ -6,6 +6,7 @@ using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DTOs.Appointment.GetAppointment;
 using KVSC.Infrastructure.DTOs.Appointment.MakeAppointment;
 using KVSC.Infrastructure.DTOs.Common.Message;
+using KVSC.Infrastructure.DTOs.EmailTemplate;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.Interface;
 using KVSC.Infrastructure.KVSC.Infrastructure.DTOs.Common;
@@ -22,14 +23,17 @@ namespace KVSC.Application.Implement.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<MakeAppointmentForServiceRequest> _serviceValidator;
         private readonly IValidator<MakeAppointmentForComboRequest> _comboValidator;
+        private readonly IEmailTemplateService _emailTemplateService;
 
         public AppointmentService(IUnitOfWork unitOfWork,
                              IValidator<MakeAppointmentForServiceRequest> serviceValidator,
-                             IValidator<MakeAppointmentForComboRequest> comboValidator)
+                             IValidator<MakeAppointmentForComboRequest> comboValidator,
+                             IEmailTemplateService emailTemplateService)
         {
             _unitOfWork = unitOfWork;
             _serviceValidator = serviceValidator;
             _comboValidator = comboValidator;
+            _emailTemplateService = emailTemplateService;
         }
 
         public async Task<Result> MakeAppointmentForServiceAsync(MakeAppointmentForServiceRequest request)
@@ -216,25 +220,85 @@ namespace KVSC.Application.Implement.Service
                 Status = "Pending",
                 AppointmentDate = request.AppointmentDate,
             };
-                // Nếu có bác sĩ được chọn, thêm vào cuộc hẹn
+            // Nếu có bác sĩ được chọn, thêm vào cuộc hẹn
+            if (request.VeterinarianIds != null && request.VeterinarianIds.Any())
+            {
                 appointment.AppointmentVeterinarians = request.VeterinarianIds.Select(v => new AppointmentVeterinarian
                 {
                     VeterinarianId = v
                 }).ToList();
-            
+            }
+
             // Lưu cuộc hẹn 
             await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
 
             // Cập nhật trạng thái IsAvailable của lịch bác sĩ qua repository
-            foreach (var veterinarian in appointment.AppointmentVeterinarians)
+            if (appointment.AppointmentVeterinarians != null)
             {
-                await _unitOfWork.AppointmentRepository.UpdateScheduleAvailabilityAsync(
-                    veterinarian.VeterinarianId,
-                    appointment.AppointmentDate
-                );
+                foreach (var veterinarian in appointment.AppointmentVeterinarians)
+                {
+                    await _unitOfWork.AppointmentRepository.UpdateScheduleAvailabilityAsync(
+                        veterinarian.VeterinarianId,
+                        appointment.AppointmentDate
+                    );
+                }
             }
-                var response = new CreateResponse { Id = appointment.Id };
-                return Result.SuccessWithObject(response);
+            string appointmentDetailUrl = $"https://localhost:7283/api/appointment/detail/{appointment.Id}";
+
+            // Send email notifications to veterinarians, if any
+            if (appointment.AppointmentVeterinarians != null)
+            {
+                foreach (var veterinarian in appointment.AppointmentVeterinarians)
+                {
+                    var vet = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(veterinarian.VeterinarianId);
+                    if (vet != null && !string.IsNullOrEmpty(vet.User.FullName))
+                    {
+                        var emailBodyResult = await _emailTemplateService.GenerateEmailWithAppointmentLink(
+                            "MakeAppointment", appointmentDetailUrl, new Dictionary<string, string> { { "Name", vet.User.FullName } }
+                        );
+
+                        if (emailBodyResult.IsSuccess)
+                        {
+                            var mailObject = new MailObject
+                            {
+                                ToMailIds = new List<string> { vet.User.FullName },
+                                Subject = "New Appointment Assignment",
+                                Body = emailBodyResult.Object as string,
+                                IsBodyHtml = true
+                            };
+                            await _emailTemplateService.SendMail(mailObject);
+                        }
+                    }
+                }
+            }
+
+            // Send email notification to the customer, if found
+            var customer = await _unitOfWork.UserRepository.GetByIdAsync(request.CustomerId);
+            if (customer != null && !string.IsNullOrEmpty(customer.Email))
+            {
+                var emailBodyResult = await _emailTemplateService.GenerateEmailWithAppointmentLink(
+                    "MakeAppointment", appointmentDetailUrl, new Dictionary<string, string> { { "Name", customer.FullName } }
+                );
+
+                if (emailBodyResult.IsSuccess)
+                {
+                    var mailObject = new MailObject
+                    {
+                        ToMailIds = new List<string> { customer.Email },
+                        Subject = "Appointment Confirmation",
+                        Body = emailBodyResult.Object as string,
+                        IsBodyHtml = true
+                    };
+                    await _emailTemplateService.SendMail(mailObject);
+                }
+            }
+            else
+            {
+                // Log or handle the case where the customer is not found or has no email
+                // Optional: Return an error or warning if the customer is a required recipient
+            }
+            var response = new CreateResponse { Id = appointment.Id };
+            return Result.SuccessWithObject(response);
         }
 
         public async Task<Result> GetUnassignedAppointmentsAsync()

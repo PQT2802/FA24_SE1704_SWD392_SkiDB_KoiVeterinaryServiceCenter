@@ -143,6 +143,48 @@ public class EmailTemplateService : IEmailTemplateService
 
         return Result.SuccessWithObject(htmlContent);
     }
+    public async Task<Result> GenerateEmailWithAppointmentLink(string templateType, string appointmentDetailUrl, Dictionary<string, string> additionalPlaceholders = null)
+    {
+        // Retrieve the email template by type
+        var templateResult = await GetTemplateByTypeAsync(templateType);
+        if (templateResult.IsFailure)
+        {
+            return Result.Failure(Error.Failure("TemplateNotFound", "Email template not found"));
+        }
+
+        var emailTemplate = templateResult.Object as EmailTemplate;
+        var htmlContent = emailTemplate.Body;
+
+        // Deserialize image mappings JSON
+        var imageMappings = JsonSerializer.Deserialize<Dictionary<string, string>>(emailTemplate.ImageMappingsJson);
+
+        // Replace image placeholders with actual URLs from Firebase
+        foreach (var mapping in imageMappings)
+        {
+            var getImageRequest = new GetImageRequest(mapping.Value); // Firebase path
+            var imageUrlResult = await _firebaseService.GetImageAsync(getImageRequest);
+            if (imageUrlResult.IsSuccess)
+            {
+                var imageUrl = ((GetImageResponse)imageUrlResult.Object).ImageUrl;
+                htmlContent = htmlContent.Replace($"{{{mapping.Key}}}", imageUrl); // Replace placeholder with actual URL
+            }
+        }
+
+        // Replace {AppointmentDetailURL} placeholder with the appointment detail link
+        htmlContent = htmlContent.Replace("{AppointmentDetailURL}", appointmentDetailUrl);
+
+        // Replace any additional placeholders if provided
+        if (additionalPlaceholders != null)
+        {
+            foreach (var placeholder in additionalPlaceholders)
+            {
+                htmlContent = htmlContent.Replace($"{{{placeholder.Key}}}", placeholder.Value);
+            }
+        }
+
+        return Result.SuccessWithObject(htmlContent);
+    }
+
 
 
 }
