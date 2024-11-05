@@ -28,7 +28,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
         [BindProperty]
         public UpdateServiceRequest UpdateServiceRequest { get; set; } = default!;
-        public ModalViewModel Success { get; set; } = default!;
+        public ModalViewModel Success { get; set; } = new ModalViewModel();
         public List<KoiServiceCategoryList> Categories { get; set; } = new List<KoiServiceCategoryList>();
 
         public ServicesModel(IPetServiceService petServiceSerivce , IPetServiceCategoryService petServiceCategoryService)
@@ -45,7 +45,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             {
                 ViewData["ShowSuccessModal"] = true;
                 Success.Message = "Service created successfully!";
-                return new JsonResult(new { isSuccess = true, message = "Service created successfully!" });
+                return new JsonResult(new { isSuccess = true, message = Success.Message });
                 // return RedirectToPage("/User/Admin/Services");
             }
 

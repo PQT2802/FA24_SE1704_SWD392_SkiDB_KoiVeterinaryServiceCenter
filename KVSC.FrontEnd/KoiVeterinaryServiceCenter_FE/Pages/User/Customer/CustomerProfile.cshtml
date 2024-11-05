@@ -10,56 +10,84 @@
 }
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 
-<div class="container mt-5">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
     <form method="post" id="profileForm" enctype="multipart/form-data">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h2 class="card-title text-center">Profile Details</h2>
-            </div>
+                <div class="card" style="background-color: #f8f9fa; padding: 10px; border-radius: 8px;padding-top: 0;">
+            <div class="card-body" style="padding-top: 0;">
+                        <div class="container mt-3">
+                            @if (TempData["SuccessMessage"] != null)
+                            {
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    @TempData["SuccessMessage"]
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
 
-            <div class="card-body">
+                            @if (TempData["ErrorMessage"] != null)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    @TempData["ErrorMessage"]
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+                        </div>
                 @if (Model.UserProfile != null)
                 {
-                    <div class="row">
-                        <input type="hidden" name="ExistingProfilePictureUrl" value="@Model.UserProfile.Extensions.Data.ProfilePictureUrl" />
-                        <div class="col-md-6 d-flex justify-content-center" style="min-height: 600px; max-height: 800px;min-width: 300px; max-width: 500px;">
-                            <img src="@Model.UserProfile.Extensions.Data.ProfilePictureUrl"
-                                 alt="Service Image"
-                                 class="img-fluid rounded shadow"
-                                 style="max-height: 100%; max-width: 100%; object-fit: contain;" />
-                        </div>
-                        <div class="col-md-6">
-                            <div class="container mt-3">
-                                @if (TempData["SuccessMessage"] != null)
+                            <div class="text-center mb-3">
+                                @if (isEditMode)
                                 {
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        @TempData["SuccessMessage"]
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
+                                    <label class="form-label"><strong>FullName:</strong></label>
+                                    <input type="text" class="form-control form-control-lg text-center fw-bold"
+                                           name="FullName"
+                                           value="@Model.UserProfile.Extensions.Data.FullName" readonly
+                                           style="background-color: #007bff; color: white; padding: 10px; border-radius: 8px;" />
                                 }
-
-                                @if (TempData["ErrorMessage"] != null)
+                                else
                                 {
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        @TempData["ErrorMessage"]
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
+                                    <h2 class="display-4 fw-bold text-white p-3 rounded"
+                                        style="background-color: #007bff;">
+                                        @Model.UserProfile.Extensions.Data.FullName
+                                    </h2>
                                 }
                             </div>
-                            @if (isEditMode)
-                            {
-                                <label class="form-label"><strong>FullName:</strong></label>
-                                <input type="text" class="form-control"
-                                       name="FullName"
-                                       value="@Model.UserProfile.Extensions.Data.FullName" readonly />
-                            }
-                            else
-                            {
-                                <h3 class="display-4 text-primary mb-4">@Model.UserProfile.Extensions.Data.FullName</h3>
-                            }
 
+                    <div class="row">
+                        <input type="hidden" name="ExistingProfilePictureUrl" value="@Model.UserProfile.Extensions.Data.ProfilePictureUrl" />
+
+                        <!-- Profile Picture on the Left -->
+                        <div class="col-md-6 d-flex justify-content-center">
+                            <img src="@Model.UserProfile.Extensions.Data.ProfilePictureUrl"
+                                 alt="Service Image"
+                                 class="img-fluid shadow"
+                                 style="width: 350px; height: 200px; object-fit: cover;" />
+                        </div>
+
+                        <!-- Wallet Information on the Right -->
+                        @if (!isEditMode)
+                        {
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="w-100">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-wallet2 fs-4 me-2 text-primary"></i>
+                                        <label class="form-label mb-0"><strong>Current Balance:</strong> @Model.UserProfile.Extensions.Data.Amount.ToString("C")</label>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                                        <input type="number" asp-for="TopUpAmount" min="10000" class="form-control" placeholder="Enter amount to add" />
+                                    </div>
+
+                                    <button type="submit" formaction="/User/Customer/CustomerProfile?handler=TopUp" class="btn btn-primary w-100">
+                                        <i class="bi bi-plus-circle me-1"></i> Add Funds
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="row">
                             <!-- Upload Profile Picture -->
                             <div class="mb-4">
                                 @if (isEditMode)
@@ -68,19 +96,8 @@
                                     <input type="file" class="form-control" name="imageFile" accept="image/*" />
                                 }
                             </div>
-
-                            <!-- Wallet -->
-                            @if (!isEditMode)
-                            {
-                                <div class="mb-4">
-                                    <label class="form-label"><strong>Current Amount: @Model.UserProfile.Extensions.Data.Amount.ToString("C")</strong></label>
-                                    <input type="number" asp-for="TopUpAmount" min="10000" class="form-control" placeholder="Enter amount to add" />
-                                    <button type="submit" formaction="/User/Customer/CustomerProfile?handler=TopUp" class="btn btn-primary">Add</button>
-                                </div>
-                            }
-
                             <!-- Username -->
-                            <div class="mb-4">
+                                <div class="col-md-6 mb-3">
                                 <label class="form-label"><strong>Username:</strong></label>
                                 @if (isEditMode)
                                 {
@@ -95,7 +112,7 @@
                             </div>
 
                             <!-- Email -->
-                            <div class="mb-4">
+                                <div class="col-md-6 mb-3">
                                 <label class="form-label"><strong>Email:</strong></label>
                                 @if (isEditMode)
                                 {
@@ -110,7 +127,7 @@
                             </div>
 
                             <!-- Phone Number -->
-                            <div class="mb-4">
+                                <div class="col-md-6 mb-3">
                                 <label class="form-label"><strong>Phone Number:</strong></label>
                                 @if (isEditMode)
                                 {
@@ -125,7 +142,7 @@
                             </div>
 
                             <!-- Address -->
-                            <div class="mb-4">
+                                <div class="col-md-6 mb-3">
                                 <label class="form-label"><strong>Address:</strong></label>
                                 @if (isEditMode)
                                 {
@@ -140,7 +157,7 @@
                             </div>
 
                             <!-- Date of Birth -->
-                            <div class="mb-4">
+                                <div class="col-md-6 mb-4">
                                 <label class="form-label"><strong>Date of Birth:</strong></label>
                                 @if (isEditMode)
                                 {
@@ -155,13 +172,12 @@
                             </div>
 
                             <!-- Joined On (Read-only) -->
-                            <div class="mb-4">
+                                <div class="col-md-6 mb-3">
                                 <p class="mb-1"><strong>Joined on:</strong></p>
                                 <p class="bg-light border rounded p-3">
                                     @Model.UserProfile.Extensions.Data.CreatedDate.ToString("dd/MM/yyyy")
                                 </p>
                             </div>
-                        </div>
                     </div>
                 }
                 else
