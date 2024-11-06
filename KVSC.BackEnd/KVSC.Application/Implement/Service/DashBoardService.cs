@@ -1,6 +1,7 @@
 ﻿using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
 using KVSC.Infrastructure.DTOs.Dashboard.Admin;
+using KVSC.Infrastructure.DTOs.Dashboard.Customer;
 using KVSC.Infrastructure.DTOs.Dashboard.Manager;
 using KVSC.Infrastructure.DTOs.Dashboard.Vet;
 using KVSC.Infrastructure.Interface;
@@ -86,12 +87,12 @@ namespace KVSC.Application.Implement.Service
 
 
         //VET
-        public async Task<Result> GetVeterinarianDashboardDataAsync(int topCount = 5)
+        public async Task<Result> GetVeterinarianDashboardDataAsync()
         {
-            var newestCompletedAppointmentsResult = await GetNewestCompletedAppointmentsAsync(topCount);
+            var newestCompletedAppointmentsResult = await GetNewestCompletedAppointmentsAsync();
             if (!newestCompletedAppointmentsResult.IsSuccess) return newestCompletedAppointmentsResult;
 
-            var nextUpcomingAppointmentsResult = await GetNextUpcomingAppointmentsAsync(topCount);
+            var nextUpcomingAppointmentsResult = await GetNextUpcomingAppointmentsAsync();
             if (!nextUpcomingAppointmentsResult.IsSuccess) return nextUpcomingAppointmentsResult;
 
             var dashboardData = new VetDashboardData
@@ -103,9 +104,9 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(dashboardData);
         }
 
-        public async Task<Result> GetNewestCompletedAppointmentsAsync(int topCount)
+        public async Task<Result> GetNewestCompletedAppointmentsAsync()
         {
-            var appointments = await _unitOfWork.DashboardRepository.GetNewestCompletedAppointmentAsync(topCount);
+            var appointments = await _unitOfWork.DashboardRepository.GetNewestCompletedAppointmentAsync();
             var appointmentDtos = appointments.Select(a => new NewestAppointment
             {
                 AppointmentId = a.Id,
@@ -118,9 +119,9 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(appointmentDtos);
         }
 
-        public async Task<Result> GetNextUpcomingAppointmentsAsync(int topCount)
+        public async Task<Result> GetNextUpcomingAppointmentsAsync()
         {
-            var appointments = await _unitOfWork.DashboardRepository.GetNextUpcomingAppointmentAsync(topCount);
+            var appointments = await _unitOfWork.DashboardRepository.GetNextUpcomingAppointmentAsync();
             var appointmentDtos = appointments.Select(a => new NextAppointment
             {
                 AppointmentId = a.Id,
@@ -134,12 +135,10 @@ namespace KVSC.Application.Implement.Service
         }
 
         //MANAGER
-        public async Task<Result> GetManagerDashboardDataAsync(int topCount = 5)
+        public async Task<Result> GetManagerDashboardDataAsync()
         {
-            var appointmentsResult = await GetAllAppointmentsAsync(topCount);
-            if (!appointmentsResult.IsSuccess) return appointmentsResult;
 
-            var serviceReportsResult = await GetServiceReportsAsync(topCount);
+            var serviceReportsResult = await GetServiceReportsAsync();
             if (!serviceReportsResult.IsSuccess) return serviceReportsResult;
 
             var manageDetailResult = await GetManageDetailAsync();
@@ -148,34 +147,15 @@ namespace KVSC.Application.Implement.Service
             var dashboardData = new ManagerDashboardData
             {
                 ManageDetails = manageDetailResult.Object as ManageDetail,
-                AppointmentDetails = appointmentsResult.Object as List<AppointmentDetail>,
                 ServiceReportDetails = serviceReportsResult.Object as List<ServiceReportDetail>
             };
 
             return Result.SuccessWithObject(dashboardData);
         }
 
-        public async Task<Result> GetAllAppointmentsAsync(int topCount)
+        public async Task<Result> GetServiceReportsAsync()
         {
-            var appointments = await _unitOfWork.DashboardRepository.GetAllAppointmentsByDateAsync(topCount);
-
-            var appointmentDtos = appointments.Select(a => new AppointmentDetail
-            {
-                AppointmentId = a.Id,
-                AppointmentDate = a.AppointmentDate,
-                Status = a.Status,
-                CustomerName = a.Customer?.FullName,
-                PetName = a.Pet?.Name,
-                ServiceName = a.PetService?.Name ?? a.ComboService?.Name,
-                VeterinarianName = a.AppointmentVeterinarians.FirstOrDefault()?.Veterinarian.User.FullName
-            }).ToList();
-
-            return Result.SuccessWithObject(appointmentDtos);
-        }
-
-        public async Task<Result> GetServiceReportsAsync(int topCount)
-        {
-            var serviceReports = await _unitOfWork.DashboardRepository.GetServiceReportsByDateAsync(topCount);
+            var serviceReports = await _unitOfWork.DashboardRepository.GetServiceReportsByDateAsync();
 
             var serviceReportDtos = serviceReports.Select(sr => new ServiceReportDetail
         {
@@ -204,6 +184,28 @@ namespace KVSC.Application.Implement.Service
             };
 
             return Result.SuccessWithObject(manageDetail);
+        }
+
+        public async Task<Result> GetCustomerDashboardDataAsync(Guid customerId)
+        {
+            var totalPets = await _unitOfWork.DashboardRepository.GetCustomerPetAsync(customerId);
+            var totalAppointments = await _unitOfWork.DashboardRepository.GetCustomerAppointmentAsync(customerId);
+            var totalPayments = await _unitOfWork.DashboardRepository.GetCustomerPaymentAsync(customerId);
+
+            var monthlyAppointments = await _unitOfWork.DashboardRepository.GetMonthlyCustomerAppointmentsAsync(customerId, 12);
+            var monthlyPayments = await _unitOfWork.DashboardRepository.GetMonthlyCustomerPaymentsAsync(customerId, 12);
+
+
+            var customerDashboard = new CustomerDashboardData
+            {
+                TotalPets = totalPets,
+                TotalAppointments = totalAppointments,
+                TotalPayments = totalPayments,
+                MonthlyAppointments = monthlyAppointments,
+                MonthlyPayments = monthlyPayments
+            };
+
+            return Result.SuccessWithObject(customerDashboard);
         }
     }
 }

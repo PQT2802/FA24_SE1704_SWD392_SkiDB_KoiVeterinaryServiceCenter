@@ -48,13 +48,9 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .Take(topCount)
                 .ToListAsync();
         }
-        public Task<int> GetTotalUserAsync()
-        {
-            throw new NotImplementedException();
-        }
 
         //VET
-        public async Task<List<Appointment>> GetNewestCompletedAppointmentAsync(int topCount)
+        public async Task<List<Appointment>> GetNewestCompletedAppointmentAsync()
         {
             return await _context.Appointments
                 .Include(a => a.Customer)
@@ -62,11 +58,10 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .Include(a => a.ComboService)
                 .Where(a => a.CompletedDate.HasValue)
                 .OrderByDescending(a => a.CompletedDate)
-                .Take(topCount)
                 .ToListAsync();
         }
 
-        public async Task<List<Appointment>> GetNextUpcomingAppointmentAsync(int topCount)
+        public async Task<List<Appointment>> GetNextUpcomingAppointmentAsync()
         {
             return await _context.Appointments
                 .Include(a => a.Customer)
@@ -74,37 +69,22 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .Include(a => a.ComboService)
                 .Where(a => a.Status == "Accepted" && a.AppointmentDate > a.AcceptedDate)
                 .OrderBy(a => a.AppointmentDate)
-                .Take(topCount)
                 .ToListAsync();
         }
 
-        public Task<int> GetTotalAppointmentAsync()
+        public Task<int> GetVetAppointmentAsync()
         {
             throw new NotImplementedException();
         }
 
         //MANAGER
-        public async Task<List<Appointment>> GetAllAppointmentsByDateAsync(int topCount)
-        {
-            return await _context.Appointments
-                .Include(a => a.Customer)
-                .Include(a => a.Pet)
-                .Include(a => a.PetService)
-                .Include(a => a.AppointmentVeterinarians)
-                    .ThenInclude(av => av.Veterinarian)
-                        .ThenInclude(u => u.User)
-                .OrderByDescending(a => a.AppointmentDate)
-                .Take(topCount)
-                .ToListAsync();
-        }
 
-        public async Task<List<ServiceReport>> GetServiceReportsByDateAsync(int topCount)
+        public async Task<List<ServiceReport>> GetServiceReportsByDateAsync()
         {
             return await _context.ServiceReports
                 .Include(s => s.Appointment)
                 .ThenInclude(a => a.Customer)
                 .OrderByDescending(sr => sr.ReportDate)
-                .Take(topCount)
                 .ToListAsync();
         }
 
@@ -121,6 +101,67 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<decimal> GetTotalPaymentsAsync()
         {
             return await _context.Payments.SumAsync(p => p.TotalAmount);
+        }
+
+        public async Task<int> GetTotalStaffAsync()
+        {
+            return await _context.Users.CountAsync(u => u.role == 4);
+        }
+
+        public async Task<int> GetAllAppointmentAsync()
+        {
+            return await _context.Appointments.CountAsync();
+        }
+
+
+        //CUSTOMER
+        public async Task<int> GetCustomerPetAsync(Guid customerId)
+        {
+            return await _context.Pets.CountAsync(p => p.OwnerId == customerId);
+        }
+
+        public async Task<int> GetCustomerAppointmentAsync(Guid customerId)
+        {
+            return await _context.Appointments.CountAsync(a => a.CustomerId == customerId);
+        }
+
+        public async Task<decimal> GetCustomerPaymentAsync(Guid customerId)
+        {
+            return await _context.Payments
+            .Where(p => p.Appointment.CustomerId == customerId)
+            .SumAsync(p => p.TotalAmount);
+        }
+
+        public async Task<Dictionary<DateTime, int>> GetMonthlyCustomerAppointmentsAsync(Guid customerId, int months)
+        {
+            var startDate = DateTime.Now.AddMonths(-months);
+
+            var appointments = await _context.Appointments
+                .Where(a => a.CustomerId == customerId && a.AppointmentDate >= startDate)
+                .ToListAsync();
+
+            var monthlyAppointments = appointments
+                .GroupBy(a => new DateTime(a.AppointmentDate.Year, a.AppointmentDate.Month, 1)) 
+                .OrderBy(g => g.Key)
+                .ToDictionary(g => g.Key, g => g.Count()); 
+
+            return monthlyAppointments;
+        }
+
+        public async Task<Dictionary<DateTime, decimal>> GetMonthlyCustomerPaymentsAsync(Guid customerId, int months)
+        {
+            var startDate = DateTime.Now.AddMonths(-months);
+
+            var payments = await _context.Payments
+                .Where(p => p.Appointment.CustomerId == customerId && p.Appointment.AppointmentDate >= startDate)
+                .ToListAsync();
+
+            var monthlyPayments = payments
+                .GroupBy(p => new DateTime(p.Appointment.AppointmentDate.Year, p.Appointment.AppointmentDate.Month, 1))
+                .OrderBy(g => g.Key) 
+                .ToDictionary(g => g.Key, g => g.Sum(p => p.TotalAmount));
+
+            return monthlyPayments;
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿<a asp-page="/User/Customer/CustomerProfile" class="nav-item nav-link @((Context.Request.Path == "/User/Customer/CustomerProfile") ? "active" : "")">
+﻿<a asp-page="/User/Customer/DashBoard" class="nav-item nav-link @((Context.Request.Path == "/User/Customer/DashBoard") ? "active" : "")">
+    <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+</a>
+<a asp-page="/User/Customer/CustomerProfile" class="nav-item nav-link @((Context.Request.Path == "/User/Customer/CustomerProfile") ? "active" : "")">
     <i class="fa fa-user me-2"></i>Profile
 </a>
 <a asp-page="/User/Customer/Pet" class="nav-item nav-link @((Context.Request.Path == "/User/Customer/Pet") ? "active" : "")">

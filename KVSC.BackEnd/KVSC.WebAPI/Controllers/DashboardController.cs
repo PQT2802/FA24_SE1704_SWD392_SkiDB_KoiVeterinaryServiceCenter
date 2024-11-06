@@ -16,7 +16,7 @@ namespace KVSC.WebAPI.Controllers
             _dashboardService = dashboardService;
         }
 
-        [HttpGet("Admin/Dashboard")]
+        [HttpGet("AdminDashboard")]
         public async Task<IResult> GetDashboardData()
         {
             var result = await _dashboardService.GetDashboardDataAsync();
@@ -25,7 +25,7 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        [HttpGet("Veterinarian/Dashboard")]
+        [HttpGet("VeterinarianDashboard")]
         public async Task<IResult> GetVeterinarianDashboardData()
         {
             var result = await _dashboardService.GetVeterinarianDashboardDataAsync();
@@ -34,12 +34,21 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        [HttpGet("Manager/Dashboard")]
+        [HttpGet("ManagerDashboard")]
         public async Task<IResult> GetManagerDashboardData()
         {
             var result = await _dashboardService.GetManagerDashboardDataAsync();
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Manager dashboard data retrieved successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpGet("CustomerDashboard/{customerId}")]
+        public async Task<IResult> GetCustomerDashboardData(Guid customerId)
+        {
+            var result = await _dashboardService.GetCustomerDashboardDataAsync(customerId);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Customer dashboard data retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
     }
