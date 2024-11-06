@@ -184,6 +184,30 @@ public class EmailTemplateService : IEmailTemplateService
 
         return Result.SuccessWithObject(htmlContent);
     }
+    public async Task<Result> GenerateEmailForAppointmentStatusAsync(string templateType,string status,string appointmentDetailUrl,Dictionary<string, string> placeholders)
+    {
+        // Retrieve the email template by type
+        var templateResult = await GetTemplateByTypeAsync(templateType);
+        if (templateResult.IsFailure)
+        {
+            return Result.Failure(Error.Failure("TemplateNotFound", "Email template not found"));
+        }
+
+        var emailTemplate = templateResult.Object as EmailTemplate;
+        var htmlContent = emailTemplate.Body;
+
+        // Replace placeholders like {AppointmentDate}, {AppointmentTime}, etc.
+        foreach (var placeholder in placeholders)
+        {
+            htmlContent = htmlContent.Replace($"{{{placeholder.Key}}}", placeholder.Value);
+        }
+
+        // Replace the status-specific placeholders if any, and the Appointment Detail URL
+        htmlContent = htmlContent.Replace("{Status}", status);
+        htmlContent = htmlContent.Replace("{AppointmentDetailURL}", appointmentDetailUrl);
+
+        return Result.SuccessWithObject(htmlContent);
+    }
 
 
 
