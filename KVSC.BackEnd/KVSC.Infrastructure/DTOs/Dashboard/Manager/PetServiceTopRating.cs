@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.DTOs.Dashboard.Manager
 {
-    public class ManageDetail
+    public class PetServiceTopRating
     {
-        public int TotalCustomers { get; set; }
-        public int TotalVeterinarians { get; set; }
-        public decimal TotalPayments { get; set; }
+        public Guid PetServiceId { get; set; }
+        public string ServiceName { get; set; }
+        public double AverageRating { get; set; }
     }
 }

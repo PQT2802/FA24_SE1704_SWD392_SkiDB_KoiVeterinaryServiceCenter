@@ -1,4 +1,5 @@
 ﻿using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Dashboard.Manager;
 using KVSC.Infrastructure.Implement.Repositories;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,14 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         Task<int> GetVetAppointmentAsync();
 
         //MANAGER
-        Task<List<ServiceReport>> GetServiceReportsByDateAsync();
         Task<int> GetTotalCustomersAsync();
         Task<int> GetTotalVeterinariansAsync();
         Task<int> GetTotalStaffAsync();
-        Task<int> GetAllAppointmentAsync();
         Task<decimal> GetTotalPaymentsAsync();
+        Task<Dictionary<string, int>> GetAllAppointmentAsync();
+        Task<List<PetServiceTopBooking>> GetTopServicesByBookingsAsync();
+        Task<List<PetServiceTopRating>> GetTopServicesByRatingAsync();
+        Task<List<PetServiceTopCancellation>> GetTopServicesByCancellationsAsync();
 
 
         //CUSTOMER

@@ -1,6 +1,7 @@
 ﻿using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
 using KVSC.Infrastructure.DTOs.Dashboard.Customer;
+using KVSC.Infrastructure.DTOs.Dashboard.Manager;
 using KVSC.Infrastructure.Repositories.Implement;
 using KVSC.Infrastructure.Repositories.Interface;
 using System;
@@ -23,6 +24,12 @@ namespace KVSC.Application.Service.Implement
         public async Task<ResponseDto<GetCusDashboardResponse>> GetCustomerDashboardAsync(Guid customerId)
         {
             var response = await _dashboardRepository.GetCustomerDashboardAsync(customerId);
+            return response;
+        }
+
+        public async Task<ResponseDto<GetManagerDashboardResponse>> GetManagerDashboardAsync(Guid managerId)
+        {
+            var response = await _dashboardRepository.GetManagerDashboardAsync(managerId);
             return response;
         }
     }

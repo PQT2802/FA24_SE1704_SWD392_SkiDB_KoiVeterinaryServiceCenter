@@ -21,9 +21,7 @@ namespace KVSC.Application.Interface.IService
         Task<Result> GetNextUpcomingAppointmentsAsync();
 
         //MANAGER
-        Task<Result> GetManagerDashboardDataAsync();
-        Task<Result> GetServiceReportsAsync();
-        Task<Result> GetManageDetailAsync();
+        Task<Result> GetManagerDashboardDataAsync(Guid managerId);
 
         //CUSTOMER
         Task<Result> GetCustomerDashboardDataAsync(Guid customerId);

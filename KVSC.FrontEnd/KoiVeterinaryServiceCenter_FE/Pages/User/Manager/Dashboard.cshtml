@@ -3,3 +3,176 @@
 @{
     Layout = "_layoutBoard";
 }
+
+<!-- Manager Dashboard Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <!-- Total Customers -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-users fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Customers</p>
+                    <h6 class="mb-0">@Model.DashboardData.TotalCustomers</h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Veterinarians -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-user-md fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Veterinarians</p>
+                    <h6 class="mb-0">@Model.DashboardData.TotalVeterinarians</h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Staffs -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-users-cog fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Staffs</p>
+                    <h6 class="mb-0">@Model.DashboardData.TotalStaffs</h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Payments -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-dollar-sign fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Payments</p>
+                    <h6 class="mb-0">$@Model.DashboardData.TotalPayments</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Manager Dashboard End -->
+
+<!-- Chart Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <!-- Appointment Status Pie Chart -->
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Appointment Status</h6>
+                <canvas id="pie-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Other Elements Start -->
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Top Services</h6>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-booking-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-booking" type="button" role="tab" aria-controls="pills-booking"
+                                aria-selected="true">
+                            Top by Bookings
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-rating-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-rating" type="button" role="tab"
+                                aria-controls="pills-rating" aria-selected="false">
+                            Top by Rating
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-cancellation-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-cancellation" type="button" role="tab"
+                                aria-controls="pills-cancellation" aria-selected="false">
+                            Top by Cancellations
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <!-- Tab Content for Top by Bookings -->
+                    <div class="tab-pane fade show active" id="pills-booking" role="tabpanel" aria-labelledby="pills-booking-tab">
+                        <ul class="list-group">
+                            @foreach (var service in Model.DashboardData.TopServicesByBookings)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    @service.ServiceName
+                                    <span class="badge bg-primary rounded-pill">@service.BookingsCount</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <!-- Tab Content for Top by Rating -->
+                    <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab">
+                        <ul class="list-group">
+                            @foreach (var service in Model.DashboardData.TopServicesByRating)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    @service.ServiceName
+                                    <span class="badge bg-warning rounded-pill">@service.AverageRating</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <!-- Tab Content for Top by Cancellations -->
+                    <div class="tab-pane fade" id="pills-cancellation" role="tabpanel" aria-labelledby="pills-cancellation-tab">
+                        <ul class="list-group">
+                            @foreach (var service in Model.DashboardData.TopServicesByCancellations)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    @service.ServiceName
+                                    <span class="badge bg-danger rounded-pill">@service.CancellationsCount</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Other Elements End -->
+    </div>
+</div>
+<!-- Chart End -->
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Lấy dữ liệu từ backend và hiển thị biểu đồ tròn
+        var appointmentStatusCounts = @Html.Raw(Json.Serialize(Model.DashboardData.AppointmentStatusCounts));
+
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+
+        var pieChart = new Chart(ctx, {
+            type: 'pie', // Loại biểu đồ
+            data: {
+                labels: Object.keys(appointmentStatusCounts), // Tạo nhãn từ các key của đối tượng
+                datasets: [{
+                    label: 'Appointment Status',
+                    data: Object.values(appointmentStatusCounts), // Lấy dữ liệu từ các giá trị của đối tượng
+                    backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4caf50', '#f44336'], // Màu sắc cho từng phần của biểu đồ
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true, // Làm cho biểu đồ đáp ứng kích thước màn hình
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw; // Hiển thị số lượng trong tooltip
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

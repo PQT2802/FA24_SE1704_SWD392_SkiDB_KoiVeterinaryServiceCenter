@@ -79,14 +79,6 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
         //MANAGER
 
-        public async Task<List<ServiceReport>> GetServiceReportsByDateAsync()
-        {
-            return await _context.ServiceReports
-                .Include(s => s.Appointment)
-                .ThenInclude(a => a.Customer)
-                .OrderByDescending(sr => sr.ReportDate)
-                .ToListAsync();
-        }
 
         public async Task<int> GetTotalCustomersAsync()
         {
@@ -97,22 +89,73 @@ namespace KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.Users.CountAsync(u => u.role == 3);
         }
-
-        public async Task<decimal> GetTotalPaymentsAsync()
-        {
-            return await _context.Payments.SumAsync(p => p.TotalAmount);
-        }
-
         public async Task<int> GetTotalStaffAsync()
         {
             return await _context.Users.CountAsync(u => u.role == 4);
         }
 
-        public async Task<int> GetAllAppointmentAsync()
+        public async Task<decimal> GetTotalPaymentsAsync()
         {
-            return await _context.Appointments.CountAsync();
+            return await _context.Payments
+                                 .Where(p => p.totalAmountStatus)
+                                 .SumAsync(p => p.TotalAmount);
+        }
+        public async Task<Dictionary<string, int>> GetAllAppointmentAsync()
+        {
+            var appointmentCounts = new Dictionary<string, int>();
+
+            appointmentCounts["Pending"] = await _context.Appointments.CountAsync(a => a.Status == "Pending");
+            appointmentCounts["InProgress"] = await _context.Appointments.CountAsync(a => a.Status == "InProgress");
+            appointmentCounts["Completed"] = await _context.Appointments.CountAsync(a => a.Status == "Completed");
+            appointmentCounts["Reported"] = await _context.Appointments.CountAsync(a => a.Status == "Reported");
+            appointmentCounts["Cancelled"] = await _context.Appointments.CountAsync(a => a.Status == "Cancelled");
+
+            return appointmentCounts;
         }
 
+        public async Task<List<PetServiceTopBooking>> GetTopServicesByBookingsAsync()
+        {
+            return await _context.Appointments
+                .Where(a => a.PetServiceId.HasValue)
+                .GroupBy(a => a.PetServiceId)
+                .Select(g => new PetServiceTopBooking
+                {
+                    PetServiceId = g.Key,
+                    ServiceName = g.FirstOrDefault().PetService.Name,
+                    BookingsCount = g.Count()
+                })
+                .OrderByDescending(s => s.BookingsCount)
+                .ToListAsync();
+        }
+
+        public async Task<List<PetServiceTopRating>> GetTopServicesByRatingAsync()
+        {
+            return await _context.Ratings
+                .GroupBy(r => r.ServiceId)
+                .Select(g => new PetServiceTopRating
+                {
+                    PetServiceId = g.Key,
+                    ServiceName = g.FirstOrDefault().Service.Name,
+                    AverageRating = g.Average(r => r.Score)
+                })
+                .OrderByDescending(s => s.AverageRating)
+                .ToListAsync();
+        }
+
+        public async Task<List<PetServiceTopCancellation>> GetTopServicesByCancellationsAsync()
+        {
+            return await _context.Appointments
+                .Where(a => a.Status == "Cancelled" && a.PetServiceId.HasValue)
+                .GroupBy(a => a.PetServiceId)
+                .Select(g => new PetServiceTopCancellation
+                {
+                    PetServiceId = g.Key,
+                    ServiceName = g.FirstOrDefault().PetService.Name,
+                    CancellationsCount = g.Count()
+                })
+                .OrderByDescending(s => s.CancellationsCount)
+                .ToListAsync();
+        }
 
         //CUSTOMER
         public async Task<int> GetCustomerPetAsync(Guid customerId)

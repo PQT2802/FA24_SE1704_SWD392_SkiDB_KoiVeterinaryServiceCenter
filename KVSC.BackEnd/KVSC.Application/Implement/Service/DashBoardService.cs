@@ -135,56 +135,33 @@ namespace KVSC.Application.Implement.Service
         }
 
         //MANAGER
-        public async Task<Result> GetManagerDashboardDataAsync()
-        {
-
-            var serviceReportsResult = await GetServiceReportsAsync();
-            if (!serviceReportsResult.IsSuccess) return serviceReportsResult;
-
-            var manageDetailResult = await GetManageDetailAsync();
-            if (!manageDetailResult.IsSuccess) return manageDetailResult;
-
-            var dashboardData = new ManagerDashboardData
-            {
-                ManageDetails = manageDetailResult.Object as ManageDetail,
-                ServiceReportDetails = serviceReportsResult.Object as List<ServiceReportDetail>
-            };
-
-            return Result.SuccessWithObject(dashboardData);
-        }
-
-        public async Task<Result> GetServiceReportsAsync()
-        {
-            var serviceReports = await _unitOfWork.DashboardRepository.GetServiceReportsByDateAsync();
-
-            var serviceReportDtos = serviceReports.Select(sr => new ServiceReportDetail
-        {
-            ReportId = sr.Id,
-            ReportDate = sr.ReportDate,
-            ReportContent = sr.ReportContent,
-            AppointmentId = sr.AppointmentId, 
-            CustomerName = sr.Appointment?.Customer?.FullName,
-            VeterinarianName = sr.Appointment?.AppointmentVeterinarians?.FirstOrDefault()?.Veterinarian.User.FullName
-            }).ToList();
-
-            return Result.SuccessWithObject(serviceReportDtos);
-        }
-
-        public async Task<Result> GetManageDetailAsync()
+        public async Task<Result> GetManagerDashboardDataAsync(Guid managerId)
         {
             var totalCustomers = await _unitOfWork.DashboardRepository.GetTotalCustomersAsync();
             var totalVeterinarians = await _unitOfWork.DashboardRepository.GetTotalVeterinariansAsync();
+            var totalStaffs = await _unitOfWork.DashboardRepository.GetTotalStaffAsync();
             var totalPayments = await _unitOfWork.DashboardRepository.GetTotalPaymentsAsync();
 
-            var manageDetail = new ManageDetail
+            var appointmentStatusCounts = await _unitOfWork.DashboardRepository.GetAllAppointmentAsync();
+            var topServicesByBookings = await _unitOfWork.DashboardRepository.GetTopServicesByBookingsAsync();
+            var topServicesByRating = await _unitOfWork.DashboardRepository.GetTopServicesByRatingAsync();
+            var topServicesByCancellations = await _unitOfWork.DashboardRepository.GetTopServicesByCancellationsAsync();
+
+            var managerDashboard = new ManagerDashboardData
             {
                 TotalCustomers = totalCustomers,
                 TotalVeterinarians = totalVeterinarians,
-                TotalPayments = totalPayments
+                TotalStaffs = totalStaffs,
+                TotalPayments = totalPayments,
+                AppointmentStatusCounts = appointmentStatusCounts, 
+                TopServicesByBookings = topServicesByBookings, 
+                TopServicesByRating = topServicesByRating,  
+                TopServicesByCancellations = topServicesByCancellations 
             };
 
-            return Result.SuccessWithObject(manageDetail);
+            return Result.SuccessWithObject(managerDashboard);
         }
+
 
         public async Task<Result> GetCustomerDashboardDataAsync(Guid customerId)
         {
