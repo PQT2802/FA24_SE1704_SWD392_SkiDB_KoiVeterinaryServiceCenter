@@ -632,6 +632,72 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+        public async Task<ResponseDto<UpdateUserResponse>> CreateVeterinarianAsync(GetVeterinarianRequest createRequest)
+        {
+            try
+            {
+                // Define the endpoint
+                var url = "api/User/veterinarian"; // Ensure this endpoint matches the correct API route for creating a veterinarian.
+
+                // Serialize the request data into JSON
+                var jsonContent = JsonSerializer.Serialize(new
+                {
+                    userId = createRequest.UserId,
+                    licenseNumber = createRequest.LicenseNumber,
+                    specialty = createRequest.Specialty,
+                    qualifications = createRequest.Qualifications
+                });
+
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Send POST request
+                var response = await _httpClient.PostAsync(url, content);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize error response from API
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<UpdateUserResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during creating the veterinarian."
+                    };
+                }
+
+                // If successful, read response content
+                var createResponse = await response.Content.ReadFromJsonAsync<UpdateUserResponse>(options);
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = true,
+                    Data = createResponse,
+                    Message = "Veterinarian created successfully."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<UpdateUserResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
 
         public async Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount)
         {

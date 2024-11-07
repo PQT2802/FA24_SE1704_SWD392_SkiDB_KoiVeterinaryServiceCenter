@@ -72,8 +72,18 @@ namespace KVSC.Application.Service.Implement
             updatedProfile.LicenseNumber = string.IsNullOrWhiteSpace(updatedProfile.LicenseNumber) ? string.Empty : updatedProfile.LicenseNumber;
             updatedProfile.Specialty = string.IsNullOrWhiteSpace(updatedProfile.Specialty) ? string.Empty : updatedProfile.Specialty;
             return await _userRepository.UpdateVeterinarianQualificationsAsync(updatedProfile);
-
         }
+        public async Task<ResponseDto<UpdateUserResponse>> CreateVeterinarian(GetVeterinarianRequest createRequest)
+        {
+            createRequest.LicenseNumber = string.IsNullOrWhiteSpace(createRequest.LicenseNumber) ? string.Empty : createRequest.LicenseNumber;
+            createRequest.Specialty = string.IsNullOrWhiteSpace(createRequest.Specialty) ? string.Empty : createRequest.Specialty;
+            createRequest.Qualifications = string.IsNullOrWhiteSpace(createRequest.Qualifications) ? string.Empty : createRequest.Qualifications;
+
+            // Validate the input data if needed (e.g., ensure license number is unique, etc.)
+
+            return await _userRepository.CreateVeterinarianAsync(createRequest);
+        }
+
 
         public async Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount)
         {
