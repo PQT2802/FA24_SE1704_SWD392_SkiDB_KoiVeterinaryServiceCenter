@@ -104,6 +104,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                     Id = user.Id,
                     FullName = user.FullName,
                     Email = user.Email,
+                    UserName = user.UserName,
                     PhoneNumber = user.PhoneNumber,
                     Address = user.Address,
                     DateOfBirth = user.DateOfBirth,

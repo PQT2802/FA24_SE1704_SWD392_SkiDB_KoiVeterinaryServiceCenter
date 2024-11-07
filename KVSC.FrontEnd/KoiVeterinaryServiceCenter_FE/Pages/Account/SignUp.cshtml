@@ -191,6 +191,42 @@
         }
     });
 
+        $('#dateOfBirth').on('input', function () {
+            const errorSpan = $(this).siblings("span[data-valmsg-for='SignUpRequest.DateOfBirth']");
+            const dateOfBirth = $(this).val();
+
+            // Kiểm tra nếu người dùng không nhập giá trị vào trường ngày sinh
+            if (!dateOfBirth) {
+                errorSpan.text("The 'Date of Birth' is required.");
+                return; // Dừng lại nếu không có giá trị
+            }
+
+            // Kiểm tra độ tuổi (phải >= 18)
+            const dob = new Date(dateOfBirth);
+            const currentDate = new Date();
+            const age = currentDate.getFullYear() - dob.getFullYear();
+            const month = currentDate.getMonth() - dob.getMonth();
+
+            if (month < 0 || (month === 0 && currentDate.getDate() < dob.getDate())) {
+                age--;
+            }
+
+            if (age < 18) {
+                errorSpan.text("You must be at least 18 years old.");
+                return;
+            }
+
+            // Kiểm tra năm không thể bằng hoặc lớn hơn năm hiện tại
+            if (dob.getFullYear() >= currentDate.getFullYear()) {
+                errorSpan.text("Year of birth cannot be current or in the future.");
+                return;
+            }
+
+            // Nếu không có lỗi, ẩn thông báo lỗi
+            errorSpan.text('');
+        });
+
+
     // Prevent form submission if there are validation errors
     $('#signUpForm button[type="submit"]').click(function (e) {
         e.preventDefault();
