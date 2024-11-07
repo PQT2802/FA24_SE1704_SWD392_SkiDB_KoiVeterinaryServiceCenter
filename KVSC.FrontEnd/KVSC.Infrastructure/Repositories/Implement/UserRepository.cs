@@ -898,8 +898,8 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 // Set the request with authorization token in headers
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                // Send the request and get the response
-                var response = await _httpClient.GetAsync($"api/Payment/pay?paymentId={paymentId}");
+                // Send the request with an empty JSON object as the payload
+                var response = await _httpClient.PutAsJsonAsync($"api/Payment/pay?paymentId={paymentId}", new { });
 
                 var options = new JsonSerializerOptions
                 {

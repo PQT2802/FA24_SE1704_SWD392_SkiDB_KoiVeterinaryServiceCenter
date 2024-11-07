@@ -28,5 +28,6 @@ namespace KVSC.Application.Service.Interface
         Task<ResponseDto<GetVetInfo>> GetVetList();
         Task<ResponseDto<UpdateUserResponse>> CreateVeterinarian(GetVeterinarianRequest createRequest);
         Task<ResponseDto<Payment>> GetPaymentOfUser(string token);
+        Task<ResponseDto<CommonMessage>> CompletePayment(string token, Guid paymentId);
     }
 }

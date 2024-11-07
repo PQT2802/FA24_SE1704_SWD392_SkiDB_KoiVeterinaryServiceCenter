@@ -342,6 +342,7 @@ namespace KVSC.Application.Implement.Service
                 {
                     VeterinarianId = v
                 }).ToList();
+                appointment.Status = "Waiting";
             }
 
             // Lưu cuộc hẹn 

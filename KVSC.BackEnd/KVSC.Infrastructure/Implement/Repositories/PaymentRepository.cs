@@ -65,6 +65,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
             // Update the TotalAmountStatus to true
             payment.TotalAmountStatus = true;
+            payment.Status = "Completed";
 
             // Save changes to the database
             await _context.SaveChangesAsync();

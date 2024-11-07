@@ -14,7 +14,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             _userService = userService;
         }
         [BindProperty]
-        public Payment Payment { get; set; }
+        public Payment Payment { get; set; } 
         public async Task OnGetAsync()
         {
             var token = HttpContext.Session.GetString("Token");
@@ -37,7 +37,15 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
             }
             else
             {
-                TempData["ErrorMessage"] = "Failed to complete payment.";
+                var errorDetail = result.Errors.FirstOrDefault(e => e.Code.Equals("Transaction"));
+                if (errorDetail != null)
+                {
+                    TempData["ErrorMessage"] = errorDetail.Description.ToString();
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Failed to pay. Please try again.";
+                }
             }
 
             return RedirectToPage();

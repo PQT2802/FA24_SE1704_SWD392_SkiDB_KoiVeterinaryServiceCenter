@@ -20,11 +20,12 @@ namespace KVSC.Infrastructure.DTOs
         public decimal TravelCost { get; set; }
         public decimal Deposit { get; set; }
         public decimal TotalAmount { get; set; }
+        public string Status { get; set; }
         public bool TotalAmountStatus { get; set; }
         public bool DepositStatus { get; set; }
         public List<string> GetPropertyNames()
         {
-            return new List<string> { nameof(ServiceName), nameof(BasePrice), nameof(TravelCost), nameof(Deposit), nameof(TotalAmount), nameof(TotalAmountStatus) };
+            return new List<string> { nameof(ServiceName), nameof(BasePrice), nameof(TravelCost), nameof(Deposit), nameof(TotalAmount), nameof(Status) };
         }
     }
 }

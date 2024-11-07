@@ -19,10 +19,7 @@ namespace KVSC.Application.Common
         }
         public async Task<CurrentUserObject> GetThisUserInfo(HttpContext httpContext)
         {
-            foreach (var claim in httpContext.User.Claims)
-            {
-                Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
-            }
+            
             // Check if the user has an "email" claim
             var checkUser = httpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
             if (checkUser == null)
