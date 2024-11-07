@@ -1,4 +1,6 @@
 ﻿@page "/appointment"
+@using System.Text.Json
+@using KVSC.Infrastructure.DTOs
 @model KoiVeterinaryServiceCenter_FE.Pages.Appointment.AppointmentModel
 @{
 }
@@ -88,6 +90,7 @@
                         @if (TempData["SuccessMessage"] != null)
                         {
                             <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+                            
                         }
                         @if (TempData["ErrorMessage"] != null)
                         {
@@ -129,20 +132,26 @@
         </div>
     </div>
 </div>
-
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
             function fetchAvailableVets(selectedDate) {
+                const serviceId = $('#serviceId').val(); // Retrieve serviceId directly from the dropdown
+
+                if (!serviceId) {
+                    alert("Please select a service before finding available veterinarians.");
+                    return;
+                }
+
                 $.ajax({
                     url: '/appointment?handler=FindAvailableVets',
                     type: 'POST',
                     headers: {
                         'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                     },
-                    data: { selectedDate: selectedDate },
+                    data: { selectedDate: selectedDate, serviceId: serviceId }, // Include serviceId
                     success: function (response) {
                         $('#vetSelectionContainer').html(response).show();
                     },

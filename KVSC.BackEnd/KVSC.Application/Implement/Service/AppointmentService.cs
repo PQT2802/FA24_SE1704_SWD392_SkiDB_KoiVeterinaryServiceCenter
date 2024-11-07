@@ -198,8 +198,6 @@ namespace KVSC.Application.Implement.Service
             }
             return Result.SuccessWithObject(appointment);
         }
-
-
         public async Task<Result> MakeAppointmentForServiceAsyncNotAuto(MakeAppointmentForServiceRequest request)
         {
             var pet = await _unitOfWork.PetRepository.GetByIdAsync(request.PetId);
@@ -221,13 +219,22 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(Error.Validation("InsufficientFunds", "Insufficient funds in wallet."));
             }
+            var endTime = Common.ParseDuration.ParseStrIntoTimeSpan(service.Duration);
+            var endDate = request.AppointmentDate.Add(endTime);
+            var exist = await _unitOfWork.AppointmentRepository.CheckRegisterAppointmentInShift(request.CustomerId, request.AppointmentDate,endTime);
+            if (exist != null)
+            {
+                return Result.Failure(Error.Conflict("Exist", $"You already make appoinment for {exist} in this shift"));
+            }
+            
             var appointment = new Appointment
             {
                 CustomerId = request.CustomerId,
                 PetId = request.PetId,
                 PetServiceId = request.PetServiceId,
                 Status = "Pending",
-                AppointmentDate = request.AppointmentDate,
+                AppointmentDate = request.AppointmentDate,   
+                EndDate = endDate,
             };
                 // Nếu có bác sĩ được chọn, thêm vào cuộc hẹn
                 appointment.AppointmentVeterinarians = request.VeterinarianIds.Select(v => new AppointmentVeterinarian
@@ -241,12 +248,17 @@ namespace KVSC.Application.Implement.Service
             await _unitOfWork.WalletRepository.UpdateAsync(wallet);
 
             // Cập nhật trạng thái IsAvailable của lịch bác sĩ qua repository
-            foreach (var veterinarian in appointment.AppointmentVeterinarians)
-            {
-                await _unitOfWork.AppointmentRepository.UpdateScheduleAvailabilityAsync(
-                    veterinarian.VeterinarianId,
-                    appointment.AppointmentDate
-                );
+            foreach (var vet in appointment.AppointmentVeterinarians)
+            {         
+                var schedule = new VeterinarianSchedule()
+                {
+                    VeterinarianId = vet.VeterinarianId,
+                    Date = appointment.AppointmentDate.Date,
+                    StartTime = appointment.AppointmentDate.TimeOfDay,
+                    EndTime = endTime,
+                    IsAvailable = false,
+                };
+                await _unitOfWork.VeterinarianScheduleRepository.CreateAsync(schedule);
             }
                 var response = new CreateResponse { Id = appointment.Id };
                 return Result.SuccessWithObject(response);
@@ -301,7 +313,6 @@ namespace KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(appointmentDto);
         }
-
         public async Task<Result> AssignVeterinarianAsync(Guid appointmentId, Guid veterinarianId)
         {
             try
@@ -318,7 +329,6 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(Error.NotFound("AssignmentError", ex.Message));
             }
         }
-
 
 
     }

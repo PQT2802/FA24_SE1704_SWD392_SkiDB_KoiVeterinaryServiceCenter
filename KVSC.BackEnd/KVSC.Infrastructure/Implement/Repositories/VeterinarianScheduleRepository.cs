@@ -137,7 +137,75 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<VeterinarianSchedule>> GetAvailableVeterinariansForBookingAppointmentAsync(DateTime appointmentDate, TimeSpan duration)
+        {
+            // Tính toán thời gian kết thúc của cuộc hẹn được yêu cầu
+            var requestedEndTime = appointmentDate.TimeOfDay.Add(duration);
 
+            // Lấy tất cả các bác sĩ có lịch làm việc trong ngày được chọn
+            var vetSchedules = await _context.VeterinarianSchedules
+                .Include(v => v.Veterinarian)
+                .ThenInclude(u => u.User)
+                .Where(v => v.Date.Date == appointmentDate.Date && v.IsAvailable)
+                .ToListAsync();
+
+            var availableVets = new List<VeterinarianSchedule>();
+
+            foreach (var schedule in vetSchedules)
+            {
+                // Lấy các cuộc hẹn của bác sĩ trong ca làm việc
+                var appointments = await _context.Appointments
+                    .Where(a => a.AppointmentVeterinarians.Any(av => av.VeterinarianId == schedule.VeterinarianId) &&
+                                a.AppointmentDate.Date == appointmentDate.Date &&
+                                a.AppointmentDate.TimeOfDay >= schedule.StartTime &&
+                                a.EndDate.Value.TimeOfDay <= schedule.EndTime)
+                    .OrderBy(a => a.AppointmentDate)
+                    .ToListAsync();
+
+                // Theo dõi các khoảng thời gian trống trong ca làm việc của bác sĩ
+                var freeSlots = new List<(TimeSpan Start, TimeSpan End)>();
+
+                // Thêm khoảng trống trước cuộc hẹn đầu tiên nếu có
+                if (appointments.Any() && appointments.First().AppointmentDate.TimeOfDay > schedule.StartTime)
+                {
+                    freeSlots.Add((schedule.StartTime, appointments.First().AppointmentDate.TimeOfDay));
+                }
+
+                // Thêm các khoảng trống giữa các cuộc hẹn
+                for (int i = 0; i < appointments.Count - 1; i++)
+                {
+                    var currentEnd = appointments[i].EndDate?.TimeOfDay ?? TimeSpan.Zero;
+                    var nextStart = appointments[i + 1].AppointmentDate.TimeOfDay;
+
+                    if (currentEnd < nextStart)
+                    {
+                        freeSlots.Add((currentEnd, nextStart));
+                    }
+                }
+
+                // Thêm khoảng trống sau cuộc hẹn cuối cùng
+                if (appointments.Any() && appointments.Last().EndDate?.TimeOfDay < schedule.EndTime)
+                {
+                    freeSlots.Add((appointments.Last().EndDate?.TimeOfDay ?? TimeSpan.Zero, schedule.EndTime));
+                }
+                else if (!appointments.Any()) // Nếu không có cuộc hẹn nào, toàn bộ ca làm việc là thời gian trống
+                {
+                    freeSlots.Add((schedule.StartTime, schedule.EndTime));
+                }
+
+                // Kiểm tra nếu khoảng thời gian yêu cầu có thể được xếp vào bất kỳ khoảng trống nào
+                foreach (var slot in freeSlots)
+                {
+                    if (appointmentDate.TimeOfDay >= slot.Start && requestedEndTime <= slot.End)
+                    {
+                        availableVets.Add(schedule);
+                        break;
+                    }
+                }
+            }
+
+            return availableVets;
+        }
 
 
     }

@@ -48,7 +48,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Please ensure all fields are filled correctly.";
-                return Page();
+                
             }
 
             var result = await _appointmentService.AddServiceReport(AddServiceReportRequest);
@@ -56,11 +56,10 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Service report created successfully.";
-                return RedirectToPage("/User/Veterinarian/Appointment");
+                return RedirectToPage("/User/Veterinarian/Appointments");
             }
-
-            ModelState.AddModelError(string.Empty, "Failed to create service report.");
-            return Page();
+            TempData["ErrorMessage"] = "Failed to create service report.";
+            return RedirectToPage();
         }
     }
 }
