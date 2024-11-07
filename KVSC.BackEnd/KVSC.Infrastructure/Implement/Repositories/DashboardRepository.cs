@@ -191,7 +191,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
             if (veterinarianId == null) return new List<UpcomingAppointment>();
 
             return await _context.Appointments
-                .Where(a => a.Status == "InProgress" && a.AppointmentVeterinarians.Any(v => v.VeterinarianId == veterinarianId))
+                .Where(a => a.Status == "Waiting" && a.AppointmentVeterinarians.Any(v => v.VeterinarianId == veterinarianId))
                 .OrderBy(a => a.AppointmentDate)
                 .Select(a => new UpcomingAppointment
                 {
