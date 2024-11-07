@@ -161,7 +161,6 @@
             .build();
         // Khởi tạo kết nối
         connection.start().then(() => {
-            console.log("SignalR connection established.");
             const userId = document.getElementById('CreateMessageRequest_SenderId').value; // Lấy ID người dùng
             connection.invoke("JoinRoom", userId).catch(err => console.error(err));
 
@@ -181,12 +180,10 @@
                 // Tạo XMLHttpRequest
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', form.action, true);
-
+                document.querySelector('.write-message').value = '';
                 // Xử lý khi nhận được phản hồi từ server
                 xhr.onload = function () {
                     if (xhr.status === 200) {
-                        // Xử lý khi gửi thành công, ví dụ: xóa nội dung ô input
-                        document.querySelector('.write-message').value = '';
                         // Cuộn xuống cuối messagesContainer
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     } else {
