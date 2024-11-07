@@ -171,7 +171,7 @@
                    <div class="mb-3">
                         <label for="petImageFile" class="form-label">Choose Image</label>
                         <input type="file" class="form-control" id="petImageFile" name="imageFile" accept="image/*" />
-                        <span data-valmsg-for="UpdatePetRequest.ImageUrl" class="text-danger"></span>
+                        <span asp-validation-for="UpdatePetRequest.ImageUrl" class="text-danger"></span>
                     </div>
 
                     <!-- Image Preview -->
@@ -328,6 +328,7 @@
             $('#updatePetModal #name').val(name);
             $('#updatePetModal #age').val(age);
             $('#updatePetModal #gender').val(gender);
+            $('#updatePetModal #imageUrl').val(imageUrl);
             $('#updatePetModal #color').val(color);
             $('#updatePetModal #length').val(length);
             $('#updatePetModal #weight').val(weight);
@@ -335,7 +336,7 @@
             // $('#updatePetModal #healthStatus').val(healthStatus);
             $('#updatePetModal #quantity').val(quantity);
             $('#updatePetModal #note').val(note);
-            $('#updatePetModal #imageUrl').val(imageUrl);
+
             $('#updatePetModal #petImagePreview').attr('src', imageUrl).show();
 
             // Hiển thị modal
@@ -369,7 +370,7 @@
         $('#updatePetForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
             // Kiểm tra trường file ảnh
-            var imageFile = $('#imageFile').get(0).files.length;
+            var imageFile = $('#petImageFile').get(0).files.length;
             if (imageFile === 0) {
                 alert('Please select a photo before update a koi fish.');
                 return; // Ngừng thực hiện nếu không có ảnh
