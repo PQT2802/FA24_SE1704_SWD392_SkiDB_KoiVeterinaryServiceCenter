@@ -149,7 +149,7 @@
         @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport == null)
         {
             <!-- Service Report Section for Adding New Report -->
-            <div class="col-sm-12 col-xl-6">
+            @* <div class="col-sm-12 col-xl-6">
                 <div class="bg-light rounded h-100 p-4">
                     <h6 class="mb-4">Service Report</h6>
                     <!-- Service Report Form -->
@@ -194,7 +194,8 @@
                         <button type="submit" class="btn btn-success">Submit Report</button>
                     </form>
                 </div>
-            </div>
+            </div> *@
+            <div>No data yet </div>
         }
         else
         {
@@ -277,7 +278,7 @@
         
 <!-- Appointment Information End -->
 <!-- JavaScript for Prescription Handling -->
-<script>
+@* <script>
     document.getElementById('hasPrescription').addEventListener('change', function () {
         const isChecked = this.checked;
         console.log("Add Prescription checkbox changed:", isChecked);
@@ -339,4 +340,4 @@
 
         console.log("Calculated total price:", totalPrice.toFixed(2));
     }
-</script>
+</script> *@

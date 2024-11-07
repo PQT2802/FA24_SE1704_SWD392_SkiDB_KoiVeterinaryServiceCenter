@@ -307,11 +307,11 @@ namespace KVSC.Infrastructure.Repositories.Implement
             }
         }
 
-        public async Task<ResponseDto<GetVetId>> GetAvailableVeterinariansByDateTime(DateTime selectedDate)
+        public async Task<ResponseDto<GetVetId>> GetAvailableVeterinariansByDateTime(string selectedDate, Guid serviceId)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/VeterinarianSchedule/available-vets?selectedDate={selectedDate}");
+                var response = await _httpClient.GetAsync($"api/VeterinarianSchedule/available-vets-book?appointmentDate={selectedDate}&serviceId={serviceId}");
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 

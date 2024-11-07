@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
 {
@@ -63,12 +64,12 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
         }
 
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> OnPostFindAvailableVetsAsync(DateTime selectedDate)
-        {
-            var vets = await _scheduleService.GetAvailableVeterinariansByDateTime(selectedDate);
-            Veterinarians = vets.IsSuccess ? vets.Data.Extensions.Data.Where(v => v.IsAvailable).ToList() : new List<GetVetIdData>();
-
-            // Return the partial view with available veterinarians
+        public async Task<IActionResult> OnPostFindAvailableVetsAsync(DateTime selectedDate,Guid serviceId)
+        {           
+            string formattedDate = selectedDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+            string encodedDate = Uri.EscapeDataString(formattedDate);          
+            var vets = await _scheduleService.GetAvailableVeterinariansByDateTime(encodedDate,serviceId);          
+            Veterinarians = vets.IsSuccess ? vets.Data.Extensions.Data.Where(v => v.IsAvailable).ToList() : new List<GetVetIdData>();         
             return Partial("_VeterinarianSelection", Veterinarians);
         }
         [ValidateAntiForgeryToken]
@@ -108,10 +109,28 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.Appointment
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Appointment successfully booked!";
+                //var successMessage = new ModalViewModel
+                //{
+                //    Type = "Success",
+                //    Title = "Success",
+                //    Message = "Appointment successfully booked!"
+                //};
+                //TempData["ModalMessage"] = JsonSerializer.Serialize(successMessage);
+                
+                
             }
             else
             {
-                TempData["ErrorMessage"] = "Failed to book appointment. Please try again.";
+                var errorDetail = result.Errors.FirstOrDefault(e => e.Code.Equals("Exist"));
+                if (errorDetail != null)
+                {
+                    TempData["ErrorMessage"] = errorDetail.Description.ToString();
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Failed to book appointment. Please try again.";
+                }
+                
             }
 
             return Page();

@@ -30,8 +30,8 @@ namespace KVSC.Domain.Entities
         
         public virtual ICollection<UserEmail> UserEmails { get; set; }
 
-        
 
+        [JsonIgnore]
         // Thêm quan hệ với Appointment
         public ICollection<Appointment> Appointments { get; set; } // Quan hệ nhiều với Appointment
         public ICollection<Rating> Ratings { get; set; } = new List<Rating>();

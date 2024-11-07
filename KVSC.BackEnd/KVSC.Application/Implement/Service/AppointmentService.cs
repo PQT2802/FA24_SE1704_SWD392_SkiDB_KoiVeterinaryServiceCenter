@@ -154,7 +154,7 @@ namespace KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(appointments);
         }
-        
+
         public async Task<Result> GetAppointmentListByCustomerIdAsync(Guid userId)
         {
             var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentListByCustomerIdAsync(userId);
@@ -297,14 +297,33 @@ namespace KVSC.Application.Implement.Service
             }
             return Result.SuccessWithObject(appointment);
         }
-
-
         public async Task<Result> MakeAppointmentForServiceAsyncNotAuto(MakeAppointmentForServiceRequest request)
         {
             var pet = await _unitOfWork.PetRepository.GetByIdAsync(request.PetId);
             if (pet == null)
             {
                 return Result.Failure(PetErrorMessage.FieldIsEmpty("pet"));
+            }
+            var wallet = await _unitOfWork.WalletRepository.GetWalletByUserIdAsync(request.CustomerId);
+            if (wallet == null)
+            {
+                return Result.Failure(UserErrorMessage.UserNotExist());
+            }
+            var service = await _unitOfWork.PetServiceRepository.GetByIdAsync(request.PetServiceId);
+            if (service == null)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
+            }
+            if (wallet.Amount < (service.BasePrice * 0.2m))
+            {
+                return Result.Failure(Error.Validation("InsufficientFunds", "Insufficient funds in wallet."));
+            }
+            var endTime = Common.ParseDuration.ParseStrIntoTimeSpan(service.Duration);
+            var endDate = request.AppointmentDate.Add(endTime);
+            var exist = await _unitOfWork.AppointmentRepository.CheckRegisterAppointmentInShift(request.CustomerId, request.AppointmentDate, endTime);
+            if (exist != null)
+            {
+                return Result.Failure(Error.Conflict("Exist", $"You already make appoinment for {exist} in this shift"));
             }
 
             var appointment = new Appointment
@@ -314,6 +333,7 @@ namespace KVSC.Application.Implement.Service
                 PetServiceId = request.PetServiceId,
                 Status = "Pending",
                 AppointmentDate = request.AppointmentDate,
+                EndDate = endDate,
             };
             // Nếu có bác sĩ được chọn, thêm vào cuộc hẹn
             if (request.VeterinarianIds != null && request.VeterinarianIds.Any())
@@ -326,20 +346,23 @@ namespace KVSC.Application.Implement.Service
 
             // Lưu cuộc hẹn 
             await _unitOfWork.AppointmentRepository.CreateAppointmentAsync(appointment);
+            wallet.Amount = wallet.Amount - (service.BasePrice * 0.2m);
+            await _unitOfWork.WalletRepository.UpdateAsync(wallet);
 
             // Cập nhật trạng thái IsAvailable của lịch bác sĩ qua repository
-            if (appointment.AppointmentVeterinarians != null)
+            foreach (var vete in appointment.AppointmentVeterinarians)
             {
-                foreach (var veterinarian in appointment.AppointmentVeterinarians)
+                var schedule = new VeterinarianSchedule()
                 {
-                    await _unitOfWork.AppointmentRepository.UpdateScheduleAvailabilityAsync(
-                        veterinarian.VeterinarianId,
-                        appointment.AppointmentDate
-                    );
-                }
-            }
-            string appointmentDetailUrl = $"https://localhost:7283/api/appointment/detail/{appointment.Id}";
-            var placeholders = new Dictionary<string, string>
+                    VeterinarianId = vete.VeterinarianId,
+                    Date = appointment.AppointmentDate.Date,
+                    StartTime = appointment.AppointmentDate.TimeOfDay,
+                    EndTime = endTime,
+                    IsAvailable = false,
+                };
+                await _unitOfWork.VeterinarianScheduleRepository.CreateAsync(schedule);
+                string appointmentDetailUrl = $"https://localhost:7283/api/appointment/detail/{appointment.Id}";
+                var placeholders = new Dictionary<string, string>
             {
                 { "AppointmentDate", appointment.AppointmentDate.ToString("MMMM dd, yyyy") },
                 { "AppointmentTime", appointment.AppointmentDate.ToString("hh:mm tt") },
@@ -347,63 +370,66 @@ namespace KVSC.Application.Implement.Service
                 { "PetName", pet?.Name ?? "Your Pet" },  // Replace with actual pet name if available
                 { "AppointmentDetailURL", appointmentDetailUrl }
             };
-            // Send email notifications to veterinarians, if any
-            if (appointment.AppointmentVeterinarians != null)
-            {
-                foreach (var veterinarian in appointment.AppointmentVeterinarians)
+                // Send email notifications to veterinarians, if any
+                if (appointment.AppointmentVeterinarians != null)
                 {
-                    var vet = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(veterinarian.VeterinarianId);
-                    if (vet != null && !string.IsNullOrEmpty(vet.User.FullName))
+                    foreach (var veterinarian in appointment.AppointmentVeterinarians)
                     {
-                        placeholders["Name"] = vet.User.FullName;
-                        var emailBodyResult = await _emailTemplateService.GenerateEmailWithAppointmentLink(
+                        var vet = await _unitOfWork.VeterinarianScheduleRepository.GetVeterinarianByUserIdAsync(veterinarian.VeterinarianId);
+                        if (vet != null && !string.IsNullOrEmpty(vet.User.FullName))
+                        {
+                            placeholders["Name"] = vet.User.FullName;
+                            var emailBodyResult = await _emailTemplateService.GenerateEmailWithAppointmentLink(
+                                "MakeAppointment", appointmentDetailUrl, placeholders
+                            );
+
+                            if (emailBodyResult.IsSuccess)
+                            {
+                                var mailObject = new MailObject
+                                {
+                                    ToMailIds = new List<string> { vet.User.FullName },
+                                    Subject = "New Appointment Assignment",
+                                    Body = emailBodyResult.Object as string,
+                                    IsBodyHtml = true
+                                };
+                                await _emailTemplateService.SendMail(mailObject);
+                            }
+                        }
+
+
+                        // Send email notification to the customer, if found
+                        var customer = await _unitOfWork.UserRepository.GetByIdAsync(request.CustomerId);
+                        if (customer != null && !string.IsNullOrEmpty(customer.Email))
+                        {
+                            placeholders["Name"] = customer.FullName;
+                            var emailBodyResult = await _emailTemplateService.GenerateEmailWithAppointmentLink(
                             "MakeAppointment", appointmentDetailUrl, placeholders
                         );
 
-                        if (emailBodyResult.IsSuccess)
-                        {
-                            var mailObject = new MailObject
+                            if (emailBodyResult.IsSuccess)
                             {
-                                ToMailIds = new List<string> { vet.User.FullName },
-                                Subject = "New Appointment Assignment",
-                                Body = emailBodyResult.Object as string,
-                                IsBodyHtml = true
-                            };
-                            await _emailTemplateService.SendMail(mailObject);
+                                var mailObject = new MailObject
+                                {
+                                    ToMailIds = new List<string> { customer.Email },
+                                    Subject = "Appointment Confirmation",
+                                    Body = emailBodyResult.Object as string,
+                                    IsBodyHtml = true
+                                };
+                                await _emailTemplateService.SendMail(mailObject);
+                            }
+                        }
+                        else
+                        {
+                            // Log or handle the case where the customer is not found or has no email
+                            // Optional: Return an error or warning if the customer is a required recipient
                         }
                     }
                 }
             }
-
-            // Send email notification to the customer, if found
-            var customer = await _unitOfWork.UserRepository.GetByIdAsync(request.CustomerId);
-            if (customer != null && !string.IsNullOrEmpty(customer.Email))
-            {
-                placeholders["Name"] = customer.FullName;
-                var emailBodyResult = await _emailTemplateService.GenerateEmailWithAppointmentLink(
-                    "MakeAppointment", appointmentDetailUrl, placeholders
-                );
-
-                if (emailBodyResult.IsSuccess)
-                {
-                    var mailObject = new MailObject
-                    {
-                        ToMailIds = new List<string> { customer.Email },
-                        Subject = "Appointment Confirmation",
-                        Body = emailBodyResult.Object as string,
-                        IsBodyHtml = true
-                    };
-                    await _emailTemplateService.SendMail(mailObject);
-                }
-            }
-            else
-            {
-                // Log or handle the case where the customer is not found or has no email
-                // Optional: Return an error or warning if the customer is a required recipient
-            }
             var response = new CreateResponse { Id = appointment.Id };
             return Result.SuccessWithObject(response);
         }
+
 
         public async Task<Result> GetUnassignedAppointmentsAsync()
         {
@@ -421,16 +447,17 @@ namespace KVSC.Application.Implement.Service
                     AppointmentListId = a.Id,  // Sử dụng Id từ đối tượng Appointment
                     CustomerId = a.CustomerId,
                     PetServiceId = a.PetServiceId ?? Guid.Empty,
-                    VeterinarianId = Guid.Empty, 
-                    CustomerName = a.Customer?.FullName ?? string.Empty, 
-                    VeterinarianName = string.Empty, 
-                    ServiceName = a.PetService?.Name ?? string.Empty, 
+                    VeterinarianId = Guid.Empty,
+                    CustomerName = a.Customer?.FullName ?? string.Empty,
+                    VeterinarianName = string.Empty,
+                    ServiceName = a.PetService?.Name ?? string.Empty,
                     Status = a.Status,
                     AppointmentDate = a.AppointmentDate
                 }).ToList();
 
             return Result.SuccessWithObject(filteredAppointments);
         }
+
         public async Task<Result> GetAppointmentByIdAsync(Guid appointmentId)
         {
             var appointment = await _unitOfWork.AppointmentRepository.GetAppointmentByIdAsync(appointmentId); // Or similar method in the repository
@@ -454,7 +481,6 @@ namespace KVSC.Application.Implement.Service
 
             return Result.SuccessWithObject(appointmentDto);
         }
-
         public async Task<Result> AssignVeterinarianAsync(Guid appointmentId, Guid veterinarianId)
         {
             try
@@ -542,9 +568,6 @@ namespace KVSC.Application.Implement.Service
                 return Result.Failure(Error.NotFound("AssignmentError", ex.Message));
             }
         }
-
-
-
-
     }
+
 }

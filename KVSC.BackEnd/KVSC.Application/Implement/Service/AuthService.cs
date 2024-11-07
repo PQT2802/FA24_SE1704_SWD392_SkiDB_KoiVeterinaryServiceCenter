@@ -129,17 +129,21 @@ namespace KVSC.Application.Implement.Service
                 role = 5,
                 
             };
-            //Wallet newWallet = new Wallet()
-            //{
-            //    UserId = newUser.Id,
-            //    Amount = 0,
-            //};
-            //await _unitOfWork.WalletRepository.CreateAsync(newWallet);
+            Wallet newWallet = new Wallet()
+            {
+                UserId = newUser.Id,
+                Amount = 0,
+            };
+            
             var createUsre = await _unitOfWork.UserRepository.CreateAsync(newUser);
             if (createUsre == 0)
             {
                 return Result.Failure(UserErrorMessage.UserNoCreated());
             }
+
+            await _unitOfWork.WalletRepository.CreateAsync(newWallet);
+            
+
             var activationLink = $"https://localhost:7283/api/Auth/confirm?userId={newUser.Id}";
 
             // Send activation email
@@ -164,7 +168,8 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(Error.None);
             }
-            return Result.SuccessWithObject(newUser);
+            return Result.SuccessWithObject(new { Message = "Create successfully!!!" });
+
         }
 
         public async Task<Result> ConfirmEmail(Guid userId)

@@ -17,6 +17,6 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<UserList>> GetVeterList();
 
         Task<ResponseDto<ScheduleDto>> GetWeeklySchedule(DateTime currentDay, string token);
-        Task<ResponseDto<GetVetId>> GetAvailableVeterinariansByDateTime(DateTime selectedDate);
+        Task<ResponseDto<GetVetId>> GetAvailableVeterinariansByDateTime(string selectedDate, Guid serviceId);
     }
 }

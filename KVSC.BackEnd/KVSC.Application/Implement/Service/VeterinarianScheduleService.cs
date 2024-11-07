@@ -289,6 +289,34 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(result);
         }
 
+        public async Task<Result> GetAvailableVeterinariansForBookingAppointmentAsync(DateTime appointmentDate, Guid serviceId)
+        {
+            var service = await _unitOfWork.PetServiceRepository.GetByIdAsync(serviceId);
+            if(service == null)
+            {
+                return Result.Failure(PetServiceErrorMessage.PetServiceNotFound());
+            }
+            var endTime = Common.ParseDuration.ParseStrIntoTimeSpan(service.Duration);
+            var availableVeterinarians = await _unitOfWork.VeterinarianScheduleRepository.GetAvailableVeterinariansForBookingAppointmentAsync(appointmentDate,endTime);
 
+            if (!availableVeterinarians.Any())
+            {
+                return Result.Failure(Error.NotFound("NoAvailableVeterinarians", "No veterinarians available on the specified date and time."));
+            }
+
+            var result = availableVeterinarians
+                .Select(schedule => new
+                {
+                    schedule.VeterinarianId,
+                    VeterinarianName = schedule.Veterinarian.User.FullName,
+                    schedule.Date,
+                    schedule.StartTime,
+                    schedule.EndTime,
+                    schedule.IsAvailable
+                })
+                .ToList();
+
+            return Result.SuccessWithObject(result);
+        }
     }
 }

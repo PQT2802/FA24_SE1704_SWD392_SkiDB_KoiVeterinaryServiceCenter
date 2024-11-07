@@ -13,6 +13,7 @@ namespace KVSC.Domain.Entities
         public Guid? PetServiceId { get; set; } 
         public Guid? ComboServiceId { get; set; } 
         public DateTime AppointmentDate { get; set; } // Date and time of the appointment
+        public DateTime? EndDate { get; set; }
         public string Status { get; set; } // Appointment status: Pending, Accepted, Rejected, Cancelled
         public DateTime? AcceptedDate { get; set; } // Date the appointment was accepted
         public DateTime? CompletedDate { get; set; } // Date the appointment was completed 
