@@ -26,5 +26,6 @@ namespace KVSC.Application.Interface.IService
         public Task<Result> GetUnassignedAppointmentsAsync();
         public Task<Result> AssignVeterinarianAsync(Guid appointmentId, Guid veterinarianId);
 
+
     }
 }

@@ -21,4 +21,9 @@ public class EmailTemplateRepository : GenericRepository<EmailTemplate>, IEmailT
         _context.UserEmails.Add(userEmail);
         return await _context.SaveChangesAsync();
     }
+    public async Task AddEmailTemplateAsync(EmailTemplate emailTemplate)
+    {
+        await _context.EmailTemplates.AddAsync(emailTemplate);
+        await _context.SaveChangesAsync();
+    }
 }

@@ -16,18 +16,18 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//customer 1 vs vet 1
                     PetId = new Guid("f1111111-1111-1111-1111-111111111111"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                    AppointmentDate = DateTime.UtcNow.AddDays(2), // Friday
-                    Status = "Pending",
-                    CreatedDate = DateTime.UtcNow,
+                    AppointmentDate = DateTime.UtcNow.AddDays(2),
+                    Status = "Waiting",
+                    CreatedDate = DateTime.UtcNow.AddDays(-1),
                     IsDeleted = false
                 },
                 new Appointment
                 {
                     Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"), //customer 1 vs vet 2
                     PetId = new Guid("f1111111-1111-1111-1111-111111111111"),
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
                     AppointmentDate = DateTime.UtcNow.AddDays(-1), // Friday
@@ -38,22 +38,22 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("33333333-3333-3333-3333-333333333333"),
-                    CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
+                    CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"), // customer 3 vs vet 1 online vào ngày 30/10
                     PetId = new Guid("f3333333-3333-3333-3333-333333333333"),
                     PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
-                    AppointmentDate = DateTime.UtcNow.AddDays(2), // Saturday
-                    Status = "Pending",
-                    CreatedDate = DateTime.UtcNow,
+                    AppointmentDate = DateTime.UtcNow.AddDays(-2),
+                    Status = "Completed",
+                    CompletedDate = DateTime.UtcNow.AddDays(-1),
+                    CreatedDate = DateTime.UtcNow.AddDays(-5),
                     IsDeleted = false
                 },
-
                 // Waiting Appointments
                 new Appointment
                 {
                     Id = new Guid("44444444-4444-4444-4444-444444444444"),
-                    CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
+                    CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),//customer 2
                     PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
-                    AppointmentDate = DateTime.UtcNow.AddDays(2), // Sunday
+                    AppointmentDate = DateTime.UtcNow.AddDays(2),
                     Status = "Pending",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
@@ -61,9 +61,9 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("55555555-5555-5555-5555-555555555555"),
-                    CustomerId = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
+                    CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"), //customer 2
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
-                    AppointmentDate = DateTime.UtcNow.AddDays(3), // Tuesday
+                    AppointmentDate = DateTime.UtcNow.AddDays(3),
                     Status = "Pending",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
@@ -73,9 +73,9 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("66666666-6666-6666-6666-666666666666"),
-                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//cus1
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//customer 1 vs Veterinarian 1
                     PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
-                    AppointmentDate =  DateTime.UtcNow, // now
+                    AppointmentDate =  DateTime.UtcNow, 
                     Status = "InProgress",
                     CreatedDate = DateTime.UtcNow.AddDays(-2),
                     IsDeleted = false
@@ -83,9 +83,9 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("77777777-7777-7777-7777-777777777777"),
-                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//cus1
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//customer 1 
                     PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
-                    AppointmentDate = DateTime.UtcNow.AddDays(3),// Tuesday
+                    AppointmentDate = DateTime.UtcNow.AddDays(3),
                     Status = "Pending",
                     CreatedDate = DateTime.UtcNow,
                     IsDeleted = false
@@ -95,9 +95,9 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("88888888-8888-8888-8888-888888888888"),
-                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
-                    PetServiceId = new Guid("7d80bd0a-7780-4c4c-981b-48d7f8784405"),
-                    AppointmentDate = DateTime.UtcNow.AddDays(-1), // Sunday
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),//Veterinarian 1 vs customer 1
+                    PetServiceId = new Guid("2d547de7-d7a0-4c27-a26c-9cf3a7099817"),
+                    AppointmentDate = DateTime.UtcNow.AddDays(-1), 
                     Status = "Reported",
                     CreatedDate = DateTime.UtcNow.AddDays(-3),
                     IsDeleted = false
@@ -105,7 +105,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("99999999-9999-9999-9999-999999999999"),
-                    CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),
+                    CustomerId = new Guid("45a9dc1c-fb8a-4607-9a7e-d6b1359384d7"),//Veterinarian 1 vs customer 3
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
                     AppointmentDate = DateTime.UtcNow.AddDays(-2), // Tuesday
                     Status = "Reported",
@@ -117,7 +117,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                    CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"),
+                    CustomerId = new Guid("bca84e29-de4d-475b-a3ad-a02e937efa14"), //Veterinarian 1 vs customer 2
                     PetServiceId = new Guid("2d95b900-9b04-4f6f-94ec-7d47d2a89ec8"),
                     AppointmentDate = DateTime.UtcNow.AddDays(-5), 
                     Status = "Completed",
@@ -128,7 +128,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                    CustomerId = new Guid("b59d5d37-53d8-4cb6-98ed-520f49eafa73"),
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"), //veterinarian 1 vs customer 1
                     PetServiceId = new Guid("f6a59f70-c0db-45b4-a598-045a005d42ed"),
                     AppointmentDate = DateTime.UtcNow.AddDays(-3), 
                     Status = "Completed",
@@ -139,11 +139,11 @@ namespace KVSC.Infrastructure.DB.Configuration
                 new Appointment
                 {
                     Id = new Guid("bbbbbcbb-bbbb-bcbb-bbbb-bbcbbbbbbbbb"),
-                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"),
+                    CustomerId = new Guid("dd0e9f37-d587-401d-932e-7f098eb60b3e"), //veterinarian 2 vs customer 1
                     PetServiceId = new Guid("c33e3a87-0230-428b-8c06-ee91b7e8cc21"),
-                    AppointmentDate = DateTime.UtcNow.AddDays(3), // Saturday
-                    Status = "Pending",
-                    CreatedDate = DateTime.UtcNow,
+                    AppointmentDate = DateTime.UtcNow.AddDays(-3),
+                    Status = "Completed",
+                    CreatedDate = DateTime.UtcNow.AddDays(-5),
                     IsDeleted = false
                 }
             );

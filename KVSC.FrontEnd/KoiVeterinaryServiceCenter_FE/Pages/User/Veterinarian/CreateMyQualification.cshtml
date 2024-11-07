@@ -1,0 +1,41 @@
+﻿@page
+@model KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian.CreateMyQualificationModel
+
+@{
+    ViewData["Title"] = "Create Veterinarian";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label for="LicenseNumber" class="form-label">License Number</label>
+        <input type="text" id="LicenseNumber" class="form-control" asp-for="Veterinarian.LicenseNumber" />
+        <span asp-validation-for="Veterinarian.LicenseNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="Specialty" class="form-label">Specialty</label>
+        <input type="text" id="Specialty" class="form-control" asp-for="Veterinarian.Specialty" />
+        <span asp-validation-for="Veterinarian.Specialty" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="Qualifications" class="form-label">Qualifications</label>
+        <input type="text" id="Qualifications" class="form-control" asp-for="Veterinarian.Qualifications" />
+        <span asp-validation-for="Veterinarian.Qualifications" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+@if (Model.ErrorMessage != null)
+{
+    <div class="alert alert-danger mt-3">
+        @Model.ErrorMessage
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

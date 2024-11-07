@@ -107,7 +107,7 @@ namespace KVSC.Application.Implement.Service
             await _unitOfWork.PaymentRepository.CreateAsync(newPayment);
 
 
-            return Result.SuccessWithObject(createResult);
+            return Result.SuccessWithObject(new {Message = "Create successfully"});
         }
 
 

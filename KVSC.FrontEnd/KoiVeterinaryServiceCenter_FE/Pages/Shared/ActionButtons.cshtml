@@ -191,7 +191,7 @@ else if (Model.ListType == "appointment")
                 </button>
             }
 
-            @if (Model.Item.Status == "Reported" || Model.Item.Status == "Completed" && Model.Item.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
+            @if ((Model.Item.Status == "Reported" || Model.Item.Status == "Completed") && Model.Item.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
             {
                 <button class="btn btn-outline-primary btn-sm open-conversation-modal"
                         data-customer-id="@Model.Item.CustomerId"

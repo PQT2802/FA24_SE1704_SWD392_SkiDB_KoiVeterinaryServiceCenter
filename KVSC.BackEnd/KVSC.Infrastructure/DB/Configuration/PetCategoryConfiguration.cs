@@ -84,9 +84,9 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Description = "Guidance and assistance in breeding Koi fish.",
                     ServiceType = "Breeding",
                     ApplicableTo = "Koi Fish",
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow.AddDays(-1),
                     IsDeleted = false,
-                    IsOnline = false
+                    IsOnline = true
                 },
                 new PetServiceCategory
                 {

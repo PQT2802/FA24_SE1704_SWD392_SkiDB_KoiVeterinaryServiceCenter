@@ -92,7 +92,7 @@ else if (Model.AppointmentList?.Extensions?.Data != null && Model.AppointmentLis
                                     <i class="fas fa-star"></i> Rating
                                 </button>
                             }
-                            @if (appointment.IsOnline && appointment.Status == "Reported" && appointment.Status == "Completed") // Kiểm tra xem cuộc hẹn có cho phép chat online không
+                            @if (appointment.IsOnline && (appointment.Status == "Reported" || appointment.Status == "Completed")) // Kiểm tra xem cuộc hẹn có cho phép chat online không
                             {
                                 <button class="btn btn-outline-primary btn-sm open-conversation-modal"
                                         data-customer-id="@appointment.CustomerId"

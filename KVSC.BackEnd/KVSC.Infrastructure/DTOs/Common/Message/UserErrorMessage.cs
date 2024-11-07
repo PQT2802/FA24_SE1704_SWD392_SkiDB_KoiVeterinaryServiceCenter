@@ -48,6 +48,8 @@ namespace KVSC.Infrastructure.DTOs.Common.Message
         => Error.Validation("User.DeleteFailed", "Failed to delete user.");
         public static Error UserUpdateFailed()
         => Error.Validation("User.UpdateFailed", "Failed to update user.");
+        public static Error UserCreationFailed()
+        => Error.Validation("User.UpdateFailed", "Failed to create user.");
 
 
         public static Error LicenseNumberInvalidFormat()

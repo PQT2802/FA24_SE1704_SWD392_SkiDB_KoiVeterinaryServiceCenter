@@ -95,11 +95,11 @@
                     </div>
 
                     @* <!-- Profile Picture URL -->
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="profilePictureUrl" name="UpdateUserRequest.ProfilePictureUrl" placeholder="Profile Picture URL">
-                        <label for="profilePictureUrl">Profile Picture URL</label>
-                        <span asp-validation-for="UpdateUserRequest.ProfilePictureUrl" class="text-danger"></span>
-                    </div> *@
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="profilePictureUrl" name="UpdateUserRequest.ProfilePictureUrl" placeholder="Profile Picture URL">
+                            <label for="profilePictureUrl">Profile Picture URL</label>
+                            <span asp-validation-for="UpdateUserRequest.ProfilePictureUrl" class="text-danger"></span>
+                        </div> *@
                     <!-- Profile Picture Upload -->
                     <div class="form-floating mb-3">
                         <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
@@ -165,7 +165,16 @@
             </ul>
         </nav>
     }
-</div>  
+</div>
+@Html.Partial("_LoadingPopup")
+@{
+    var modalData = new ModalViewModel
+    {
+        Message = "Your action was completed successfully!"
+    };
+}
+
+@Html.Partial("_SuccessModal", modalData)
 <script>
     $(document).ready(function () {
         $('.edit-user-button').click(function () {
@@ -208,8 +217,8 @@
         });
 
         $('#updateUserForm').submit(function (e) {
-            e.preventDefault(); 
-          
+            e.preventDefault();
+
             var formData = new FormData(this);
 
             $.ajax({
@@ -220,9 +229,14 @@
                 processData: false,
                 success: function (response) {
                     if (response.isSuccess) {
-                        $('#updateUserModal').modal('hide');
-                        alert('Update successful');
-                        location.reload();
+                        $('span[data-valmsg-for]').text('');
+                        setTimeout(function () {
+                            $('#updateUserModal').modal('hide');
+                            $('#successModal').modal('show');
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        }, 100);
                     } else {
                         $('span[data-valmsg-for]').text('');
                         for (const [key, value] of Object.entries(response.errors)) {
@@ -245,7 +259,7 @@
             setTimeout(function () {
                 alertElement.classList.add('fade');
                 alertElement.classList.remove('show');
-            }, 3000); 
+            }, 3000);
         }
     });
 </script>

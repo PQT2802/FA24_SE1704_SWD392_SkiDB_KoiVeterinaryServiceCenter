@@ -1,4 +1,6 @@
 ﻿@page "/appointment"
+@using System.Text.Json
+@using KVSC.Infrastructure.DTOs
 @model KoiVeterinaryServiceCenter_FE.Pages.Appointment.AppointmentModel
 @{
 }
@@ -18,19 +20,19 @@
                         <!-- Customer Information (Read-Only) -->
                         <div class="form-group mb-3">
                             <label for="customerName">Name</label>
-                            <input type="text" class="form-control" id="customerName" name="CustomerName" value="@Model.UserInfo?.Extensions?.Data?.UserName ?? " N /A"" readonly />
+                            <input type="text" class="form-control" id="customerName" name="CustomerName" value="@Model.UserInfo?.Extensions?.Data?.UserName" readonly />
                         </div>
                         <div class="form-group mb-3">
                             <label for="customerEmail">Email Address</label>
-                            <input type="text" class="form-control" id="customerEmail" name="CustomerEmail" value="@Model.UserInfo?.Extensions?.Data?.Email ?? " N /A"" readonly />
+                            <input type="text" class="form-control" id="customerEmail" name="CustomerEmail" value="@Model.UserInfo?.Extensions?.Data?.Email" readonly />
                         </div>
                         <div class="form-group mb-3">
                             <label for="customerPhone">Phone Number</label>
-                            <input type="text" class="form-control" id="customerPhone" name="CustomerPhone" value="@Model.UserInfo?.Extensions?.Data?.PhoneNumber ?? " N /A"" readonly />
+                            <input type="text" class="form-control" id="customerPhone" name="CustomerPhone" value="@Model.UserInfo?.Extensions?.Data?.PhoneNumber" readonly />
                         </div>
                         <div class="form-group mb-3">
                             <label for="customerAddress">Address</label>
-                            <input type="text" class="form-control" id="customerAddress" name="CustomerAddress" value="@Model.UserInfo?.Extensions?.Data?.Address ?? " N /A"" readonly />
+                            <input type="text" class="form-control" id="customerAddress" name="CustomerAddress" value="@Model.UserInfo?.Extensions?.Data?.Address" readonly />
                         </div>
 
                         <!-- Pet Selection Dropdown -->
@@ -88,6 +90,7 @@
                         @if (TempData["SuccessMessage"] != null)
                         {
                             <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+                            
                         }
                         @if (TempData["ErrorMessage"] != null)
                         {
@@ -129,20 +132,26 @@
         </div>
     </div>
 </div>
-
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
             function fetchAvailableVets(selectedDate) {
+                const serviceId = $('#serviceId').val(); // Retrieve serviceId directly from the dropdown
+
+                if (!serviceId) {
+                    alert("Please select a service before finding available veterinarians.");
+                    return;
+                }
+
                 $.ajax({
                     url: '/appointment?handler=FindAvailableVets',
                     type: 'POST',
                     headers: {
                         'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                     },
-                    data: { selectedDate: selectedDate },
+                    data: { selectedDate: selectedDate, serviceId: serviceId }, // Include serviceId
                     success: function (response) {
                         $('#vetSelectionContainer').html(response).show();
                     },

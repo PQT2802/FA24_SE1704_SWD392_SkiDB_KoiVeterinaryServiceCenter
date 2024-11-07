@@ -37,6 +37,10 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
             }
 
             var result = await _userService.GetVeterinarianDetail(userId);
+            if (result.Data == null)
+            {
+                return RedirectToPage("/User/Veterinarian/CreateMyQualification");
+            }
             VeterinarianProfile = result.IsSuccess ? result.Data ?? new GetVeterinarianResponse() : new GetVeterinarianResponse();
 
             return Page();
@@ -58,6 +62,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Veterinarian
 
             // Save qualifications here using _userService or other logic
             var result = await _userService.UpdateVeterinarianQualifications(request);
+           
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = "Qualifications updated successfully.";

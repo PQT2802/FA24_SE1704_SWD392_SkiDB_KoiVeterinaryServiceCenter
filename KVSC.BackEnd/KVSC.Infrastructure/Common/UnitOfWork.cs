@@ -32,6 +32,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Common
         public IRatingRepository RatingRepository {  get; private set; }
         public IWalletRepository WalletRepository {  get; private set; }
         public ITransactionRepository TransactionRepository {  get; private set; }
+        public IEmailTemplateRepository EmailTemplateRepository {  get; private set; }
 
         public IDashboardRepository DashboardRepository { get; private set; }
 

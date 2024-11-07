@@ -3,6 +3,7 @@ using KVSC.Application.KVSC.Application.Common.Result;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using KVSC.Domain.Entities;
 
 namespace KVSC.Application.Interface.IService
 {
@@ -16,6 +17,7 @@ namespace KVSC.Application.Interface.IService
         Task<Result> GetAllVeterinariansWeeklyScheduleAsync(DateTime currentDay);
 
         Task<Result> GetAvailableVeterinariansForDateAsync(DateTime appointmentDate);
+        Task<Result> GetAvailableVeterinariansForBookingAppointmentAsync(DateTime appointmentDate,Guid serivceId);
         Task<Result> GetAvailableVeterinariansForDateTimeAsync(DateTime selectedDate, TimeSpan startTime, TimeSpan endTime);
 
     }

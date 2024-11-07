@@ -411,6 +411,26 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
             return latestAppointment;
         }
+        public async Task<string> CheckRegisterAppointmentInShift(Guid customerId, DateTime appointmentDate, TimeSpan duration)
+        {
+            // Calculate the end time of the new appointment
+            var endDate = appointmentDate.Add(duration);
+
+            // Check for overlapping appointments on the same day for the customer
+            var existingAppointment = await _context.Appointments
+                .Include(a => a.PetService)
+                .Include(a => a.ComboService)
+                .Where(a => a.CustomerId == customerId
+                            && a.AppointmentDate.Date == appointmentDate.Date  // Ensure it's the same day
+                            && a.Status != "Cancelled" // Exclude cancelled appointments
+                            && ((appointmentDate >= a.AppointmentDate && appointmentDate < a.EndDate) // Overlap case 1
+                                || (endDate > a.AppointmentDate && endDate <= a.EndDate)              // Overlap case 2
+                                || (appointmentDate <= a.AppointmentDate && endDate >= a.EndDate)))   // Overlap case 3
+                .FirstOrDefaultAsync();
+
+            // If an overlapping appointment is found, return the service name; otherwise, return null
+            return existingAppointment?.PetService?.Name ?? existingAppointment?.ComboService?.Name ?? null;
+        }
 
     }
 }

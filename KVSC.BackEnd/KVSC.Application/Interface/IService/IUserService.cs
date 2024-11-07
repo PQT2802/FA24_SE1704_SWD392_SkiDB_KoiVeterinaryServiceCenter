@@ -35,5 +35,6 @@ namespace KVSC.Application.Interface.IService
         Task<Result> GetVeterinarianByIdAsync(Guid id);
         Task<Result> GetUserByVeterId(Guid veterinarianid);
         Task<Result> GetAllVeterinarians();
+        Task<Result> CreateVeterinarianAsync(CreateVeterinarianRequest request);
     }
 }

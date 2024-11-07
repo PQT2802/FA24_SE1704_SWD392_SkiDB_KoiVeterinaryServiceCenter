@@ -121,6 +121,14 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Veterinarian updated successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
+        [HttpPost("veterinarian")]
+        public async Task<IResult> CreateVeterinarian([FromBody] CreateVeterinarianRequest createRequest)
+        {
+            var result = await _userService.CreateVeterinarianAsync(createRequest);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Veterinarian created successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
         [HttpGet("veterinarian/{id}")]
         public async Task<IResult> GetById(Guid id)
         {

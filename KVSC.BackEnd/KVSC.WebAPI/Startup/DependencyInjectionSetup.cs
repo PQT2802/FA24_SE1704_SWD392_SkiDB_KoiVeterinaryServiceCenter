@@ -135,6 +135,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<RegisterScheduleRequest>, RegisterScheduleValidator>();
             services.AddTransient<IValidator<ManagementRegisterScheduleRequest>, ManagementRegisterScheduleValidator>();
             services.AddTransient<IValidator<UpdateVeterinarianRequest>, UpdateVeterinarianValidator>();
+            services.AddTransient<IValidator<CreateVeterinarianRequest>, CreateVeterinarianValidator>();
 
 
             //Validator
@@ -162,6 +163,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
             services.AddTransient<IVeterinarianScheduleRepository, VeterinarianScheduleRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IEmailTemplateRepository, EmailTemplateRepository>();
 
 
             services.AddTransient<IRatingRepository, RatingRepository>();
@@ -211,7 +213,8 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IVnPaymentService, VnPaymentService>();
 
             services.AddScoped<IMessageService, MessageService>();
-
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IEmailTemplateService, EmailTemplateService>();
             services.AddTransient<IUserService, UserService>();
 
             services.AddTransient<IRatingService, RatingService>();

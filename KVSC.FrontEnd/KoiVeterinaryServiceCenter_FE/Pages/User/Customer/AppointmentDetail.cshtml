@@ -19,23 +19,40 @@
         @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailKoi != null)
         {
             <div class="col-sm-12 col-xl-6 text-center">
-                <img class="rounded-circle" src="~/img/fish.jpg" alt="Koi Image" style="width: 200px; height: 200px;">
+                <img class="rounded-circle" src="~/img/fish.jpg" alt="" style="width: 200px; height: 200px;">
                 <div class="bg-light rounded p-4 mt-3">
-                    <h2 class="mb-4 p-2 bg-primary text-white">Koi Information</h2>
+                    <h2 class="mb-4 p-2 mb-2 bg-primary text-white">Koi Information</h2>
                     <div class="row g-4">
-                        <!-- Koi Details -->
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-light text-center rounded p-4">
-                                <p><strong>Name:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Name</span></p>
-                                <p><strong>Age:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Age</span></p>
-                                <p><strong>Color:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Color</span></p>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Name:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Name</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Age:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Age</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Color:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Color</h3>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-light text-center rounded p-4">
-                                <p><strong>Quantity:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Quantity</span></p>
-                                <p><strong>Weight:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Weight</span></p>
-                                <p><strong>Length:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Length</span></p>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Quantity:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Quantity</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Weight:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Weight</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 style="font-size: 18px;">Length:</h3>
+                                    <h3 class="text-center text-primary" style="flex: 2; font-size: 20px;">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailKoi.Length</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -44,8 +61,8 @@
         }
         else
         {
-            <div class="col-sm-12 col-xl-6">
-                <div class="alert alert-warning text-center">No Koi information available.</div>
+            <div class="col-sm-12 col-xl-6 text-center">
+                <p>No data available for Koi information.</p>
             </div>
         }
         <!-- Koi Information End -->
@@ -53,149 +70,201 @@
         @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailService != null)
         {
             <div class="col-sm-12 col-xl-6">
-                <div class="bg-light rounded p-4">
-                    <h4 class="text-center text-primary">Appointment Information</h4>
-                    <p><strong>Service Name:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.ServiceName</span></p>
-                    <p><strong>Service Category:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.ServiceCategory</span></p>
-                    <p><strong>Description:</strong> <span class="text-muted">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.PetDescription</span></p>
-                    <p><strong>Customer:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.FullName</span></p>
-                    <p><strong>Email:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.Email</span></p>
-                    <p><strong>Phone:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.PhoneNumber</span></p>
-                    <p><strong>Cost:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.Cost</span></p>
-                    <p><strong>Duration:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.Duration</span></p>
-                    <p><strong>Location:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.Address</span></p>
-                    <p><strong>Create Date:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.CreateDate.ToString("yyyy-MM-dd")</span></p>
-                    <p><strong>Appointment Date:</strong> <span class="text-primary">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.AppointmentDate.ToString("yyyy-MM-dd")</span></p>
+                <div class="bg-light rounded p-4 mt-4">
+                    <h4 class="mb-4 text-center text-primary">Appointment Information</h4>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Service Name:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.ServiceName</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Service Category:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.ServiceCategory</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-12">
+                            <h6 class="mb-1">Description:</h6>
+                            <p class="text-muted mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.PetDescription</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Customer:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.FullName</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Email:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.Email</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Phone:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.PhoneNumber</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Cost:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.Cost</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Duration:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.Duration</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Location:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailCustomer.Address</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Create Date:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.CreateDate</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1">Appointment Date:</h6>
+                            <p class="text-primary mb-0">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailService.AppointmentDate</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
         else
         {
             <div class="col-sm-12 col-xl-6">
-                <div class="alert alert-warning text-center">No Appointment information available.</div>
+                <p>No data available for Appointment Information.</p>
             </div>
         }
         <!-- Service Information End -->
     </div>
+    <div style="height: 20px ;width: 100%;"></div>
 
-    <!-- Service Report Start -->
     <div class="row g-4 mt-4">
-        <div class="col-sm-12 col-xl-6">
-            <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Service Report</h6>
-                @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport != null)
-                {
-                    <p><strong>Report Content:</strong> <span class="text-muted">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.ReportContent ?? "No report content available."</span></p>
-                    <p><strong>Report Date:</strong> <span class="text-muted">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.ReportDate != default(DateTime) ? Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.ReportDate.ToString("yyyy-MM-dd") : "No report date available."</span></p>
-                    <p><strong>Recommendations:</strong> <span class="text-muted">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.Recommendations ?? "No recommendations available."</span></p>
-                }
-                else
-                {
-                    <p>No service report available.</p>
-                }
-            </div>
+        @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport == null)
+        {
+            <!-- Service Report Section for Adding New Report -->
+            @* <div class="col-sm-12 col-xl-6">
+        <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Service Report</h6>
+        <!-- Service Report Form -->
+        <form method="post">
+
+        <input type="hidden" asp-for="AddServiceReportRequest.AppointmentId" />
+
+        <div class="form-floating mb-3">
+        <textarea class="form-control" asp-for="AddServiceReportRequest.ReportContent" placeholder="Enter report content" style="height: 100px;" required></textarea>
+        <label for="reportContent">Report Content</label>
         </div>
 
-        <!-- Prescription Section Start -->
-        <div class="col-sm-12 col-xl-6">
-            <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Prescription Details</h6>
-                <table class="table table-bordered text-center" id="prescriptionDetailsTable">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Medicine Name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailReport?.PrescriptionDetail != null)
-                        {
-                            @foreach (var prescription in Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.PrescriptionDetail)
-                            {
-                                <tr>
-                                    <td>@prescription.MedicineName</td>
-                                    <td>@prescription.Quantity</td>
-                                    <td>@prescription.Price</td>
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="3" class="text-center">No prescription data available.</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <button class="btn btn-primary mb-3" onclick="togglePrescriptionForm()">Add Prescription</button>
+        <div class="form-floating mb-3">
+        <textarea class="form-control" asp-for="AddServiceReportRequest.Recommendations" placeholder="Enter recommendations" style="height: 100px;" required></textarea>
+        <label for="recommendations">Recommendations</label>
+        </div>
 
-                <!-- Add Prescription Form (Initially Hidden) -->
-                <div id="prescriptionForm" style="display: none;">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name">
-                        <label for="medicineName">Medicine Name</label>
+        <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" asp-for="AddServiceReportRequest.HasPrescription" id="hasPrescription">
+        <label class="form-check-label" for="hasPrescription">Add Prescription</label>
+        </div>
+
+        <!-- Prescription Section -->
+        <div id="prescriptionDetailsSection" style="display: none;">
+        <h6 class="mb-4">Prescription Details</h6>
+        <table class="table table-bordered" id="prescriptionDetailsTable">
+        <thead>
+        <tr>
+        <th>Medicine</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+        <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Rows will be dynamically added here -->
+        </tbody>
+        </table>
+        <button class="btn btn-primary" type="button" onclick="addPrescriptionRow()">Add Prescription</button>
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit Report</button>
+        </form>
+        </div>
+        </div> *@
+            <div class="col-sm-12 col-xl-6">No data yet </div>
+        }
+        else
+        {
+            <!-- Display Existing Service Report Data -->
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4">Service Report</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Report Content</label>
+                        <p class="border p-3 rounded bg-white">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.ReportContent</p>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="quantity" placeholder="Enter Quantity">
-                        <label for="quantity">Quantity</label>
+                    <div class="mb-3">
+                        <label class="form-label">Recommendations</label>
+                        <p class="border p-3 rounded bg-white">@Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.Recommendations</p>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="price" placeholder="Enter Price">
-                        <label for="price">Price</label>
-                    </div>
-                    <button class="btn btn-success" onclick="savePrescription()">Save Prescription</button>
+
+                    @if (Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.PrescriptionDetail != null && Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.PrescriptionDetail.Any())
+                    {
+                        <h6 class="mb-4">Prescription Details</h6>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Quantity</th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var prescription in Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailReport.PrescriptionDetail)
+                                {
+                                    <tr>
+                                        <td>@prescription.MedicineName</td>
+                                        <td>@prescription.Quantity</td>
+                                        <td>@(prescription.Price * prescription.Quantity)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No prescription details available.</p>
+                    }
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Vet Information Start -->
-    <div class="row g-4 mt-4">
+        }
+        <!-- Vet Information Start -->
         <div class="col-sm-12 col-xl-6">
-            <div class="bg-light rounded p-4">
-                <h6 class="mb-3">Vet Information</h6>
-                @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailVeterinarian != null)
-                {
-                    <p><strong>Name:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.FullName</p>
-                    <p><strong>Email:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.Email</p>
-                    <p><strong>Phone:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.PhoneNumber</p>
-                    <p><strong>Address:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.Address</p>
-                }
-                else
-                {
-                    <p class="text-center">No vet information assigned.</p>
-                }
-            </div>
+            @if (Model.GetAppointmentDetailResponse?.Extensions?.Data?.AppointmentDetailVeterinarian != null)
+            {
+                <div class="row g-4">
+                    <!-- Left Column: Information -->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded p-4">
+                            <h6 class="mb-3">Vet Information</h6>
+                            <p><strong>Name:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.FullName </p>
+                            <p><strong>Email:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.Email</p>
+                            <p><strong>Phone:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.PhoneNumber</p>
+                            <p><strong>Address:</strong> @Model.GetAppointmentDetailResponse.Extensions.Data.AppointmentDetailVeterinarian.Address</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Image -->
+                    <div class="col-sm-12 col-xl-6 d-flex justify-content-center align-items-center">
+                        <div>
+                            <img class="rounded-circle" src="~/img/team-1.jpg" alt="" style="width: 250px; height: 300px;">
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div> Vet have not assigan yet ! </div>
+            }
         </div>
+        <!-- Vet Information End -->
     </div>
 </div>
+<!-- Service Report End -->
 <!-- Appointment Information End -->
-<!-- JavaScript for Prescription Form Handling -->
-<script>
-    function togglePrescriptionForm() {
-        const form = document.getElementById('prescriptionForm');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function savePrescription() {
-        const medicineName = document.getElementById('medicineName').value;
-        const quantity = document.getElementById('quantity').value;
-        const price = document.getElementById('price').value;
-
-        if (!medicineName || !quantity || !price) {
-            alert("Please fill in all fields.");
-            return;
-        }
-
-        const table = document.getElementById('prescriptionDetailsTable').querySelector('tbody');
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${medicineName}</td><td>${quantity}</td><td>${price}</td>`;
-        table.appendChild(row);
-
-        document.getElementById('medicineName').value = '';
-        document.getElementById('quantity').value = '';
-        document.getElementById('price').value = '';
-        togglePrescriptionForm();
-    }
-</script>

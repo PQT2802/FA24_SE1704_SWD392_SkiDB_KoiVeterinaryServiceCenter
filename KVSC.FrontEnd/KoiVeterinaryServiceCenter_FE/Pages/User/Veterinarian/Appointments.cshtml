@@ -5,8 +5,15 @@
 @{
     Layout = "_LayoutBoard";
 }
+@if (Model.AppointmentList != null && Model.AppointmentList.Extensions.Data.Any())
+{
+    @await Component.InvokeAsync("GenericTable", new { items = Model.AppointmentList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "appointment" })
+}
+else
+{
+    <div class="d-flex justify-content-center align-items-center"> No data</div>
+}
 
-@await Component.InvokeAsync("GenericTable", new { items = Model.AppointmentList.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "appointment" })
 
 @if (TempData["SuccessMessage"] != null)
 {

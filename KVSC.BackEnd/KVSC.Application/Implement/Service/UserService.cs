@@ -32,13 +32,15 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
         private readonly IValidator<AddUserRequest> _userValidator;
         private readonly IValidator<UpdateUserRequest> _updateUserValidator;
         private readonly IValidator<UpdateVeterinarianRequest> _updateVeter;
+        private readonly IValidator<CreateVeterinarianRequest> _createVeter;
 
-        public UserService(UnitOfWork unitOfWork, IValidator<AddUserRequest> userValiator, IValidator<UpdateUserRequest> updateUserValidator, IValidator<UpdateVeterinarianRequest> updateVeter)
+        public UserService(UnitOfWork unitOfWork, IValidator<AddUserRequest> userValiator, IValidator<UpdateUserRequest> updateUserValidator, IValidator<UpdateVeterinarianRequest> updateVeter, IValidator<CreateVeterinarianRequest> createVeter)
         {
             _unitOfWork = unitOfWork;
             _userValidator = userValiator;
             _updateUserValidator = updateUserValidator;
             _updateVeter = updateVeter;
+            _createVeter = createVeter;
         }
 
         public async Task<Result> GetUserByEmail(string email)
@@ -296,6 +298,39 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             var response = new CreateResponse { Id = veterinarian.Id };
             return Result.SuccessWithObject(response);
         }
+        public async Task<Result> CreateVeterinarianAsync(CreateVeterinarianRequest request)
+        {
+            var validationResult = await _createVeter.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors
+                    .Select(e => (Error)e.CustomState)
+                    .ToList();
+                return Result.Failures(errors);
+            }
+
+            // Create a new Veterinarian object
+            var veterinarian = new Veterinarian
+            {
+                Id = Guid.NewGuid(),
+                UserId = request.UserId,
+                LicenseNumber = request.LicenseNumber,
+                Specialty = request.Specialty,
+                Qualifications = request.Qualifications,
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow
+            };
+
+            var createResult = await _unitOfWork.UserRepository.CreateVeterinarianAsync(veterinarian);
+            if (createResult == 0)
+            {
+                return Result.Failure(UserErrorMessage.UserCreationFailed());
+            }
+
+            var response = new CreateResponse { Id = veterinarian.Id };
+            return Result.SuccessWithObject(response);
+        }
+
 
         public async Task<Result> GetVeterinarianByIdAsync(Guid id)
         {

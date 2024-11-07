@@ -148,7 +148,15 @@ namespace KVSC.WebAPI.Controllers
                 ? ResultExtensions.ToSuccessDetails(result, "Fetched available veterinarians successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
-
+        // GET: api/veterinarian-schedule/
+        [HttpGet("available-vets-book")]
+        public async Task<IResult> GetAvailableVeterinariansByDateTime([FromQuery] DateTime appointmentDate,Guid serviceId)
+        {
+            Result result = await _veterinarianScheduleService.GetAvailableVeterinariansForBookingAppointmentAsync(appointmentDate, serviceId);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Fetched available veterinarians successfully.")
+                : ResultExtensions.ToProblemDetails(result);
+        }
 
     }
 }
