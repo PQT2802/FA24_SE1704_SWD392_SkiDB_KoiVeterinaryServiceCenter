@@ -30,10 +30,10 @@ namespace KVSC.WebAPI.Controllers
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        [HttpGet("VeterinarianDashboard")]
-        public async Task<IResult> GetVeterinarianDashboardData()
+        [HttpGet("VeterinarianDashboard/{veterinarianId}")]
+        public async Task<IResult> GetVeterinarianDashboardData(Guid veterinarianId)
         {
-            Result result = await _dashboardService.GetVeterinarianDashboardDataAsync();
+            Result result = await _dashboardService.GetVeterinarianDashboardDataAsync(veterinarianId);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Veterinarian dashboard data retrieved successfully.")
                 : ResultExtensions.ToProblemDetails(result);

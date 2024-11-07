@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using KVSC.Infrastructure.DTOs.Dashboard.Manager;
+using KVSC.Infrastructure.DTOs.Dashboard.Veterinarian;
 
 namespace KVSC.Infrastructure.Repositories.Implement
 {
@@ -135,6 +136,65 @@ namespace KVSC.Infrastructure.Repositories.Implement
             {
                 // Xử lý các ngoại lệ khác
                 return new ResponseDto<GetManagerDashboardResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDto<GetVetDashboardResponse>> GetVetDashboardAsync(Guid veterinarianId)
+        {
+            try
+            {
+                // Send request and receive response from the API
+                var response = await _httpClient.GetAsync($"api/Dashboard/VeterinarianDashboard/{veterinarianId}");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates a failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetVetDashboardResponse>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred while retrieving veterinarian dashboard data."
+                    };
+                }
+
+                // On success, deserialize the response content into GetVetDashboardResponse
+                var dashboardData = await response.Content.ReadFromJsonAsync<GetVetDashboardResponse>(options);
+
+                return new ResponseDto<GetVetDashboardResponse>
+                {
+                    IsSuccess = true,
+                    Data = dashboardData,
+                    Message = "Veterinarian dashboard data retrieved successfully."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handle HTTP request errors (e.g., network issues)
+                return new ResponseDto<GetVetDashboardResponse>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handle other unexpected exceptions
+                return new ResponseDto<GetVetDashboardResponse>
                 {
                     IsSuccess = false,
                     Data = null,
