@@ -205,17 +205,11 @@ else
 {
     <div class="alert alert-warning">Bạn không có quyền truy cập vào phần này.</div>
 }
-@Html.Partial("_LoadingPopup")
-@{
-    var modalData = new ModalViewModel
-            {
-                Message = "Your action was completed successfully!"
-            };
-}
+
 
 
 @*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
-@Html.Partial("_SuccessModal", modalData)
+@Html.Partial("_SuccessModal")  
 <script>
 $(document).ready(function () {
         // Xử lý preview ảnh khi người dùng chọn file

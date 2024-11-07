@@ -53,7 +53,7 @@
                             @if (Model.WeeklySchedule?.Extensions?.Data != null && Model.WeeklySchedule.Extensions.Data.Any())
                             {
                                 var schedulesForShift = Model.WeeklySchedule.Extensions.Data
-                                .Where(sd => sd.Date.Date == day.Date && sd.Shift == shift && sd.IsAvailable)
+                                .Where(sd => sd.Date.Date == day.Date.Date && sd.Shift == shift && sd.IsAvailable)
                                     .ToList(); 
 
                             bool isShiftFull = schedulesForShift.Count >= 2;
