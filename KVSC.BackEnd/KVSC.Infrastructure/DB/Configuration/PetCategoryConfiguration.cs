@@ -129,7 +129,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     ApplicableTo = "Koi Enthusiasts and Pond Owners",
                     CreatedDate = DateTime.Now,
                     IsDeleted = false,
-                    IsOnline = false
+                    IsOnline = false,
                 }
             );
         }

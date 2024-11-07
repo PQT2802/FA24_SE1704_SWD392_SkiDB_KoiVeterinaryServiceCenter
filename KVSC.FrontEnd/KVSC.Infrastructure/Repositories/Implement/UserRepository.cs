@@ -826,5 +826,133 @@ namespace KVSC.Infrastructure.Repositories.Implement
                 };
             }
         }
+
+        public async Task<ResponseDto<Payment>> GetPaymentOfUser(string token)
+        {
+            try
+            {
+                // Set the request with authorization token in headers
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                // Send the request and get the response
+                var response = await _httpClient.GetAsync("api/Payment/payment");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<Payment>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get infor."
+                    };
+                }
+
+                // If successful, deserialize the UserInfo response
+                var payment = await response.Content.ReadFromJsonAsync<Payment>(options);
+
+                return new ResponseDto<Payment>
+                {
+                    IsSuccess = true,
+                    Data = payment,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<Payment>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<Payment>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDto<CommonMessage>> CompletePayment(string token, Guid paymentId)
+        {
+            try
+            {
+                // Set the request with authorization token in headers
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                // Send the request and get the response
+                var response = await _httpClient.GetAsync($"api/Payment/pay?paymentId={paymentId}");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<CommonMessage>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get infor."
+                    };
+                }
+
+                // If successful, deserialize the UserInfo response
+                var payment = await response.Content.ReadFromJsonAsync<CommonMessage>(options);
+
+                return new ResponseDto<CommonMessage>
+                {
+                    IsSuccess = true,
+                    Data = payment,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<CommonMessage>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<CommonMessage>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
     }
 }

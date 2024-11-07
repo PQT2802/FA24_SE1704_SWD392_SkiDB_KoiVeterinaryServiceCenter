@@ -40,7 +40,7 @@ namespace KVSC.Infrastructure.Implement.Repositories
         public async Task<decimal> GetTotalPaymentsAsync()
         {
             return await _context.Payments
-                                 .Where(p => p.totalAmountStatus)
+                                 .Where(p => p.TotalAmountStatus)
                                  .SumAsync(p => p.TotalAmount);
         }
 

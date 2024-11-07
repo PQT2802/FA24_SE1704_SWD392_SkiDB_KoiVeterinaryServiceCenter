@@ -1101,10 +1101,10 @@ namespace KVSC.Infrastructure.Migrations
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("depositStatus")
+                    b.Property<bool>("DepositStatus")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("totalAmountStatus")
+                    b.Property<bool>("TotalAmountStatus")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

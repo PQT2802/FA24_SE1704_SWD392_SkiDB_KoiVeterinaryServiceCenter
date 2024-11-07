@@ -15,9 +15,7 @@ namespace KVSC.Application.Interface.IService
         Task<Result> CreatePaymentUrl(HttpContext context, double depositMoney, Guid userId);
         Task<Result> PaymentExecute(IQueryCollection collections, Guid userId, double depositMoney);
         Task<Result> GetPaymentByUserIdAsync(Guid userId);
-        Task<Result> UpdatePayment(Guid userId,Guid paymentId);
-       
-        
+        Task<Result> UpdatePayment(Guid userId,Guid paymentId);               
     }
 }
 

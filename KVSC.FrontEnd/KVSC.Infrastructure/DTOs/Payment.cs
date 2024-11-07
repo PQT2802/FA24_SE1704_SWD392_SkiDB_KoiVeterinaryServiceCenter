@@ -8,14 +8,23 @@ namespace KVSC.Infrastructure.DTOs
 {
     public class Payment
     {
-        public Extensions<CommonMessageData> Extensions { get; set; }
+        public Extensions<List<PaymentData>> Extensions { get; set; }
     }
-    public class PaymentData 
+    public class PaymentData : IPropertyNameProvider
     {
-        public Guid AppointmentId { get; set; } // Foreign key to Order
-        public decimal TotalAmount { get; set; }
+        public Guid PaymentId { get; set; }
+        public Guid AppointmentId { get; set; }
+        public string ServiceName { get; set; }
+        public Guid CustomerId { get; set; }
+        public decimal BasePrice { get; set; }
+        public decimal TravelCost { get; set; }
         public decimal Deposit { get; set; }
-        public bool totalAmountStatus { get; set; }
-        public bool depositStatus { get; set; }
+        public decimal TotalAmount { get; set; }
+        public bool TotalAmountStatus { get; set; }
+        public bool DepositStatus { get; set; }
+        public List<string> GetPropertyNames()
+        {
+            return new List<string> { nameof(ServiceName), nameof(BasePrice), nameof(TravelCost), nameof(Deposit), nameof(TotalAmount), nameof(TotalAmountStatus) };
+        }
     }
 }

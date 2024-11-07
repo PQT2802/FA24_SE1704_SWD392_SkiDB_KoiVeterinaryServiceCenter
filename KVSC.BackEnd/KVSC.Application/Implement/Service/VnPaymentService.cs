@@ -55,6 +55,10 @@ namespace KVSC.Application.Implement.Service
         public async Task<Result> GetPaymentByUserIdAsync(Guid userId)
         {
             var result = await _unitOfWork.PaymentRepository.GetPaymentByUserIdAsync(userId);
+            if (result == null || result.Count() == 0)
+            {
+                return Result.Failure(Error.NotFound("NoData", "No payment record!!!!"));
+            }
             return Result.SuccessWithObject(result);
         }
 

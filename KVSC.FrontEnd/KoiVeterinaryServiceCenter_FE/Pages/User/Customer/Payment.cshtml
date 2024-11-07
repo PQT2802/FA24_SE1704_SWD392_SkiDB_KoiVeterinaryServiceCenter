@@ -1,5 +1,15 @@
 ﻿@page
+@using KVSC.Infrastructure.DTOs
 @model KoiVeterinaryServiceCenter_FE.Pages.User.Customer.PaymentModel
 @{
     Layout = "_LayoutBoard";
+}
+
+@if (Model.Payment != null && Model.Payment.Extensions.Data.Any())
+{
+    @await Component.InvokeAsync("GenericTable", new { items = Model.Payment.Extensions.Data.Cast<IPropertyNameProvider>(), listType = "payment" })
+}
+else
+{
+    <div class="d-flex justify-content-center align-items-center"> No data</div>
 }

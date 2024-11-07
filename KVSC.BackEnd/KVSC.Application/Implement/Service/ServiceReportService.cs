@@ -101,8 +101,9 @@ namespace KVSC.Application.Implement.Service
                 AppointmentId = addServiceReportRequest.AppointmentId,
                 Deposit = appointment.PetService.BasePrice * 0.2m,
                 TotalAmount = appointment.PetService.BasePrice + appointment.PetService.TravelCost - appointment.PetService.BasePrice * 0.2m,
-                totalAmountStatus =false,
-                depositStatus = true,
+                Status = "Waiting",
+                TotalAmountStatus =false,
+                DepositStatus = true,
             };
             await _unitOfWork.PaymentRepository.CreateAsync(newPayment);
 
