@@ -1,5 +1,10 @@
-﻿using KVSC.Application.Interface.IService;
+﻿using KVSC.Application.Common;
+using KVSC.Application.Implement.Service;
+using KVSC.Application.Interface.IService;
 using KVSC.Application.KVSC.Application.Common.Result;
+using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,30 +21,39 @@ namespace KVSC.WebAPI.Controllers
             _dashboardService = dashboardService;
         }
 
-        [HttpGet("Admin/Dashboard")]
+        [HttpGet("AdminDashboard")]
         public async Task<IResult> GetDashboardData()
         {
-            var result = await _dashboardService.GetDashboardDataAsync();
+            Result result = await _dashboardService.GetDashboardDataAsync();
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Admin dashboard data retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        [HttpGet("Veterinarian/Dashboard")]
-        public async Task<IResult> GetVeterinarianDashboardData()
+        [HttpGet("VeterinarianDashboard/{veterinarianId}")]
+        public async Task<IResult> GetVeterinarianDashboardData(Guid veterinarianId)
         {
-            var result = await _dashboardService.GetVeterinarianDashboardDataAsync();
+            Result result = await _dashboardService.GetVeterinarianDashboardDataAsync(veterinarianId);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Veterinarian dashboard data retrieved successfully.")
                 : ResultExtensions.ToProblemDetails(result);
         }
 
-        [HttpGet("Manager/Dashboard")]
-        public async Task<IResult> GetManagerDashboardData()
+        [HttpGet("ManagerDashboard/{managerId}")]
+        public async Task<IResult> GetManagerDashboardData(Guid managerId)
         {
-            var result = await _dashboardService.GetManagerDashboardDataAsync();
+            Result result = await _dashboardService.GetManagerDashboardDataAsync(managerId);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Manager dashboard data retrieved successfully")
+                : ResultExtensions.ToProblemDetails(result);
+        }
+
+        [HttpGet("CustomerDashboard/{customerId}")]
+        public async Task<IResult> GetCustomerDashboardData(Guid customerId)
+        {
+            Result result = await _dashboardService.GetCustomerDashboardDataAsync(customerId);
+            return result.IsSuccess
+                ? ResultExtensions.ToSuccessDetails(result, "Customer dashboard data retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);
         }
     }

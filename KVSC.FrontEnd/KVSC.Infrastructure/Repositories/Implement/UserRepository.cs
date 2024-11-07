@@ -1,4 +1,5 @@
 ﻿using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.Rating.GetRatingDetail;
 using KVSC.Infrastructure.DTOs.Service.AddService;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
 using KVSC.Infrastructure.DTOs.User;
@@ -691,6 +692,67 @@ namespace KVSC.Infrastructure.Repositories.Implement
             {
                 // Handling any other exceptions
                 return new ResponseDto<AddMoney>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"An unexpected error occurred: {ex.Message}"
+                };
+            }
+        }
+        public async Task<ResponseDto<GetVetInfo>> GetVetList()
+        {
+            try
+            {
+                // Send the request and get the response
+                var response = await _httpClient.GetAsync("api/User/veterinarian/all");
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                // Check if the response indicates failure
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the error response using the options for case insensitivity
+                    var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseContent, options);
+
+                    return new ResponseDto<GetVetInfo>
+                    {
+                        IsSuccess = false,
+                        Data = null,
+                        Errors = errorResponse?.Errors ?? new List<ErrorDetail>(),
+                        Message = "An error occurred during get infor."
+                    };
+                }
+
+                // If successful, deserialize the UserInfo response
+                var userInfo = await response.Content.ReadFromJsonAsync<GetVetInfo>(options);
+                Console.WriteLine(JsonSerializer.Serialize(userInfo, new JsonSerializerOptions { WriteIndented = true }));
+
+                return new ResponseDto<GetVetInfo>
+                {
+                    IsSuccess = true,
+                    Data = userInfo,
+                    Message = "Get data successful."
+                };
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handling HTTP request exceptions (e.g., network errors)
+                return new ResponseDto<GetVetInfo>
+                {
+                    IsSuccess = false,
+                    Data = null,
+                    Message = $"Request error: {httpEx.Message}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handling any other exceptions
+                return new ResponseDto<GetVetInfo>
                 {
                     IsSuccess = false,
                     Data = null,

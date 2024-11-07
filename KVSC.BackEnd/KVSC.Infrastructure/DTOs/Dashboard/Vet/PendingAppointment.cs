@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.DTOs.Dashboard.Vet
 {
-    public class NewestAppointment
+    public class PendingAppointment
     {
-        public DateTime? CompletedDate { get; set; }
         public Guid AppointmentId { get; set; }
-        public string CustomerName { get; set; }
-        public DateTime? AcceptedDate { get; set; }
         public DateTime AppointmentDate { get; set; }
+        public string CustomerName { get; set; }
+        public string ServiceName { get; set; }
     }
 }

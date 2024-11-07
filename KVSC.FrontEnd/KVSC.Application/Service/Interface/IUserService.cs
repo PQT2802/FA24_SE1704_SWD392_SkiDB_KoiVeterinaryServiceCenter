@@ -25,5 +25,6 @@ namespace KVSC.Application.Service.Interface
 
         Task<ResponseDto<GetVetId>> GetVetForAppoinment();
         Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount);
+        Task<ResponseDto<GetVetInfo>> GetVetList();
     }
 }

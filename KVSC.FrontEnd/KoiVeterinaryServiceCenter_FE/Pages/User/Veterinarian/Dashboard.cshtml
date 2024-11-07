@@ -3,3 +3,122 @@
 @{
     Layout = "_LayoutBoard";
 }
+
+<!-- Sale & Revenue Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <!-- Total Customers -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-users fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Customers</p>
+                    <h6 class="mb-0">@Model.DashboardData.TotalCustomers</h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Appointments -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-calendar-check fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Appointments</p>
+                    <h6 class="mb-0">@Model.DashboardData.TotalAppointments</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sale & Revenue End -->
+
+
+<!-- Upcoming & Completed Appointments Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Upcoming Appointments</h6>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Appointment Date</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Service</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.DashboardData.UpcomingAppointment.Count; i++)
+                        {
+                            <tr>
+                                <th scope="row">@((i + 1))</th>
+                                <td>@Model.DashboardData.UpcomingAppointment[i].AppointmentDate</td>
+                                <td>@Model.DashboardData.UpcomingAppointment[i].CustomerName</td>
+                                <td>@Model.DashboardData.UpcomingAppointment[i].ServiceName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Completed Appointments</h6>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Completed Date</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Service</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.DashboardData.CompletedAppointment.Count; i++)
+                        {
+                            <tr>
+                                <th scope="row">@((i + 1))</th>
+                                <td>@Model.DashboardData.CompletedAppointment[i].CompletedDate</td>
+                                <td>@Model.DashboardData.CompletedAppointment[i].CustomerName</td>
+                                <td>@Model.DashboardData.CompletedAppointment[i].ServiceName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Upcoming & Completed Appointments End -->
+
+<!-- Pending Appointments Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Pending Appointments</h6>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark">
+                        <th scope="col">Date</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Service</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointment in Model.DashboardData.PendingAppointment)
+                    {
+                        <tr>
+                            <td>@appointment.AppointmentDate</td>
+                            <td>@appointment.CustomerName</td>
+                            <td>@appointment.ServiceName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Pending Appointments End -->

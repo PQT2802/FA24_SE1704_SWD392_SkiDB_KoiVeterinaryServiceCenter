@@ -34,5 +34,6 @@ namespace KVSC.Application.Interface.IService
         Task<Result> UpdateVeterinarianAsync(Guid userId, UpdateVeterinarianRequest request);
         Task<Result> GetVeterinarianByIdAsync(Guid id);
         Task<Result> GetUserByVeterId(Guid veterinarianid);
+        Task<Result> GetAllVeterinarians();
     }
 }

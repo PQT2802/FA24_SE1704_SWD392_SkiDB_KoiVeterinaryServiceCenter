@@ -1,10 +1,10 @@
 using KVSC.Application.Service.Interface;
-using KVSC.Infrastructure.DTOs.Dashboard.Manager;
+using KVSC.Infrastructure.DTOs.Dashboard.Customer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace KoiVeterinaryServiceCenter_FE.Pages.User.Manager
+namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
 {
     public class DashboardModel : PageModel
     {
@@ -16,7 +16,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Manager
         }
 
         [BindProperty]
-        public GetManagerDashboardData DashboardData { get; set; } = default!;
+        public GetCustomerDashboardData DashboardData { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -31,21 +31,21 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Manager
             var jwtToken = handler.ReadJwtToken(token);
             var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
 
-            if (!Guid.TryParse(userIdClaimString, out Guid managerId))
+            if (!Guid.TryParse(userIdClaimString, out Guid customerId))
             {
-                ModelState.AddModelError(string.Empty, "Unable to decode managerId from token.");
+                ModelState.AddModelError(string.Empty, "Unable to decode userId from token.");
                 return Page();
             }
 
-            var result = await _dashboardService.GetManagerDashboardAsync(managerId);
+            var result = await _dashboardService.GetCustomerDashboardAsync(customerId);
 
             if (result.IsSuccess)
             {
-                DashboardData = result.Data?.Extensions?.Data ?? new GetManagerDashboardData();
+                DashboardData = result.Data?.Extensions?.Data ?? new GetCustomerDashboardData();
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Error fetching manager dashboard data.");
+                ModelState.AddModelError(string.Empty, "Error fetching dashboard data.");
             }
 
             return Page();

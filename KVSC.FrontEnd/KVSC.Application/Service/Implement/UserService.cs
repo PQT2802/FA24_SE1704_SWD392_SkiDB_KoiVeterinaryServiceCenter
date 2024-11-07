@@ -13,6 +13,7 @@ using KVSC.Infrastructure.DTOs.User.UpdateUser;
 using KVSC.Infrastructure.DTOs.User.DeleteUser;
 using KVSC.Infrastructure.DTOs.User.GetUser;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace KVSC.Application.Service.Implement
 {
@@ -77,6 +78,12 @@ namespace KVSC.Application.Service.Implement
         public async Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount)
         {
             var response = await _userRepository.TopUpWallet(token,amount);
+            return response;
+        }
+
+        public async Task<ResponseDto<GetVetInfo>> GetVetList()
+        {
+            var response = await _userRepository.GetVetList();
             return response;
         }
     }

@@ -10,6 +10,7 @@ using KVSC.Infrastructure.DTOs.Firebase.GetImage;
 using KVSC.Infrastructure.DTOs.Paging;
 using KVSC.Infrastructure.DTOs.Pet.AddPetService;
 using KVSC.Infrastructure.DTOs.PetService;
+using KVSC.Infrastructure.DTOs.Rating.GetRating;
 using KVSC.Infrastructure.DTOs.User;
 using KVSC.Infrastructure.DTOs.User.AddUser;
 using KVSC.Infrastructure.DTOs.User.GetUser;
@@ -21,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace KVSC.Application.KVSC.Application.Implement.Service
 {
@@ -31,7 +33,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
         private readonly IValidator<UpdateUserRequest> _updateUserValidator;
         private readonly IValidator<UpdateVeterinarianRequest> _updateVeter;
 
-        public UserService(UnitOfWork unitOfWork, IValidator<AddUserRequest> userValiator, IValidator<UpdateUserRequest> updateUserValidator, IValidator<UpdateVeterinarianRequest> updateVeter) 
+        public UserService(UnitOfWork unitOfWork, IValidator<AddUserRequest> userValiator, IValidator<UpdateUserRequest> updateUserValidator, IValidator<UpdateVeterinarianRequest> updateVeter)
         {
             _unitOfWork = unitOfWork;
             _userValidator = userValiator;
@@ -42,7 +44,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
         public async Task<Result> GetUserByEmail(string email)
         {
             var user = await _unitOfWork.UserRepository.GetByAsync("Email", email);
-            if (user == null) 
+            if (user == null)
             {
                 return Result.Failure(UserErrorMessage.UserNotExist());
             }
@@ -72,7 +74,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                 Address = user.Address,
                 Amount = wallet?.Amount ?? 0
             };
-            
+
             return Result.SuccessWithObject(userInfor);
         }
 
@@ -94,7 +96,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             {
                 var getImgRequest = new GetImageRequest(user.ProfilePictureUrl ?? string.Empty);
                 var userImg = await _unitOfWork.FirebaseRepository.GetImageAsync(getImgRequest);
-                
+
                 var userResponse = new GetUserResponse
                 {
                     Id = user.Id,
@@ -206,7 +208,7 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
                 FullName = user.FullName,
                 UserName = user.Username,
                 Email = user.Email,
-                Amount =  wallet.Amount,
+                Amount = wallet.Amount,
                 PhoneNumber = user.PhoneNumber,
                 ProfilePictureUrl = UserImg.ImageUrl ?? string.Empty,
                 Address = user.Address,
@@ -326,6 +328,23 @@ namespace KVSC.Application.KVSC.Application.Implement.Service
             var response = new CreateResponse { Id = user.Id };
 
             return Result.SuccessWithObject(response);
+        }
+
+        public async Task<Result> GetAllVeterinarians()
+        {
+            var vets = await _unitOfWork.UserRepository.GetAllVeterinarians();
+            var vetResponses = new List<VetResponse>();
+            foreach (var vet in vets)
+            {
+                vetResponses.Add(new VetResponse
+                {
+                    UserId = vet.Id,
+                    Specialty = vet.Veterinarian.Specialty,
+                    Qualifications = vet.Veterinarian.Qualifications
+                });
+            }
+
+            return Result.SuccessWithObject(vetResponses);
         }
     }
 }
