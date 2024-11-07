@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace KVSC.Infrastructure.DTOs.Dashboard.Admin
 {
-    public class AdminDashboardData
+    public class GetAdminDashboardResponse
+    {
+        public Extensions<GetAdminDashboardData> Extensions { get; set; }
+
+    }
+    public class GetAdminDashboardData
     {
         public int TotalUsers { get; set; }
         public int TotalCustomers { get; set; }
@@ -16,3 +21,4 @@ namespace KVSC.Infrastructure.DTOs.Dashboard.Admin
         public decimal TotalPayments { get; set; }
     }
 }
+

@@ -1,22 +1,55 @@
+using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.Dashboard.Admin;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 {
     public class DashboardModel : PageModel
     {
-        public List<DynamicFormField> FormFields { get; set; }
+        private readonly IDashboardService _dashboardService;
 
-        public void OnGet()
+        public DashboardModel(IDashboardService dashboardService)
         {
-            FormFields = new List<DynamicFormField>
+            _dashboardService = dashboardService;
+        }
+
+        [BindProperty]
+        public GetAdminDashboardData DashboardData { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            var token = HttpContext.Session.GetString("Token");
+
+            if (string.IsNullOrEmpty(token))
             {
-                new DynamicFormField { Label = "Service Name", FieldType = "text", Name = "Name", Placeholder = "Enter service name", Required = true },
-                new DynamicFormField { Label = "Description", FieldType = "textarea", Name = "Description", Placeholder = "Enter description", Required = true },
-                new DynamicFormField { Label = "Price", FieldType = "number", Name = "Price", Placeholder = "Enter price", Required = true },
-                new DynamicFormField { Label = "Category ID", FieldType = "number", Name = "PetCategoryId", Placeholder = "Enter category ID", Required = true }
-            };
+                return RedirectToPage("/Account/SignIn");
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var userIdClaimString = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+
+            if (!Guid.TryParse(userIdClaimString, out Guid adminId))
+            {
+                ModelState.AddModelError(string.Empty, "Unable to decode adminId from token.");
+                return Page();
+            }
+
+            var result = await _dashboardService.GetAdminDashboardAsync(adminId);
+
+            if (result.IsSuccess)
+            {
+                DashboardData = result.Data?.Extensions?.Data ?? new GetAdminDashboardData();
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error fetching admin dashboard data.");
+            }
+
+            return Page();
         }
     }
 }

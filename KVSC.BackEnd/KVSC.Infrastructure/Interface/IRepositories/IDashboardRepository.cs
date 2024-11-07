@@ -1,4 +1,5 @@
 ﻿using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Dashboard.Admin;
 using KVSC.Infrastructure.DTOs.Dashboard.Manager;
 using KVSC.Infrastructure.DTOs.Dashboard.Vet;
 using KVSC.Infrastructure.Implement.Repositories;
@@ -40,9 +41,8 @@ namespace KVSC.Infrastructure.Interface.IRepositories
 
 
         //ADMIN
-        Task<List<Veterinarian>> GetTopVeterinariansByAppointmentsAsync(int topCount);
-        Task<List<PetService>> GetBestServicesByRatingAsync(int topCount);
-        Task<List<Product>> GetTopSellingProductsAsync(int topCount);
+        Task<int> GetTotalManagersAsync();
+        Task<int> GetTotalUsersAsync();
 
     }
 }

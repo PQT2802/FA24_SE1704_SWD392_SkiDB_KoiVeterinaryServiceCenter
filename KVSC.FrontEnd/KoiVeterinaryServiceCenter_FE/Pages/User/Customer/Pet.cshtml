@@ -270,7 +270,7 @@
             // Kiểm tra trường file ảnh
             var imageFile = $('#imageFile').get(0).files.length;
             if (imageFile === 0) {
-                alert('Please select a photo before creating a koi fish.');
+                alert('Please select a photo before create a koi fish.');
                 return; // Ngừng thực hiện nếu không có ảnh
             }
 
@@ -368,6 +368,12 @@
 
         $('#updatePetForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
+            // Kiểm tra trường file ảnh
+            var imageFile = $('#imageFile').get(0).files.length;
+            if (imageFile === 0) {
+                alert('Please select a photo before update a koi fish.');
+                return; // Ngừng thực hiện nếu không có ảnh
+            }
 
             // Tạo FormData
             var formData = new FormData(this);

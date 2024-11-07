@@ -1,5 +1,6 @@
 ﻿using KVSC.Application.Service.Interface;
 using KVSC.Infrastructure.DTOs;
+using KVSC.Infrastructure.DTOs.Dashboard.Admin;
 using KVSC.Infrastructure.DTOs.Dashboard.Customer;
 using KVSC.Infrastructure.DTOs.Dashboard.Manager;
 using KVSC.Infrastructure.DTOs.Dashboard.Veterinarian;
@@ -37,6 +38,12 @@ namespace KVSC.Application.Service.Implement
         public async Task<ResponseDto<GetVetDashboardResponse>> GetVetDashboardAsync(Guid veterinarianId)
         {
             var response = await _dashboardRepository.GetVetDashboardAsync(veterinarianId);
+            return response;
+        }
+
+        public async Task<ResponseDto<GetAdminDashboardResponse>> GetAdminDashboardAsync(Guid adminId)
+        {
+            var response = await _dashboardRepository.GetAdminDashboardAsync(adminId);
             return response;
         }
     }

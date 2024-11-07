@@ -1,5 +1,6 @@
 ﻿using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DB;
+using KVSC.Infrastructure.DTOs.Dashboard.Admin;
 using KVSC.Infrastructure.DTOs.Dashboard.Manager;
 using KVSC.Infrastructure.DTOs.Dashboard.Vet;
 using KVSC.Infrastructure.Interface.IRepositories;
@@ -140,11 +141,11 @@ namespace KVSC.Infrastructure.Implement.Repositories
             var startDate = DateTime.Now.AddMonths(-months);
 
             var payments = await _context.Payments
-                .Where(p => p.Appointment.CustomerId == customerId && p.Appointment.AppointmentDate >= startDate)
+                .Where(p => p.Appointment.CustomerId == customerId && p.CreatedDate >= startDate)
                 .ToListAsync();
 
             var monthlyPayments = payments
-                .GroupBy(p => new DateTime(p.Appointment.AppointmentDate.Year, p.Appointment.AppointmentDate.Month, 1))
+                .GroupBy(p => new DateTime(p.CreatedDate.Year, p.CreatedDate.Month, 1))
                 .OrderBy(g => g.Key)
                 .ToDictionary(g => g.Key, g => g.Sum(p => p.TotalAmount));
 
@@ -234,32 +235,15 @@ namespace KVSC.Infrastructure.Implement.Repositories
 
 
         //ADMIN
-        public async Task<List<Veterinarian>> GetTopVeterinariansByAppointmentsAsync(int topCount)
+
+        public async Task<int> GetTotalManagersAsync()
         {
-            return await _context.Veterinarians
-                .Include(v => v.User)
-                .Include(v => v.AppointmentVeterinarians)
-                .OrderByDescending(v => v.AppointmentVeterinarians.Count)
-                .Take(topCount)
-                .ToListAsync();
+            return await _context.Users.CountAsync(u => u.role == 2);
         }
 
-        public async Task<List<PetService>> GetBestServicesByRatingAsync(int topCount)
+        public async Task<int> GetTotalUsersAsync()
         {
-            return await _context.PetServices
-                .Include(s => s.Ratings)
-                .OrderByDescending(s => s.Ratings.Average(r => r.Score))
-                .Take(topCount)
-                .ToListAsync();
-        }
-
-        public async Task<List<Product>> GetTopSellingProductsAsync(int topCount)
-        {
-            return await _context.Products
-                .Include(p => p.OrderItems)
-                .OrderByDescending(p => p.OrderItems.Count)
-                .Take(topCount)
-                .ToListAsync();
+            return await _context.Users.CountAsync(u => u.role != 1);
         }
 
     }

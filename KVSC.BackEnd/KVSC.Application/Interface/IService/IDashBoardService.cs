@@ -10,10 +10,7 @@ namespace KVSC.Application.Interface.IService
     public interface IDashBoardService
     {
         //ADMIN
-        Task<Result> GetDashboardDataAsync(int topCount = 5);
-        Task<Result> GetTopVeterinariansAsync(int topCount);
-        Task<Result> GetBestServicesAsync(int topCount);
-        Task<Result> GetTopSellingProductsAsync(int topCount);
+        Task<Result> GetAdminDashboardDataAsync(Guid adminId);
 
         //VET
         Task<Result> GetVeterinarianDashboardDataAsync(Guid veterinarianId);

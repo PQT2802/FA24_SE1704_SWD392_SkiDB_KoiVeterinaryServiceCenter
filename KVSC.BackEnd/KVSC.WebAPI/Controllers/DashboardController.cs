@@ -21,10 +21,10 @@ namespace KVSC.WebAPI.Controllers
             _dashboardService = dashboardService;
         }
 
-        [HttpGet("AdminDashboard")]
-        public async Task<IResult> GetDashboardData()
+        [HttpGet("AdminDashboard/{adminId}")]
+        public async Task<IResult> GetDashboardData(Guid adminId)
         {
-            Result result = await _dashboardService.GetDashboardDataAsync();
+            Result result = await _dashboardService.GetAdminDashboardDataAsync(adminId);
             return result.IsSuccess
                 ? ResultExtensions.ToSuccessDetails(result, "Admin dashboard data retrieved successfully")
                 : ResultExtensions.ToProblemDetails(result);

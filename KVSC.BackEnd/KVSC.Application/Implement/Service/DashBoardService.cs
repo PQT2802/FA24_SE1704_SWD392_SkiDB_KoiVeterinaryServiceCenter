@@ -98,67 +98,28 @@ namespace KVSC.Application.Implement.Service
             return Result.SuccessWithObject(vetDashboard);
         }
 
+
         //ADMIN
-        public async Task<Result> GetDashboardDataAsync(int topCount = 5)
+        public async Task<Result> GetAdminDashboardDataAsync(Guid adminId)
         {
-            var topVeterinariansResult = await GetTopVeterinariansAsync(topCount);
-            if (!topVeterinariansResult.IsSuccess) return topVeterinariansResult;
+            var totalUsers = await _unitOfWork.DashboardRepository.GetTotalUsersAsync();
+            var totalCustomers = await _unitOfWork.DashboardRepository.GetTotalCustomersAsync();
+            var totalVeterinarians = await _unitOfWork.DashboardRepository.GetTotalVeterinariansAsync();
+            var totalStaff = await _unitOfWork.DashboardRepository.GetTotalStaffAsync();
+            var totalManagers = await _unitOfWork.DashboardRepository.GetTotalManagersAsync();
+            var totalPayments = await _unitOfWork.DashboardRepository.GetTotalPaymentsAsync();
 
-            var bestServicesResult = await GetBestServicesAsync(topCount);
-            if (!bestServicesResult.IsSuccess) return bestServicesResult;
-
-            var topProductsResult = await GetTopSellingProductsAsync(topCount);
-            if (!topProductsResult.IsSuccess) return topProductsResult;
-
-            var dashboardData = new AdminDashboardData
+            var adminDashboard = new AdminDashboardData
             {
-                TopVeterinarians = topVeterinariansResult.Object as List<TopVeterinarian>,
-                BestServices = bestServicesResult.Object as List<TopService>,
-                TopSellingProducts = topProductsResult.Object as List<TopProduct>
+                TotalUsers = totalUsers,
+                TotalCustomers = totalCustomers,
+                TotalVeterinarians = totalVeterinarians,
+                TotalStaff = totalStaff,
+                TotalManagers = totalManagers,
+                TotalPayments = totalPayments
             };
 
-            return Result.SuccessWithObject(dashboardData);
-        }
-
-        public async Task<Result> GetTopVeterinariansAsync(int topCount)
-        {
-            var veterinarians = await _unitOfWork.DashboardRepository.GetTopVeterinariansByAppointmentsAsync(topCount);
-
-            var veterinarianDtos = veterinarians.Select(v => new TopVeterinarian
-            {
-                Id = v.UserId,
-                Name = v.User?.FullName,
-                AppointmentCount = v.AppointmentVeterinarians?.Count ?? 0
-            })
-                .ToList();
-
-            return Result.SuccessWithObject(veterinarianDtos);
-        }
-
-        public async Task<Result> GetBestServicesAsync(int topCount)
-        {
-            var services = await _unitOfWork.DashboardRepository.GetBestServicesByRatingAsync(topCount);
-            var serviceDtos = services.Select(s => new TopService
-            {
-                Id = s.Id,
-                Name = s.Name,
-                AverageRating = s.Ratings.Any() ? (decimal)s.Ratings.Average(r => r.Score) : 0m
-            }).ToList();
-            return Result.SuccessWithObject(serviceDtos);
-        }
-
-        public async Task<Result> GetTopSellingProductsAsync(int topCount)
-        {
-            var products = await _unitOfWork.DashboardRepository.GetTopSellingProductsAsync(topCount);
-
-            var productDtos = products.Select(p => new TopProduct
-            {
-                Id = p.Id,
-                Name = p.Name,
-                SoldQuantity = p.OrderItems?.Count ?? 0
-            }).ToList();
-
-            return Result.SuccessWithObject(productDtos);
+            return Result.SuccessWithObject(adminDashboard);
         }
     }
 }
