@@ -106,6 +106,9 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
                         case "User.Email.Format":
                             errorDictionary["Email"] = error.Description;
                             break;
+                        case "User.UserName.Length":
+                            errorDictionary["UserName"] = error.Description;
+                            break;
                         case "User.Phone.Format":
                             errorDictionary["PhoneNumber"] = error.Description;
                             break;
