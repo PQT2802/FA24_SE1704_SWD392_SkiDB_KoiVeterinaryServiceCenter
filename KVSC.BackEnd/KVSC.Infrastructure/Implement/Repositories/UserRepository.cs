@@ -131,6 +131,12 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
             _context.Veterinarians.Update(veterinarian);
             return await _context.SaveChangesAsync();
         }
+        public async Task<int> CreateVeterinarianAsync(Veterinarian veterinarian)
+        {
+            await _context.Veterinarians.AddAsync(veterinarian);
+            return await _context.SaveChangesAsync();
+        }
+
         public async Task<Veterinarian> GetVeterinarianByVeterinarianIdAsync(Guid veterinarianId)
         {
             return await _context.Veterinarians

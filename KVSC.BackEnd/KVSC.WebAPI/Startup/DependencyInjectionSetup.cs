@@ -135,6 +135,7 @@ namespace KVSC.WebAPI.Startup
             services.AddTransient<IValidator<RegisterScheduleRequest>, RegisterScheduleValidator>();
             services.AddTransient<IValidator<ManagementRegisterScheduleRequest>, ManagementRegisterScheduleValidator>();
             services.AddTransient<IValidator<UpdateVeterinarianRequest>, UpdateVeterinarianValidator>();
+            services.AddTransient<IValidator<CreateVeterinarianRequest>, CreateVeterinarianValidator>();
 
 
             //Validator

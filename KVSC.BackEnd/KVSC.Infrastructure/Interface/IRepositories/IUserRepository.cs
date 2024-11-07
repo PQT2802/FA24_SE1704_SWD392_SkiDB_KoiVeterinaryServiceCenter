@@ -33,5 +33,6 @@ namespace KVSC.Infrastructure.Interface.IRepositories
         Task<Veterinarian> GetVeterinarianByVeterinarianIdAsync(Guid veterinarianId);
         Task<User> GetUserByVeterinarianIdAsync(Guid veterinarianId);
         Task<List<User>> GetAllVeterinarians();
+        Task<int> CreateVeterinarianAsync(Veterinarian veterinarian);
     }
 }
