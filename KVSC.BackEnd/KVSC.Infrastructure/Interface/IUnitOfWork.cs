@@ -1,4 +1,5 @@
-﻿using KVSC.Infrastructure.Interface.IRepositories;
+﻿using KVSC.Infrastructure.Implement.Repositories;
+using KVSC.Infrastructure.Interface.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace KVSC.Infrastructure.Interface
         IPaymentRepository PaymentRepository { get; }
 
         IWalletRepository WalletRepository { get; }
+        IEmailTemplateRepository EmailTemplateRepository { get; }
 
 
 

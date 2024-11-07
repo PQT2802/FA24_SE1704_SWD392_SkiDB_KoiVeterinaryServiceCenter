@@ -18,6 +18,7 @@ namespace KVSC.Domain.Entities
         public string PasswordHash { get; set; }
         public string? ProfilePictureUrl { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public bool IsEmailConfirmed { get; set; }
         public int role {  get; set; }//1 admin, 2 manager,3 veterinarian, 4 staff, 5 customer
 
         // Relationships

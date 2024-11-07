@@ -8,4 +8,5 @@ public interface IEmailTemplateRepository
 
 
     public Task<dynamic> SaveEmailSending(UserEmail userEmail);
+    public Task AddEmailTemplateAsync(EmailTemplate emailTemplate);
 }
