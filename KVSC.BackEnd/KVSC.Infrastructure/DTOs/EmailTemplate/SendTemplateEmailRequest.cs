@@ -4,6 +4,6 @@
     {
         public string ToEmail { get; set; }
         public string TemplateType { get; set; }
-        public Dictionary<string, string> Placeholders { get; set; } = new Dictionary<string, string>();
+        //public Dictionary<string, string> Placeholders { get; set; } = new Dictionary<string, string>();
     }
 }
