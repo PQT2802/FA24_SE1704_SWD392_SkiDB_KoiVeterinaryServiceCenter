@@ -10,6 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using KVSC.Infrastructure.DTOs.Service.UpdateService;
 using KVSC.Application.Service.Implement;
 using KVSC.Infrastructure.DTOs.Service.DeleteService;
+using KVSC.Infrastructure.DTOs.Message;
 
 namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 {
@@ -27,7 +28,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
 
         [BindProperty]
         public UpdateServiceRequest UpdateServiceRequest { get; set; } = default!;
-
+        public ModalViewModel Success { get; set; } = new ModalViewModel();
         public List<KoiServiceCategoryList> Categories { get; set; } = new List<KoiServiceCategoryList>();
 
         public ServicesModel(IPetServiceService petServiceSerivce , IPetServiceCategoryService petServiceCategoryService)
@@ -43,7 +44,8 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Admin
             if (result.IsSuccess)
             {
                 ViewData["ShowSuccessModal"] = true;
-                return new JsonResult(new { isSuccess = true, message = "Service created successfully!" });
+                Success.Message = "Service created successfully!";
+                return new JsonResult(new { isSuccess = true, message = Success.Message });
                 // return RedirectToPage("/User/Admin/Services");
             }
 

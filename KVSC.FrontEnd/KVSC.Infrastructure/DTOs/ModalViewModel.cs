@@ -8,6 +8,6 @@ namespace KVSC.Infrastructure.DTOs
 {
     public class ModalViewModel
     {
-        public string Message { get; set; }
+        public string Message { get; set; } = default!;
     }
 }

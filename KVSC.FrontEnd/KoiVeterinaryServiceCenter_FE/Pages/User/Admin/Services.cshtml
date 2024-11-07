@@ -205,6 +205,7 @@ else
 {
     <div class="alert alert-warning">Bạn không có quyền truy cập vào phần này.</div>
 }
+@Html.Partial("_LoadingPopup")
 @{
     var modalData = new ModalViewModel
             {
@@ -212,17 +213,10 @@ else
             };
 }
 
-@Html.Partial("SuccessModal", modalData)
+
 @*-------------------------------------------------------------- Create ------------------------------------------------------------------*@
-@if (ViewData["ShowSuccessModal"] != null && (bool)ViewData["ShowSuccessModal"])
-{
-    <script>
-        $(document).ready(function () {
-            $('#successModal').modal('show');
-        });
-    </script>
-}
-<script>
+@Html.Partial("_SuccessModal", modalData)
+
 $(document).ready(function () {
         // Xử lý preview ảnh khi người dùng chọn file
         $('#imageFile').change(function (e) {
@@ -248,7 +242,7 @@ $(document).ready(function () {
             alert('Please select a photo before creating a service.');
             return; // Ngừng thực hiện nếu không có ảnh
         }
-        
+
         // Tạo một FormData để gửi dữ liệu
         var formData = new FormData($('#createServiceForm')[0]);
 
@@ -262,16 +256,12 @@ $(document).ready(function () {
                 if (response.isSuccess) {
                         $('span[data-valmsg-for]').text('');
                         setTimeout(function () {
-                            $('#createServiceModal').modal('hide'); // Ẩn modal hiện tại
-
-                            // Hiển thị modal thông báo thành công
-                            $('#successModal').modal('show'); // Hiện modal thành công
-
-                            // Tải lại trang sau 500ms
+                            $('#createServiceModal').modal('hide'); 
+                            $('#successModal').modal('show'); 
                             setTimeout(function () {
                                 location.reload();
-                            }, 1500); 
-                        }, 700);
+                            }, 1000); 
+                        }, 100);
                     } else {
                     $('span[data-valmsg-for]').text('');
                     for (const [key, value] of Object.entries(response.errors)) {
@@ -326,7 +316,6 @@ $(document).ready(function () {
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function (event) {
-                    // Cập nhật ảnh xem trước
                     $('#serviceImagePreview').attr('src', event.target.result).show();
                 };
                 reader.readAsDataURL(file);
@@ -334,20 +323,15 @@ $(document).ready(function () {
         });
         $('#updateServiceForm').submit(function (e) {
             e.preventDefault(); // Ngăn chặn hành vi mặc định
-
-            // Tạo FormData
             var formData = new FormData(this);
-        
-            // Gọi Ajax
                 $.ajax({
                     type: "POST",
                     url: window.location.pathname + "?handler=UpdateService", // Gửi đến đúng handler
                     data: formData,
-                    processData: false, // Ngăn jQuery xử lý dữ liệu
-                    contentType: false, // Ngăn jQuery thiết lập Content-Type
+                    processData: false,
+                    contentType: false, 
                     success: function (response) {
                         if (response.isSuccess) {
-
                         $('span[data-valmsg-for]').text('');
                         setTimeout(function () {
                             $('#updateServiceModal').modal('hide'); 
@@ -356,12 +340,11 @@ $(document).ready(function () {
 
                             setTimeout(function () {
                                 location.reload();
-                            }, 1500);
-                        }, 500);
+                            }, 1000);
+                        }, 100);
 
                         } else {
                             $('span[data-valmsg-for]').text('');
-                            // Hiển thị lỗi vào các input tương ứng
                             for (const [key, value] of Object.entries(response.errors)) {
                                 $(`span[data-valmsg-for='UpdateServiceRequest.${key}']`).text(value);
                             }
