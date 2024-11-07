@@ -105,7 +105,9 @@ namespace KVSC.Infrastructure.Implement.Repositories
         //CUSTOMER
         public async Task<int> GetCustomerPetAsync(Guid customerId)
         {
-            return await _context.Pets.CountAsync(p => p.OwnerId == customerId);
+            return await _context.Pets
+                .Where(p => p.OwnerId == customerId && !p.IsDeleted) 
+                .CountAsync();
         }
 
         public async Task<int> GetCustomerAppointmentAsync(Guid customerId)
