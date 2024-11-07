@@ -14,7 +14,7 @@ namespace KVSC.Application.Common.Validator.User
     {
         public UpdateUserValidator(UnitOfWork unitOfWork) : base(unitOfWork)
         {
-            AddUserNamesRules(request => request.FullName);
+            AddUserNamesRules(request => request.UserName);
             AddEmailUserRules(request => request.Email);
             AddPhoneNumberRules(request => request.PhoneNumber);
         }
