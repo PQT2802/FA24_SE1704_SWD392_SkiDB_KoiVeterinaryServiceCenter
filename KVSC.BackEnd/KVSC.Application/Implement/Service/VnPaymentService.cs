@@ -55,6 +55,10 @@ namespace KVSC.Application.Implement.Service
         public async Task<Result> GetPaymentByUserIdAsync(Guid userId)
         {
             var result = await _unitOfWork.PaymentRepository.GetPaymentByUserIdAsync(userId);
+            if (result == null || result.Count() == 0)
+            {
+                return Result.Failure(Error.NotFound("NoData", "No payment record!!!!"));
+            }
             return Result.SuccessWithObject(result);
         }
 
@@ -108,11 +112,19 @@ namespace KVSC.Application.Implement.Service
         {
             var wallet = await _unitOfWork.WalletRepository.GetWalletByUserIdAsync(userId);
             var payment = await _unitOfWork.PaymentRepository.GetByIdAsync(paymentId);
+            var appointment = await _unitOfWork.AppointmentRepository.GetByIdAsync(payment.AppointmentId);
+           // var appointment = await _unitOfWork.AppointmentRepository.Get
             if (payment.TotalAmount > wallet.Amount)
             {
                 return Result.Failure(Error.Failure("Transaction", $"Not enough money"));
             }
-            var result = await _unitOfWork.PaymentRepository.UpdatePayment(userId);
+            wallet.Amount = wallet.Amount - payment.TotalAmount;
+            payment.TotalAmountStatus = true;
+            payment.Status = "Completed";
+            appointment.Status = "Completed";
+            await _unitOfWork.WalletRepository.UpdateAsync(wallet);
+            await _unitOfWork.AppointmentRepository.UpdateAsync(appointment);
+            var result = await _unitOfWork.PaymentRepository.UpdateAsync(payment);
             return Result.SuccessWithObject(new {Message =" Pay successfully"});
         }
     }

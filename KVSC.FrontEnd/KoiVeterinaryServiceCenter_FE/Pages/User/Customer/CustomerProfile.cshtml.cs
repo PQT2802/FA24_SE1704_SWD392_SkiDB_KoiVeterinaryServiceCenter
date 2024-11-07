@@ -131,7 +131,7 @@ namespace KoiVeterinaryServiceCenter_FE.Pages.User.Customer
                 return RedirectToPage("/Account/SignIn");
             }
 
-            if (TopUpAmount <= 10000)
+            if (TopUpAmount < 10000)
             {
                 ModelState.AddModelError(string.Empty, "Please enter a valid amount to add (more than 10000).");
                 return Redirect("/User/Customer/CustomerProfile");

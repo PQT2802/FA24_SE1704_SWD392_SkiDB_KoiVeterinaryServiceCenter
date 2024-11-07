@@ -33,7 +33,7 @@ namespace KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories
 
         public async Task<User> GetUserByEmailAndPasswordAsync(string email, string password)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Email.Equals(email) && x.PasswordHash.Equals(password));
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email.Equals(email) && x.PasswordHash.Equals(password) && x.IsEmailConfirmed);
         }
 
         public async Task<User> GetUserByNameAsync(string userName)

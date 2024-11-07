@@ -192,7 +192,7 @@ namespace KVSC.Application.Implement.Service
         { "AppointmentDate", appointment.AppointmentDate.ToString("MMMM dd, yyyy") },
         { "AppointmentTime", appointment.AppointmentDate.ToString("hh:mm tt") },
         { "ServiceName", "Koi Care Service" }, // Replace with actual service name if available
-        { "PetName", appointment.Pet.Name }, // Replace with actual pet name if available
+        //{ "PetName", appointment.Pet.Name }, // Replace with actual pet name if available
         { "AppointmentDetailURL", appointmentDetailUrl }
     };
 
@@ -342,6 +342,7 @@ namespace KVSC.Application.Implement.Service
                 {
                     VeterinarianId = v
                 }).ToList();
+                appointment.Status = "Waiting";
             }
 
             // Lưu cuộc hẹn 

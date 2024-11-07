@@ -25,5 +25,7 @@ namespace KVSC.Infrastructure.Repositories.Interface
         Task<ResponseDto<AddMoney>> TopUpWallet(string token, decimal amount);
         Task<ResponseDto<GetVetInfo>> GetVetList();
         Task<ResponseDto<UpdateUserResponse>> CreateVeterinarianAsync(GetVeterinarianRequest createRequest);
+        Task<ResponseDto<Payment>> GetPaymentOfUser(string token);
+        Task<ResponseDto<CommonMessage>> CompletePayment(string token,Guid paymentId);
     }
 }

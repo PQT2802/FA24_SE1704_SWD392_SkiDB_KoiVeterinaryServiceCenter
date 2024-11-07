@@ -75,6 +75,10 @@ namespace KVSC.Application.Implement.Service
             {
                 return Result.Failure(UserErrorMessage.UserNotExist());
             }
+            if (!userLogin.IsEmailConfirmed)
+            {
+                return Result.Failure(Error.NotFound("Confirm", "Your email is not activated yet!!, please confirm your mail"));
+            }
             var role = userLogin.role switch
             {
                 1 => "Admin",

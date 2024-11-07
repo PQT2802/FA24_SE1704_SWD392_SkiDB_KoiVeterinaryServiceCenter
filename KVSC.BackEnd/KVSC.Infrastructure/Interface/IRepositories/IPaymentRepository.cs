@@ -1,4 +1,5 @@
 ﻿using KVSC.Domain.Entities;
+using KVSC.Infrastructure.DTOs.Payment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace KVSC.Infrastructure.Interface.IRepositories
     {
         Task<Payment> AddPaymentAsync(Payment payment);
         Task<Payment> GetPaymentByAppointmentIdAsync(Guid appointmentId);
-        Task<Payment> GetPaymentByUserIdAsync(Guid userId);
+        Task<List<GetPayment>> GetPaymentByUserIdAsync(Guid userId);
         Task<bool> UpdatePayment(Guid userId);
     }
 }

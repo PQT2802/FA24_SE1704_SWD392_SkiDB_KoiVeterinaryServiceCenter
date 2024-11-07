@@ -6,6 +6,8 @@ public class Payment : BaseEntity
     public Appointment Appointment { get; set; }
     public decimal TotalAmount { get; set; }
     public decimal Deposit { get; set; }
-    public bool totalAmountStatus { get; set; }
-    public bool depositStatus { get; set; }
+    public string Status { get; set; }
+    public bool TotalAmountStatus { get; set; }
+    public bool DepositStatus { get; set; }
+
 }

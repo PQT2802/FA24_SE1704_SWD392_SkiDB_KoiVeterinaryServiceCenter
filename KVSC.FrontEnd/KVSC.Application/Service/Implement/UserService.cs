@@ -96,5 +96,17 @@ namespace KVSC.Application.Service.Implement
             var response = await _userRepository.GetVetList();
             return response;
         }
+
+        public async Task<ResponseDto<Payment>> GetPaymentOfUser(string token)
+        {
+            var response = await _userRepository.GetPaymentOfUser(token);
+            return response;
+        }
+
+        public async Task<ResponseDto<CommonMessage>> CompletePayment(string token, Guid paymentId)
+        {
+            var response = await _userRepository.CompletePayment(token, paymentId);
+            return response;
+        }
     }
 }

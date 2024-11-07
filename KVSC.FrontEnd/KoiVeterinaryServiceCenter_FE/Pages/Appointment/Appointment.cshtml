@@ -56,7 +56,7 @@
                                 @foreach (var service in Model.Services)
                                 {
                                     var deposit = service.BasePrice * 0.2m;  // Calculate 20% deposit
-                                    <option value="@service.Id">@service.Name - @service.BasePrice.ToString("C") - Deposit: @deposit.ToString("C") (@service.Duration)</option>
+                                    <option value="@service.Id">@service.Name - @service.BasePrice.ToString("C", new System.Globalization.CultureInfo("vi-VN")) - Deposit: @deposit.ToString("C", new System.Globalization.CultureInfo("vi-VN")) (@service.Duration)</option>
                                 }
                             </select>
                             <div class="invalid-feedback">Please select a service.</div>

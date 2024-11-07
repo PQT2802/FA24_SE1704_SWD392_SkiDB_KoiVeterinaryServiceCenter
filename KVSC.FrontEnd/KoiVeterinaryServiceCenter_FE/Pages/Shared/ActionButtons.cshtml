@@ -148,17 +148,13 @@ else if (Model.ListType == "appointment")
                 <input type="hidden" name="AppointmentId" value="@Model.Item.AppointmentListId" />
                 @switch (Model.Status)
                 {
-                    case "Pending":
+                    case "Waiting":
                         <button class="btn btn-outline-warning btn-sm" type="submit"
                                 asp-page-handler="UpdateStatus" asp-route-status="InProgress">
                             Execute
                         </button>
                         <!-- View button for navigation -->
-                        <a class="btn btn-outline-info btn-sm"
-                           asp-page="/User/Veterinarian/AppointmentDetail"
-                           asp-route-appointmentId="@Model.Item.AppointmentListId">
-                            View
-                        </a>
+                        
                         break;
                     case "InProgress":
                         <!-- View button for navigation -->
@@ -167,11 +163,7 @@ else if (Model.ListType == "appointment")
                            asp-route-appointmentId="@Model.Item.AppointmentListId">
                             Report
                         </a>
-                        <a class="btn btn-outline-info btn-sm"
-                           asp-page="/User/Veterinarian/AppointmentDetail"
-                           asp-route-appointmentId="@Model.Item.AppointmentListId">
-                            View
-                        </a>
+                        
                         break;
                 }
             </form>
@@ -189,6 +181,7 @@ else if (Model.ListType == "appointment")
                 <button onclick="window.location.href='@Url.Page("Chat", new { recipientId = Model.Item.CustomerId, recipientName = Model.Item.CustomerName })'" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-chat-dots"></i> Start Chat
                 </button>
+                
             }
 
             @if ((Model.Item.Status == "Reported" || Model.Item.Status == "Completed") && Model.Item.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
@@ -199,7 +192,13 @@ else if (Model.ListType == "appointment")
                         data-appointment-id="@Model.Item.AppointmentListId">
                     <i class="bi bi-chat-dots"></i> Chat History
                 </button>
+                
             }
+            <a class="btn btn-outline-info btn-sm"
+               asp-page="/User/Veterinarian/AppointmentDetail"
+               asp-route-appointmentId="@Model.Item.AppointmentListId">
+                View
+            </a>
         </div>
     }
 }
@@ -219,5 +218,21 @@ else if (Model.ListType == "appointment")
             Detail
         </a>
     </div>
-
+}
+@if (Model.ListType == "payment")
+{
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+        <form method="post" asp-page-handler="PayAppointment" class="d-inline">
+            <input type="hidden" name="PaymentId" value="@Model.Item.PaymentId" />
+            @switch (Model.Status)
+            {
+                case "Waiting":
+                    <!-- Button to execute the payment action -->
+                    <button class="btn btn-outline-warning btn-sm" type="submit">
+                        Pay
+                    </button>
+                    break;
+            }
+        </form>
+    </div>
 }

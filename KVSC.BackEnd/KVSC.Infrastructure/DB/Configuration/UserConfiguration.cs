@@ -27,7 +27,8 @@ namespace KVSC.Infrastructure.DB.Configuration
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
                     role = 1,
-                    ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
+                    ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png",
+                    IsEmailConfirmed = true,
                 },
                 //2
                 new User
@@ -40,6 +41,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Manager",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
+                    IsEmailConfirmed = true,
                     role = 2
                 },
                 //3
@@ -53,6 +55,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Veterinarian_1",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
+                    IsEmailConfirmed = true,
                     role = 3,
                     ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
                 },
@@ -67,6 +70,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Veterinarian_2",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
+                    IsEmailConfirmed = true,
                     role = 3,
                     ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
                 },
@@ -80,6 +84,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Veterinarian_3",
                     PasswordHash = "String456!",
                     DateOfBirth = new DateTime(1985, 5, 15),
+                    IsEmailConfirmed = true,
                     role = 3,
                     ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
                 },
@@ -94,6 +99,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Staff_1",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
+                    IsEmailConfirmed = true,
                     role = 4
                 },
                 //6
@@ -107,6 +113,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Staff_2",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
+                    IsEmailConfirmed = true,
                     role = 4
                 },
                 //7
@@ -121,6 +128,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
                     role = 5,
+                    IsEmailConfirmed = true,
                     ProfilePictureUrl = "User/0c08ff89-61a7-4b57-9c1d-ac6f3c57907b_Screenshot 2024-01-17 155826.png"
                 },
                 new User
@@ -133,6 +141,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_2",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -145,6 +154,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_3",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1990, 1, 1),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -157,6 +167,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_4",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1992, 2, 2),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -169,6 +180,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_5",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1993, 3, 3),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -181,6 +193,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_6",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1994, 4, 4),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -193,6 +206,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_7",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1995, 5, 5),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -205,6 +219,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_8",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1996, 6, 6),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -217,6 +232,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_9",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1997, 7, 7),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -229,6 +245,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_10",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1998, 8, 8),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -241,6 +258,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_11",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1999, 9, 9),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -253,6 +271,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_12",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(2000, 10, 10),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -265,6 +284,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_13",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1988, 11, 11),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -277,6 +297,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_14",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1987, 12, 12),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -289,6 +310,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_15",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1986, 1, 1),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -301,6 +323,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_16",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1985, 2, 2),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -313,6 +336,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_17",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1984, 3, 3),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -325,6 +349,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_18",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1983, 4, 4),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -337,6 +362,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_19",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1982, 5, 5),
+                    IsEmailConfirmed = true,
                     role = 5
                 },
                 new User
@@ -349,6 +375,7 @@ namespace KVSC.Infrastructure.DB.Configuration
                     Username = "Customer_20",
                     PasswordHash = "String123!",
                     DateOfBirth = new DateTime(1981, 6, 6),
+                    IsEmailConfirmed = true,
                     role = 5
                 }
           );

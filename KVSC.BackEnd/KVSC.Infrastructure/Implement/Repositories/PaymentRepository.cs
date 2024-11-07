@@ -1,5 +1,6 @@
 ﻿using KVSC.Domain.Entities;
 using KVSC.Infrastructure.DB;
+using KVSC.Infrastructure.DTOs.Payment;
 using KVSC.Infrastructure.Interface.IRepositories;
 using KVSC.Infrastructure.KVSC.Infrastructure.Implement.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -27,13 +28,27 @@ namespace KVSC.Infrastructure.Implement.Repositories
         {
             return await _context.Payments.FirstOrDefaultAsync(p => p.AppointmentId == appointmentId);
         }
-        public async Task<Payment> GetPaymentByUserIdAsync(Guid userId)
+        public async Task<List<GetPayment>> GetPaymentByUserIdAsync(Guid userId)
         {
-            // Assuming _context is your DbContext instance
             return await _context.Payments
-                .Include(p => p.Appointment) // Include Appointment to access CustomerId
+                .Include(p => p.Appointment)
+                .ThenInclude(s => s.PetService)// Bao gồm Appointment để truy cập CustomerId
                 .Where(p => p.Appointment.CustomerId == userId)
-                .FirstOrDefaultAsync();
+                .Select(p => new GetPayment
+                {
+                    PaymentId = p.Id,
+                    CustomerId = userId,
+                    AppointmentId = p.AppointmentId,
+                    ServiceName = p.Appointment.PetService.Name,
+                    BasePrice = p.Appointment.PetService.BasePrice,
+                    TravelCost = p.Appointment.PetService.TravelCost,
+                    TotalAmount = p.TotalAmount,
+                    Deposit = p.Deposit,
+                    Status = p.Status,
+                    TotalAmountStatus = p.TotalAmountStatus,
+                    DepositStatus = p.DepositStatus
+                })
+                .ToListAsync(); // Lấy toàn bộ kết quả dưới dạng danh sách
         }
         public async Task<bool> UpdatePayment(Guid userId)
         {
@@ -48,8 +63,9 @@ namespace KVSC.Infrastructure.Implement.Repositories
                 return false; // Payment not found for the given userId
             }
 
-            // Update the totalAmountStatus to true
-            payment.totalAmountStatus = true;
+            // Update the TotalAmountStatus to true
+            payment.TotalAmountStatus = true;
+            payment.Status = "Completed";
 
             // Save changes to the database
             await _context.SaveChangesAsync();
