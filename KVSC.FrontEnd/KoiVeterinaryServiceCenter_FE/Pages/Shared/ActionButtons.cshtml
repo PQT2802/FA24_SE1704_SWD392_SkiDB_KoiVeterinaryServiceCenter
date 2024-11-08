@@ -153,6 +153,7 @@ else if (Model.ListType == "appointment")
                                 asp-page-handler="UpdateStatus" asp-route-status="InProgress">
                             Execute
                         </button>
+                       
                         <!-- View button for navigation -->
                         
                         break;
@@ -181,7 +182,16 @@ else if (Model.ListType == "appointment")
                 <button onclick="window.location.href='@Url.Page("Chat", new { recipientId = Model.Item.CustomerId, recipientName = Model.Item.CustomerName })'" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-chat-dots"></i> Start Chat
                 </button>
-                
+                <form method="post" asp-page-handler="Message" class="d-inline">
+                    <input type="hidden" name="RecipientId" value="@Model.Item.CustomerId" />
+                    <input type="hidden" name="Content"
+                           value="Conversation created for appointment on @Model.Item.AppointmentDate.
+Service: @Model.Item.ServiceName. This conversation will be stored and used
+to generate reports about your Koi." />
+                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-chat-dots"></i> Message
+                    </button>
+                </form>
             }
 
             @if ((Model.Item.Status == "Reported" || Model.Item.Status == "Completed") && Model.Item.IsOnline) // Kiểm tra xem cuộc hẹn có cho phép chat online không
@@ -192,6 +202,7 @@ else if (Model.ListType == "appointment")
                         data-appointment-id="@Model.Item.AppointmentListId">
                     <i class="bi bi-chat-dots"></i> Chat History
                 </button>
+
                 
             }
             <a class="btn btn-outline-info btn-sm"

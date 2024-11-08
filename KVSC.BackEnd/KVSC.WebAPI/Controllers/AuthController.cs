@@ -39,12 +39,16 @@ namespace KVSC.WebAPI.Controllers
         }
 
         [HttpGet("confirm")]
-        public async Task<IResult> ConfirmEmail(Guid userId)
+        public async Task<IActionResult> ConfirmEmail(Guid userId)
         {
             Result result = await _authService.ConfirmEmail(userId);
-            return result.IsSuccess
-                ? ResultExtensions.ToSuccessDetails(result, "Email confirmed successfully")
-                : ResultExtensions.ToProblemDetails(result);
+
+            if (result.IsSuccess)
+            {
+                return Redirect("https://localhost:7241/Account/SignIn");
+            }
+
+            return (IActionResult)ResultExtensions.ToProblemDetails(result);
         }
 
 
